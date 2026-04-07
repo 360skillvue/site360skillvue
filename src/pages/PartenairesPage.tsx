@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ArrowRight, Users, Search, Loader2, AlertCircle,
-  Mail, Phone, Globe, MapPin, Maximize2, Minimize2, ChevronDown,
+  Mail, Phone, Globe, MapPin, Maximize2, Minimize2, X,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, CircleMarker, Circle, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// ─── Types ──────────────────────────────────────────────────────────────────
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 type CompetenceKey =
   | 'formation' | 'materiel' | 'ergonome_presentiel'
@@ -20,18 +20,18 @@ interface Professional {
   id: number; name: string; company: string;
   competences: CompetenceInfo[];
   email: string; phone: string; website: string; description: string;
-  zone: string; lat?: number; lng?: number;
+  zone: string; radius: number; lat?: number; lng?: number;
 }
 
-// ─── Constants ───────────────────────────────────────────────────────────────
+// ─── Constants ────────────────────────────────────────────────────────────────
 
 const COMPETENCES: Record<CompetenceKey, CompetenceInfo> = {
-  formation:              { key: 'formation',              label: 'Formation Qualiopi',     color: '#2ecc71' },
-  materiel:               { key: 'materiel',               label: 'Matériel Ergonomique',   color: '#e67e22' },
-  ergonome_presentiel:    { key: 'ergonome_presentiel',    label: 'Ergonome Présentiel',    color: '#e74c3c' },
-  psychologue_presentiel: { key: 'psychologue_presentiel', label: 'Psychologue Présentiel', color: '#3498db' },
-  consultant_prevention:  { key: 'consultant_prevention',  label: 'Consultant Prévention',  color: '#9b59b6' },
-  non_defini:             { key: 'non_defini',             label: 'Autre',                  color: '#95a5a6' },
+  formation:              { key: 'formation',              label: 'Formation Qualiopi',     color: '#16a34a' },
+  materiel:               { key: 'materiel',               label: 'Matériel Ergonomique',   color: '#ea580c' },
+  ergonome_presentiel:    { key: 'ergonome_presentiel',    label: 'Ergonome Présentiel',    color: '#dc2626' },
+  psychologue_presentiel: { key: 'psychologue_presentiel', label: 'Psychologue Présentiel', color: '#2563eb' },
+  consultant_prevention:  { key: 'consultant_prevention',  label: 'Consultant Prévention',  color: '#7c3aed' },
+  non_defini:             { key: 'non_defini',             label: 'Autre',                  color: '#64748b' },
 };
 
 const COMPETENCE_ID_MAP: Record<string, CompetenceKey> = {
@@ -54,7 +54,30 @@ const FILTERS = [
   ...Object.values(COMPETENCES).filter(c => c.key !== 'non_defini'),
 ];
 
-// ─── Geocoding ───────────────────────────────────────────────────────────────
+// ─── Zone radius ──────────────────────────────────────────────────────────────
+
+const FRENCH_REGIONS = [
+  'auvergne-rhone-alpes','auvergne rhone alpes',
+  'bourgogne-franche-comte','bourgogne franche comte',
+  'bretagne','centre-val de loire','centre val de loire','corse',
+  'grand est','hauts-de-france','hauts de france',
+  'ile-de-france','ile de france','normandie',
+  'nouvelle-aquitaine','nouvelle aquitaine','occitanie',
+  'pays de la loire','provence-alpes-cote dazur','provence alpes cote dazur','paca',
+  'guadeloupe','martinique','guyane','la reunion','reunion','mayotte',
+];
+
+function getZoneRadius(zone: string): number {
+  const n = zone.toLowerCase().trim()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, ' ').trim();
+  if (n === 'france') return 500_000;
+  if (n === 'suisse') return 100_000;
+  if (FRENCH_REGIONS.some(r => n.includes(r))) return 150_000;
+  return 30_000;
+}
+
+// ─── Geocoding ────────────────────────────────────────────────────────────────
 
 type GeoCache = Record<string, { lat: number; lng: number; ts: number }>;
 
@@ -84,7 +107,7 @@ async function geocode(address: string): Promise<{ lat: number; lng: number } | 
   return null;
 }
 
-// ─── Pipedrive ───────────────────────────────────────────────────────────────
+// ─── Pipedrive ────────────────────────────────────────────────────────────────
 
 async function fetchAllContacts(apiKey: string): Promise<any[]> {
   const all: any[] = [];
@@ -105,9 +128,9 @@ function parseContacts(raw: any[]): Professional[] {
   return raw
     .filter(p => p[FIELD_ADDRESS] && p[FIELD_QUALIFICATION])
     .map(p => {
-      const rawComp  = p[FIELD_COMPETENCES];
-      const ids      = (Array.isArray(rawComp) ? rawComp.map(String) : rawComp ? [String(rawComp)] : []);
-      const comps    = ids.filter((id: string) => COMPETENCE_ID_MAP[id]).map((id: string) => COMPETENCES[COMPETENCE_ID_MAP[id]]);
+      const rawComp = p[FIELD_COMPETENCES];
+      const ids     = (Array.isArray(rawComp) ? rawComp.map(String) : rawComp ? [String(rawComp)] : []);
+      const comps   = ids.filter((id: string) => COMPETENCE_ID_MAP[id]).map((id: string) => COMPETENCES[COMPETENCE_ID_MAP[id]]);
       if (!comps.length) comps.push(COMPETENCES.non_defini);
       const rawSite: string = p[FIELD_WEBSITE] || '';
       return {
@@ -116,11 +139,12 @@ function parseContacts(raw: any[]): Professional[] {
         email: p.email?.[0]?.value || '', phone: p.phone?.[0]?.value || '',
         website: rawSite && !rawSite.startsWith('http') ? `https://${rawSite}` : rawSite,
         description: p[FIELD_DESCRIPTION] || '', zone: p[FIELD_ADDRESS],
+        radius: getZoneRadius(p[FIELD_ADDRESS]),
       };
     });
 }
 
-// ─── Map helpers (inside MapContainer) ───────────────────────────────────────
+// ─── Map helpers ──────────────────────────────────────────────────────────────
 
 function MapFlyTo({ target }: { target: Professional | null }) {
   const map    = useMap();
@@ -140,7 +164,7 @@ function MapInvalidate({ trigger }: { trigger: boolean }) {
   return null;
 }
 
-// ─── Professional card ────────────────────────────────────────────────────────
+// ─── ProCard ──────────────────────────────────────────────────────────────────
 
 const ProCard = React.forwardRef<
   HTMLDivElement,
@@ -153,38 +177,37 @@ const ProCard = React.forwardRef<
       onClick={onClick}
       whileHover={selected ? {} : { y: -1 }}
       transition={{ duration: 0.15 }}
-      className={`relative rounded-[16px] border cursor-pointer overflow-hidden transition-shadow duration-200 ${
+      className={`relative cursor-pointer overflow-hidden transition-all duration-200 rounded-2xl ${
         selected
-          ? 'border-scanup-blue/30 shadow-lg shadow-scanup-blue/[0.08]'
-          : 'border-scanup-graylight bg-white hover:shadow-md hover:shadow-black/[0.06]'
-      } bg-white`}
+          ? 'bg-white shadow-md ring-1 ring-black/[0.08]'
+          : 'bg-white/60 hover:bg-white hover:shadow-sm ring-1 ring-black/[0.06]'
+      }`}
     >
-      {/* Left color accent */}
-      <div className="absolute inset-y-0 left-0 w-[3px]" style={{ background: primary.color }} />
+      {/* Top color accent */}
+      <div className="h-[3px] w-full rounded-t-2xl" style={{ background: primary.color }} />
 
-      <div className="pl-5 pr-4 py-3.5">
-        {/* Header row */}
-        <div className="flex items-start justify-between gap-2 mb-2">
+      <div className="px-4 py-3">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-2 mb-2.5">
           <div className="min-w-0">
             <p className="font-semibold text-[13px] text-scanup-navy leading-snug truncate">{pro.name}</p>
             {pro.company && (
-              <p className="text-[11px] font-medium text-scanup-blue mt-0.5 truncate">{pro.company}</p>
+              <p className="text-[11px] text-scanup-blue font-medium mt-0.5 truncate">{pro.company}</p>
             )}
           </div>
-          {/* located indicator */}
           {pro.lat && (
-            <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 ring-2 ring-white"
+            <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5"
               style={{ background: primary.color }} />
           )}
         </div>
 
-        {/* Competence pills — site style */}
-        <div className="flex flex-wrap gap-1 mb-2">
+        {/* Pills */}
+        <div className="flex flex-wrap gap-1 mb-2.5">
           {pro.competences.map(c => (
             <span
               key={c.key}
-              className="inline-flex items-center px-2 py-[3px] rounded-full text-[9px] font-bold tracking-wide"
-              style={{ background: `${c.color}18`, color: c.color, border: `1px solid ${c.color}28` }}
+              className="inline-flex items-center px-2 py-[2px] rounded-full text-[9px] font-semibold tracking-wide"
+              style={{ background: `${c.color}12`, color: c.color }}
             >
               {c.label}
             </span>
@@ -192,12 +215,12 @@ const ProCard = React.forwardRef<
         </div>
 
         {/* Zone */}
-        <div className="flex items-center gap-1 text-[11px] text-scanup-graytext">
-          <MapPin size={10} className="flex-shrink-0" />
+        <div className="flex items-center gap-1.5 text-[11px] text-scanup-graytext/80">
+          <MapPin size={9} className="flex-shrink-0" />
           <span className="truncate">{pro.zone}</span>
         </div>
 
-        {/* Expanded contact details */}
+        {/* Expanded */}
         <AnimatePresence>
           {selected && (pro.email || pro.phone || pro.website || pro.description) && (
             <motion.div
@@ -207,33 +230,33 @@ const ProCard = React.forwardRef<
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden"
             >
-              <div className="mt-3 pt-3 border-t border-scanup-graylight/80 flex flex-col gap-1.5">
+              <div className="mt-3 pt-3 border-t border-black/[0.05] flex flex-col gap-1.5">
+                {pro.description && (
+                  <p className="text-[11px] text-scanup-graytext leading-relaxed mb-1 line-clamp-3">
+                    {pro.description}
+                  </p>
+                )}
                 {pro.email && (
-                  <a href={`mailto:${pro.email}`}
-                    onClick={e => e.stopPropagation()}
-                    className="flex items-center gap-2 text-[11px] text-scanup-graytext hover:text-scanup-blue transition-colors truncate">
-                    <Mail size={10} className="flex-shrink-0 text-scanup-blue" />{pro.email}
+                  <a href={`mailto:${pro.email}`} onClick={e => e.stopPropagation()}
+                    className="flex items-center gap-2 text-[11px] text-scanup-graytext hover:text-scanup-blue transition-colors truncate group">
+                    <Mail size={10} className="flex-shrink-0 text-scanup-blue/60 group-hover:text-scanup-blue transition-colors" />
+                    {pro.email}
                   </a>
                 )}
                 {pro.phone && (
-                  <a href={`tel:${pro.phone}`}
-                    onClick={e => e.stopPropagation()}
-                    className="flex items-center gap-2 text-[11px] text-scanup-graytext hover:text-scanup-blue transition-colors">
-                    <Phone size={10} className="flex-shrink-0 text-scanup-blue" />{pro.phone}
+                  <a href={`tel:${pro.phone}`} onClick={e => e.stopPropagation()}
+                    className="flex items-center gap-2 text-[11px] text-scanup-graytext hover:text-scanup-blue transition-colors group">
+                    <Phone size={10} className="flex-shrink-0 text-scanup-blue/60 group-hover:text-scanup-blue transition-colors" />
+                    {pro.phone}
                   </a>
                 )}
                 {pro.website && (
                   <a href={pro.website} target="_blank" rel="noopener noreferrer"
                     onClick={e => e.stopPropagation()}
-                    className="flex items-center gap-2 text-[11px] text-scanup-graytext hover:text-scanup-blue transition-colors truncate">
-                    <Globe size={10} className="flex-shrink-0 text-scanup-blue" />
+                    className="flex items-center gap-2 text-[11px] text-scanup-graytext hover:text-scanup-blue transition-colors truncate group">
+                    <Globe size={10} className="flex-shrink-0 text-scanup-blue/60 group-hover:text-scanup-blue transition-colors" />
                     {pro.website.replace(/^https?:\/\//, '')}
                   </a>
-                )}
-                {pro.description && (
-                  <p className="text-[11px] text-scanup-graytext leading-relaxed mt-0.5 line-clamp-3">
-                    {pro.description}
-                  </p>
                 )}
               </div>
             </motion.div>
@@ -245,21 +268,21 @@ const ProCard = React.forwardRef<
 });
 ProCard.displayName = 'ProCard';
 
-// ─── Main page ────────────────────────────────────────────────────────────────
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PartenairesPage() {
-  const [pros, setPros]         = useState<Professional[]>([]);
-  const [loading, setLoading]   = useState(true);
-  const [progress, setProgress] = useState({ done: 0, total: 0 });
-  const [filter, setFilter]     = useState('all');
-  const [search, setSearch]     = useState('');
-  const [selected, setSelected] = useState<Professional | null>(null);
+  const [pros, setPros]             = useState<Professional[]>([]);
+  const [loading, setLoading]       = useState(true);
+  const [progress, setProgress]     = useState({ done: 0, total: 0 });
+  const [filter, setFilter]         = useState('all');
+  const [search, setSearch]         = useState('');
+  const [selected, setSelected]     = useState<Professional | null>(null);
   const [fullscreen, setFullscreen] = useState(false);
-  const [error, setError]       = useState<string | null>(null);
-  const cardRefs                = useRef<Map<number, HTMLDivElement>>(new Map());
-  const aborted                 = useRef(false);
+  const [phoneOpen, setPhoneOpen]   = useState(false);
+  const [error, setError]           = useState<string | null>(null);
+  const cardRefs                    = useRef<Map<number, HTMLDivElement>>(new Map());
+  const aborted                     = useRef(false);
 
-  // ESC to exit fullscreen
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setFullscreen(false); };
     document.addEventListener('keydown', onKey);
@@ -267,14 +290,12 @@ export default function PartenairesPage() {
     return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
   }, [fullscreen]);
 
-  // Load data
   useEffect(() => {
     aborted.current = false;
     load();
     return () => { aborted.current = true; };
   }, []);
 
-  // Scroll selected card
   useEffect(() => {
     if (selected) cardRefs.current.get(selected.id)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [selected]);
@@ -286,7 +307,6 @@ export default function PartenairesPage() {
       const raw    = await fetchAllContacts(apiKey);
       const parsed = parseContacts(raw);
       setProgress({ done: 0, total: parsed.length });
-
       const cache = readCache();
       const ready: Professional[] = [];
       const pending: Professional[] = [];
@@ -297,7 +317,6 @@ export default function PartenairesPage() {
       }
       if (ready.length) setPros(ready);
       setProgress({ done: ready.length, total: parsed.length });
-
       for (let i = 0; i < pending.length; i += BATCH_SIZE) {
         if (aborted.current) break;
         const batch   = pending.slice(i, i + BATCH_SIZE);
@@ -323,67 +342,92 @@ export default function PartenairesPage() {
   });
   const onMap = filtered.filter(p => p.lat && p.lng);
 
-  // ── Sidebar (shared between compact + fullscreen) ────────────────────────
+  // ── Sidebar ────────────────────────────────────────────────────────────────
   const sidebar = (
-    <div className={`flex flex-col bg-white border-l border-black/[0.06] flex-shrink-0 ${fullscreen ? 'w-[380px]' : 'w-full md:w-[360px] lg:w-[400px]'}`}>
+    <div className={`flex flex-col bg-[#f8f9fb] border-l border-black/[0.06] flex-shrink-0 ${fullscreen ? 'w-[360px]' : 'w-full md:w-[340px] lg:w-[380px]'}`}>
 
-      {/* Header */}
-      <div className="px-4 pt-4 pb-3 border-b border-scanup-graylight/60 flex-shrink-0">
+      {/* Sidebar header */}
+      <div className="px-4 pt-4 pb-3 border-b border-black/[0.06] flex-shrink-0 bg-white">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="text-[13px] font-bold text-scanup-navy">
-              {loading && progress.total === 0 ? 'Chargement…' : `${filtered.length} professionnel${filtered.length !== 1 ? 's' : ''}`}
-            </p>
+            {loading && progress.total === 0 ? (
+              <div className="flex items-center gap-2 text-[12px] text-scanup-graytext">
+                <Loader2 size={12} className="animate-spin text-scanup-blue" />
+                Chargement du réseau…
+              </div>
+            ) : (
+              <p className="text-[13px] font-semibold text-scanup-navy">
+                {filtered.length} professionnel{filtered.length !== 1 ? 's' : ''}
+                {filter !== 'all' && <span className="text-scanup-graytext font-normal"> filtrés</span>}
+              </p>
+            )}
             {loading && progress.total > 0 && (
-              <div className="flex items-center gap-2 mt-1">
-                <div className="flex-1 h-1 bg-scanup-graylight rounded-full overflow-hidden w-24">
+              <div className="flex items-center gap-2 mt-1.5">
+                <div className="flex-1 h-0.5 bg-black/[0.07] rounded-full overflow-hidden w-28">
                   <div
                     className="h-full bg-scanup-blue rounded-full transition-all duration-500"
                     style={{ width: `${(progress.done / progress.total) * 100}%` }}
                   />
                 </div>
-                <span className="text-[10px] text-scanup-graytext whitespace-nowrap">{progress.done}/{progress.total}</span>
+                <span className="text-[10px] text-scanup-graytext tabular-nums">{progress.done}/{progress.total}</span>
               </div>
             )}
           </div>
-          {loading && progress.total === 0 && <Loader2 size={14} className="animate-spin text-scanup-blue" />}
+          {selected && (
+            <button
+              onClick={() => setSelected(null)}
+              className="text-[10px] text-scanup-graytext hover:text-scanup-navy transition-colors flex items-center gap-1"
+            >
+              <X size={10} /> Effacer
+            </button>
+          )}
         </div>
 
         {/* Search */}
         <div className="relative">
-          <Search size={12} className="absolute left-3 top-1/2 -translate-y-1/2 text-scanup-graytext/60 pointer-events-none" />
+          <Search size={11} className="absolute left-3 top-1/2 -translate-y-1/2 text-scanup-graytext/50 pointer-events-none" />
           <input
             type="text"
-            placeholder="Nom, ville, entreprise…"
+            placeholder="Rechercher un professionnel…"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-8 pr-3 py-2 text-[12px] bg-scanup-graylight/50 rounded-xl border border-transparent focus:outline-none focus:border-scanup-blue/30 focus:bg-white transition-all"
+            className="w-full pl-8 pr-3 py-2 text-[12px] bg-[#f8f9fb] rounded-xl border border-black/[0.08] focus:outline-none focus:border-scanup-blue/40 focus:bg-white transition-all placeholder:text-scanup-graytext/50"
           />
         </div>
       </div>
 
-      {/* Filter pills */}
-      <div className="px-4 py-2.5 border-b border-scanup-graylight/60 flex-shrink-0">
+      {/* Filters */}
+      <div className="px-4 py-2.5 border-b border-black/[0.06] flex-shrink-0 bg-white">
         <div className="flex gap-1.5 overflow-x-auto pb-0.5" style={{ scrollbarWidth: 'none' }}>
-          {FILTERS.map(f => (
-            <button
-              key={f.key}
-              onClick={() => setFilter(f.key)}
-              className={`px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all flex-shrink-0 border ${
-                filter === f.key ? 'text-white border-transparent shadow-sm' : 'bg-white text-scanup-graytext border-scanup-graylight hover:border-scanup-blue/20'
-              }`}
-              style={filter === f.key ? { background: f.color, borderColor: f.color } : {}}
-            >
-              {f.label}
-            </button>
-          ))}
+          {FILTERS.map(f => {
+            const active = filter === f.key;
+            return (
+              <button
+                key={f.key}
+                onClick={() => setFilter(f.key)}
+                className="px-3 py-1 rounded-full text-[11px] font-medium whitespace-nowrap transition-all flex-shrink-0"
+                style={active
+                  ? { background: f.color, color: '#fff' }
+                  : { background: 'transparent', color: '#64748b', border: '1px solid #e2e8f0' }
+                }
+              >
+                {f.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Pro list */}
-      <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2">
+      {/* List */}
+      <div className="flex-1 overflow-y-auto px-3 py-3 space-y-1.5">
         {filtered.length === 0 && !loading && (
-          <p className="text-center text-[13px] text-scanup-graytext py-10">Aucun résultat</p>
+          <div className="text-center py-12">
+            <p className="text-[13px] text-scanup-graytext">Aucun résultat</p>
+            <button onClick={() => { setFilter('all'); setSearch(''); }}
+              className="mt-2 text-[11px] text-scanup-blue hover:underline">
+              Réinitialiser les filtres
+            </button>
+          </div>
         )}
         {filtered.map(pro => (
           <ProCard
@@ -397,16 +441,17 @@ export default function PartenairesPage() {
       </div>
 
       {/* Legend */}
-      <div className="px-4 py-3 border-t border-scanup-graylight/60 flex-shrink-0">
-        <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+      <div className="px-4 py-3 border-t border-black/[0.06] bg-white flex-shrink-0">
+        <p className="text-[9px] font-semibold text-scanup-graytext/60 uppercase tracking-widest mb-2">Spécialités</p>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
           {Object.values(COMPETENCES).filter(c => c.key !== 'non_defini').map(c => (
             <button
               key={c.key}
               onClick={() => setFilter(f => f === c.key ? 'all' : c.key)}
-              className="flex items-center gap-1.5 hover:opacity-60 transition-opacity"
+              className="flex items-center gap-1.5 hover:opacity-70 transition-opacity text-left"
             >
-              <div className="w-2 h-2 rounded-full" style={{ background: c.color }} />
-              <span className="text-[10px] text-scanup-graytext">{c.label}</span>
+              <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: c.color }} />
+              <span className="text-[10px] text-scanup-graytext leading-tight">{c.label}</span>
             </button>
           ))}
         </div>
@@ -414,7 +459,7 @@ export default function PartenairesPage() {
     </div>
   );
 
-  // ── Map block (shared) ────────────────────────────────────────────────────
+  // ── Map block ──────────────────────────────────────────────────────────────
   const mapBlock = (
     <div className="relative flex-1 min-h-0">
       <MapContainer
@@ -427,33 +472,92 @@ export default function PartenairesPage() {
         <MapFlyTo target={selected} />
         <MapInvalidate trigger={fullscreen} />
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://www.openstreetmap.fr">OSM France</a>'
+          url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
+          maxZoom={20}
         />
+
+        {/* Zone circles */}
+        {onMap.map(pro => {
+          const r = pro.radius;
+          const fillOpacity   = r >= 200_000 ? 0.02 : r >= 100_000 ? 0.04 : 0.08;
+          const strokeOpacity = r >= 200_000 ? 0.2  : r >= 100_000 ? 0.3  : 0.4;
+          return (
+            <Circle
+              key={`zone-${pro.id}`}
+              center={[pro.lat!, pro.lng!]}
+              radius={r}
+              pathOptions={{
+                color: pro.competences[0].color,
+                weight: 1.5,
+                opacity: strokeOpacity,
+                fillColor: pro.competences[0].color,
+                fillOpacity,
+              }}
+            />
+          );
+        })}
+
+        {/* Markers */}
         {onMap.map(pro => (
           <CircleMarker
             key={pro.id}
             center={[pro.lat!, pro.lng!]}
-            radius={selected?.id === pro.id ? 10 : 6}
+            radius={selected?.id === pro.id ? 9 : 6}
             pathOptions={{
               color: 'white',
-              weight: selected?.id === pro.id ? 3 : 2,
+              weight: selected?.id === pro.id ? 2.5 : 2,
               fillColor: pro.competences[0].color,
               fillOpacity: 1,
             }}
             eventHandlers={{ click: () => handleSelect(pro) }}
           >
-            <Popup maxWidth={220}>
-              <div style={{ fontFamily: "'Poppins', sans-serif", padding: '2px 0', lineHeight: 1.4 }}>
-                <p style={{ fontWeight: 700, fontSize: '13px', color: '#1C244B', margin: '0 0 2px' }}>{pro.name}</p>
-                {pro.company && <p style={{ fontSize: '11px', color: '#0068FF', margin: '0 0 6px' }}>{pro.company}</p>}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
+            <Popup maxWidth={280} minWidth={240} className="clean-popup">
+              <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', padding: '2px 0', lineHeight: 1.5 }}>
+                <div style={{ height: '3px', background: pro.competences[0].color, borderRadius: '2px 2px 0 0', margin: '-8px -20px 10px' }} />
+                <p style={{ fontWeight: 700, fontSize: '13px', color: '#0f172a', margin: '0 0 1px' }}>{pro.name}</p>
+                {pro.company && <p style={{ fontSize: '11px', color: '#0068FF', margin: '0 0 8px', fontWeight: 600 }}>{pro.company}</p>}
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '10px', color: '#94a3b8', marginBottom: '8px' }}>
+                  <span>📍</span> {pro.zone}
+                </div>
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginBottom: pro.description || pro.email || pro.phone || pro.website ? '10px' : '0' }}>
                   {pro.competences.map(c => (
-                    <span key={c.key} style={{ background: c.color, color: '#fff', fontSize: '9px', padding: '2px 7px', borderRadius: '20px', fontWeight: 700 }}>
+                    <span key={c.key} style={{
+                      background: `${c.color}15`, color: c.color,
+                      fontSize: '9px', padding: '2px 7px', borderRadius: '99px', fontWeight: 600,
+                    }}>
                       {c.label}
                     </span>
                   ))}
                 </div>
+
+                {pro.description && (
+                  <p style={{ fontSize: '11px', color: '#475569', margin: '0 0 10px', lineHeight: 1.55, borderTop: '1px solid #f1f5f9', paddingTop: '10px' }}>
+                    {pro.description.length > 180 ? pro.description.slice(0, 180) + '…' : pro.description}
+                  </p>
+                )}
+
+                {(pro.email || pro.phone || pro.website) && (
+                  <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '8px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    {pro.email && (
+                      <a href={`mailto:${pro.email}`} style={{ fontSize: '11px', color: '#0068FF', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ fontSize: '10px' }}>✉</span> {pro.email}
+                      </a>
+                    )}
+                    {pro.phone && (
+                      <a href={`tel:${pro.phone}`} style={{ fontSize: '11px', color: '#0068FF', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ fontSize: '10px' }}>📞</span> {pro.phone}
+                      </a>
+                    )}
+                    {pro.website && (
+                      <a href={pro.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#0068FF', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ fontSize: '10px' }}>🌐</span> {pro.website.replace(/^https?:\/\//, '')}
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </Popup>
           </CircleMarker>
@@ -463,12 +567,12 @@ export default function PartenairesPage() {
       {/* Fullscreen toggle */}
       <button
         onClick={() => setFullscreen(f => !f)}
-        className="absolute bottom-4 right-4 z-[400] bg-white/95 backdrop-blur-sm rounded-xl border border-black/[0.08] shadow-lg p-2.5 hover:shadow-xl transition-all hover:scale-105"
+        className="absolute bottom-4 right-4 z-[400] bg-white rounded-xl border border-black/[0.08] shadow-md p-2.5 hover:shadow-lg transition-all hover:scale-105 active:scale-95"
         title={fullscreen ? 'Réduire' : 'Plein écran'}
       >
         {fullscreen
-          ? <Minimize2 size={15} className="text-scanup-navy" />
-          : <Maximize2 size={15} className="text-scanup-navy" />
+          ? <Minimize2 size={14} className="text-scanup-navy" />
+          : <Maximize2 size={14} className="text-scanup-navy" />
         }
       </button>
     </div>
@@ -477,16 +581,16 @@ export default function PartenairesPage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white">
 
-      {/* Top bar */}
-      <div className="h-[6px] w-full bg-gradient-to-r from-scanup-blue via-scanup-turquoise to-scanup-blue fixed top-0 z-50" />
+      {/* Top accent bar */}
+      <div className="h-[4px] w-full bg-gradient-to-r from-scanup-blue via-scanup-turquoise to-scanup-blue fixed top-0 z-50" />
 
       {/* Nav */}
-      <nav className="sticky top-[6px] z-40 bg-white/90 backdrop-blur-xl border-b border-black/[0.06]">
+      <nav className="sticky top-[4px] z-40 bg-white/95 backdrop-blur-xl border-b border-black/[0.06]">
         <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
           <motion.div
-            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+            initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
+            whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
             className="cursor-pointer"
           >
             <Link to="/" className="flex items-center gap-2">
@@ -496,65 +600,102 @@ export default function PartenairesPage() {
             </Link>
           </motion.div>
           <div className="hidden md:flex items-center gap-8 text-[14px]">
-            <span className="text-scanup-blue font-semibold">Notre Réseau</span>
-            <Link to="/certification-periodique-sante" className="text-scanup-graytext hover:text-scanup-blue transition-colors">Certification Santé</Link>
+            <span className="text-scanup-blue font-semibold border-b-2 border-scanup-blue pb-0.5">Notre Réseau</span>
+            <Link to="/certification-periodique-sante" className="text-scanup-graytext hover:text-scanup-navy transition-colors">Certification Santé</Link>
           </div>
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-3">
-            <button className="hidden sm:block text-scanup-navy font-medium hover:text-scanup-blue transition-colors text-sm">Connexion</button>
-            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-              className="bg-scanup-blue text-white px-4 py-2 rounded-full text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20">
+          <div className="flex items-center gap-3">
+            <button className="hidden sm:block text-[13px] text-scanup-graytext hover:text-scanup-navy transition-colors font-medium">
+              Connexion
+            </button>
+            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+              className="bg-scanup-blue text-white px-4 py-2 rounded-full text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-scanup-blue/20">
               Essai gratuit
             </motion.button>
-          </motion.div>
+          </div>
         </div>
       </nav>
 
-      {/* ── Page header ────────────────────────────────────────── */}
-      <div className="px-6 py-8 max-w-7xl mx-auto">
-        <div className="flex items-center gap-2 text-scanup-blue text-[11px] font-bold uppercase tracking-widest mb-2">
-          <Users size={12} /> Réseau de professionnels
+      {/* ── Hero header ────────────────────────────────────────────── */}
+      <div className="bg-[#f8f9fb] border-b border-black/[0.05]">
+        <div className="max-w-7xl mx-auto px-6 py-10">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="flex items-center gap-2 text-scanup-blue text-[11px] font-semibold uppercase tracking-widest mb-3">
+              <Users size={11} />
+              <span>Réseau de professionnels</span>
+            </div>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div>
+                <h1 className="text-[32px] md:text-[40px] font-bold tracking-tight leading-tight">
+                  Carte des{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">
+                    professionnels
+                  </span>
+                </h1>
+                <p className="text-[15px] text-scanup-graytext mt-2 max-w-xl leading-relaxed">
+                  Ergonomes, psychologues, formateurs et consultants en prévention qualifiés et référencés sur ScanUp.
+                </p>
+              </div>
+              {pros.length > 0 && (
+                <div className="flex items-center gap-6 flex-shrink-0 pb-0.5">
+                  {[
+                    { value: pros.length, label: 'Professionnels' },
+                    { value: onMap.length, label: 'Géolocalisés' },
+                    { value: new Set(pros.flatMap(p => p.competences.map(c => c.key))).size, label: 'Spécialités' },
+                  ].map((stat, i) => (
+                    <React.Fragment key={stat.label}>
+                      {i > 0 && <div className="w-px h-8 bg-black/[0.08]" />}
+                      <div>
+                        <p className="text-[28px] font-bold text-scanup-blue leading-none tabular-nums">{stat.value}</p>
+                        <p className="text-[11px] text-scanup-graytext mt-0.5">{stat.label}</p>
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+              )}
+            </div>
+          </motion.div>
         </div>
-        <h1 className="text-[28px] md:text-[36px] font-bold tracking-tight">
-          Carte des{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">
-            professionnels
-          </span>
-        </h1>
-        <p className="text-[15px] text-scanup-graytext mt-2">
-          Ergonomes, psychologues, formateurs et consultants en prévention référencés sur ScanUp.
-        </p>
       </div>
 
-      {/* ── Error ──────────────────────────────────────────────── */}
+      {/* ── Error ──────────────────────────────────────────────────── */}
       {error && (
-        <div className="max-w-7xl mx-auto px-6 pb-6">
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-5 flex items-start gap-3">
-            <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
-            <p className="text-[13px] text-red-700">{error}</p>
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="bg-red-50 border border-red-100 rounded-2xl p-5 flex items-start gap-3">
+            <AlertCircle className="text-red-400 flex-shrink-0 mt-0.5" size={16} />
+            <p className="text-[13px] text-red-600">{error}</p>
           </div>
         </div>
       )}
 
-      {/* ── Compact map + sidebar ─────────────────────────────── */}
+      {/* ── Map + sidebar ──────────────────────────────────────────── */}
       {!error && !fullscreen && (
-        <div className="max-w-7xl mx-auto px-6 pb-12">
-          <div className="rounded-3xl overflow-hidden border border-black/[0.07] shadow-xl flex flex-col md:flex-row" style={{ height: '520px' }}>
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-2xl overflow-hidden border border-black/[0.07] shadow-xl shadow-black/[0.04] flex flex-col md:flex-row"
+            style={{ height: '560px' }}
+          >
             {mapBlock}
             {sidebar}
-          </div>
+          </motion.div>
         </div>
       )}
 
-      {/* ── Fullscreen overlay ─────────────────────────────────── */}
+      {/* ── Fullscreen ─────────────────────────────────────────────── */}
       <AnimatePresence>
         {fullscreen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.18 }}
             className="fixed inset-0 z-[999] flex bg-white"
-            style={{ top: 0 }}
           >
             {mapBlock}
             {sidebar}
@@ -562,19 +703,22 @@ export default function PartenairesPage() {
         )}
       </AnimatePresence>
 
-      {/* ── CTA ────────────────────────────────────────────────── */}
+      {/* ── CTA ────────────────────────────────────────────────────── */}
       {!fullscreen && (
-        <section className="py-16 px-6 bg-scanup-graylight/40 border-t border-scanup-graylight">
-          <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-[24px] md:text-[32px] font-bold tracking-tight mb-3">
-              Rejoignez le réseau
+        <section className="py-20 px-6">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-scanup-blue/[0.07] text-scanup-blue text-[11px] font-semibold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
+              <Users size={11} /> Rejoindre le réseau
+            </div>
+            <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight mb-4">
+              Vous êtes professionnel<br />de la prévention&nbsp;?
             </h2>
-            <p className="text-[15px] text-scanup-graytext mb-8 leading-relaxed">
-              Ergonome, psychologue, formateur, consultant ? Soyez visible auprès des entreprises qui ont besoin de vos compétences.
+            <p className="text-[15px] text-scanup-graytext leading-relaxed mb-8 max-w-lg mx-auto">
+              Ergonome, psychologue, formateur, consultant — soyez visible auprès des entreprises qui ont besoin de votre expertise.
             </p>
             <motion.button
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-              className="bg-scanup-blue text-white px-7 py-3.5 rounded-full font-semibold text-[14px] hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/20 inline-flex items-center gap-2 group"
+              className="bg-scanup-blue text-white px-8 py-3.5 rounded-full font-semibold text-[14px] hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/20 inline-flex items-center gap-2 group"
             >
               Rejoindre le réseau
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />

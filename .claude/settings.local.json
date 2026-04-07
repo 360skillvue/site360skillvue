@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:360skillvue.com)",
+      "Bash(curl -s \"https://360skillvue.com/\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s \"https://360skillvue.com/scanup/\")",
+      "Bash(curl -s \"https://360skillvue.com/tarifs/\")",
+      "Bash(curl -s \"https://360skillvue.com/en/home/\")",
+      "Bash(grep -v '^[[:space:]]*$')",
+      "Bash(grep -v '^$')",
+      "Bash(node -e ':*)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}

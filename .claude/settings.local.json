@@ -11,7 +11,13 @@
       "Bash(grep -v '^$')",
       "Bash(node -e ':*)",
       "Bash(npm install:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(node:*)",
+      "Bash(mkdir -p /c/Users/Adam/Documents/GitHub/site360skillvue/public/partners)",
+      "Bash(curl -sO \"https://360skillvue.com/wp-content/uploads/2025/roche.png\")",
+      "Bash(curl -sO \"https://360skillvue.com/wp-content/uploads/2025/cerba.png\")",
+      "Bash(curl -sO \"https://360skillvue.com/wp-content/uploads/2025/LogoHCL.jpg\")",
+      "Bash(curl -sO \"https://360skillvue.com/wp-content/uploads/2025/Bic.png\")"
     ]
   }
 }

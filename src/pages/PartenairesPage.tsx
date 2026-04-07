@@ -5,6 +5,8 @@ import {
   Mail, Phone, Globe, MapPin, Maximize2, Minimize2, X,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { useLanguage } from '../i18n';
 import { MapContainer, TileLayer, CircleMarker, Circle, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -49,10 +51,7 @@ const GEOCACHE_KEY = 'scanup_geo_v2';
 const GEOCACHE_TTL = 14 * 24 * 60 * 60 * 1000;
 const BATCH_SIZE   = 8;
 
-const FILTERS = [
-  { key: 'all', label: 'Tous', color: '#0068FF' },
-  ...Object.values(COMPETENCES).filter(c => c.key !== 'non_defini'),
-];
+// FILTERS are built dynamically inside the component using translated labels
 
 // ─── Zone radius ──────────────────────────────────────────────────────────────
 
@@ -271,6 +270,16 @@ ProCard.displayName = 'ProCard';
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PartenairesPage() {
+  const { t } = useLanguage();
+
+  const FILTERS = [
+    { key: 'all', label: t.partenaires.filterAll, color: '#0068FF' },
+    ...Object.values(COMPETENCES).filter(c => c.key !== 'non_defini').map(c => ({
+      ...c,
+      label: t.partenaires.competences[c.key as keyof typeof t.partenaires.competences] || c.label,
+    })),
+  ];
+
   const [pros, setPros]             = useState<Professional[]>([]);
   const [loading, setLoading]       = useState(true);
   const [progress, setProgress]     = useState({ done: 0, total: 0 });
@@ -278,7 +287,6 @@ export default function PartenairesPage() {
   const [search, setSearch]         = useState('');
   const [selected, setSelected]     = useState<Professional | null>(null);
   const [fullscreen, setFullscreen] = useState(false);
-  const [phoneOpen, setPhoneOpen]   = useState(false);
   const [error, setError]           = useState<string | null>(null);
   const cardRefs                    = useRef<Map<number, HTMLDivElement>>(new Map());
   const aborted                     = useRef(false);
@@ -302,7 +310,7 @@ export default function PartenairesPage() {
 
   async function load() {
     const apiKey = import.meta.env.VITE_PIPEDRIVE_API_KEY as string | undefined;
-    if (!apiKey) { setError('VITE_PIPEDRIVE_API_KEY manquante dans .env'); setLoading(false); return; }
+    if (!apiKey) { setError(t.partenaires.errorMissingKey); setLoading(false); return; }
     try {
       const raw    = await fetchAllContacts(apiKey);
       const parsed = parseContacts(raw);
@@ -353,12 +361,12 @@ export default function PartenairesPage() {
             {loading && progress.total === 0 ? (
               <div className="flex items-center gap-2 text-[12px] text-scanup-graytext">
                 <Loader2 size={12} className="animate-spin text-scanup-blue" />
-                Chargement du réseau…
+                {t.partenaires.loading}
               </div>
             ) : (
               <p className="text-[13px] font-semibold text-scanup-navy">
-                {filtered.length} professionnel{filtered.length !== 1 ? 's' : ''}
-                {filter !== 'all' && <span className="text-scanup-graytext font-normal"> filtrés</span>}
+                {filtered.length} {filtered.length !== 1 ? t.partenaires.professionalsCountPlural : t.partenaires.professionalsCount}
+                {filter !== 'all' && <span className="text-scanup-graytext font-normal"> {t.partenaires.filtered}</span>}
               </p>
             )}
             {loading && progress.total > 0 && (
@@ -378,7 +386,7 @@ export default function PartenairesPage() {
               onClick={() => setSelected(null)}
               className="text-[10px] text-scanup-graytext hover:text-scanup-navy transition-colors flex items-center gap-1"
             >
-              <X size={10} /> Effacer
+              <X size={10} /> {t.partenaires.clear}
             </button>
           )}
         </div>
@@ -388,7 +396,7 @@ export default function PartenairesPage() {
           <Search size={11} className="absolute left-3 top-1/2 -translate-y-1/2 text-scanup-graytext/50 pointer-events-none" />
           <input
             type="text"
-            placeholder="Rechercher un professionnel…"
+            placeholder={t.partenaires.searchPlaceholder}
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-8 pr-3 py-2 text-[12px] bg-[#f8f9fb] rounded-xl border border-black/[0.08] focus:outline-none focus:border-scanup-blue/40 focus:bg-white transition-all placeholder:text-scanup-graytext/50"
@@ -396,36 +404,14 @@ export default function PartenairesPage() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="px-4 py-2.5 border-b border-black/[0.06] flex-shrink-0 bg-white">
-        <div className="flex gap-1.5 overflow-x-auto pb-0.5" style={{ scrollbarWidth: 'none' }}>
-          {FILTERS.map(f => {
-            const active = filter === f.key;
-            return (
-              <button
-                key={f.key}
-                onClick={() => setFilter(f.key)}
-                className="px-3 py-1 rounded-full text-[11px] font-medium whitespace-nowrap transition-all flex-shrink-0"
-                style={active
-                  ? { background: f.color, color: '#fff' }
-                  : { background: 'transparent', color: '#64748b', border: '1px solid #e2e8f0' }
-                }
-              >
-                {f.label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
       {/* List */}
       <div className="flex-1 overflow-y-auto px-3 py-3 space-y-1.5">
         {filtered.length === 0 && !loading && (
           <div className="text-center py-12">
-            <p className="text-[13px] text-scanup-graytext">Aucun résultat</p>
+            <p className="text-[13px] text-scanup-graytext">{t.partenaires.noResults}</p>
             <button onClick={() => { setFilter('all'); setSearch(''); }}
               className="mt-2 text-[11px] text-scanup-blue hover:underline">
-              Réinitialiser les filtres
+              {t.partenaires.resetFilters}
             </button>
           </div>
         )}
@@ -442,7 +428,7 @@ export default function PartenairesPage() {
 
       {/* Legend */}
       <div className="px-4 py-3 border-t border-black/[0.06] bg-white flex-shrink-0">
-        <p className="text-[9px] font-semibold text-scanup-graytext/60 uppercase tracking-widest mb-2">Spécialités</p>
+        <p className="text-[9px] font-semibold text-scanup-graytext/60 uppercase tracking-widest mb-2">{t.partenaires.legendTitle}</p>
         <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
           {Object.values(COMPETENCES).filter(c => c.key !== 'non_defini').map(c => (
             <button
@@ -568,7 +554,7 @@ export default function PartenairesPage() {
       <button
         onClick={() => setFullscreen(f => !f)}
         className="absolute bottom-4 right-4 z-[400] bg-white rounded-xl border border-black/[0.08] shadow-md p-2.5 hover:shadow-lg transition-all hover:scale-105 active:scale-95"
-        title={fullscreen ? 'Réduire' : 'Plein écran'}
+        title={fullscreen ? t.partenaires.reduce : t.partenaires.fullscreen}
       >
         {fullscreen
           ? <Minimize2 size={14} className="text-scanup-navy" />
@@ -581,39 +567,7 @@ export default function PartenairesPage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white">
 
-      {/* Top accent bar */}
-      <div className="h-[4px] w-full bg-gradient-to-r from-scanup-blue via-scanup-turquoise to-scanup-blue fixed top-0 z-50" />
-
-      {/* Nav */}
-      <nav className="sticky top-[4px] z-40 bg-white/95 backdrop-blur-xl border-b border-black/[0.06]">
-        <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
-            whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-            className="cursor-pointer"
-          >
-            <Link to="/" className="flex items-center gap-2">
-              <span className="font-bold text-xl tracking-tight text-scanup-blue">ScanUp</span>
-              <span className="text-scanup-graytext text-sm">by</span>
-              <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-8 w-auto" />
-            </Link>
-          </motion.div>
-          <div className="hidden md:flex items-center gap-8 text-[14px]">
-            <span className="text-scanup-blue font-semibold border-b-2 border-scanup-blue pb-0.5">Notre Réseau</span>
-            <Link to="/certification-periodique-sante" className="text-scanup-graytext hover:text-scanup-navy transition-colors">Certification Santé</Link>
-          </div>
-          <div className="flex items-center gap-3">
-            <button className="hidden sm:block text-[13px] text-scanup-graytext hover:text-scanup-navy transition-colors font-medium">
-              Connexion
-            </button>
-            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-              className="bg-scanup-blue text-white px-4 py-2 rounded-full text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-scanup-blue/20">
-              Essai gratuit
-            </motion.button>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* ── Hero header ────────────────────────────────────────────── */}
       <div className="bg-[#f8f9fb] border-b border-black/[0.05]">
@@ -625,31 +579,31 @@ export default function PartenairesPage() {
           >
             <div className="flex items-center gap-2 text-scanup-blue text-[11px] font-semibold uppercase tracking-widest mb-3">
               <Users size={11} />
-              <span>Réseau de professionnels</span>
+              <span>{t.partenaires.badge}</span>
             </div>
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div>
-                <h1 className="text-[32px] md:text-[40px] font-bold tracking-tight leading-tight">
-                  Carte des{' '}
+                <h1 className="text-[24px] sm:text-[32px] md:text-[40px] font-bold tracking-tight leading-tight">
+                  {t.partenaires.title}{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">
-                    professionnels
+                    {t.partenaires.titleHighlight}
                   </span>
                 </h1>
                 <p className="text-[15px] text-scanup-graytext mt-2 max-w-xl leading-relaxed">
-                  Ergonomes, psychologues, formateurs et consultants en prévention qualifiés et référencés sur ScanUp.
+                  {t.partenaires.subtitle}
                 </p>
               </div>
               {pros.length > 0 && (
                 <div className="flex items-center gap-6 flex-shrink-0 pb-0.5">
                   {[
-                    { value: pros.length, label: 'Professionnels' },
-                    { value: onMap.length, label: 'Géolocalisés' },
-                    { value: new Set(pros.flatMap(p => p.competences.map(c => c.key))).size, label: 'Spécialités' },
+                    { value: pros.length, label: t.partenaires.statProfessionnels },
+                    { value: onMap.length, label: t.partenaires.statGeolocalises },
+                    { value: new Set(pros.flatMap(p => p.competences.map(c => c.key))).size, label: t.partenaires.statSpecialites },
                   ].map((stat, i) => (
                     <React.Fragment key={stat.label}>
                       {i > 0 && <div className="w-px h-8 bg-black/[0.08]" />}
                       <div>
-                        <p className="text-[28px] font-bold text-scanup-blue leading-none tabular-nums">{stat.value}</p>
+                        <p className="text-[22px] sm:text-[28px] font-bold text-scanup-blue leading-none tabular-nums">{stat.value}</p>
                         <p className="text-[11px] text-scanup-graytext mt-0.5">{stat.label}</p>
                       </div>
                     </React.Fragment>
@@ -671,15 +625,52 @@ export default function PartenairesPage() {
         </div>
       )}
 
+      {/* ── Filters ────────────────────────────────────────────────── */}
+      {!error && !fullscreen && (
+        <div className="max-w-7xl mx-auto px-6 pt-4 pb-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            {FILTERS.map(f => {
+              const active = filter === f.key;
+              return (
+                <button
+                  key={f.key}
+                  onClick={() => setFilter(f.key)}
+                  className="px-4 py-2 rounded-full text-[12px] font-medium whitespace-nowrap transition-all border"
+                  style={active
+                    ? { background: f.color, color: '#fff', borderColor: f.color }
+                    : { background: '#fff', color: '#64748b', borderColor: '#e2e8f0' }
+                  }
+                >
+                  {f.label}
+                  {active && filter !== 'all' && (
+                    <span className="ml-2 text-white/70 text-[10px]">
+                      {filtered.length}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+            {filter !== 'all' && (
+              <button
+                onClick={() => setFilter('all')}
+                className="text-[11px] text-scanup-graytext hover:text-scanup-navy transition-colors ml-1 flex items-center gap-1"
+              >
+                <X size={11} /> {t.partenaires.reset}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* ── Map + sidebar ──────────────────────────────────────────── */}
       {!error && !fullscreen && (
-        <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="rounded-2xl overflow-hidden border border-black/[0.07] shadow-xl shadow-black/[0.04] flex flex-col md:flex-row"
-            style={{ height: '560px' }}
+            style={{ height: 'min(560px, calc(100vh - 120px))' }}
           >
             {mapBlock}
             {sidebar}
@@ -708,19 +699,21 @@ export default function PartenairesPage() {
         <section className="py-20 px-6">
           <div className="max-w-2xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-scanup-blue/[0.07] text-scanup-blue text-[11px] font-semibold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-              <Users size={11} /> Rejoindre le réseau
+              <Users size={11} /> {t.partenaires.ctaBadge}
             </div>
             <h2 className="text-[28px] md:text-[36px] font-bold tracking-tight mb-4">
-              Vous êtes professionnel<br />de la prévention&nbsp;?
+              {t.partenaires.ctaTitle.split('\n').map((line, i) => (
+                <React.Fragment key={i}>{line}{i < t.partenaires.ctaTitle.split('\n').length - 1 && <br />}</React.Fragment>
+              ))}
             </h2>
             <p className="text-[15px] text-scanup-graytext leading-relaxed mb-8 max-w-lg mx-auto">
-              Ergonome, psychologue, formateur, consultant — soyez visible auprès des entreprises qui ont besoin de votre expertise.
+              {t.partenaires.ctaSubtitle}
             </p>
             <motion.button
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="bg-scanup-blue text-white px-8 py-3.5 rounded-full font-semibold text-[14px] hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/20 inline-flex items-center gap-2 group"
             >
-              Rejoindre le réseau
+              {t.partenaires.ctaButton}
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </motion.button>
           </div>

@@ -1,16 +1,18 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  Stethoscope, 
-  Activity, 
-  Users, 
-  ShieldCheck, 
+import {
+  Stethoscope,
+  Activity,
+  Users,
+  ShieldCheck,
   ArrowRight,
   Mail,
   ClipboardCheck,
   HeartPulse
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { useLanguage } from '../i18n';
 
 const FadeIn: React.FC<{ children: React.ReactNode, delay?: number, className?: string }> = ({ children, delay = 0, className = "" }) => (
   <motion.div
@@ -25,79 +27,42 @@ const FadeIn: React.FC<{ children: React.ReactNode, delay?: number, className?: 
 );
 
 export default function SPSTIPage() {
+  const { t } = useLanguage();
+  const navigate = useNavigate();
+
   const trackEvent = (eventName: string) => {
     console.log(`[GA4 Event] ${eventName}`);
+    if (eventName.includes('demo')) navigate('/aide-support');
   };
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-warning/20">
-      {/* Top Decorative Bar */}
-      <div className="h-[8px] w-full bg-gradient-to-r from-scanup-warning to-scanup-blue fixed top-0 z-50"></div>
-
-      {/* Navigation */}
-      <nav className="sticky top-[8px] z-40 bg-scanup-white/80 backdrop-blur-md border-b border-scanup-graylight/50 transition-all">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            className="flex items-center gap-2 cursor-pointer"
-          >
-            <Link to="/" className="flex items-center gap-2">
-              <span className="font-bold text-xl tracking-tight text-scanup-blue">ScanUp</span>
-              <span className="text-scanup-graytext text-sm font-normal">by</span>
-              <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-8 w-auto" />
-            </Link>
-          </motion.div>
-          <div className="hidden md:flex items-center gap-8">
-            <span className="text-scanup-warning font-medium">SPSTI</span>
-            <Link to="/partenaires" className="text-scanup-graytext hover:text-scanup-warning transition-colors">Notre Réseau</Link>
-            <a href="#" className="text-scanup-graytext hover:text-scanup-warning transition-colors">Aide & Support</a>
-          </div>
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-4"
-          >
-            <button className="hidden sm:block text-scanup-navy font-medium hover:text-scanup-warning transition-colors">Connexion</button>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => trackEvent('click_essai_gratuit_nav_spsti')}
-              className="bg-scanup-warning text-scanup-navy px-5 py-2.5 rounded-[10px] font-medium hover:bg-amber-500 transition-colors shadow-lg shadow-scanup-warning/20"
-            >
-              Essai gratuit
-            </motion.button>
-          </motion.div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-scanup-warning/5 rounded-full blur-3xl -z-10"></div>
-        <div className="max-w-7xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-6 md:gap-12 items-center">
           <div className="z-10">
             <FadeIn>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-scanup-warning/10 text-scanup-warning text-sm font-medium mb-6 border border-scanup-warning/20">
                 <Stethoscope size={16} />
-                Prévention primaire & désinsertion
+                {t.spsti.heroBadge}
               </div>
-              <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-bold leading-[1.15] mb-6 tracking-tight">
-                Détection précoce et <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-warning to-scanup-blue">maintien dans l’emploi</span>
+              <h1 className="text-[24px] sm:text-[32px] md:text-[48px] lg:text-[56px] font-bold leading-[1.15] mb-6 tracking-tight">
+                {t.spsti.heroTitle} <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-warning to-scanup-blue">{t.spsti.heroTitleHighlight}</span>
               </h1>
               <p className="text-[18px] text-scanup-graytext mb-10 leading-[1.6] max-w-lg">
-                ScanUp RPS et TMS : l'outil indispensable pour vos équipes pluridisciplinaires pour assurer une traçabilité parfaite de vos actions de prévention.
+                {t.spsti.heroSubtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <motion.button 
+                <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => trackEvent('click_demande_demo_hero_spsti')}
                   className="bg-scanup-warning text-scanup-navy px-8 py-4 rounded-[10px] font-medium hover:bg-amber-500 transition-colors flex items-center justify-center gap-2 shadow-xl shadow-scanup-warning/20 group"
                 >
-                  Demander une démo
+                  {t.spsti.heroCtaDemo}
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </motion.button>
               </div>
@@ -125,15 +90,15 @@ export default function SPSTIPage() {
       <section className="bg-scanup-graylight py-24 relative">
         <div className="max-w-7xl mx-auto px-6">
           <FadeIn className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">Vos objectifs de santé au travail</h2>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">{t.spsti.objectivesTitle}</h2>
             <p className="text-[18px] text-scanup-graytext leading-relaxed">
-              Renforcez votre action de prévention primaire et facilitez le maintien dans l'emploi de vos salariés suivis.
+              {t.spsti.objectivesSubtitle}
             </p>
           </FadeIn>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {[
-              { icon: Activity, title: "Détection précoce", desc: "Identifiez les signaux faibles de RPS et TMS dès les premières alertes pour une intervention rapide.", color: "text-scanup-warning", bg: "bg-scanup-warning/10" },
-              { icon: HeartPulse, title: "Maintien dans l’emploi", desc: "Accompagnez durablement les salariés pour prévenir la désinsertion professionnelle.", color: "text-scanup-blue", bg: "bg-scanup-blue/10" }
+              { icon: Activity, title: t.spsti.objective1Title, desc: t.spsti.objective1Desc, color: "text-scanup-warning", bg: "bg-scanup-warning/10" },
+              { icon: HeartPulse, title: t.spsti.objective2Title, desc: t.spsti.objective2Desc, color: "text-scanup-blue", bg: "bg-scanup-blue/10" },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <motion.div 
@@ -156,9 +121,9 @@ export default function SPSTIPage() {
       <section className="py-24 bg-scanup-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
           <FadeIn>
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">Un outil pour vos équipes pluridisciplinaires</h2>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">{t.spsti.teamTitle}</h2>
             <p className="text-[18px] text-scanup-graytext mb-8 leading-relaxed">
-              Facilitez la collaboration entre médecins du travail, infirmiers, psychologues et ergonomes grâce à une plateforme partagée.
+              {t.spsti.teamSubtitle}
             </p>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
@@ -166,8 +131,8 @@ export default function SPSTIPage() {
                   <Users className="text-scanup-warning" size={20} />
                 </div>
                 <div>
-                  <h4 className="text-[18px] font-bold mb-1">Outil pour équipes pluridisciplinaires</h4>
-                  <p className="text-scanup-graytext">Partagez les informations et coordonnez vos actions de prévention en temps réel.</p>
+                  <h4 className="text-[18px] font-bold mb-1">{t.spsti.team1Title}</h4>
+                  <p className="text-scanup-graytext">{t.spsti.team1Desc}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -175,8 +140,8 @@ export default function SPSTIPage() {
                   <ClipboardCheck className="text-scanup-blue" size={20} />
                 </div>
                 <div>
-                  <h4 className="text-[18px] font-bold mb-1">Traçabilité des actions</h4>
-                  <p className="text-scanup-graytext">Assurez un suivi rigoureux et conforme de chaque intervention et recommandation.</p>
+                  <h4 className="text-[18px] font-bold mb-1">{t.spsti.team2Title}</h4>
+                  <p className="text-scanup-graytext">{t.spsti.team2Desc}</p>
                 </div>
               </div>
             </div>
@@ -200,19 +165,19 @@ export default function SPSTIPage() {
         <div className="max-w-3xl mx-auto px-6 relative z-10">
           <FadeIn>
             <h2 className="text-[32px] md:text-[48px] font-bold mb-10 text-scanup-white tracking-tight">
-              Optimisez votre action de prévention
+              {t.spsti.ctaTitle}
             </h2>
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => trackEvent('click_demande_demo_footer_spsti')}
               className="bg-scanup-warning text-scanup-navy px-10 py-4 rounded-[10px] font-medium hover:bg-amber-500 transition-colors shadow-xl shadow-scanup-warning/20 text-lg"
             >
-              Demander une démo SPSTI
+              {t.spsti.ctaButton}
             </motion.button>
             <div className="mt-12 text-scanup-lightblue/60 flex items-center justify-center gap-2">
               <Mail size={16} />
-              <a href="mailto:contact@360skillvue.com" className="hover:text-scanup-white transition-colors">contact@360skillvue.com</a>
+              <a href={`mailto:${t.spsti.ctaEmail}`} className="hover:text-scanup-white transition-colors">{t.spsti.ctaEmail}</a>
             </div>
           </FadeIn>
         </div>

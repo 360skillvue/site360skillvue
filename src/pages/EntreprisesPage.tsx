@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ChevronDown, Mail, Check, Star } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { useLanguage } from '../i18n';
 
 /* ── Helpers ─────────────────────────────────────────────── */
 
@@ -21,107 +22,30 @@ const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 
 /* ── Data ────────────────────────────────────────────────── */
 
-const stats = [
-  { value: '+650', label: 'utilisateurs actifs' },
-  { value: '43%', label: 'burn-out détecté plus tôt' },
-  { value: '5€', label: 'par évaluation' },
-  { value: '×3', label: 'taux de complétion' },
-];
-
-const problems = [
-  { n: "01", title: "RPS invisibles en télétravail", body: "Les signaux de burn-out se cachent. Les sondages annuels ne capturent plus la réalité des équipes dispersées.", stat: "43 % des cadres en burn-out" },
-  { n: "02", title: "Absentéisme mal compris", body: "Les chiffres remontent trop tard et sans contexte. 72 % des entreprises citent le désengagement comme frein.", stat: "8 % préviennent l'absentéisme" },
-  { n: "03", title: "Coût prohibitif de la prévention", body: "Un audit RPS coûte 15 000 €. L'inaction coûte encore plus : 1 à 2 fois le salaire annuel par départ.", stat: "dès 5 € avec ScanUp" },
-  { n: "04", title: "Quiet Quitting & désengagement", body: "50 % des salariés font le minimum. Cause principale : aucune perspective visible de développement.", stat: "32 % pleinement engagés" },
-  { n: "05", title: "DUERP & conformité", body: "Prouver que vous agissez est aussi important qu'agir. Les reportings prennent du temps, les données manquent.", stat: "HR Tech ×2 d'ici 2032" },
-];
-
-const features = [
-  { label: "Dépistage", title: "Campagnes RPS & TMS en continu", body: "Identifiez les situations à risque grâce aux taux de dépistage positif par équipe — pas une fois par an, en permanence." },
-  { label: "Expertise", title: "Ergonomes & psys du travail", body: "Modules sur-mesure construits après entretien exploratoire. Des humains analysent vos données terrain." },
-  { label: "Conformité", title: "DUERP en un clic", body: "Générez et mettez à jour vos attestations directement depuis le tableau de bord. Toujours prêts pour un audit." },
-  { label: "Analytics", title: "Tableaux de bord temps réel", body: "Des données fiables pour de bonnes décisions. Export facile vers vos outils RH existants." },
-  { label: "Inclusion", title: "Accessible à tous", body: "Application web sans téléchargement, QR code, email facultatif, multilangue. 98 % des appareils supportés." },
-];
-
-const personas = [
-  {
-    name: "Marc",
-    role: "DRH · Grande Entreprise / ETI",
-    intro: "Engagé, mais qui doit rendre des comptes",
-    items: ["Réduire l'absentéisme et piloter par les données", "Justifier le ROI prévention au CODIR", "Dashboards compatibles avec l'écosystème existant"],
-  },
-  {
-    name: "Sophie",
-    role: "Responsable QVT · PME",
-    intro: "Pilote de la prévention sur le terrain",
-    items: ["Plans d'action RPS / TMS mesurables", "Atteindre les travailleurs de nuit et itinérants", "Démontrer des résultats chiffrés à la direction"],
-  },
-  {
-    name: "Thomas",
-    role: "Dirigeant · PME / Industrie",
-    intro: "Pragmatique, orienté résultats immédiats",
-    items: ["Conformité légale sans charge administrative", "Réduire le turnover, stabiliser les effectifs", "ROI en moins de 3 mois"],
-  },
-];
-
-const faqs = [
-  { q: "Qu'est-ce que ScanUp RPS et TMS ?", a: "Des modules d'évaluation scientifiquement validés pour dépister les Risques Psycho-Sociaux et les Troubles Musculo-Squelettiques au sein de vos équipes. Résultats en 48 h." },
-  { q: "Les données des salariés sont-elles confidentielles ?", a: "Absolument. Les données individuelles sont strictement confidentielles. Les RH n'accèdent qu'à des données agrégées et anonymisées. L'email est facultatif." },
-  { q: "Combien coûte ScanUp ?", a: "Essai gratuit avec 5 dépistages. Ensuite, dès 5 € par évaluation en autonomie, ou 2 700 € HT pour 100 dépistages avec qualification par nos experts." },
-  { q: "Cela remplace-t-il le Document Unique (DUERP) ?", a: "Non, cela l'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre DUERP et justifier vos plans d'action." },
-  { q: "Combien de temps pour démarrer ?", a: "En 48 heures. Vos collaborateurs accèdent aux questionnaires par QR code ou email, sans téléchargement, depuis n'importe quel appareil." },
-];
-
-const plans = [
-  { name: "Starter", price: "Gratuit", sub: "14 jours d'essai", items: ["5 dépistages", "Tableau de bord", "Analyse par nos experts"], cta: "Démarrer", featured: false },
-  { name: "Access", price: "5 €", sub: "/ action HT", items: ["Plateforme complète", "Modules autonomes", "Crédits flexibles"], cta: "Prendre RDV", featured: false },
-  { name: "Pack 100", price: "2 700 €", sub: "HT · 100 dépistages", items: ["Modules sur mesure", "Qualification experts", "Dashboard par équipe"], cta: "Prendre RDV", featured: true },
-  { name: "Impact 50", price: "4 475 €", sub: "HT · 50 dépistages", items: ["Retours individuels", "Restitution direction", "Plan d'action prévention"], cta: "Prendre RDV", featured: false },
-];
 
 /* ── Component ───────────────────────────────────────────── */
 
 export default function EntreprisesPage() {
+  const { t } = useLanguage();
+  const stats    = t.entreprises.stats;
+  const problems = t.entreprises.problems;
+  const features = t.entreprises.features;
+  const personas = t.entreprises.personas;
+  const faqs     = t.entreprises.faqs;
+  const plans    = t.entreprises.plans.map((p, i) => ({ ...p, featured: i === 2 }));
+
   const [activePersona, setActivePersona] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white">
 
-      {/* accent bar */}
-      <div className="h-[5px] w-full fixed top-0 z-50 bg-gradient-to-r from-scanup-turquoise via-scanup-blue to-scanup-turquoise bg-[length:200%_100%]"
-        style={{ animation: 'shimmer 4s linear infinite' }} />
-
       <style>{`
         @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
         @keyframes float   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
       `}</style>
 
-      {/* Nav */}
-      <nav className="sticky top-[5px] z-40 bg-white/75 backdrop-blur-xl border-b border-black/[0.06]">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
-            <Link to="/" className="flex items-center gap-2">
-              <span className="font-bold text-[17px] tracking-tight text-scanup-blue">ScanUp</span>
-              <span className="text-scanup-graytext text-xs">by</span>
-              <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-7 w-auto" />
-            </Link>
-          </motion.div>
-          <div className="hidden md:flex items-center gap-8 text-[14px]">
-            <span className="text-scanup-navy font-semibold">Entreprises & DRH</span>
-            <Link to="/partenaires" className="text-scanup-graytext hover:text-scanup-navy transition-colors">Notre Réseau</Link>
-            <a href="#" className="text-scanup-graytext hover:text-scanup-navy transition-colors">Support</a>
-          </div>
-          <motion.button
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-            className="bg-scanup-navy text-white px-5 py-2.5 rounded-full text-[13px] font-semibold hover:bg-scanup-blue transition-colors"
-          >
-            Essai gratuit
-          </motion.button>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative pt-24 pb-32 px-6 text-center overflow-hidden">
@@ -134,23 +58,23 @@ export default function EntreprisesPage() {
         <div className="max-w-4xl mx-auto">
           <Reveal>
             <div className="inline-flex items-center gap-2 border border-scanup-blue/20 bg-scanup-blue/5 text-scanup-blue text-[12px] font-semibold px-4 py-1.5 rounded-full mb-8 tracking-wide">
-              ScanUp RPS & TMS — Entreprises & DRH
+              {t.entreprises.heroBadge}
             </div>
           </Reveal>
 
           <Reveal delay={0.05}>
-            <h1 className="text-[44px] md:text-[60px] lg:text-[72px] font-bold tracking-[-0.02em] leading-[1.08] mb-8">
-              Dépistez vos risques{' '}
+            <h1 className="text-[26px] sm:text-[36px] md:text-[44px] lg:text-[60px] font-bold tracking-[-0.02em] leading-[1.08] mb-8">
+              {t.entreprises.heroTitle}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">
-                TMS & RPS
+                {t.entreprises.heroTitleHighlight}
               </span>
-              <br />sans audit en 48h.
+              <br />{t.entreprises.heroTitleEnd}
             </h1>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className="text-[18px] text-scanup-graytext leading-[1.75] max-w-2xl mx-auto mb-10">
-              Recueillez des témoignages terrain authentiques et anticipez les risques grâce à une plateforme de feedback anonyme. Dès 5€ par évaluation.
+              {t.entreprises.heroSubtitle}
             </p>
           </Reveal>
 
@@ -158,13 +82,13 @@ export default function EntreprisesPage() {
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="bg-scanup-blue text-white px-8 py-3.5 rounded-full font-semibold text-[15px] hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/25 flex items-center gap-2 group"
             >
-              Commencer gratuitement
+              {t.entreprises.heroCtaPrimary}
               <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
             </motion.button>
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="text-scanup-navy px-8 py-3.5 rounded-full font-semibold text-[15px] border border-black/10 hover:border-scanup-blue hover:text-scanup-blue transition-all"
             >
-              Voir une démo
+              {t.entreprises.heroCtaSecondary}
             </motion.button>
           </Reveal>
 
@@ -186,9 +110,9 @@ export default function EntreprisesPage() {
       <section className="py-28 px-6 bg-[#F8F9FC]">
         <div className="max-w-5xl mx-auto">
           <Reveal className="mb-16">
-            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">La réalité terrain</p>
+            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.entreprises.problemsLabel}</p>
             <h2 className="text-[36px] md:text-[48px] font-bold tracking-[-0.02em] leading-[1.1]">
-              Vous le voyez<br />trop tard.
+              {t.entreprises.problemsTitle}<br />{t.entreprises.problemsTitleEnd}
             </h2>
           </Reveal>
 
@@ -221,17 +145,17 @@ export default function EntreprisesPage() {
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-[1fr_1.4fr] gap-20 items-start">
             <Reveal className="md:sticky md:top-28">
-              <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-4">La solution</p>
+              <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-4">{t.entreprises.featuresLabel}</p>
               <h2 className="text-[32px] md:text-[40px] font-bold tracking-[-0.02em] leading-[1.15] mb-5">
-                Une plateforme.<br />Cinq leviers.
+                {t.entreprises.featuresTitle}<br />{t.entreprises.featuresTitleEnd}
               </h2>
               <p className="text-[15px] text-scanup-graytext leading-relaxed mb-8">
-                Conçue pour les DRH, responsables QVT et dirigeants qui veulent des résultats concrets, pas de la théorie.
+                {t.entreprises.featuresSubtitle}
               </p>
               <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
                 className="bg-scanup-blue text-white px-6 py-3 rounded-full font-semibold text-[14px] hover:bg-blue-700 transition-colors"
               >
-                Commencer gratuitement
+                {t.entreprises.featuresCtaButton}
               </motion.button>
             </Reveal>
 
@@ -259,8 +183,8 @@ export default function EntreprisesPage() {
       <section className="py-24 px-6 bg-[#F8F9FC]">
         <div className="max-w-4xl mx-auto">
           <Reveal className="mb-12">
-            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">Fait pour vous</p>
-            <h2 className="text-[32px] md:text-[42px] font-bold tracking-[-0.02em]">Votre profil, votre solution.</h2>
+            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.entreprises.personasLabel}</p>
+            <h2 className="text-[32px] md:text-[42px] font-bold tracking-[-0.02em]">{t.entreprises.personasTitle}</h2>
           </Reveal>
 
           <Reveal delay={0.05}>
@@ -298,7 +222,7 @@ export default function EntreprisesPage() {
                   </div>
                   <div className="w-px bg-black/[0.06] hidden md:block" />
                   <div className="flex-1">
-                    <div className="text-[11px] text-scanup-graytext font-semibold uppercase tracking-widest mb-5">Défis principaux</div>
+                    <div className="text-[11px] text-scanup-graytext font-semibold uppercase tracking-widest mb-5">{t.entreprises.personaChallengesLabel}</div>
                     <ul className="space-y-4">
                       {personas[activePersona].items.map((item, j) => (
                         <li key={j} className="flex items-start gap-3 text-[15px] text-scanup-navy">
@@ -331,15 +255,15 @@ export default function EntreprisesPage() {
                   ))}
                 </div>
                 <p className="text-[24px] md:text-[32px] font-medium leading-[1.5] text-scanup-navy mb-10 tracking-[-0.01em]">
-                  "En 3 mois, nous avons réduit notre taux d'absentéisme de 28% et détecté 4 situations de burn-out avant qu'elles deviennent des arrêts de travail. L'investissement s'est remboursé en 6 semaines."
+                  {t.entreprises.testimonialQuote}
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-11 h-11 rounded-full bg-scanup-blue/10 flex items-center justify-center text-scanup-blue font-bold text-[13px]">
                     MA
                   </div>
                   <div>
-                    <div className="text-[15px] font-semibold text-scanup-navy">Marie-Anne Lebrun</div>
-                    <div className="text-[13px] text-scanup-graytext">DRH · Groupe industriel, 1 200 salariés</div>
+                    <div className="text-[15px] font-semibold text-scanup-navy">{t.entreprises.testimonialName}</div>
+                    <div className="text-[13px] text-scanup-graytext">{t.entreprises.testimonialRole}</div>
                   </div>
                 </div>
               </div>
@@ -347,14 +271,11 @@ export default function EntreprisesPage() {
           </Reveal>
 
           <div className="mt-16 grid md:grid-cols-2 gap-px bg-black/[0.06] rounded-2xl overflow-hidden">
-            {[
-              { text: "Nous avons atteint 85% de participation terrain. Les opérateurs ont particulièrement apprécié les retours personnalisés de l'ergonome.", name: "Julien Delacroix", role: "Resp. QVT · PME logistique, 340 sal." },
-              { text: "Avec ScanUp, nous sommes toujours à jour pour les audits. J'ai économisé deux jours par mois en travail administratif.", name: "Françoise Paulin", role: "Dirigeante · Cabinet RH, 85 sal." },
-            ].map((t, i) => (
+            {t.entreprises.testimonials.map((testimonial, i) => (
               <Reveal key={i} delay={i * 0.1} className="bg-white p-8">
-                <p className="text-[15px] text-scanup-graytext leading-relaxed italic mb-6">"{t.text}"</p>
-                <div className="text-[13px] font-semibold text-scanup-navy">{t.name}</div>
-                <div className="text-[12px] text-scanup-graytext">{t.role}</div>
+                <p className="text-[15px] text-scanup-graytext leading-relaxed italic mb-6">"{testimonial.text}"</p>
+                <div className="text-[13px] font-semibold text-scanup-navy">{testimonial.name}</div>
+                <div className="text-[12px] text-scanup-graytext">{testimonial.role}</div>
               </Reveal>
             ))}
           </div>
@@ -365,12 +286,12 @@ export default function EntreprisesPage() {
       <section className="py-24 px-6 bg-[#F8F9FC]">
         <div className="max-w-5xl mx-auto">
           <Reveal className="text-center mb-16">
-            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">Tarifs</p>
-            <h2 className="text-[32px] md:text-[44px] font-bold tracking-[-0.02em] mb-4">Fini les audits à 15 000€.</h2>
-            <p className="text-[16px] text-scanup-graytext">Démarrez dès 5€ par évaluation. Passez à l'échelle selon vos besoins.</p>
+            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.entreprises.pricingLabel}</p>
+            <h2 className="text-[32px] md:text-[44px] font-bold tracking-[-0.02em] mb-4">{t.entreprises.pricingTitle}</h2>
+            <p className="text-[16px] text-scanup-graytext">{t.entreprises.pricingSubtitle}</p>
           </Reveal>
 
-          <div className="grid md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {plans.map((plan, i) => (
               <Reveal key={i} delay={i * 0.06}>
                 <motion.div whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
@@ -383,7 +304,7 @@ export default function EntreprisesPage() {
                 >
                   {plan.featured && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-scanup-blue text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-wide">
-                      Populaire
+                      {t.entreprises.pricingPopular}
                     </div>
                   )}
                   <div className={`text-[11px] font-semibold uppercase tracking-widest mb-3 ${plan.featured ? 'text-scanup-turquoise' : 'text-scanup-blue'}`}>
@@ -414,7 +335,7 @@ export default function EntreprisesPage() {
           </div>
 
           <Reveal className="mt-8 flex flex-wrap justify-center gap-6">
-            {['Aucune carte bancaire requise', 'Résiliation à tout moment', 'Données hébergées en France (HDS)'].map((item, i) => (
+            {t.entreprises.pricingGuarantees.map((item, i) => (
               <div key={i} className="flex items-center gap-2 text-[13px] text-scanup-graytext">
                 <Check size={11} className="text-scanup-blue" />{item}
               </div>
@@ -427,7 +348,7 @@ export default function EntreprisesPage() {
       <section className="py-24 px-6">
         <div className="max-w-3xl mx-auto">
           <Reveal className="text-center mb-14">
-            <h2 className="text-[32px] md:text-[40px] font-bold tracking-[-0.02em]">Questions fréquentes</h2>
+            <h2 className="text-[32px] md:text-[40px] font-bold tracking-[-0.02em]">{t.entreprises.faqTitle}</h2>
           </Reveal>
           <div className="border-t border-black/[0.06]">
             {faqs.map((faq, i) => (
@@ -468,25 +389,25 @@ export default function EntreprisesPage() {
         </div>
         <Reveal className="max-w-2xl mx-auto text-center">
           <h2 className="text-[36px] md:text-[52px] font-bold tracking-[-0.02em] leading-[1.1] mb-6">
-            Prêt à prendre soin<br />de vos équipes ?
+            {t.entreprises.ctaTitle}<br />{t.entreprises.ctaTitleEnd}
           </h2>
           <p className="text-[17px] text-scanup-graytext mb-10 leading-relaxed">
-            Démarrez en 48 heures. Essai gratuit 14 jours, sans carte bancaire.
+            {t.entreprises.ctaSubtitle}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="bg-scanup-blue text-white px-8 py-4 rounded-full font-semibold text-[15px] hover:bg-blue-700 transition-colors shadow-xl shadow-scanup-blue/20"
             >
-              Démarrer gratuitement
+              {t.entreprises.ctaPrimary}
             </motion.button>
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="text-scanup-navy px-8 py-4 rounded-full font-semibold text-[15px] border border-black/10 hover:border-scanup-blue hover:text-scanup-blue transition-all"
             >
-              Demander une démo
+              {t.entreprises.ctaSecondary}
             </motion.button>
           </div>
-          <a href="mailto:contact@360skillvue.com" className="inline-flex items-center gap-1.5 text-[13px] text-scanup-graytext hover:text-scanup-navy transition-colors">
-            <Mail size={12} /> contact@360skillvue.com
+          <a href={`mailto:${t.entreprises.ctaEmail}`} className="inline-flex items-center gap-1.5 text-[13px] text-scanup-graytext hover:text-scanup-navy transition-colors">
+            <Mail size={12} /> {t.entreprises.ctaEmail}
           </a>
         </Reveal>
       </section>

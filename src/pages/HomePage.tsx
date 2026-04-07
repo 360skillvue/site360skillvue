@@ -6,6 +6,8 @@ import {
   BarChart3, Users, FileCheck
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { useLanguage } from '../i18n';
 
 const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: string }> = ({
   children, delay = 0, className = ""
@@ -21,82 +23,40 @@ const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: 
   </motion.div>
 );
 
+const refs = [
+  { name: "Roche",  src: "/partners/roche.png" },
+  { name: "Cerba",  src: "/partners/cerba.png" },
+  { name: "HCL",    src: "/partners/LogoHCL.jpg" },
+  { name: "BIC",    src: "/partners/Bic.png" },
+  { name: "HPS",    src: "/partners/HPS.png" },
+  { name: "CDE",    src: "/partners/cde.png" },
+  { name: "Revima", src: "/partners/Revima.png" },
+];
+
 type Audience = { label: string; link: string };
 
-const audiences: Audience[] = [
-  { label: "Assureurs & Mutuelles", link: "/assureurs-mutuelles" },
-  { label: "Entreprises & DRH",     link: "/entreprises-drh" },
-  { label: "SPSTI",                  link: "/spsti" },
-  { label: "Secteur santé",          link: "/certification-periodique-sante" },
-];
-
-
-const pillars = [
-  {
-    icon: ScanLine,
-    color: "text-scanup-blue",
-    bg: "bg-scanup-blue/8",
-    title: "Évaluer",
-    desc: "Des questionnaires scientifiquement validés pour mesurer TMS, RPS et compétences — déployés en quelques clics.",
-  },
-  {
-    icon: BarChart3,
-    color: "text-scanup-turquoise",
-    bg: "bg-scanup-turquoise/10",
-    title: "Analyser",
-    desc: "Tableaux de bord en temps réel, segmentation par population, alertes automatiques sur les cohortes à risque.",
-  },
-  {
-    icon: ShieldCheck,
-    color: "text-scanup-success",
-    bg: "bg-scanup-success/8",
-    title: "Agir",
-    desc: "Plans de prévention personnalisés, relances automatiques et traçabilité complète pour chaque collaborateur.",
-  },
-];
-
-const products = [
-  {
-    tag: "Prévention",
-    name: "ScanUp TMS",
-    desc: "Dépistage des troubles musculo-squelettiques à grande échelle, avec orientation vers les équipes soignantes.",
-    icon: Users,
-    link: "/entreprises-drh",
-    accent: "#0068FF",
-    accentLight: "rgba(0,104,255,0.07)",
-  },
-  {
-    tag: "Prévention",
-    name: "ScanUp RPS",
-    desc: "Évaluation des risques psychosociaux et détection précoce des signaux faibles de souffrance au travail.",
-    icon: Brain,
-    link: "/assureurs-mutuelles",
-    accent: "#33FFCC",
-    accentLight: "rgba(51,255,204,0.08)",
-  },
-  {
-    tag: "Réglementation",
-    name: "ScanUp Certification",
-    desc: "Pilotage de la certification périodique des professionnels de santé — conformité, traçabilité, HDS.",
-    icon: FileCheck,
-    link: "/certification-periodique-sante",
-    accent: "#16A34A",
-    accentLight: "rgba(22,163,74,0.07)",
-    highlight: true,
-  },
-];
-
-const refs = [
-  { name: "Roche",  src: "https://360skillvue.com/wp-content/uploads/2025/roche.png" },
-  { name: "Cerba",  src: "https://360skillvue.com/wp-content/uploads/2025/cerba.png" },
-  { name: "HCL",    src: "https://360skillvue.com/wp-content/uploads/2025/LogoHCL.jpg" },
-  { name: "BIC",    src: "https://360skillvue.com/wp-content/uploads/2025/Bic.png" },
-  { name: "HPS",    src: "https://360skillvue.com/wp-content/uploads/2025/HPS.png" },
-  { name: "CDE",    src: "https://360skillvue.com/wp-content/uploads/2025/cde.png" },
-  { name: "Revima", src: "https://360skillvue.com/wp-content/uploads/2025/Revima.png" },
-];
-
 export default function HomePage() {
+  const { t } = useLanguage();
+
+  const audiences: Audience[] = [
+    { label: t.home.audiences.assureurs, link: "/assureurs-mutuelles" },
+    { label: t.home.audiences.entreprises, link: "/entreprises-drh" },
+    { label: t.home.audiences.spsti,      link: "/spsti" },
+    { label: t.home.audiences.sante,      link: "/certification-periodique-sante" },
+  ];
+
+  const pillars = [
+    { icon: ScanLine,   color: "text-scanup-blue",      bg: "bg-scanup-blue/8",      title: t.home.pillar1Title, desc: t.home.pillar1Desc },
+    { icon: BarChart3,  color: "text-scanup-turquoise", bg: "bg-scanup-turquoise/10", title: t.home.pillar2Title, desc: t.home.pillar2Desc },
+    { icon: ShieldCheck,color: "text-scanup-success",   bg: "bg-scanup-success/8",   title: t.home.pillar3Title, desc: t.home.pillar3Desc },
+  ];
+
+  const products = [
+    { tag: t.home.productTagPrevention,     name: t.home.product1Name, desc: t.home.product1Desc, icon: Users,     link: "/entreprises-drh",               accent: "#0068FF", accentLight: "rgba(0,104,255,0.07)" },
+    { tag: t.home.productTagPrevention,     name: t.home.product2Name, desc: t.home.product2Desc, icon: Brain,     link: "/assureurs-mutuelles",            accent: "#33FFCC", accentLight: "rgba(51,255,204,0.08)" },
+    { tag: t.home.productTagReglementation, name: t.home.product3Name, desc: t.home.product3Desc, icon: FileCheck, link: "/certification-periodique-sante", accent: "#16A34A", accentLight: "rgba(22,163,74,0.07)", highlight: true },
+  ];
+
   const [open, setOpen]         = useState(false);
   const [selected, setSelected]  = useState<Audience | null>(null);
   const [cycleIdx, setCycleIdx]  = useState(0);
@@ -115,48 +75,14 @@ export default function HomePage() {
 
   useEffect(() => {
     if (selected) return;
-    const t = setInterval(() => setCycleIdx(i => (i + 1) % audiences.length), 5000);
-    return () => clearInterval(t);
-  }, [selected]);
+    const timer = setInterval(() => setCycleIdx(i => (i + 1) % audiences.length), 5000);
+    return () => clearInterval(timer);
+  }, [selected, audiences.length]);
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-blue/20">
 
-      {/* Top bar */}
-      <div className="h-[6px] w-full bg-gradient-to-r from-scanup-blue via-scanup-turquoise to-scanup-blue fixed top-0 z-50" />
-
-      {/* Nav */}
-      <nav className="sticky top-[6px] z-40 bg-scanup-white/80 backdrop-blur-md border-b border-scanup-graylight/50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            className="flex items-center gap-2 cursor-pointer"
-          >
-            <span className="font-bold text-xl tracking-tight text-scanup-blue">ScanUp</span>
-            <span className="text-scanup-graytext text-sm">by</span>
-            <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-8 w-auto" />
-          </motion.div>
-          <div className="hidden md:flex items-center gap-8">
-            <Link to="/certification-periodique-sante" className="text-scanup-graytext hover:text-scanup-blue transition-colors">Certification Santé</Link>
-            <Link to="/partenaires" className="text-scanup-graytext hover:text-scanup-blue transition-colors">Notre Réseau</Link>
-            <a href="#" className="text-scanup-graytext hover:text-scanup-blue transition-colors">Aide & Support</a>
-          </div>
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-4">
-            <button className="hidden sm:block text-scanup-navy font-medium hover:text-scanup-blue transition-colors">Connexion</button>
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="bg-scanup-blue text-white px-5 py-2.5 rounded-[10px] font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/20"
-            >
-              Essai gratuit
-            </motion.button>
-          </motion.div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* ─── HERO ──────────────────────────────────────────────── */}
       <section className="relative flex flex-col items-center justify-center min-h-[78vh] pt-16 pb-20 overflow-hidden">
@@ -186,8 +112,8 @@ export default function HomePage() {
 
         <div className="max-w-5xl mx-auto px-6 text-center">
           <FadeIn>
-            <h1 className="text-[42px] md:text-[58px] lg:text-[68px] font-bold leading-[1.15] tracking-tight mb-6">
-              <span className="block mb-2">Vous êtes</span>
+            <h1 className="text-[28px] sm:text-[36px] md:text-[48px] lg:text-[58px] font-bold leading-[1.15] tracking-tight mb-6">
+              <span className="block mb-2">{t.home.heroTitle}</span>
 
               {/* Animated label slot */}
               <span className="relative inline-block" ref={dropdownRef}>
@@ -233,7 +159,7 @@ export default function HomePage() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.96 }}
                       transition={{ duration: 0.16 }}
-                      className="absolute left-1/2 -translate-x-1/2 top-full mt-4 bg-white border border-scanup-graylight rounded-2xl shadow-2xl z-50 min-w-[280px] overflow-hidden text-left"
+                      className="absolute left-1/2 -translate-x-1/2 top-full mt-4 bg-white border border-scanup-graylight rounded-2xl shadow-2xl z-50 min-w-[min(280px,80vw)] overflow-hidden text-left"
                     >
                       {audiences.map((a, i) => (
                         <motion.li
@@ -258,7 +184,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-[18px] text-scanup-graytext leading-[1.75] max-w-2xl mx-auto mt-8">
-              Sélectionnez votre profil pour découvrir la solution ScanUp adaptée à vos enjeux de prévention et de conformité.
+              {t.home.heroSubtitle}
             </p>
           </FadeIn>
         </div>
@@ -266,9 +192,9 @@ export default function HomePage() {
 
       {/* ─── CLIENTS STRIP ─────────────────────────────────────── */}
       <section className="border-y border-scanup-graylight/70 py-10 px-6 bg-white">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-12">
           <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-graytext whitespace-nowrap flex-shrink-0">
-            Ils nous font confiance
+            {t.home.trustStrip}
           </p>
           <div className="w-px h-8 bg-scanup-graylight hidden md:block flex-shrink-0" />
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-8 md:gap-10">
@@ -292,10 +218,10 @@ export default function HomePage() {
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <FadeIn className="text-center mb-16">
-            <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">Notre approche</p>
+            <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.home.pillarsLabel}</p>
             <h2 className="text-[32px] md:text-[42px] font-bold tracking-tight">
-              De la mesure à l'action,<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">en un seul outil.</span>
+              {t.home.pillarsTitle}<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">{t.home.pillarsTitleHighlight}</span>
             </h2>
           </FadeIn>
 
@@ -323,9 +249,9 @@ export default function HomePage() {
       <section className="py-24 px-6 bg-scanup-graylight/40">
         <div className="max-w-6xl mx-auto">
           <FadeIn className="text-center mb-16">
-            <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">Nos solutions</p>
+            <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.home.productsLabel}</p>
             <h2 className="text-[32px] md:text-[42px] font-bold tracking-tight">
-              Trois produits, une vision.
+              {t.home.productsTitle}
             </h2>
           </FadeIn>
 
@@ -344,7 +270,7 @@ export default function HomePage() {
                   >
                     {prod.highlight && (
                       <div className="absolute top-0 right-0 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-bl-xl" style={{ background: prod.accent }}>
-                        Nouveau
+                        {t.home.productNew}
                       </div>
                     )}
                     <div
@@ -365,7 +291,7 @@ export default function HomePage() {
                       className="mt-8 pt-5 border-t border-scanup-graylight flex items-center gap-2 font-semibold text-[14px] transition-colors duration-200"
                       style={{ color: prod.accent }}
                     >
-                      Découvrir
+                      {t.home.productDiscover}
                       <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </motion.div>
@@ -390,25 +316,19 @@ export default function HomePage() {
         />
         <FadeIn className="max-w-3xl mx-auto text-center relative">
           <h2 className="text-[32px] md:text-[44px] font-bold text-white mb-6 tracking-tight">
-            Prêt à passer à l'action ?
+            {t.home.ctaTitle}
           </h2>
           <p className="text-[17px] text-white/60 mb-10 leading-relaxed">
-            Déployez ScanUp en quelques heures. Essai gratuit 14 jours, sans carte bancaire.
+            {t.home.ctaSubtitle}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
+              onClick={() => navigate('/aide-support')}
               className="bg-scanup-turquoise text-scanup-navy px-8 py-4 rounded-[12px] font-bold text-[16px] hover:brightness-105 transition-all shadow-lg shadow-scanup-turquoise/20"
             >
-              Démarrer l'essai gratuit
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="border border-white/20 text-white px-8 py-4 rounded-[12px] font-semibold text-[16px] hover:bg-white/5 transition-all"
-            >
-              Demander une démo
+              {t.home.ctaButtonTrial}
             </motion.button>
           </div>
         </FadeIn>
@@ -417,7 +337,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-scanup-navy border-t border-white/5 py-10 text-center text-white/40 text-sm">
         <div className="max-w-7xl mx-auto px-6">
-          <p>© 2026 360SkillVue. Tous droits réservés.</p>
+          <p>{t.home.footer}</p>
         </div>
       </footer>
     </div>

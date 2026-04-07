@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  CheckCircle2, 
-  XCircle, 
-  FileSpreadsheet, 
-  Mail, 
-  Monitor, 
-  Users, 
-  BookOpen, 
-  BellRing, 
-  Calendar, 
-  ShieldCheck, 
-  Database, 
-  Wand2, 
+import {
+  CheckCircle2,
+  XCircle,
+  FileSpreadsheet,
+  Mail,
+  Monitor,
+  Users,
+  BookOpen,
+  BellRing,
+  Calendar,
+  ShieldCheck,
+  Database,
+  Wand2,
   Award,
   ChevronDown,
   ChevronUp,
   Settings,
   ArrowRight
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { useLanguage } from '../i18n';
 
 const FadeIn: React.FC<{ children: React.ReactNode, delay?: number, className?: string }> = ({ children, delay = 0, className = "" }) => (
   <motion.div
@@ -73,32 +75,10 @@ const FAQItem: React.FC<{ question: string, answer: string, index: number }> = (
 };
 
 export default function CertificationPage() {
-  const faqData = [
-    {
-      question: "Qu’est-ce que la certification périodique ?",
-      answer: "Une obligation pour les 7 professions de santé à ordre de valider des actions de formation, qualité, relation patient et santé personnelle sur un cycle de 6 ans."
-    },
-    {
-      question: "Quelles professions sont concernées ?",
-      answer: "Médecins, infirmiers, pharmaciens, sages-femmes, kinésithérapeutes, podologues et chirurgiens-dentistes."
-    },
-    {
-      question: "L’employeur a-t-il des obligations ?",
-      answer: "Oui. L’article L.4022-2 du Code de la santé publique impose à l’employeur de coordonner et faciliter l’accès aux actions de certification."
-    },
-    {
-      question: "Combien de modules à valider ?",
-      answer: "8 à 10 modules selon la profession, répartis sur les 4 blocs de la certification, à valider sur 6 ans."
-    },
-    {
-      question: "Votre plateforme est-elle conforme Qualiopi ?",
-      answer: "Oui. IEF Biologie, organisme de formation certifié Qualiopi, utilise déjà 360SkillVue pour ses formations."
-    },
-    {
-      question: "Pouvez-vous héberger des données de santé ?",
-      answer: "Oui. Notre infrastructure permet l’hébergement de données de santé (HDS), rendant possible la validation des 4 blocs contrairement aux autres LMS. C'est indispensable pour les audits cliniques et les suivis d'indicateurs car l'apprenant communique sur des données de santé des patients."
-    }
-  ];
+  const { t } = useLanguage();
+  const navigate = useNavigate();
+
+  const faqData = t.certification.faq.map(f => ({ question: f.q, answer: f.a }));
 
   const schemaOrgData = {
     "@context": "https://schema.org",
@@ -132,63 +112,19 @@ export default function CertificationPage() {
         event_label: 'Landing Page Certification'
       });
     }
+    if (eventName.includes('demo')) navigate('/aide-support');
   };
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-blue/20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrgData) }} />
       
-      {/* Top Decorative Bar */}
-      <div className="h-[8px] w-full bg-gradient-to-r from-scanup-blue to-scanup-turquoise fixed top-0 z-50"></div>
-
-      {/* Navigation (Sticky & Glassmorphism) */}
-      <nav className="sticky top-[8px] z-40 bg-scanup-white/80 backdrop-blur-md border-b border-scanup-graylight/50 transition-all">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            className="flex items-center gap-2 cursor-pointer"
-          >
-            <Link to="/" className="flex items-center gap-2">
-              <span className="font-bold text-xl tracking-tight text-scanup-blue">ScanUp</span>
-              <span className="text-scanup-graytext text-sm font-normal">by</span>
-              <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-8 w-auto" />
-            </Link>
-          </motion.div>
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#" className="text-scanup-blue font-medium flex items-center gap-2 relative group">
-              Certification Santé
-              <span className="bg-gradient-to-r from-scanup-blue to-scanup-turquoise text-scanup-white text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider shadow-sm">Nouveau</span>
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-scanup-blue transform scale-x-100 transition-transform origin-left"></span>
-            </a>
-            <Link to="/partenaires" className="text-scanup-graytext hover:text-scanup-blue transition-colors">Notre Réseau</Link>
-            <a href="#" className="text-scanup-graytext hover:text-scanup-blue transition-colors">Aide & Support</a>
-          </div>
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-4"
-          >
-            <button className="hidden sm:block text-scanup-navy font-medium hover:text-scanup-blue transition-colors">Connexion</button>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => trackEvent('click_essai_gratuit_nav')}
-              className="bg-scanup-blue text-scanup-white px-5 py-2.5 rounded-[10px] font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/20"
-            >
-              Essai gratuit
-            </motion.button>
-          </motion.div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Section 1: Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-scanup-blue/5 rounded-full blur-3xl -z-10"></div>
-        <div className="max-w-7xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-6 md:gap-12 items-center">
           <div className="z-10">
             <FadeIn>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-scanup-lightblue/50 text-scanup-blue text-sm font-medium mb-6 border border-scanup-blue/10">
@@ -196,31 +132,31 @@ export default function CertificationPage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-scanup-blue opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-scanup-blue"></span>
                 </span>
-                Conforme à l'arrêté du 26 février 2026
+                {t.certification.heroBadge}
               </div>
-              <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-bold leading-[1.15] mb-6 tracking-tight">
-                Certification périodique : <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">pilotez la conformité</span>
+              <h1 className="text-[24px] sm:text-[32px] md:text-[48px] lg:text-[56px] font-bold leading-[1.15] mb-6 tracking-tight">
+                {t.certification.heroTitle} <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">{t.certification.heroTitleHighlight}</span>
               </h1>
               <p className="text-[18px] text-scanup-graytext mb-10 leading-[1.6] max-w-lg">
-                Une seule plateforme pour déployer les modules, suivre l’avancement et vous assurer que tous vos professionnels valident leur certification dans les temps.
+                {t.certification.heroSubtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <motion.button 
+                <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => trackEvent('click_demande_demo_hero')}
                   className="bg-scanup-blue text-scanup-white px-8 py-4 rounded-[10px] font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-xl shadow-scanup-blue/20 group"
                 >
-                  Demander une démo
+                  {t.certification.heroCtaDemo}
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </motion.button>
-                <motion.button 
+                <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => trackEvent('click_essai_gratuit_hero')}
                   className="bg-scanup-white text-scanup-navy border border-scanup-graylight px-8 py-4 rounded-[10px] font-medium hover:bg-scanup-graylight transition-colors flex items-center justify-center"
                 >
-                  Essai gratuit 14 jours
+                  {t.certification.heroCtaTrial}
                 </motion.button>
               </div>
             </FadeIn>
@@ -247,16 +183,16 @@ export default function CertificationPage() {
       <section className="bg-scanup-graylight py-24 relative">
         <div className="max-w-7xl mx-auto px-6">
           <FadeIn className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">Ce que la loi impose à votre établissement</h2>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">{t.certification.contextTitle}</h2>
             <p className="text-[18px] text-scanup-graytext leading-relaxed">
-              Depuis l’ordonnance du 19 juillet 2021, les 7 professions de santé à ordre doivent valider une certification périodique sur un cycle de 6 ans. En tant qu’employeur (Art. L.4022-2), vous devez coordonner cette démarche.
+              {t.certification.contextSubtitle}
             </p>
           </FadeIn>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: Users, title: "7 professions concernées", desc: "Médecin, infirmier, pharmacien, sage-femme, kinésithérapeute, podologue, chirurgien-dentiste.", color: "text-scanup-blue", bg: "bg-scanup-blue/10" },
-              { icon: BookOpen, title: "8 à 10 modules à valider", desc: "Par profession sur un cycle de 6 ans, couvrant les 4 blocs de la certification.", color: "text-scanup-blue", bg: "bg-scanup-blue/10" },
-              { icon: ShieldCheck, title: "Sanction possible", desc: "Risque de suspension d’exercice en cas de non-validation à l'issue du cycle.", color: "text-scanup-warning", bg: "bg-scanup-warning/10" }
+              { icon: Users,      title: t.certification.context1Title, desc: t.certification.context1Desc, color: "text-scanup-blue",    bg: "bg-scanup-blue/10" },
+              { icon: BookOpen,   title: t.certification.context2Title, desc: t.certification.context2Desc, color: "text-scanup-blue",    bg: "bg-scanup-blue/10" },
+              { icon: ShieldCheck,title: t.certification.context3Title, desc: t.certification.context3Desc, color: "text-scanup-warning", bg: "bg-scanup-warning/10" },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <motion.div 
@@ -279,9 +215,9 @@ export default function CertificationPage() {
       <section className="py-24 bg-scanup-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
           <FadeIn>
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">Aujourd’hui, vous jonglez entre plusieurs outils</h2>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">{t.certification.problemTitle}</h2>
             <p className="text-[18px] text-scanup-graytext mb-8 leading-relaxed">
-              Tableurs pour suivre les avancements, e-mails pour relancer, plateforme DPC séparée, pas de vue consolidée… Le résultat : un pilotage compliqué et des risques de non-conformité.
+              {t.certification.problemSubtitle}
             </p>
           </FadeIn>
           <FadeIn delay={0.2}>
@@ -300,9 +236,9 @@ export default function CertificationPage() {
                 </motion.div>
                 
                 {[
-                  { icon: FileSpreadsheet, label: "Tableurs" },
-                  { icon: Mail, label: "E-mails" },
-                  { icon: Monitor, label: "LMS DPC" }
+                  { icon: FileSpreadsheet, label: t.certification.problemBefore.tableurs },
+                  { icon: Mail,            label: t.certification.problemBefore.emails   },
+                  { icon: Monitor,         label: t.certification.problemBefore.lms      },
                 ].map((item, i) => (
                   <motion.div 
                     key={i}
@@ -318,17 +254,17 @@ export default function CertificationPage() {
                 ))}
               </div>
               
-              <div className="text-scanup-graytext/50 font-black text-3xl italic">VS</div>
-              
+              <div className="text-scanup-graytext/50 font-black text-3xl italic">{t.certification.problemVs}</div>
+
               {/* Après */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4, type: "spring" }}
                 className="bg-scanup-white p-8 rounded-2xl shadow-xl border-2 border-scanup-success flex flex-col items-center gap-4 relative w-full md:w-auto"
               >
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
@@ -340,8 +276,8 @@ export default function CertificationPage() {
                 <div className="w-20 h-20 bg-scanup-blue/10 rounded-full flex items-center justify-center mb-2">
                   <Settings className="text-scanup-blue" size={40} />
                 </div>
-                <span className="font-bold text-2xl text-scanup-navy tracking-tight">360SkillVue</span>
-                <span className="bg-scanup-success/10 text-scanup-success text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wider">Tout-en-un</span>
+                <span className="font-bold text-2xl text-scanup-navy tracking-tight">{t.certification.problemAfterBrand}</span>
+                <span className="bg-scanup-success/10 text-scanup-success text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wider">{t.certification.problemAfterBadge}</span>
               </motion.div>
             </div>
           </FadeIn>
@@ -352,19 +288,19 @@ export default function CertificationPage() {
       <section className="bg-scanup-graylight py-24">
         <div className="max-w-7xl mx-auto px-6">
           <FadeIn className="text-center mb-16">
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">Tout au même endroit : déployez et suivez</h2>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">{t.certification.solutionTitle}</h2>
             <p className="text-[18px] text-scanup-graytext max-w-2xl mx-auto leading-relaxed">
-              Plus besoin de jongler entre plusieurs outils. 360SkillVue centralise le déploiement des modules et le suivi des avancements.
+              {t.certification.solutionSubtitle}
             </p>
           </FadeIn>
-          
+
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
             <div className="grid sm:grid-cols-2 gap-6">
               {[
-                { icon: BookOpen, title: "Déployez vos modules", desc: "Modules génériques prêts à l’emploi ou sur-mesure. Création simplifiée." },
-                { icon: Monitor, title: "Suivez en temps réel", desc: "Tableau de bord RH : avancement par profession, par apprenant." },
-                { icon: BellRing, title: "Relancez en un clic", desc: "Identifiez ceux qui n’ont pas terminé et relancez depuis la plateforme." },
-                { icon: Calendar, title: "Pilotez sur 6 ans", desc: "Sessions calées sur le cycle officiel de certification." }
+                { icon: BookOpen, title: t.certification.solution1Title, desc: t.certification.solution1Desc },
+                { icon: Monitor,  title: t.certification.solution2Title, desc: t.certification.solution2Desc },
+                { icon: BellRing, title: t.certification.solution3Title, desc: t.certification.solution3Desc },
+                { icon: Calendar, title: t.certification.solution4Title, desc: t.certification.solution4Desc },
               ].map((item, i) => (
                 <FadeIn key={i} delay={i * 0.1}>
                   <motion.div 
@@ -400,7 +336,7 @@ export default function CertificationPage() {
               onClick={() => trackEvent('click_voir_plateforme_solution')}
               className="bg-scanup-blue text-scanup-white px-8 py-4 rounded-[10px] font-medium hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-2 shadow-lg shadow-scanup-blue/20 group"
             >
-              Voir la plateforme en action
+              {t.certification.solutionCtaButton}
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </FadeIn>
@@ -412,15 +348,15 @@ export default function CertificationPage() {
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-scanup-blue/20 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2"></div>
         <div className="max-w-7xl mx-auto px-6 z-10 relative">
           <FadeIn>
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-16 text-center tracking-tight">Pourquoi 360SkillVue plutôt qu’un LMS généraliste ?</h2>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-16 text-center tracking-tight">{t.certification.advantagesTitle}</h2>
           </FadeIn>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Award, title: "Conforme Qualiopi", desc: "IEF Biologie, OF certifié Qualiopi, utilise déjà notre plateforme." },
-              { icon: Database, title: "Hébergement HDS", desc: "Rend possible la validation des 4 blocs contrairement aux autres LMS. Indispensable pour les audits cliniques et suivis d'indicateurs car l'apprenant communique sur des données de santé des patients." },
-              { icon: Wand2, title: "Création ultra-simple", desc: "Un PS peut créer un module sans aucune compétence technique. Accès facilité avec une connexion sans email." },
-              { icon: ShieldCheck, title: "Spécialisée certification", desc: "Conçue spécifiquement pour ce dispositif, pas un LMS générique." }
+              { icon: Award,      title: t.certification.advantage1Title, desc: t.certification.advantage1Desc },
+              { icon: Database,   title: t.certification.advantage2Title, desc: t.certification.advantage2Desc },
+              { icon: Wand2,      title: t.certification.advantage3Title, desc: t.certification.advantage3Desc },
+              { icon: ShieldCheck,title: t.certification.advantage4Title, desc: t.certification.advantage4Desc },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <motion.div 
@@ -442,32 +378,32 @@ export default function CertificationPage() {
         <div className="max-w-3xl mx-auto px-6 text-center">
           <FadeIn>
             <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-scanup-success/10 text-scanup-success font-semibold text-sm tracking-wide uppercase">
-              Offre de lancement
+              {t.certification.pricingBadge}
             </div>
-            <h2 className="text-[48px] md:text-[64px] font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">
-              10 € <span className="text-[24px] text-scanup-navy font-semibold">/ salarié / an</span>
+            <h2 className="text-[32px] sm:text-[48px] md:text-[64px] font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">
+              {t.certification.pricingPrice} <span className="text-[24px] text-scanup-navy font-semibold">{t.certification.pricingUnit}</span>
             </h2>
-            <h3 className="text-[20px] font-medium text-scanup-graytext mb-10">Tarif early adopter — gagnant-gagnant pour nos premiers partenaires</h3>
+            <h3 className="text-[20px] font-medium text-scanup-graytext mb-10">{t.certification.pricingSubtitle}</h3>
           </FadeIn>
-          
+
           <FadeIn delay={0.2}>
             <div className="bg-scanup-graylight rounded-[24px] p-8 md:p-12 mb-8 border border-scanup-graylight/80 text-left shadow-lg relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-scanup-turquoise/10 rounded-full blur-2xl"></div>
               <p className="text-[18px] text-scanup-navy leading-relaxed mb-8 relative z-10">
-                Accès autonome à l’ensemble de la plateforme pendant 12 mois, tous modules inclus. En contrepartie : vos retours pour améliorer la plateforme et votre autorisation de communiquer sur notre collaboration.
+                {t.certification.pricingDesc}
               </p>
               <div className="flex justify-center relative z-10">
-                <motion.button 
+                <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => trackEvent('click_essai_gratuit_tarif')}
                   className="bg-scanup-blue text-scanup-white px-10 py-4 rounded-[10px] font-medium hover:bg-blue-700 transition-colors shadow-xl shadow-scanup-blue/20 text-lg"
                 >
-                  Démarrer l’essai gratuit
+                  {t.certification.pricingCta}
                 </motion.button>
               </div>
             </div>
-            <p className="text-[14px] text-scanup-graytext">Modules sur étagère ou sur-mesure disponibles sur devis</p>
+            <p className="text-[14px] text-scanup-graytext">{t.certification.pricingNote}</p>
           </FadeIn>
         </div>
       </section>
@@ -486,12 +422,12 @@ export default function CertificationPage() {
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
                 <blockquote className="text-[20px] md:text-[24px] font-medium italic text-scanup-navy mb-6 leading-relaxed">
-                  « Nous utilisons 360SkillVue pour déployer nos formations et suivre la conformité de nos professionnels de santé. »
+                  {t.certification.testimonialQuote}
                 </blockquote>
-                <div className="text-[16px] text-scanup-graytext mb-6 font-medium">— IEF Biologie, OF certifié Qualiopi</div>
+                <div className="text-[16px] text-scanup-graytext mb-6 font-medium">{t.certification.testimonialAuthor}</div>
                 <div className="flex flex-wrap gap-3">
-                  <span className="bg-scanup-blue/10 text-scanup-blue text-[13px] px-4 py-1.5 rounded-full font-semibold tracking-wide">Qualiopi</span>
-                  <span className="bg-scanup-turquoise/20 text-scanup-navy text-[13px] px-4 py-1.5 rounded-full font-semibold tracking-wide">Hébergement données de santé</span>
+                  <span className="bg-scanup-blue/10 text-scanup-blue text-[13px] px-4 py-1.5 rounded-full font-semibold tracking-wide">{t.certification.testimonialTag1}</span>
+                  <span className="bg-scanup-turquoise/20 text-scanup-navy text-[13px] px-4 py-1.5 rounded-full font-semibold tracking-wide">{t.certification.testimonialTag2}</span>
                 </div>
               </div>
             </div>
@@ -503,7 +439,7 @@ export default function CertificationPage() {
       <section className="py-24 bg-scanup-white">
         <div className="max-w-3xl mx-auto px-6">
           <FadeIn>
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-12 text-center tracking-tight">Questions fréquentes</h2>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-12 text-center tracking-tight">{t.certification.faqTitle}</h2>
           </FadeIn>
           <div className="space-y-2">
             {faqData.map((faq, index) => (
@@ -519,34 +455,34 @@ export default function CertificationPage() {
         <div className="max-w-3xl mx-auto px-6 relative z-10">
           <FadeIn>
             <h2 className="text-[32px] md:text-[48px] font-bold mb-10 text-scanup-white tracking-tight leading-tight">
-              Prêts à simplifier la certification de vos équipes ?
+              {t.certification.ctaTitle}
             </h2>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => trackEvent('click_demande_demo_footer')}
                 className="bg-scanup-blue text-scanup-white px-10 py-4 rounded-[10px] font-medium hover:bg-blue-700 transition-colors shadow-xl shadow-scanup-blue/20 text-lg"
               >
-                Demander une démo
+                {t.certification.ctaDemo}
               </motion.button>
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => trackEvent('click_essai_gratuit_footer')}
                 className="bg-scanup-white/10 text-scanup-white border border-scanup-white/20 px-10 py-4 rounded-[10px] font-medium hover:bg-scanup-white/20 transition-colors backdrop-blur-sm text-lg"
               >
-                Essai gratuit 14 jours
+                {t.certification.heroCtaTrial}
               </motion.button>
             </div>
             <div className="text-scanup-lightblue/60 text-[16px] flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-              <a href="mailto:Laure.dellamonica@360skillvue.com?subject=Demande%20de%20d%C3%A9mo%20-%20Certification%20P%C3%A9riodique" className="hover:text-scanup-white transition-colors flex items-center gap-2">
+              <a href={`mailto:${t.certification.ctaEmail}`} className="hover:text-scanup-white transition-colors flex items-center gap-2">
                 <Mail size={16} />
-                Laure.dellamonica@360skillvue.com
+                {t.certification.ctaEmail}
               </a>
               <span className="hidden sm:block text-scanup-white/20">|</span>
-              <a href="https://360skillvue.com?utm_source=website&utm_medium=landing&utm_campaign=certif_periodique" className="hover:text-scanup-white transition-colors">
-                360skillvue.com
+              <a href="https://360skillvue.com" className="hover:text-scanup-white transition-colors">
+                {t.certification.ctaWebsite}
               </a>
             </div>
           </FadeIn>

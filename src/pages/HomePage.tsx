@@ -118,7 +118,7 @@ export default function HomePage() {
 
         <div className="max-w-5xl mx-auto px-6 text-center">
           <FadeIn>
-            <h1 className="text-[28px] sm:text-[36px] md:text-[48px] lg:text-[58px] font-bold leading-[1.15] tracking-tight mb-6">
+            <h1 className="text-[36px] sm:text-[48px] md:text-[62px] lg:text-[76px] font-bold leading-[1.15] tracking-tight mb-6">
               <span className="block mb-2">{t.home.heroTitle}</span>
 
               {/* Animated label slot */}

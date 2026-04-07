@@ -309,8 +309,7 @@ export default function PartenairesPage() {
   }, [selected]);
 
   async function load() {
-    const apiKey = import.meta.env.VITE_PIPEDRIVE_API_KEY as string | undefined;
-    if (!apiKey) { setError(t.partenaires.errorMissingKey); setLoading(false); return; }
+    const apiKey = '9253b27b43a478f140271664aa4d040d9079c848';
     try {
       const raw    = await fetchAllContacts(apiKey);
       const parsed = parseContacts(raw);

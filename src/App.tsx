@@ -9,13 +9,20 @@ const AssureursPage     = lazy(() => import('./pages/AssureursPage'));
 const SPSTIPage         = lazy(() => import('./pages/SPSTIPage'));
 const PartenairesPage   = lazy(() => import('./pages/PartenairesPage'));
 const AidePage          = lazy(() => import('./pages/AidePage'));
-const NotFoundPage      = lazy(() => import('./pages/NotFoundPage'));
+const NotFoundPage        = lazy(() => import('./pages/NotFoundPage'));
+const MentionsLegalesPage = lazy(() => import('./pages/MentionsLegalesPage'));
+const CGUPage                      = lazy(() => import('./pages/CGUPage'));
+const PolitiqueConfidentialitePage = lazy(() => import('./pages/PolitiqueConfidentialitePage'));
 
 export default function App() {
   return (
     <LanguageProvider>
       <Router>
-        <Suspense fallback={<div />}>
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center bg-white">
+            <div className="w-8 h-8 border-2 border-scanup-blue/20 border-t-scanup-blue rounded-full animate-spin" />
+          </div>
+        }>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/certification-periodique-sante" element={<CertificationPage />} />
@@ -24,6 +31,9 @@ export default function App() {
             <Route path="/spsti" element={<SPSTIPage />} />
             <Route path="/partenaires" element={<PartenairesPage />} />
             <Route path="/aide-support" element={<AidePage />} />
+            <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
+            <Route path="/cgu" element={<CGUPage />} />
+            <Route path="/politique-confidentialite" element={<PolitiqueConfidentialitePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>

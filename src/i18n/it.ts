@@ -239,29 +239,30 @@ export const it = {
     testimonialTag1: 'Qualiopi',
     testimonialTag2: 'Hosting dati sanitari',
     faqTitle: 'Domande frequenti',
+    faqSubtitle: 'Tutto ciò che i responsabili della formazione nelle strutture sanitarie devono sapere per gestire la certificazione periodica dei propri professionisti.',
     faq: [
       {
-        q: 'Cos\'è la certificazione periodica?',
+        section: 'Quadro normativo', q: 'Cos\'è la certificazione periodica?',
         a: 'Un obbligo per le 7 professioni sanitarie regolamentate di convalidare azioni di formazione, qualità, relazione con il paziente e salute personale su un ciclo di 6 anni.',
       },
       {
-        q: 'Quali professioni sono coinvolte?',
+        section: 'Quadro normativo', q: 'Quali professioni sono coinvolte?',
         a: 'Medici, infermieri, farmacisti, ostetriche, fisioterapisti, podologi e odontoiatri.',
       },
       {
-        q: 'Il datore di lavoro ha degli obblighi?',
+        section: 'Obblighi del datore di lavoro', q: 'Il datore di lavoro ha degli obblighi?',
         a: 'Sì. L\'articolo L.4022-2 del Codice della sanità pubblica impone al datore di lavoro di coordinare e facilitare l\'accesso alle azioni di certificazione.',
       },
       {
-        q: 'Quanti moduli devono essere convalidati?',
+        section: 'In pratica', q: 'Quanti moduli devono essere convalidati?',
         a: 'Da 8 a 10 moduli a seconda della professione, distribuiti sui 4 blocchi della certificazione, da convalidare in 6 anni.',
       },
       {
-        q: 'La vostra piattaforma è conforme Qualiopi?',
+        section: 'Come ScanUp vi accompagna', q: 'La vostra piattaforma è conforme Qualiopi?',
         a: 'Sì. IEF Biologie, organismo di formazione certificato Qualiopi, utilizza già 360SkillVue per le sue formazioni.',
       },
       {
-        q: 'Potete ospitare dati sanitari?',
+        section: 'Come ScanUp vi accompagna', q: 'Potete ospitare dati sanitari?',
         a: 'Sì. La nostra infrastruttura consente l\'hosting di dati sanitari (HDS), rendendo possibile la convalida di tutti e 4 i blocchi, a differenza degli altri LMS. È indispensabile per gli audit clinici e il monitoraggio degli indicatori, poiché l\'apprendista comunica dati sanitari dei pazienti.',
       },
     ],

@@ -205,7 +205,7 @@ export const fr = {
       lms: 'LMS DPC',
     },
     problemVs: 'VS',
-    problemAfterBrand: '360SkillVue',
+    problemAfterBrand: 'ScanUp',
     problemAfterBadge: 'Tout-en-un',
     solutionTitle: 'Tout au même endroit : déployez et suivez',
     solutionSubtitle: 'Plus besoin de jongler entre plusieurs outils. 360SkillVue centralise le déploiement des modules et le suivi des avancements.',
@@ -239,30 +239,118 @@ export const fr = {
     testimonialTag1: 'Qualiopi',
     testimonialTag2: 'Hébergement données de santé',
     faqTitle: 'Questions fréquentes',
+    faqSubtitle: 'Tout ce que les responsables formation des établissements de santé doivent savoir pour piloter la certification périodique de leurs professionnels.',
     faq: [
+      // ── Le cadre réglementaire ──────────────────────────────────
       {
+        section: 'Le cadre réglementaire',
         q: 'Qu\'est-ce que la certification périodique ?',
-        a: 'Une obligation pour les 7 professions de santé à ordre de valider des actions de formation, qualité, relation patient et santé personnelle sur un cycle de 6 ans.',
+        a: 'C\'est une obligation légale instaurée par la loi du 24 juillet 2019 qui impose aux professionnels de santé à ordre de valider un parcours de maintien des compétences sur un cycle de 6 ans. Ce parcours est structuré autour de 4 axes : actualisation des connaissances et compétences, renforcement de la qualité des pratiques professionnelles, amélioration de la relation avec le patient, et prise en compte de la santé personnelle du professionnel.',
       },
       {
+        section: 'Le cadre réglementaire',
         q: 'Quelles professions sont concernées ?',
-        a: 'Médecins, infirmiers, pharmaciens, sages-femmes, kinésithérapeutes, podologues et chirurgiens-dentistes.',
+        a: '7 professions de santé à ordre : médecins, pharmaciens, infirmiers, chirurgiens-dentistes, masseurs-kinésithérapeutes, sages-femmes et pédicures-podologues. Cela concerne aussi bien les libéraux que les salariés de votre établissement.',
       },
       {
-        q: 'L\'employeur a-t-il des obligations ?',
-        a: 'Oui. L\'article L.4022-2 du Code de la santé publique impose à l\'employeur de coordonner et faciliter l\'accès aux actions de certification.',
+        section: 'Le cadre réglementaire',
+        q: 'Combien d\'actions chaque professionnel doit-il valider ?',
+        a: 'Un minimum de 8 actions sur 6 ans, soit au moins 2 par axe. Les actions éligibles sont variées : formations (DPC ou non), analyses de pratiques, simulation, activités d\'enseignement, d\'encadrement, démarches de qualité ou de sécurité, missions de santé publique, recherche, publications, etc. Les 52 référentiels détaillant les actions éligibles par spécialité ont été publiés par l\'arrêté du 26 février 2026 — soit 1 438 pages couvrant l\'ensemble des professions concernées.',
       },
       {
-        q: 'Combien de modules à valider ?',
-        a: '8 à 10 modules selon la profession, répartis sur les 4 blocs de la certification, à valider sur 6 ans.',
+        section: 'Le cadre réglementaire',
+        q: 'Quels sont les textes de référence ?',
+        a: 'Article L.4022-2 du Code de la santé publique — coordination par l\'employeur. Décret n° 2024-258 du 22 mars 2024 — modalités d\'application. Décret n° 2025-1335 du 26 décembre 2025 — modalités de contrôle et système d\'information. Arrêté du 26 février 2026 — publication des 52 référentiels de certification.',
+      },
+      // ── Vos obligations en tant qu'employeur ────────────────────
+      {
+        section: 'Vos obligations en tant qu\'employeur',
+        q: 'Quel est le rôle de l\'employeur dans la certification périodique ?',
+        a: 'L\'article L.4022-2 du Code de la santé publique prévoit que le choix des actions de certification des professionnels salariés s\'effectue en lien avec l\'employeur. Concrètement, en tant qu\'établissement de santé, vous avez un rôle de coordination du parcours de certification de vos professionnels salariés.',
       },
       {
-        q: 'Votre plateforme est-elle conforme Qualiopi ?',
-        a: 'Oui. IEF Biologie, organisme de formation certifié Qualiopi, utilise déjà 360SkillVue pour ses formations.',
+        section: 'Vos obligations en tant qu\'employeur',
+        q: 'L\'employeur aura-t-il accès au suivi de ses salariés ?',
+        a: 'Oui. Le décret n° 2025-1335 prévoit que les employeurs disposeront d\'un accès dédié au téléservice national Ma Certif\'Pro Santé, leur permettant d\'assurer le suivi de leurs professionnels salariés, notamment lorsque l\'Ordre identifie un risque de non-réalisation du programme minimal d\'actions.',
       },
       {
-        q: 'Pouvez-vous héberger des données de santé ?',
-        a: 'Oui. Notre infrastructure permet l\'hébergement de données de santé (HDS), rendant possible la validation des 4 blocs contrairement aux autres LMS. C\'est indispensable pour les audits cliniques et les suivis d\'indicateurs car l\'apprenant communique sur des données de santé des patients.',
+        section: 'Vos obligations en tant qu\'employeur',
+        q: 'Que se passe-t-il si un professionnel ne valide pas sa certification ?',
+        a: 'C\'est l\'instance ordinale compétente qui assure le contrôle. Si un professionnel est identifié comme étant en risque de non-réalisation, l\'employeur en sera informé via l\'accès dédié au téléservice, afin de pouvoir accompagner le professionnel dans la régularisation de sa situation.',
+      },
+      {
+        section: 'Vos obligations en tant qu\'employeur',
+        q: 'Comment coordonner des dizaines, voire des centaines de professionnels ?',
+        a: 'Avec 7 professions, 52 référentiels différents et 4 axes à suivre par professionnel sur 6 ans, le suivi individuel est complexe. C\'est pourquoi un outil de pilotage interne, en complément du téléservice national, est fortement recommandé pour garder une vision d\'ensemble et anticiper les retards.',
+      },
+      // ── Ma Certif'Pro Santé ─────────────────────────────────────
+      {
+        section: 'Ma Certif\'Pro Santé — le téléservice national',
+        q: 'Qu\'est-ce que Ma Certif\'Pro Santé ?',
+        a: 'C\'est le téléservice national développé par l\'Agence du Numérique en Santé (ANS), destiné à rassembler les comptes individuels de certification de l\'ensemble des professionnels concernés. Chaque professionnel y disposera d\'un compte personnel pour suivre son parcours sur les 4 axes réglementaires et l\'intégralité du cycle de 6 ans.',
+      },
+      {
+        section: 'Ma Certif\'Pro Santé — le téléservice national',
+        q: 'Quand Ma Certif\'Pro Santé sera-t-il disponible ?',
+        a: 'L\'ouverture du téléservice national à l\'ensemble des professionnels de santé est prévue au mois de novembre 2026. En attendant, les professionnels doivent conserver toutes leurs attestations pour les formations réalisées depuis 2023, date d\'entrée en vigueur de la certification périodique.',
+      },
+      {
+        section: 'Ma Certif\'Pro Santé — le téléservice national',
+        q: 'Et les formations réalisées via un LMS interne ou un autre organisme ?',
+        a: 'Pour la V1, ces attestations ne seront pas automatiquement remontées dans Ma Certif\'Pro Santé. Le professionnel devra les saisir manuellement. L\'automatisation de ces flux est prévue pour la V2, après 2027. D\'ici là, il est essentiel que votre établissement dispose d\'un système interne pour tracer ces formations.',
+      },
+      {
+        section: 'Ma Certif\'Pro Santé — le téléservice national',
+        q: 'Ma Certif\'Pro Santé remplace-t-il un LMS ?',
+        a: 'Non. Ma Certif\'Pro Santé est un outil de suivi et de déclaration individuel — il ne permet pas de créer des modules de formation, de déployer des parcours pédagogiques ou de piloter globalement la certification au niveau d\'un établissement. Il est complémentaire d\'un LMS, pas un substitut.',
+      },
+      // ── Calendrier et échéances ─────────────────────────────────
+      {
+        section: 'Calendrier et échéances',
+        q: 'Quelles sont les dates clés à retenir ?',
+        a: '1er janvier 2023 — Entrée en vigueur de la certification périodique. 22 mars 2024 — Décret d\'application. 26 décembre 2025 — Décret sur les modalités de contrôle. 26 février 2026 — Publication des 52 référentiels. Novembre 2026 — Ouverture de Ma Certif\'Pro Santé. 31 décembre 2028 — Fin du premier cycle de 6 ans.',
+      },
+      // ── En pratique ─────────────────────────────────────────────
+      {
+        section: 'En pratique dans votre établissement',
+        q: 'Par où commencer en tant que responsable formation ?',
+        a: 'Trois priorités immédiates : (1) Recenser l\'ensemble de vos professionnels de santé à ordre salariés, par profession et spécialité. (2) Identifier les actions déjà réalisées depuis janvier 2023 et s\'assurer que les attestations sont conservées. (3) Planifier les actions restantes à réaliser d\'ici fin 2028 pour que chaque professionnel valide ses 8 actions minimales sur les 4 axes.',
+      },
+      {
+        section: 'En pratique dans votre établissement',
+        q: 'Puis-je créer des modules de formation en interne pour la certification ?',
+        a: 'Oui. Les référentiels prévoient une grande diversité d\'actions éligibles : formations (DPC ou non), analyses de pratiques, simulations, activités d\'enseignement, démarches qualité, etc. Votre établissement peut tout à fait créer et déployer ses propres modules, à condition qu\'ils répondent aux critères définis dans les référentiels de la spécialité concernée.',
+      },
+      {
+        section: 'En pratique dans votre établissement',
+        q: 'Quels sont les risques si je ne m\'organise pas dès maintenant ?',
+        a: 'Le cycle a démarré en 2023. Il reste moins de 3 ans avant la première échéance. Sans anticipation, vous risquez de vous retrouver avec un grand nombre de professionnels en retard sur leurs axes, des alertes de l\'Ordre signalant des risques de non-réalisation, et une charge administrative concentrée sur les derniers mois du cycle.',
+      },
+      // ── Comment ScanUp vous accompagne ──────────────────────────
+      {
+        section: 'Comment ScanUp vous accompagne',
+        q: 'Qu\'est-ce que ScanUp ?',
+        a: 'ScanUp est une plateforme LMS conçue pour les établissements de santé qui permet à vos responsables formation de créer des modules de formation en ligne, de les déployer auprès de vos professionnels, et de piloter l\'ensemble de la certification périodique depuis un tableau de bord unique.',
+      },
+      {
+        section: 'Comment ScanUp vous accompagne',
+        q: 'Quelle est la différence entre ScanUp et Ma Certif\'Pro Santé ?',
+        a: 'Ma Certif\'Pro Santé est le téléservice national individuel : chaque professionnel y déclare ses actions et les Ordres y contrôlent la conformité. ScanUp est votre outil de pilotage côté établissement : vous y créez les formations, suivez l\'avancement de chaque professionnel sur les 4 axes, et anticipez les retards. Les deux sont complémentaires.',
+      },
+      {
+        section: 'Comment ScanUp vous accompagne',
+        q: 'Combien coûte ScanUp ?',
+        a: '10 € par apprenant par an. Pas de licence, pas de frais de mise en place. Un tarif simple et prévisible pour votre établissement.',
+      },
+      {
+        section: 'Comment ScanUp vous accompagne',
+        q: 'Puis-je tester ScanUp avant de m\'engager ?',
+        a: 'Oui. Nous proposons un accès pilote gratuit pour vous permettre de tester la plateforme avec une équipe restreinte avant un déploiement plus large.',
+      },
+      {
+        section: 'Comment ScanUp vous accompagne',
+        q: 'ScanUp sera-t-il interopérable avec Ma Certif\'Pro Santé ?',
+        a: 'Nous travaillons activement avec la DGOS et l\'Agence du Numérique en Santé sur l\'interopérabilité. L\'objectif est que les attestations générées sur ScanUp puissent être remontées automatiquement dans Ma Certif\'Pro Santé, évitant toute double saisie. Cette automatisation est prévue dans la V2 du téléservice, après 2027.',
       },
     ],
     ctaTitle: 'Prêts à simplifier la certification de vos équipes ?',

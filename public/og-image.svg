@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A2540;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0D3460;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00C9B1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0066CC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)" />
+
+  <!-- Subtle grid pattern -->
+  <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)" />
+
+  <!-- Accent bar -->
+  <rect x="80" y="280" width="240" height="4" rx="2" fill="url(#accent)" />
+
+  <!-- Brand name -->
+  <text x="80" y="180" font-family="Arial, sans-serif" font-size="28" font-weight="600" fill="rgba(255,255,255,0.6)" letter-spacing="4">360SKILLVUE</text>
+
+  <!-- Product name -->
+  <text x="80" y="260" font-family="Arial, sans-serif" font-size="80" font-weight="800" fill="white" letter-spacing="-2">ScanUp</text>
+
+  <!-- Tagline -->
+  <text x="80" y="340" font-family="Arial, sans-serif" font-size="28" font-weight="400" fill="rgba(255,255,255,0.75)">Prévention TMS &amp; RPS · Certification Santé</text>
+
+  <!-- Sub tagline -->
+  <text x="80" y="390" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="rgba(255,255,255,0.5)">Dépistez les risques de vos équipes. Résultats en 48h.</text>
+
+  <!-- Right decorative element -->
+  <circle cx="980" cy="315" r="200" fill="rgba(0,201,177,0.06)" />
+  <circle cx="980" cy="315" r="140" fill="rgba(0,201,177,0.08)" />
+  <circle cx="980" cy="315" r="80" fill="rgba(0,201,177,0.12)" />
+
+  <!-- Stats pills -->
+  <rect x="80" y="450" width="160" height="44" rx="22" fill="rgba(0,201,177,0.15)" />
+  <text x="160" y="478" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#00C9B1" text-anchor="middle">+650 utilisateurs</text>
+
+  <rect x="260" y="450" width="160" height="44" rx="22" fill="rgba(0,201,177,0.15)" />
+  <text x="340" y="478" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#00C9B1" text-anchor="middle">Données HDS 🇫🇷</text>
+
+  <rect x="440" y="450" width="160" height="44" rx="22" fill="rgba(0,201,177,0.15)" />
+  <text x="520" y="478" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#00C9B1" text-anchor="middle">Essai gratuit 14j</text>
+
+  <!-- Bottom URL -->
+  <text x="80" y="580" font-family="Arial, sans-serif" font-size="16" fill="rgba(255,255,255,0.35)">scanup.360skillvue.com</text>
+</svg>

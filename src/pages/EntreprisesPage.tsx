@@ -46,6 +46,15 @@ export default function EntreprisesPage() {
         title="Entreprises & DRH — Dépistage TMS & RPS"
         description="Dépistez les risques TMS et RPS de vos équipes sans audit. Résultats en 48h, dès 5€ par évaluation."
         path="/entreprises-drh"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((f: { q: string; a: string }) => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: { '@type': 'Answer', text: f.a },
+          })),
+        }}
       />
 
       <style>{`

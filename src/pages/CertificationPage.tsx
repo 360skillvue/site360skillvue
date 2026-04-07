@@ -16,7 +16,7 @@ import {
   Award,
   ChevronDown,
   ChevronUp,
-  Settings,
+  Search,
   ArrowRight
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -79,7 +79,13 @@ export default function CertificationPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
 
-  const faqData = t.certification.faq.map(f => ({ question: f.q, answer: f.a }));
+  const faqData = t.certification.faq.map(f => ({ question: f.q, answer: f.a, section: f.section }));
+  const faqSections = faqData.reduce<{ section: string; items: typeof faqData }[]>((acc, item) => {
+    const last = acc[acc.length - 1];
+    if (last && last.section === item.section) { last.items.push(item); }
+    else { acc.push({ section: item.section ?? '', items: [item] }); }
+    return acc;
+  }, []);
 
   const schemaOrgData = {
     "@context": "https://schema.org",
@@ -280,7 +286,7 @@ export default function CertificationPage() {
                   <CheckCircle2 size={24} />
                 </motion.div>
                 <div className="w-20 h-20 bg-scanup-blue/10 rounded-full flex items-center justify-center mb-2">
-                  <Settings className="text-scanup-blue" size={40} />
+                  <Search className="text-scanup-blue" size={40} />
                 </div>
                 <span className="font-bold text-2xl text-scanup-navy tracking-tight">{t.certification.problemAfterBrand}</span>
                 <span className="bg-scanup-success/10 text-scanup-success text-sm font-bold px-3 py-1 rounded-full uppercase tracking-wider">{t.certification.problemAfterBadge}</span>
@@ -422,8 +428,8 @@ export default function CertificationPage() {
           <FadeIn>
             <div className="bg-scanup-white rounded-[24px] p-8 md:p-12 border border-scanup-graylight/80 shadow-xl flex flex-col md:flex-row items-center gap-10 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-scanup-blue to-scanup-turquoise"></div>
-              <div className="flex-shrink-0 w-32 h-32 bg-scanup-graylight rounded-full flex items-center justify-center border border-scanup-graylight/80 shadow-inner">
-                <span className="font-bold text-scanup-navy text-center text-sm">Logo<br/>IEF Biologie</span>
+              <div className="flex-shrink-0 w-32 h-32 rounded-full overflow-hidden border border-scanup-graylight/80 shadow-inner bg-white flex items-center justify-center">
+                <img src="/logo-bioloigie_e-learning.png" alt="Logo Biologie e-learning" className="w-28 h-28 object-contain" />
               </div>
               <div>
                 <svg className="w-10 h-10 text-scanup-blue/20 mb-4" fill="currentColor" viewBox="0 0 24 24">
@@ -447,11 +453,25 @@ export default function CertificationPage() {
       <section className="py-24 bg-scanup-white">
         <div className="max-w-3xl mx-auto px-6">
           <FadeIn>
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-12 text-center tracking-tight">{t.certification.faqTitle}</h2>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-4 text-center tracking-tight">{t.certification.faqTitle}</h2>
+            {t.certification.faqSubtitle && (
+              <p className="text-[16px] text-scanup-graytext text-center max-w-2xl mx-auto mb-14 leading-relaxed">{t.certification.faqSubtitle}</p>
+            )}
           </FadeIn>
-          <div className="space-y-2">
-            {faqData.map((faq, index) => (
-              <FAQItem key={index} index={index} question={faq.question} answer={faq.answer} />
+          <div className="space-y-12">
+            {faqSections.map((group, gi) => (
+              <div key={gi}>
+                {group.section && (
+                  <h3 className="text-[13px] font-semibold text-scanup-blue uppercase tracking-widest mb-4 pb-2 border-b border-scanup-blue/10">
+                    {group.section}
+                  </h3>
+                )}
+                <div className="space-y-2">
+                  {group.items.map((faq, i) => (
+                    <FAQItem key={i} index={gi * 10 + i} question={faq.question} answer={faq.answer} />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>

@@ -239,29 +239,30 @@ export const de = {
     testimonialTag1: 'Qualiopi',
     testimonialTag2: 'Hosting von Gesundheitsdaten',
     faqTitle: 'Häufig gestellte Fragen',
+    faqSubtitle: 'Alles, was Ausbildungsverantwortliche in Gesundheitseinrichtungen wissen müssen, um die periodische Zertifizierung ihrer Fachkräfte zu steuern.',
     faq: [
       {
-        q: 'Was ist die periodische Zertifizierung?',
+        section: 'Rechtlicher Rahmen', q: 'Was ist die periodische Zertifizierung?',
         a: 'Eine Verpflichtung für die 7 reglementierten Gesundheitsberufe, Massnahmen in den Bereichen Fortbildung, Qualität, Patientenbeziehung und persönliche Gesundheit über einen 6-Jahres-Zyklus zu validieren.',
       },
       {
-        q: 'Welche Berufe sind betroffen?',
+        section: 'Rechtlicher Rahmen', q: 'Welche Berufe sind betroffen?',
         a: 'Ärzte, Pflegefachkräfte, Apotheker, Hebammen, Physiotherapeuten, Podologen und Zahnärzte.',
       },
       {
-        q: 'Hat der Arbeitgeber Pflichten?',
+        section: 'Arbeitgeberpflichten', q: 'Hat der Arbeitgeber Pflichten?',
         a: 'Ja. Artikel L.4022-2 des Gesundheitsgesetzbuchs verpflichtet den Arbeitgeber, den Zugang zu Zertifizierungsmassnahmen zu koordinieren und zu erleichtern.',
       },
       {
-        q: 'Wie viele Module müssen validiert werden?',
+        section: 'In der Praxis', q: 'Wie viele Module müssen validiert werden?',
         a: '8 bis 10 Module je nach Beruf, verteilt auf die 4 Zertifizierungsblöcke, zu validieren über 6 Jahre.',
       },
       {
-        q: 'Ist Ihre Plattform Qualiopi-konform?',
+        section: 'Wie ScanUp hilft', q: 'Ist Ihre Plattform Qualiopi-konform?',
         a: 'Ja. IEF Biologie, ein Qualiopi-zertifizierter Schulungsanbieter, nutzt bereits 360SkillVue für seine Schulungen.',
       },
       {
-        q: 'Können Sie Gesundheitsdaten hosten?',
+        section: 'Wie ScanUp hilft', q: 'Können Sie Gesundheitsdaten hosten?',
         a: 'Ja. Unsere Infrastruktur ermöglicht das Hosting von Gesundheitsdaten (HDS) und damit die Validierung aller 4 Blöcke, im Gegensatz zu anderen LMS. Dies ist unverzichtbar für klinische Audits und die Verfolgung von Indikatoren, da die Lernenden Gesundheitsdaten von Patienten verarbeiten.',
       },
     ],

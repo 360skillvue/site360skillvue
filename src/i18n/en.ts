@@ -239,29 +239,30 @@ export const en = {
     testimonialTag1: 'Qualiopi',
     testimonialTag2: 'Health data hosting',
     faqTitle: 'Frequently asked questions',
+    faqSubtitle: 'Everything training managers in healthcare institutions need to know to manage the periodic certification of their professionals.',
     faq: [
       {
-        q: 'What is periodic certification?',
+        section: 'Regulatory framework', q: 'What is periodic certification?',
         a: 'A requirement for the 7 regulated healthcare professions to validate training, quality, patient relationship, and personal health actions over a 6-year cycle.',
       },
       {
-        q: 'Which professions are concerned?',
+        section: 'Regulatory framework', q: 'Which professions are concerned?',
         a: 'Physicians, nurses, pharmacists, midwives, physiotherapists, podiatrists and dental surgeons.',
       },
       {
-        q: 'Does the employer have obligations?',
+        section: 'Employer obligations', q: 'Does the employer have obligations?',
         a: 'Yes. Article L.4022-2 of the Public Health Code requires the employer to coordinate and facilitate access to certification actions.',
       },
       {
-        q: 'How many modules need to be validated?',
+        section: 'In practice', q: 'How many modules need to be validated?',
         a: '8 to 10 modules depending on the profession, spread across the 4 certification blocks, to be validated over 6 years.',
       },
       {
-        q: 'Is your platform Qualiopi compliant?',
+        section: 'How ScanUp helps', q: 'Is your platform Qualiopi compliant?',
         a: 'Yes. IEF Biologie, a Qualiopi-certified training organization, already uses 360SkillVue for its training programs.',
       },
       {
-        q: 'Can you host health data?',
+        section: 'How ScanUp helps', q: 'Can you host health data?',
         a: 'Yes. Our infrastructure supports health data hosting (HDS), enabling validation of all 4 blocks unlike other LMS. This is essential for clinical audits and indicator tracking as the learner communicates health data about patients.',
       },
     ],

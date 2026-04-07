@@ -107,6 +107,15 @@ export default function AidePage() {
         title="Aide & Support"
         description="Toutes vos questions sur ScanUp. FAQ, contact et prise de rendez-vous avec l'équipe 360SkillVue."
         path="/aide-support"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: FAQ_ITEMS.map((item: { q: string; a: string }) => ({
+            '@type': 'Question',
+            name: item.q,
+            acceptedAnswer: { '@type': 'Answer', text: item.a },
+          })),
+        }}
       />
       <Navbar />
 
@@ -120,7 +129,7 @@ export default function AidePage() {
         >
           <div>
             <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-2">{t.aide.faqBadge}</p>
-            <h2 className="text-[28px] font-bold tracking-tight">{t.aide.faqTitle}</h2>
+            <h1 className="text-[28px] font-bold tracking-tight">{t.aide.faqTitle}</h1>
             <p className="text-[14px] text-scanup-graytext mt-1.5">{t.aide.faqSubtitle}</p>
           </div>
           <a href="#contact"

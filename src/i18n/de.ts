@@ -10,8 +10,8 @@ export const de = {
     phoneLabel: 'Telefon',
     callNow: 'Jetzt anrufen',
     certItems: {
-      entreprises: { label: 'Unternehmen & Personalwesen', desc: 'Verwalten Sie die Gesundheit Ihrer Mitarbeitenden am Arbeitsplatz' },
-      assureurs: { label: 'Versicherer & Krankenkassen', desc: 'Reduzieren Sie Gesundheitsrisiken und -kosten' },
+      entreprises: { label: 'Unternehmen & HR', desc: 'Verwalten Sie die Gesundheit Ihrer Mitarbeitenden am Arbeitsplatz' },
+      assureurs: { label: 'Versicherer & Kassen', desc: 'Reduzieren Sie Gesundheitsrisiken und -kosten' },
       spsti: { label: 'SPSTI', desc: 'Arbeitsmedizinische Präventionsdienste' },
       certification: { label: 'Gesundheitszertifizierung', desc: 'Periodische Zertifizierung und regulatorische Überwachung' },
     },
@@ -20,8 +20,8 @@ export const de = {
     heroTitle: 'Sie sind',
     heroSubtitle: 'Wählen Sie Ihr Profil, um die ScanUp-Lösung zu entdecken, die auf Ihre Präventions- und Compliance-Anforderungen zugeschnitten ist.',
     audiences: {
-      assureurs: 'Versicherer & Krankenkassen',
-      entreprises: 'Unternehmen & Personalwesen',
+      assureurs: 'Versicherer & Kassen',
+      entreprises: 'Unternehmen & HR',
       spsti: 'SPSTI',
       sante: 'Gesundheitswesen',
     },
@@ -252,7 +252,7 @@ export const de = {
     ctaWebsite: '360skillvue.com',
   },
   entreprises: {
-    heroBadge: 'ScanUp PSR & MSE — Unternehmen & Personalwesen',
+    heroBadge: 'ScanUp PSR & MSE — Unternehmen & HR',
     heroTitle: 'Erkennen Sie Ihre',
     heroTitleHighlight: 'MSE- & PSR-Risiken',
     heroTitleEnd: 'ohne Audit in 48 Stunden.',

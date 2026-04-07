@@ -11,7 +11,7 @@ export const en = {
     callNow: 'Call now',
     certItems: {
       entreprises: { label: 'Companies & HR', desc: 'Manage workplace health for your employees' },
-      assureurs: { label: 'Insurers & Mutual Funds', desc: 'Reduce health risks and costs' },
+      assureurs: { label: 'Insurers & Mutuals', desc: 'Reduce health risks and costs' },
       spsti: { label: 'SPSTI', desc: 'Occupational health and prevention services' },
       certification: { label: 'Health Certification', desc: 'Periodic certification and regulatory compliance' },
     },
@@ -20,7 +20,7 @@ export const en = {
     heroTitle: 'You are',
     heroSubtitle: 'Select your profile to discover the ScanUp solution tailored to your prevention and compliance challenges.',
     audiences: {
-      assureurs: 'Insurers & Mutual Funds',
+      assureurs: 'Insurers & Mutuals',
       entreprises: 'Companies & HR',
       spsti: 'SPSTI',
       sante: 'Healthcare sector',

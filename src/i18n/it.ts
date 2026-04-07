@@ -10,7 +10,7 @@ export const it = {
     phoneLabel: 'Telefono',
     callNow: 'Chiama ora',
     certItems: {
-      entreprises: { label: 'Aziende & Risorse Umane', desc: 'Gestite la salute sul lavoro dei vostri collaboratori' },
+      entreprises: { label: 'Aziende & HR', desc: 'Gestite la salute sul lavoro dei vostri collaboratori' },
       assureurs: { label: 'Assicuratori & Mutue', desc: 'Riducete i rischi e i costi sanitari' },
       spsti: { label: 'SPSTI', desc: 'Servizi di prevenzione e salute sul lavoro' },
       certification: { label: 'Certificazione Sanitaria', desc: 'Certificazione periodica e monitoraggio normativo' },
@@ -21,7 +21,7 @@ export const it = {
     heroSubtitle: 'Selezionate il vostro profilo per scoprire la soluzione ScanUp adatta alle vostre esigenze di prevenzione e conformità.',
     audiences: {
       assureurs: 'Assicuratori & Mutue',
-      entreprises: 'Aziende & Risorse Umane',
+      entreprises: 'Aziende & HR',
       spsti: 'SPSTI',
       sante: 'Settore sanitario',
     },
@@ -252,7 +252,7 @@ export const it = {
     ctaWebsite: '360skillvue.com',
   },
   entreprises: {
-    heroBadge: 'ScanUp RPS & DMS — Aziende & Risorse Umane',
+    heroBadge: 'ScanUp RPS & DMS — Aziende & HR',
     heroTitle: 'Screening dei rischi',
     heroTitleHighlight: 'DMS & RPS',
     heroTitleEnd: 'senza audit in 48 ore.',

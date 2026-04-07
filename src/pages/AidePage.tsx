@@ -7,6 +7,9 @@ import Navbar from '../components/Navbar';
 import { useLanguage } from '../i18n';
 import PageMeta from '../components/PageMeta';
 
+// ➜ Créer la clé sur https://web3forms.com/create avec tech@360skillvue.com
+const WEB3FORMS_KEY = '19385c98-ba2c-4ac6-a6d8-0090c5416c33';
+
 type FormState = { nom: string; email: string; sujet: string; message: string };
 const INITIAL_FORM: FormState = { nom: '', email: '', sujet: '', message: '' };
 
@@ -80,6 +83,8 @@ export default function AidePage() {
   const [openIndex, setOpenIndex]   = useState<number | null>(null);
   const [form, setForm]             = useState<FormState>(INITIAL_FORM);
   const [submitted, setSubmitted]   = useState(false);
+  const [sending, setSending]       = useState(false);
+  const [sendError, setSendError]   = useState<string | null>(null);
 
   useEffect(() => {
     if (document.querySelector('script[src*="calendly"]')) return;
@@ -93,9 +98,35 @@ export default function AidePage() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    setSendError(null);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          name: form.nom,
+          email: form.email,
+          subject: `[ScanUp] ${form.sujet} — ${form.nom}`,
+          message: form.message,
+          from_name: 'ScanUp Contact',
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+        setForm(INITIAL_FORM);
+      } else {
+        setSendError('Une erreur est survenue. Veuillez réessayer ou nous écrire directement.');
+      }
+    } catch {
+      setSendError('Impossible d\'envoyer le message. Vérifiez votre connexion.');
+    } finally {
+      setSending(false);
+    }
   }
 
   const inputClass = 'w-full border border-black/[0.08] rounded-xl px-4 py-3 text-[13px] bg-[#f8f9fb] focus:outline-none focus:border-scanup-blue/40 focus:bg-white transition-all placeholder:text-scanup-graytext/40';
@@ -230,17 +261,25 @@ export default function AidePage() {
                       </div>
                     </div>
 
+                    {/* Error */}
+                    {sendError && (
+                      <p className="mx-7 mb-2 text-[12px] text-red-500 bg-red-50 border border-red-100 rounded-xl px-4 py-2">{sendError}</p>
+                    )}
+
                     {/* Footer */}
                     <div className="px-7 pb-7 flex items-center justify-between gap-4">
                       <p className="text-[11px] text-scanup-graytext/50 leading-snug">
                         {t.aide.privacyText}{' '}
                         <a href="#" className="underline hover:text-scanup-blue transition-colors">{t.aide.privacyLink}</a>.
                       </p>
-                      <motion.button type="submit"
-                        whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                        className="flex-shrink-0 bg-scanup-blue text-white rounded-full px-6 py-2.5 text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20 flex items-center gap-2"
+                      <motion.button type="submit" disabled={sending}
+                        whileHover={{ scale: sending ? 1 : 1.03 }} whileTap={{ scale: sending ? 1 : 0.97 }}
+                        className="flex-shrink-0 bg-scanup-blue text-white rounded-full px-6 py-2.5 text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20 flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                       >
-                        <Mail size={13} /> {t.aide.sendButton}
+                        {sending
+                          ? <><span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Envoi…</>
+                          : <><Mail size={13} /> {t.aide.sendButton}</>
+                        }
                       </motion.button>
                     </div>
 

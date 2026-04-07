@@ -226,9 +226,7 @@ export default function Navbar() {
             </motion.a>
 
             <motion.a
-              href="https://scanup.360skillvue.com/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/aide-support#contact"
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="hidden sm:flex bg-scanup-blue text-white px-4 py-2 rounded-full text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-scanup-blue/20">
               {t.nav.trial}
@@ -387,9 +385,7 @@ export default function Navbar() {
               {/* Mobile CTA */}
               <div className="p-4 border-t border-black/[0.06]">
                 <a
-                  href="https://scanup.360skillvue.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/aide-support#contact"
                   className="block w-full bg-scanup-blue text-white py-3 rounded-full text-[14px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20 text-center"
                 >
                   {t.nav.trial}

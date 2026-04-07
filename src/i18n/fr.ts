@@ -64,7 +64,7 @@ export const fr = {
       { label: 'Dépistage combiné RPS + TMS',                   scanup: true,        q: false,     rps: false,     ia: false     },
       { label: 'Risque qualifié lié au travail',                 scanup: true,        q: false,     rps: 'partial', ia: false     },
       { label: 'Rapide et sans effort pour les employés',        scanup: true,        q: false,     rps: false,     ia: true      },
-      { label: 'Tarifs',                                         scanup: 'CHF 27/dépistage', q: 'Gratuit ✓', rps: 'CHF 6/personne', ia: 'CHF 585/util./an' },
+      { label: 'Tarifs',                                         scanup: '27 €/dépistage', q: 'Gratuit ✓', rps: '6 €/personne', ia: '585 €/util./an' },
     ],
     comparePriceNote: '',
     ctaTitle: 'Prêt à passer à l\'action ?',
@@ -457,10 +457,10 @@ export const fr = {
   },
   assureurs: {
     heroBadge: 'Pilotage du risque',
-    heroTitle: 'Optimisez votre',
-    heroTitleHighlight: 'tarification',
-    heroTitleEnd: 'grâce à la data',
-    heroSubtitle: 'ScanUp RPS et TMS : une solution de dépistage à grande échelle pour segmenter vos populations et obtenir une data exploitable en temps réel.',
+    heroTitle: 'Passez d\'une logique',
+    heroTitleHighlight: 'curative',
+    heroTitleEnd: 'à une logique préventive',
+    heroSubtitle: 'ScanUp transforme les données de dépistage TMS et RPS de vos assurés en cartographie des risques actionnable — pour réduire l\'absentéisme et piloter votre prévention avec précision.',
     heroCtaDemo: 'Demander une démo',
     // ── Le constat ──────────────────────────────────────────────
     constatLabel: 'Le constat',

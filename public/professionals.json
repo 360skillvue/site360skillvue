@@ -1,0 +1,1122 @@
+[
+  {
+    "id": 36,
+    "name": "Eric DELAGE",
+    "company": "ACE formation",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "ace.formations.sst@gmail.com",
+    "phone": "06 64 91 08 56",
+    "website": "",
+    "description": "Audit & conseil : accompagnement, mise en place et suivi des documents obligatoires (Document unique, registres divers, etc.) et des formations spécifiques dédiées en immersion.\n\nIngénierie pédagogique : conception et mise en place de dispositifs de formation adaptés à un public d'apprenants et répondant à des objectifs pédagogiques.\n\nFormation : thématique sur mesure spécialisée en santé sécurité au travail (risques chimiques, risques incendies, troubles musculo-squelettiques, risques psycho-sociaux, etc.).\n\nRéférencé Intervenant en Prévention des Risques Professionnels (IPRP).\nInterventions dans le secteur public et privé (organismes et assurances spécialisés en santé sécurité au travail, collectivité, centre de formation, etc.).",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 38,
+    "name": "Marie Terrier",
+    "company": "Arwen prevention",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "arwenprevention@gmail.com",
+    "phone": "06 83 65 46 33",
+    "website": "https://www.arwenprevention.fr/",
+    "description": "Intégration d'exosquelettes, conseils, commercialisation et accompagnement\nSécurité prévention",
+    "zone": "Grand Est, France",
+    "radius": 150000,
+    "lat": 48.4845157,
+    "lng": 6.113035
+  },
+  {
+    "id": 43,
+    "name": "Virginie GABEL",
+    "company": "Clock&me",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "virginie.gabel@clockandme.com",
+    "phone": "+33 6 44 39 02 40",
+    "website": "https://www.clockandme.com/",
+    "description": "Dr. en Neurosciences et Chronobiologie 🧑‍🎓 | Formation Santé et Sécurité au travail - IPRP ⚡ J'aide les entreprises à prévenir les risques liés au manque de sommeil, Prévention - Sommeil et Travail de nuit",
+    "zone": "Grand Est, France",
+    "radius": 150000,
+    "lat": 48.4845157,
+    "lng": 6.113035
+  },
+  {
+    "id": 45,
+    "name": "Aurélie BOYER",
+    "company": "Cocelys",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "a.boyer@cocelys.fr",
+    "phone": "33783363533",
+    "website": "https://www.cocelys.fr/",
+    "description": "ergonome consultante, et Intervenante en Prévention des Risques Professionnels",
+    "zone": "Lyon, France",
+    "radius": 30000,
+    "lat": 45.7578137,
+    "lng": 4.8320114
+  },
+  {
+    "id": 46,
+    "name": "Claudie Paoli",
+    "company": "CPAOLI",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "claudiepaoli2@sfr.fr",
+    "phone": "613039612",
+    "website": "",
+    "description": "RPS, accompagnement démarche QVCT, médiation ( gestion des conflits interpersonnels en entreprises, médiation préventive RPS)\n\nIPRP enregistrée sur la liste de la Dreets de Corse pour les RPS préférentiellement,\nmembre du réseau Reflex QVT de l'ANACT\nMédiateur conventionnel et judiciaire\n",
+    "zone": "Corse, France",
+    "radius": 150000,
+    "lat": 42.188098,
+    "lng": 9.0683139
+  },
+  {
+    "id": 47,
+    "name": "Pascal Chatelain",
+    "company": "EFFIPREV",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "pascal.chatelain@effiprev.fr",
+    "phone": "06 64 54 14 56",
+    "website": "https://www.effiprev.fr/",
+    "description": "Préventeur - Formateur santé sécurité au travail.\nErgonomie\nFormations santé\nAnalyse de pratique \nAutre : CSE SSCT - incendie - secourisme - prévention du risque lié à l'activité physique IBC (PRAP IBC) - évaluation des risques professionnels et document unique.\n\nIPRP enregistré auprès de la DREETS Occitanie, j'interviens sur l'ensemble du territoire régional.\nFormation et accompagnement sur toutes les thématiques concernant la santé sécurité au travail et en particulier l'incendie, le secourisme, la prévention du risque lié à l'activité physique - TMS (PRAP IBC), l'évaluation des risques professionnels et l'élaboration/actualisation du Document Unique. J'accompagne aussi les organisations à la mise en place du CSE et/ou à la formation de ses membres (SSCT).",
+    "zone": "Béziers, France",
+    "radius": 30000,
+    "lat": 43.3426562,
+    "lng": 3.2131307
+  },
+  {
+    "id": 48,
+    "name": "Benoit LYAUTEY",
+    "company": "Cobo4You",
+    "competences": [
+      "materiel"
+    ],
+    "email": "benoit.lyautey@cobo4you.com",
+    "phone": "+33 (0)7 89 06 48 93",
+    "website": "https://www.cobo4you.com/fr/",
+    "description": "Président et fondateur de COBO4YOU, société d’ingénierie spécialisée dans la gestion de la pénibilité au poste de travail grâce à l’intégration de cobots . Notre vocation est de placer l’humain au cœur de votre projet cobotique que cela soit au travers la mise en place de cobots 6 axes, navettes collaboratives, exosquelettes ou d’équipements spécifiques.",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 49,
+    "name": "Sam DELAHAYE",
+    "company": "Ergodel",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "ergodel08@gmail.com",
+    "phone": "06 48 73 76 48",
+    "website": "https://www.ergodel.com/",
+    "description": "Ergonome consultant - expert en prévention des TMS - Certifié auprès de la DREETS",
+    "zone": "Ardenes, France",
+    "radius": 30000,
+    "lat": 49.6980118,
+    "lng": 4.6716005
+  },
+  {
+    "id": 50,
+    "name": "Elisa AUSSENAC",
+    "company": "GIMS Prévention",
+    "competences": [
+      "ergonome_presentiel"
+    ],
+    "email": "elisa.aussenac@icloud.com",
+    "phone": "630881442",
+    "website": "https://www.gims13.com/",
+    "description": "Consultante Ergonome IPRP",
+    "zone": "Marseille, France",
+    "radius": 30000,
+    "lat": 43.2961743,
+    "lng": 5.3699525
+  },
+  {
+    "id": 52,
+    "name": "Anne Lise Fourot",
+    "company": "ERGONOMIA / CAPTA PROD/ ATELIER 10",
+    "competences": [
+      "ergonome_presentiel"
+    ],
+    "email": "al.fourot@ergonomia-conseil.fr",
+    "phone": "623983217",
+    "website": "",
+    "description": "Ergonomie des postes de travail (y compris dans le domaine du Handicap)\nBilan professionnels / Bilans de compétences\nSensibilisation « Gestes et Postures » au poste de travail\nPrestations en communication audiovisuelle pour les Missions Handicap et entreprises",
+    "zone": "Île-de-France, France",
+    "radius": 150000,
+    "lat": 48.6443057,
+    "lng": 2.7537863
+  },
+  {
+    "id": 53,
+    "name": "Fabien LENFANT",
+    "company": "FSP",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "formationsecuriteprevention@gmail.com",
+    "phone": "06 81 49 22 27",
+    "website": "https://formationsecuriteprevention.fr/a-propos",
+    "description": "Ergonomie\nFormations santé \nAutre : PRAP, ibc industrie batiment commerce et 2s sanitaire et social. SST. Management. Accompagnement et audit sécurité, DUERP.\nAutorisation de conduite.\nHab élec.\nStress, confiance en soi, Prévention chutes.  FormationCSE. APS Attestation Prevention Secors ASD Aide et Soins à Domicile-ALM Aide à la Mobilité",
+    "zone": "Pas-de-Calais, France",
+    "radius": 30000,
+    "lat": 50.5144061,
+    "lng": 2.2580078
+  },
+  {
+    "id": 55,
+    "name": "Cédric DUMESGE",
+    "company": "HYGEE",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "c.dumesge@gmail.com",
+    "phone": "0750415522",
+    "website": "https://www.dumesge-osteopathe.fr/",
+    "description": "Audit présentiel ergonomique \nFormation TMS et RPS\nEntrepreneur dans le secteur de la santé. Ostéopathe & Ergonome",
+    "zone": "Île-de-France, France",
+    "radius": 150000,
+    "lat": 48.6443057,
+    "lng": 2.7537863
+  },
+  {
+    "id": 57,
+    "name": "Romain FAUCHIER",
+    "company": "JIN'AI Formation",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "jinaiformation@gmail.com",
+    "phone": "627470240",
+    "website": "https://jinai-formation.com/",
+    "description": "Prévention TMS et RPS.\nformateurs SST- Formateur PRAP- Qualiopi- Intervient sur Gironde, Charente Maritime et Dordogne",
+    "zone": "Nouvelle-Aquitaine, France",
+    "radius": 150000,
+    "lat": 45.4039367,
+    "lng": 0.3756199
+  },
+  {
+    "id": 60,
+    "name": "Jean-Michel HENON",
+    "company": "JMRH Consultant",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "jmrh-consultant.63@orange.fr",
+    "phone": "09 61 32 93 49",
+    "website": "http://www.jmrh-consultant.fr/",
+    "description": "Prévention des risques professionnels - RGPD - Registre Public d'Accessibilité -Praticien DISC et intelligence émotionnelle",
+    "zone": "Auvergne, France",
+    "radius": 30000,
+    "lat": 45.7100132,
+    "lng": 3.1531803
+  },
+  {
+    "id": 61,
+    "name": "Samuel Leroux",
+    "company": "Leroux consultant",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "leroux.consultant80@gmail.com",
+    "phone": "612864577",
+    "website": "",
+    "description": "Conseil en management de la santé et de la sécurité au travail.\nAutre : audit santé, sécurité, impacts environnementaux (SSE), accompagnement à la réalisation du plan d'action SSE, analyse des causes (AT-MP), accompagnement à la réalisation du document unique d'évaluation des risques professionnels, actions de sensibilisation SSE auprès du personnel et du CSE, autres activités QSE.",
+    "zone": "Hauts-de-France, France",
+    "radius": 150000,
+    "lat": 50.1024606,
+    "lng": 2.7247515
+  },
+  {
+    "id": 63,
+    "name": "Marjorie Geva",
+    "company": "equi mov'up coaching",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "marjoriemka@gmail.com",
+    "phone": "609757206",
+    "website": "",
+    "description": "Prévention TMS \nAménagement de poste \nErgonome IPRP et Praticienne ActionTypes® certifiée (Préférences Motrices) - Prévention des risques professionnels Sensibilisation handicap - Equicoaching Coaching sportif",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 64,
+    "name": "Manuel Marques",
+    "company": "MCI Prévention",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "contact@mciprevention.fr",
+    "phone": "06 22 92 68 51",
+    "website": "https://www.mciprevention.fr/",
+    "description": "Je réalise votre Document Unique d’évaluation des risques professionnels complet,\nJe vous offre l’évaluation de la pénibilité au travail de vos salariés et son rapport complet,\nJe vous offre l'affichage obligatoire et des fiches de sensibilisation pratiques pour vous et vos équipes,\nJe vous assure un accompagnement permanent pour toute question ou contrôle en tant qu'IPRP habilité.\n🚀 Ce que vous gagnez : \n\nZéro interruption : vos activités avancent sans imprévu,\nÉconomie réelle : chaque euro investi dans la prévention peut vous en faire économiser 5 en coûts directs et indirects,\nSérénité totale : pas de stress, conformité garantie en cas de contrôle surprise, d’accident du travail ou de conflit prud’homal.\n✅ Résultat : votre entreprise passe de « gestion de crise » à « gestion de croisière » en matière de sécurité.\n\nProchaine étape :\nUn échange de 10 minutes pour vous présenter comment mieux gérer la prévention et la sécurité dans vos Unités de Travail et vous éviter toute peine financière. Je reste à votre disposition pour échanger, par mail à contact@mciprevention.fr ou par téléphone, demander Manuel Marques au 06.22.92.68.51.",
+    "zone": "Île-de-France, France",
+    "radius": 150000,
+    "lat": 48.6443057,
+    "lng": 2.7537863
+  },
+  {
+    "id": 67,
+    "name": "Thibaut Revers",
+    "company": "REFLEXOSTEO",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "thibaut.revers@gmail.com",
+    "phone": "06 79 24 91 80",
+    "website": "https://www.reflexosteo.com/",
+    "description": "Ostéopathie intervenant en prévention des risques professionnels, ergonomie, formation gestes et postures, réveil musculaire avant prise de poste, pauses actives, traitement des TMS...\nErgonomie \nFormation santé\nAnalyse de pratique \nAutre : Prévention des violences externes et des risques d'agression. \nSelf-Défense",
+    "zone": "Loire-Atlantique, France",
+    "radius": 30000,
+    "lat": 47.3481615,
+    "lng": -1.8727461
+  },
+  {
+    "id": 68,
+    "name": "Alban JOURDET",
+    "company": "neo forma",
+    "competences": [
+      "formation"
+    ],
+    "email": "a.jourdet@neo-forma.fr",
+    "phone": "07 63 60 71 25",
+    "website": "https://www.neo-forma.fr/",
+    "description": "450 Ostéopathes et Formateurs en France, Formations en e-learning et présentiel",
+    "zone": "france",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 71,
+    "name": "Mathilde VASSET",
+    "company": "Progre'SSE",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "progresse74@outlook.fr",
+    "phone": "676996466",
+    "website": "https://www.progresse74.fr/",
+    "description": "Consultante & formatrice en santé sécurité au travail\nGestes et postures\n😀 santé mentale\n🩹 Sauveteur Secouriste du Travail\n🧯Extincteur, guide file, serre file\n🦺Conseil HSE: Document unique, étude de poste, produit chimique, aspects environnementaux ....\n🗣 Risques psychosociaux : audit, bilan ou accompagnement\n😎VR : formations en réalité virtuelle, chasses aux risques\n🌞 Safety Day : atelier autour de la Sécurité, environnement",
+    "zone": "Haute-Savoie, France",
+    "radius": 30000,
+    "lat": 46.0690407,
+    "lng": 6.3445321
+  },
+  {
+    "id": 73,
+    "name": "Salomé FOULON",
+    "company": "Indépendante",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "foulonsalome@gmail.com",
+    "phone": "760757713",
+    "website": "https://salomefoulon.wixsite.com/salom--foulon--psych",
+    "description": "Prévention TMS et RPS\nConsultante ergonome et psychologue du travail (indépendante)\nAteliers bien être au travail : respiration, étirements, méditation etc. \nIntervention de conception architecturale en ergonomie",
+    "zone": "Île-de-France, France",
+    "radius": 150000,
+    "lat": 48.6443057,
+    "lng": 2.7537863
+  },
+  {
+    "id": 76,
+    "name": "Lucie Rondeau",
+    "company": "LUCIE RONDEAU",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "rondeau.lucie@yahoo.fr",
+    "phone": "666228713",
+    "website": "https://rondeaulucie.wixsite.com/website",
+    "description": "Chargée de projet santé publique - prévention et promotion de la santé\nFormation prévention des risques psychosociaux\nParcours e-learning (20 h) : comprendre les RPS et apprendre à les anticiper. \n\nFormations ciblées à distance : approfondir les leviers d’action face aux RPS et renforcer la qualité de vie au travail (6 modules de 1 à 2 journée(s)). \nMon objectif : aider les organisations à conjuguer performance et bien-être en créant un environnement de travail plus serein, inclusif et motivant.\n\nToutes mes interventions se déroulent à distance, pour un accompagnement flexible et disponible partout.",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 78,
+    "name": "Sylvain Allgeyer",
+    "company": "SYLVAIN ALLGEYER CONSEIL",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "sallgeyer.conseil@gmail.com",
+    "phone": "06 81 76 15 69",
+    "website": "",
+    "description": "Intervenant en Prévention des Risques Professionnels.\nAnalyse de pratique\nAutre : Audit conseil formation en qualité sécurité environnement aide à la prévention des risques (évaluation des risques, mise en place d'action de prévention, formation, choix EPI)\nConseil dans le cadre de demandes de subvention (CARSAT) Certification d'entreprises digitalisation de la fonction QSE.",
+    "zone": "Colmar, France",
+    "radius": 30000,
+    "lat": 48.0777517,
+    "lng": 7.3579641
+  },
+  {
+    "id": 85,
+    "name": "Bertrand Artigny",
+    "company": "INDEPENDANT",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "bertrand.artigny@wanadoo.fr",
+    "phone": "06 74 64 17 63",
+    "website": "",
+    "description": "Intervenant en Prévention des risques professionnels (analyse d'accident du travail, mise en place de prévention).\nAnalyse de pratique",
+    "zone": "Lyon, France",
+    "radius": 30000,
+    "lat": 45.7578137,
+    "lng": 4.8320114
+  },
+  {
+    "id": 87,
+    "name": "Nicolas PRUNET",
+    "company": "Indépendant",
+    "competences": [
+      "psychologue_presentiel"
+    ],
+    "email": "particuliernicolas@gmail.com",
+    "phone": "+33 6 89 65 84 54",
+    "website": "",
+    "description": "Psychologie du travail\nFormations santé \nAnalyse de pratique\nAutre : Management RPS / QVCT Médiation",
+    "zone": "Grand Est, France",
+    "radius": 150000,
+    "lat": 48.4845157,
+    "lng": 6.113035
+  },
+  {
+    "id": 92,
+    "name": "Karine FROMENT",
+    "company": "FROMENT Karine",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "karine.froment44@gmail.com",
+    "phone": "0663141422",
+    "website": "https://www.cnfce.com/",
+    "description": "FORMATRICE EN DROIT DU TRAVAIL ET EN PREVENTION DES RISQUES PROFESSIONNELS - Habilitation IPRP\n- Droit du travail\n- Santé, sécurité et conditions de travail\n- Les risques psychosociaux (RPS)\n- Les agissements sexistes et le harcèlement (moral et sexuel)\n- Sensibilisation au handicap et au maintien dans l’emploi\n- Formation économique (élus du CSE)",
+    "zone": "Loire-Atlantique, France",
+    "radius": 30000,
+    "lat": 47.3481615,
+    "lng": -1.8727461
+  },
+  {
+    "id": 95,
+    "name": "Coun DEPREZ",
+    "company": "BIOSWING",
+    "competences": [
+      "materiel"
+    ],
+    "email": "koen.deprez@bioswing.fr",
+    "phone": "06 38 36 78 37",
+    "website": "https://bioswing.de/fr/",
+    "description": "Chaise ergonomique de bureau, pour réduire le mal de dos.\nAméliorer les conditions de travail.",
+    "zone": "Flandres, Belgique",
+    "radius": 30000,
+    "lat": 51.0377778,
+    "lng": 4.2405556
+  },
+  {
+    "id": 229,
+    "name": "Louis Darfeuille",
+    "company": "German Bionic",
+    "competences": [
+      "materiel"
+    ],
+    "email": "l.darfeuille@germanbionic.com",
+    "phone": "07 89 34 58 23",
+    "website": "https://www.germanbionic.com/",
+    "description": "Responsable commercial France\nMatériel ergonomique exosquelette actif et connecté",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 252,
+    "name": "Marie-Claire GALLIN-MARTEL",
+    "company": "GALLIN-MARTEL MARIE-CLAIRE",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "m.cl@live.fr",
+    "phone": "0761682410",
+    "website": "https://www.mc-gallinmartel.fr/",
+    "description": "Psychopraticienne du travail\nConception et animation de formations • Facilitation de groupes de parole • Ecoute et accompagnement psychologique • Prestation de conseils • Analyse des situations de travail",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 253,
+    "name": "Audrey HARSLEM",
+    "company": "Audrey HARSLEM",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "contact@audrey-harslem.fr",
+    "phone": "0681617747",
+    "website": "https://www.audrey-harslem.fr/",
+    "description": "Psychologie du travail\nAnalyse de pratique\nAutre : Audit et formation, RPS, QVT",
+    "zone": "Grand Est, France",
+    "radius": 150000,
+    "lat": 48.4845157,
+    "lng": 6.113035
+  },
+  {
+    "id": 329,
+    "name": "Nicolas PFENNIG",
+    "company": "azergo France",
+    "competences": [
+      "materiel"
+    ],
+    "email": "n.pfennig@azergo.fr",
+    "phone": "+33 (0)6 78 69 85 83",
+    "website": "https://www.azergo.fr/",
+    "description": "CEO chez Azergo",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 339,
+    "name": "Jean-Louis Muller",
+    "company": "azergo France",
+    "competences": [
+      "materiel"
+    ],
+    "email": "jl.muller@azergo.fr",
+    "phone": "0760408282",
+    "website": "https://www.azergo.fr/",
+    "description": "Directeur Commercial chez AZERGO\nAménagements ergonomiques ",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 425,
+    "name": "Sophie Clevers",
+    "company": "AZUR-ERGO",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "sophie.clevers@azur-ergo.fr",
+    "phone": "0636109563",
+    "website": "http://www.azur-ergo.fr/",
+    "description": "Etude de poste, démarche prévention des TMS, démarche QVCT, Audit TMS, audit Pénibilité, accompagnement DUER\n\nFormation DUER, TMS, Ecran, PRAP IBC, Gestes et Postures",
+    "zone": "Rouen, France",
+    "radius": 30000,
+    "lat": 49.4404591,
+    "lng": 1.0939658
+  },
+  {
+    "id": 472,
+    "name": "Alexis Paynon",
+    "company": "APREVENTION",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "alexis.paynon@aprevention.com",
+    "phone": "",
+    "website": "https:// aprevention.com",
+    "description": "Préventeur Santé Sécurité au Travail - IPRP enregistré auprès de la DREETS Occitanie. Ingénieur de formation je propose du conseil, de la formation et de l'accompagnement dans les domaines HSE : Support à la réalisation du Document Unique d’Evaluation des Risques Professionnels (DUERP) incluant l’évaluation des facteurs de Risques PsychoSociaux (RPS) ; Référent Prévention Santé Sécurité à temps partagé de l'organisation, etc.",
+    "zone": "Toulouse, France",
+    "radius": 30000,
+    "lat": 43.6044638,
+    "lng": 1.4442433
+  },
+  {
+    "id": 533,
+    "name": "Arnaud Voisin",
+    "company": "SAS PREVHYSE",
+    "competences": [
+      "formation"
+    ],
+    "email": "arnaud.voisin@prevhyse-formation.fr",
+    "phone": "+33 6 16 34 38 59",
+    "website": "",
+    "description": "Organisme de Formation QUALIOPI TMS et RPS.\nIPRP Prévention des risques SST PRAP CSE, IPRP auprès de la DREETS Normandie et habilité par la CARSAT, j’interviens auprès des entreprises sur les postes de manutention manuelle ou de bureau (PRAP) et auprès des CSE sur la prévention des risques (TMS, RPS…).",
+    "zone": "Normandie, France",
+    "radius": 150000,
+    "lat": 49.0677708,
+    "lng": 0.3138532
+  },
+  {
+    "id": 682,
+    "name": "Hervé KERCRET",
+    "company": "Ker & Co",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "kercret.herve@gmail.com",
+    "phone": "+33 6 33 41 22 15",
+    "website": "https://www.ker-co.fr/",
+    "description": "Conseil et prévention des conduites addictives - Patient expert certifié / Formateur Indépendant / Conférencier / Coach professionnel membre EMCC ",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 746,
+    "name": "Jean-Paul Lugan",
+    "company": "Zenmind",
+    "competences": [
+      "formation"
+    ],
+    "email": "lugan.jp@zen-mind.eu",
+    "phone": "+33 6 80 24 03 91",
+    "website": "https://lugan-and-partners.fr/",
+    "description": "Préparateur mental, formateur et coach, j’active les leviers du mental, du management et de la performance. Formé TOP et SANE, je partage mon expertise en conférence et accompagne dirigeants et sportifs de haut niveau.",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 747,
+    "name": "Samia  Ben Smida",
+    "company": "A rythme ethique",
+    "competences": [
+      "formation"
+    ],
+    "email": "contact@arythmeethique-formations.fr",
+    "phone": "+33 4 82 83 94 65",
+    "website": "https://arythmeethique-formations.fr/",
+    "description": "Fondatrice - Dirigeante \"A Rythme Éthique\" Formation professionnelle & Intervention en prévention des risques professionnels Spécialisé Petite enfance - Services à la personne, et services médico-sociaux.",
+    "zone": "Rhône-Alpes, France",
+    "radius": 30000,
+    "lat": 45.3175313,
+    "lng": 5.7212944
+  },
+  {
+    "id": 749,
+    "name": "David Bozier",
+    "company": "Optimance",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "david.bozier@optimance.ch",
+    "phone": "078 657 98 49",
+    "website": "https://isqvt.ch/",
+    "description": "Expert en Qualité de Vie au Travail | Ergonomie & Performance Durable | Formateur & Consultant en Santé au Travail",
+    "zone": "Corcelles, Suisse",
+    "radius": 30000,
+    "lat": 46.8480696,
+    "lng": 6.7079314
+  },
+  {
+    "id": 841,
+    "name": "Melina  Leggeri",
+    "company": "AUDHYGE",
+    "competences": [
+      "formation"
+    ],
+    "email": "m.leggeri@audhyge.fr",
+    "phone": "0662092808",
+    "website": "https://sites.google.com/view/audhyge/accueil",
+    "description": "AUDHYGE est un centre de formation spécialisé dans les métiers du nettoyage et de la propreté, basé à Camon (80), près d’Amiens.\n\nNous intervenons dans les Hauts-de-France, notamment dans le Nord, l’Oise et à Reims, où nous disposons de plusieurs antennes.\n\n \n\nNotre offre de formation couvre les domaines suivants : nettoyage, propreté, ultra-propreté, ainsi que la prévention et la sécurité (habilitations électriques, gestes et postures, manipulation des extincteurs, prévention incendie, SST…).",
+    "zone": "Camon, France",
+    "radius": 30000,
+    "lat": 49.8874246,
+    "lng": 2.3446546
+  },
+  {
+    "id": 969,
+    "name": "Elisa Aussenac",
+    "company": "Indépendante Elisa Aussenac",
+    "competences": [
+      "ergonome_presentiel"
+    ],
+    "email": "elisa.aussenac@icloud.com",
+    "phone": "0630881442",
+    "website": "https://www.elisa-aussenac.com/",
+    "description": "Consultante ergonome IPRP",
+    "zone": "Marseille, France",
+    "radius": 30000,
+    "lat": 43.2961743,
+    "lng": 5.3699525
+  },
+  {
+    "id": 992,
+    "name": "Corinne Sabadel",
+    "company": "corinnesabadel",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "contact@corinnesabadel.fr",
+    "phone": "+33 6 79 56 39 09",
+    "website": "",
+    "description": "Conférences sur la prévention des risques, le stress et les émotions au travail\nDiagnostic RPS/QVT avec grille d’analyse\nAteliers gestion du stress \nAccompagnement managérial et stratégique incluant des outils comme le DISC et l’EIQ2\nFormations RPS/QVT finançables, mon organisme est Qualiopi.\nA savoir également, que je mène des bilans de compétences qui peuvent être très utiles en fonction des résultats des diagnostics RPS.",
+    "zone": "Avignon, France",
+    "radius": 30000,
+    "lat": 43.9492493,
+    "lng": 4.8059012
+  },
+  {
+    "id": 993,
+    "name": "Camille Moulin",
+    "company": "camillemoulinconseil",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "contact@camillemoulinconseil.fr",
+    "phone": "+33 6 86 59 67 43",
+    "website": "",
+    "description": "- Formation Acteur PRAP IBC \n- Formations et animation d’ateliers en prévention des risques professionnels ( Éveil musculaire, risques TMS et Lombalgie, les principes de sécurité physiques et d’économie d’efforts…) \n- Animation de groupes de travail d’amélioration continue (amélioration de l’accueil et la formation des salariés, animation des équipes par les managers, management visuel et communication…)\n- Évaluation des risques professionnels et Duerp ( réalisation ou  formation du personnel) ",
+    "zone": "Dijon, France",
+    "radius": 30000,
+    "lat": 47.3215806,
+    "lng": 5.0414701
+  },
+  {
+    "id": 995,
+    "name": "Xavier LAVEILLE",
+    "company": "lxpertisehse",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "lxpertisehse@yahoo.com",
+    "phone": "+33 6 85 82 35 42",
+    "website": "https://263bcff3-0314-4806-98aa-16e06ad5457f.pipedrive.email/c/z48mdd7r6k/941veoopn4/xdkz33674n/4?redirectUrl=https%3A%2F%2Flxpertisehse.odoo.com&hash=2E_c_GhJdMvOiai4VGkO-2MVf4DD6fJ9wioeOXWf-jE",
+    "description": "Expertise HSE, Coaching et Audit, Formations HSE, Etudes...)",
+    "zone": "Normandie, France",
+    "radius": 150000,
+    "lat": 49.0677708,
+    "lng": 0.3138532
+  },
+  {
+    "id": 1002,
+    "name": "Thifaine BEAU",
+    "company": "tutanota",
+    "competences": [
+      "formation"
+    ],
+    "email": "thifainebeau@tutanota.com",
+    "phone": "",
+    "website": "",
+    "description": "",
+    "zone": "Auvergne-Rhône-Alpes, France",
+    "radius": 150000,
+    "lat": 45.2968119,
+    "lng": 4.6604809
+  },
+  {
+    "id": 1045,
+    "name": "Calista Prouteau",
+    "company": "Ergo Motri Santé Sud",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "calista.prouteau@ergo-motri-sante.fr",
+    "phone": "07 66 54 53 99",
+    "website": "https://ergo-motri-sante.fr/",
+    "description": "Descriptif activité :\n🪑 Aménagement et conception de postes de travail\n📊 Évaluation des risques professionnels\n🎓 Formations & sensibilisation à l’ergonomie et à la QVCT\n♿ Accompagnement du handicap et maintien dans l’emploi",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 1123,
+    "name": "Christophe  Antoine",
+    "company": "QSE START Consulting",
+    "competences": [
+      "formation"
+    ],
+    "email": "qse.start@gmail.com",
+    "phone": "",
+    "website": "",
+    "description": "Conseil, Audit, Formation en Qualité, Sécurité, hygiène, Prévention et Environnement",
+    "zone": "Lyon, France",
+    "radius": 30000,
+    "lat": 45.7578137,
+    "lng": 4.8320114
+  },
+  {
+    "id": 1125,
+    "name": "Benedicte Campagne",
+    "company": "QUALIFOR",
+    "competences": [
+      "formation"
+    ],
+    "email": "benedicte.campagne@qualifor.fr",
+    "phone": "+33 6 07 72 45 75",
+    "website": "",
+    "description": "J'anime des formations gestes et postures depuis une dizaine d'années dans différents secteurs d'activité .\nPar ailleurs, je suis aussi formateur SST",
+    "zone": "Île-de-France, France",
+    "radius": 150000,
+    "lat": 48.6443057,
+    "lng": 2.7537863
+  },
+  {
+    "id": 1133,
+    "name": "Laurence Chiappone",
+    "company": "chiappone",
+    "competences": [
+      "ergonome_presentiel"
+    ],
+    "email": "laurence.chiappone@gmail.com",
+    "phone": "+33 6 49 80 10 79",
+    "website": "",
+    "description": "Accompagnement indépendant et sur-mesure pour les entreprises qui souhaitent sécuriser leurs projets, améliorer les conditions de travail et renforcer leur conformité. Ergonome, Coordination SPS, accompagnement QSE, gestion des coactivités, expertise terrain, formation et conseil",
+    "zone": "Alpes-Maritimes, France",
+    "radius": 30000,
+    "lat": 43.9210587,
+    "lng": 7.1790785
+  },
+  {
+    "id": 1135,
+    "name": "Myriam LIAOURACI",
+    "company": "OPTIMUM",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "myriam.liaouraci@optimum-cd.com",
+    "phone": "+33 6 87 79 84 57",
+    "website": "",
+    "description": "Consultante et auditrice IRCA- Qualité Sécurité Environnement- Conseil en management- Gestion du Changement, Evaluations des risques professionnels, Etude des risques psychosociaux - Domaines : technique et organisationnel - Spécialité : Santé sécurité au travail",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 1138,
+    "name": "Loic et Severine Gambardella",
+    "company": "CEO Neomove",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "loic@neomove.app",
+    "phone": "+33 7 60 49 14 65",
+    "website": "http://www.neomove.app/",
+    "description": "application pour recommandations de mouvements, coach digital, conçu pour réinsérer dans le quotidien les gestes qui maintiennent le corps en bonne santé.\nLà où le poste de travail impose ses contraintes, Neomove aide le corps à les absorber.\n",
+    "zone": "france",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 1159,
+    "name": "Violaine Mazzara",
+    "company": "Alignis",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "violaine.mazzara@outlook.fr",
+    "phone": "33 6 85 75 33 57",
+    "website": "https://temp-kezyywqgckhmgjoyqkaw.webadorsite.com/",
+    "description": "Facilitatrice RH/QVT, Bilans de compétences, Bilan d'orientation pro, psychologue du travail et Coache certifiée ICF\n\nPartie RH : audit RH, prestations externalisées, RH de transition & RH à temps partagé\nPartie QVT : sondage RPS, sondage d'engagement et baromètre social, co-construction du plan d'actions, formations, ateliers de sensibilisation, coaching\nAccompagnement individuel : Bilan de compétences (100% conforme CPF), Bilan d'orientation professionnelle (jeunes de 15 à 25 ans)",
+    "zone": "Luxembourg",
+    "radius": 30000,
+    "lat": 49.8158683,
+    "lng": 6.1296751
+  },
+  {
+    "id": 1169,
+    "name": "Rémi et Boris Chazottes",
+    "company": "Cocoon alpes",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "contact@cocoon-alpes.fr",
+    "phone": "+33 6 62 31 76 47",
+    "website": "https://cocoon-alpes.fr/",
+    "description": "Bien-être sur site, massages, relaxation, atelier , conférences, Cocoon est une entreprise fondée par deux frères proposant des services innovants axés sur le bien-être des salariés. Forts de leurs expériences respectives dans le domaine de la santé et du sport de haute performance, ils mettent en place des actions adaptées aux besoins des entreprises, en s'appuyant sur des innovations technologiques et des méthodes d’entraînement reconnues et validées scientifiquement. Notre approche combine :\n Des ateliers de préparation mentale sur diverses thématiques comme la compréhension des émotions, du stress et de l'anxiété ou encore la gestion de la motivation des équipes. \nDes moments de récupération dans notre camion aménagé comme un véritable centre de bien-être itinérant. Avec nos sièges et masques de massage robotisés, la méditation immersive ou encore notre cocon de sieste connecté, quelques minutes suffisent pour se relaxer physiquement et mentalement.",
+    "zone": "Rhône-Alpes, France",
+    "radius": 30000,
+    "lat": 45.3175313,
+    "lng": 5.7212944
+  },
+  {
+    "id": 1172,
+    "name": "Laure Coanus",
+    "company": "Coanus Laure",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "lcoanus@gmail.com",
+    "phone": "+33 6 71 38 46 68",
+    "website": "",
+    "description": "ergonome\n",
+    "zone": "Rhône-Alpes, France",
+    "radius": 30000,
+    "lat": 45.3175313,
+    "lng": 5.7212944
+  },
+  {
+    "id": 1182,
+    "name": "Olivier Lallement",
+    "company": "France Assos Santé ADDICTOCOACH",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "addictocoach@gmail.com",
+    "phone": "+33 6 51 43 07 10",
+    "website": "",
+    "description": "Je suis patient-expert, spécialisé dans les addictions, j'accompagne les personnes concernées par une addiction ou leurs proches (familles, collègues...), qu’elle soit liée à un produit ou à un comportement. Je propose un accompagnement global, en individuel ou en groupe. Mon approche s’appuie sur l’écoute, le non-jugement et la co-construction d’un chemin de changement. \nJ'interviens également en entreprise, en administration et en collectivité..., pour des actions de sensibilisation, possibilité de mettre en place des tests d'alcoolémie et/ou salivaires avec tout le processus de modification administratif.. \nJe travaille en lien avec un réseau de professionnels : psychologues, médecins, travailleurs sociaux, structures spécialisées…\nReprésentant des usagers dans 2 cliniques\nTitulaire d'un DU en Addictologie\nCertifié Patient Expert Addictions\nFormé à l'éducation Thérapeutique\nAdministrateur National France Assos Santé\nAdministrateur Fédération Addiction",
+    "zone": "Hauts-de-France, France",
+    "radius": 150000,
+    "lat": 50.1024606,
+    "lng": 2.7247515
+  },
+  {
+    "id": 1195,
+    "name": "Florian Guiol",
+    "company": "Sophronitis",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "floguiol@hotmail.fr",
+    "phone": "+33 6 58 87 38 77",
+    "website": "",
+    "description": "Développement personnel, Santé mentale, Mieux Etre, Fondateur de l'application Sophronitis",
+    "zone": "Chambéry, France",
+    "radius": 30000,
+    "lat": 45.5662672,
+    "lng": 5.9203636
+  },
+  {
+    "id": 1196,
+    "name": "David Ruch",
+    "company": "Physiopraxis",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "contact@physiopraxisformation.com",
+    "phone": "+33 6 99 73 32 24",
+    "website": "https://physiopraxis.fr/",
+    "description": "Kinésithérapie,\nOptimisation des postes de travail, formations optimisation du mouvement en situation, échauffements… Conférences Santé, lutte contre la sédentarité et promotion du mouvement au travail, optimisation de la santé physique et mentale des travailleurs et dirigeants",
+    "zone": "Grand Est, France",
+    "radius": 150000,
+    "lat": 48.4845157,
+    "lng": 6.113035
+  },
+  {
+    "id": 1210,
+    "name": "Dounia Techec",
+    "company": "TECHEC",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "d.techec@outlook.fr",
+    "phone": "+33 7 67 24 15 15",
+    "website": "https://douniatechec-psychologue.fr/",
+    "description": "Psychologue du travail, audit RPS, Formations, Santé Mentale\n",
+    "zone": "Hauts-de-France, France",
+    "radius": 150000,
+    "lat": 50.1024606,
+    "lng": 2.7247515
+  },
+  {
+    "id": 1239,
+    "name": "Yohann Jobard",
+    "company": "HR'Go",
+    "competences": [
+      "ergonome_presentiel"
+    ],
+    "email": "y.jobard@hrgo.fr",
+    "phone": "+33 6 32 05 22 24",
+    "website": "http://www.hrgo.fr/",
+    "description": "\"Etude ergonomique, Prévention TMS, RPS, Médiation : du Diag à l’accompagnement\"\n\nSpécialiste de la santé physique, mentale et des relations au travail !\n\nEquipe pluridisciplinaire d’Ergonomes, Médiateurs, Consultants en Santé-Sécurité au Travail, IPRP agréés.\n\nDiagnostic, Audit, Accompagnement, Conseil dans la Prévention des TMS et des RPS.\n\nEtudes de postes et des situations de travail ; recherches de solutions ergonomiques\n\nMise en place et formation à l’Eveil musculaire, Formations PRAP, Gestes et Postures\n\nFacilitation des groupes de travail ; Médiation préventive collective, en entreprise et dans les organisations\n\nOrganisme de Formation certifié QUALIOPI",
+    "zone": "Essarts-en-Bocage, France",
+    "radius": 30000,
+    "lat": 46.7860578,
+    "lng": -1.2528103
+  },
+  {
+    "id": 1241,
+    "name": "Jean-Luc Ruel",
+    "company": "Happymanut",
+    "competences": [
+      "materiel"
+    ],
+    "email": "jean-luc@happymanut.net",
+    "phone": "+33 6 73 48 05 13",
+    "website": "http://www.happymanut.net/",
+    "description": "Equipements ergonomiques, inventer les solutions pour améliorer les conditions de travail dans l'industrie agroalimentaire et la cuisine professionnelle/collective",
+    "zone": "France",
+    "radius": 500000,
+    "lat": 46.603354,
+    "lng": 1.8883335
+  },
+  {
+    "id": 1260,
+    "name": "Chloé  Chomel Grillet",
+    "company": "ACQvt",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "acqvt13@gmail.com",
+    "phone": "+33 6 84 52 21 70",
+    "website": "",
+    "description": "Formation, atelier, sensibilisation, webinaire\nQualité de vie au travail et prévention des RPS\nCompétences psychosociales : gestion du stress, charge mentale, communication et coopération, équilibre vie pro/perso, intelligence émotionnelle, accompagnement managérial",
+    "zone": "Marseille, France",
+    "radius": 30000,
+    "lat": 43.2961743,
+    "lng": 5.3699525
+  },
+  {
+    "id": 1261,
+    "name": "Estelle ROMENS",
+    "company": "Indépendant",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "estelleromens74@gmail.com",
+    "phone": "+33 6 71 36 40 47",
+    "website": "",
+    "description": "Coach professionnelle certifiée, j’accompagne managers et équipes pour allier bien-être et performance.\nJe propose des coachings individuels et collectifs ainsi que des permanences en entreprise, afin de prévenir le stress, le burn-out et de renforcer la gestion des conflits et la cohésion. Intervention en Rhône-Alpes et en visio partout à distance.",
+    "zone": "Annecy, France",
+    "radius": 30000,
+    "lat": 45.8992348,
+    "lng": 6.1288847
+  },
+  {
+    "id": 1267,
+    "name": "Théophile Buquet",
+    "company": "CapiConsult",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "theophile.buquet@capiconsult.com",
+    "phone": "+33 6 22 12 76 87",
+    "website": "",
+    "description": "Accompagnement des entreprises du Nord pour faire de la santé, sécurité et du dialogue social un véritable levier de performance collective. Formations et accompagnement pour les élus du CSE, Missions de conseil terrain",
+    "zone": "Hauts-de-France, France",
+    "radius": 150000,
+    "lat": 50.1024606,
+    "lng": 2.7247515
+  },
+  {
+    "id": 1281,
+    "name": "Claire Maurin",
+    "company": "CM Conseil STPS",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "claire@cmconseilstps.ch",
+    "phone": "+41 78 933 21 43",
+    "website": "http://www.cmconseilstps.ch/",
+    "description": "Accompagnement des entreprises romandes à développer des environnements de travail sûrs et sains grâce à des solutions sur mesure en Sécurité au Travail, Protection de la Santé et Protection Incendie.",
+    "zone": "Areuse, Suisse",
+    "radius": 30000,
+    "lat": 46.9545853,
+    "lng": 6.8528779
+  },
+  {
+    "id": 1306,
+    "name": "Lise Lambert",
+    "company": "PRAGMASENS",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "lise.lambert@pragmasens.fr",
+    "phone": "+33 6 72 38 33 31",
+    "website": "",
+    "description": "Développement professionnel et coaching\nPsychologue et Formatrice\nIPRP Intervenante en Prévention des risques professionnels",
+    "zone": "Grand Est, France",
+    "radius": 150000,
+    "lat": 48.4845157,
+    "lng": 6.113035
+  },
+  {
+    "id": 1323,
+    "name": "Marina Cecchi",
+    "company": "Marina Cecchi",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "info@marinacecchi.com",
+    "phone": "+41 77 414 42 28",
+    "website": "https://www.marinacecchi.com/entreprises",
+    "description": "Marina Cecchi est micronutritionniste et nutrithérapeute. Ancienne consultante en management pendant plus de quinze ans, elle accompagne aujourd’hui les équipes en entreprise fatigués ou surmenés, qui souhaitent retrouver leur énergie et prendre soin de leur santé mentale.",
+    "zone": "Genève, Suisse",
+    "radius": 30000,
+    "lat": 46.2017559,
+    "lng": 6.1466014
+  },
+  {
+    "id": 1374,
+    "name": "Martial Lépine",
+    "company": "Martial Lépine",
+    "competences": [
+      "consultant_prevention"
+    ],
+    "email": "Martial.hypnose@gmail.com",
+    "phone": "06 29 35 40 22",
+    "website": "",
+    "description": "Hypnothérapeute et intervenant en gestion du stress, j’accompagne les particuliers et les professionnels dans la régulation des émotions, la prévention des risques psychosociaux et l’amélioration du bien-être global.\nJ’interviens également au sein de structures telles qu’APESA (Aide Psychologique aux entrepreneurs en souffrance aigue, implanté aujourd'hui dans 90 tribunaux de commerce) et Adventys Care (prévention des RPS et accompagnement managérial).\nMon approche s’appuie sur les neurosciences, la psychologie positive et des techniques d’hypnose appliquées à la qualité de vie au travail et à la performance émotionnelle.\nJe développe également des conférences interactives autour de la gestion du stress, de l’anxiété et de la puissance de nos pensées.",
+    "zone": "Gard, France",
+    "radius": 30000,
+    "lat": 43.95995,
+    "lng": 4.297637
+  },
+  {
+    "id": 1607,
+    "name": "Frédérique BENETRUY",
+    "company": "Ergo Bien-être",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "f.benetruy@ergobienetre.ch",
+    "phone": "+41 79 823 52 59",
+    "website": "http://www.ergobienetre.ch/",
+    "description": "Conseils et formations personnalisés auprès des entreprises pour des solutions ergonomiques adaptées à la personne, pour un bien-être optimal, une réduction des douleurs et de l'absentéisme.\nJ'interviens dans les entreprises en Suisse, mais également en France dans les régions Doubs, Jura, Haute-Saône, Territoire de Belfort.",
+    "zone": "Val-de-Travers, Suisse",
+    "radius": 30000,
+    "lat": 46.9185883,
+    "lng": 6.5823784
+  },
+  {
+    "id": 1682,
+    "name": "Jérôme Bonamy",
+    "company": "JB Formation et Conseil",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "jbformationetconseil@gmail.com",
+    "phone": "06 10 29 75 66",
+    "website": "",
+    "description": "Ergonomie en projet et en vie courante : prévention des RPS, TMS, absentéisme, AT et MP. Adaptation de postes au personnel à restriction ou reconnu handicapé. Du diagnostic à la mise en place de solutions, en passant par la réalisation de cahiers des charges et la réception du matériel.\n\nFormateur : SST, PRAP, gestes et postures, travail sur écran…\n\nwww.linkedin.com/in/jerome-bonamy-ergonome",
+    "zone": "Grand Est, France",
+    "radius": 150000,
+    "lat": 48.4845157,
+    "lng": 6.113035
+  },
+  {
+    "id": 1685,
+    "name": "François Robilliard",
+    "company": "Orseu Ethix",
+    "competences": [
+      "non_defini"
+    ],
+    "email": "f.robilliard@orseu-ethix.fr",
+    "phone": "06 69 67 26 67",
+    "website": "https://www.orseu-ethix.fr",
+    "description": "Ergonome expert en santé au travail et IPRP :  RPS, TMS, enquête paritaire, analyse d’activité globale, dialogue social, au sein du Cabinet Orseu-Ethix. Mobilité nationale. Tout secteur d’activités. Formation action – atelier – expertise.",
+    "zone": "Lille, France",
+    "radius": 30000,
+    "lat": 50.6365654,
+    "lng": 3.0635282
+  }
+]

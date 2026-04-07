@@ -49,7 +49,7 @@ const FIELD_QUALIFICATION = '5e72f39c485ce76cacd08e551767749a5704ee3e';
 
 const GEOCACHE_KEY = 'scanup_geo_v2';
 const GEOCACHE_TTL = 14 * 24 * 60 * 60 * 1000;
-const BATCH_SIZE   = 8;
+const BATCH_SIZE   = 20;
 
 // FILTERS are built dynamically inside the component using translated labels
 
@@ -106,41 +106,16 @@ async function geocode(address: string): Promise<{ lat: number; lng: number } | 
   return null;
 }
 
-// ─── Pipedrive ────────────────────────────────────────────────────────────────
+// ─── Load from static JSON ────────────────────────────────────────────────────
 
-async function fetchAllContacts(apiKey: string): Promise<any[]> {
-  const all: any[] = [];
-  let start = 0;
-  while (true) {
-    const res  = await fetch(`https://360skillvue.pipedrive.com/api/v1/persons?start=${start}&limit=500&api_token=${encodeURIComponent(apiKey)}`);
-    if (!res.ok) throw new Error(`Pipedrive ${res.status}`);
-    const data = await res.json();
-    if (!data.success || !data.data?.length) break;
-    all.push(...data.data);
-    if (data.data.length < 500) break;
-    start += 500;
-  }
-  return all;
-}
-
-function parseContacts(raw: any[]): Professional[] {
-  return raw
-    .filter(p => p[FIELD_ADDRESS] && p[FIELD_QUALIFICATION])
-    .map(p => {
-      const rawComp = p[FIELD_COMPETENCES];
-      const ids     = (Array.isArray(rawComp) ? rawComp.map(String) : rawComp ? [String(rawComp)] : []);
-      const comps   = ids.filter((id: string) => COMPETENCE_ID_MAP[id]).map((id: string) => COMPETENCES[COMPETENCE_ID_MAP[id]]);
-      if (!comps.length) comps.push(COMPETENCES.non_defini);
-      const rawSite: string = p[FIELD_WEBSITE] || '';
-      return {
-        id: p.id, name: p.name || 'Sans nom', company: p.org_id?.name || '',
-        competences: comps,
-        email: p.email?.[0]?.value || '', phone: p.phone?.[0]?.value || '',
-        website: rawSite && !rawSite.startsWith('http') ? `https://${rawSite}` : rawSite,
-        description: p[FIELD_DESCRIPTION] || '', zone: p[FIELD_ADDRESS],
-        radius: getZoneRadius(p[FIELD_ADDRESS]),
-      };
-    });
+async function fetchProfessionals(): Promise<Professional[]> {
+  const res = await fetch('/professionals.json');
+  if (!res.ok) throw new Error(`professionals.json ${res.status}`);
+  const data: any[] = await res.json();
+  return data.map(p => ({
+    ...p,
+    competences: (p.competences as string[]).map(key => COMPETENCES[key as CompetenceKey] ?? COMPETENCES.non_defini),
+  }));
 }
 
 // ─── Map helpers ──────────────────────────────────────────────────────────────
@@ -309,30 +284,10 @@ export default function PartenairesPage() {
   }, [selected]);
 
   async function load() {
-    const apiKey = '9253b27b43a478f140271664aa4d040d9079c848';
     try {
-      const raw    = await fetchAllContacts(apiKey);
-      const parsed = parseContacts(raw);
-      setProgress({ done: 0, total: parsed.length });
-      const cache = readCache();
-      const ready: Professional[] = [];
-      const pending: Professional[] = [];
-      for (const p of parsed) {
-        const entry = cache[p.zone.toLowerCase().trim()];
-        if (entry && Date.now() - entry.ts < GEOCACHE_TTL) ready.push({ ...p, lat: entry.lat, lng: entry.lng });
-        else pending.push(p);
-      }
-      if (ready.length) setPros(ready);
-      setProgress({ done: ready.length, total: parsed.length });
-      for (let i = 0; i < pending.length; i += BATCH_SIZE) {
-        if (aborted.current) break;
-        const batch   = pending.slice(i, i + BATCH_SIZE);
-        const results = await Promise.all(batch.map(p => geocode(p.zone).then(c => c ? { ...p, ...c } : null)));
-        const geo     = results.filter((r): r is NonNullable<typeof r> => r !== null);
-        if (geo.length) setPros(prev => [...prev, ...geo]);
-        setProgress({ done: ready.length + Math.min(i + BATCH_SIZE, pending.length), total: parsed.length });
-        if (i + BATCH_SIZE < pending.length) await new Promise(r => setTimeout(r, 80));
-      }
+      const pros = await fetchProfessionals();
+      setPros(pros);
+      setProgress({ done: pros.length, total: pros.length });
       setLoading(false);
     } catch (e: any) { setError(e?.message || 'Erreur'); setLoading(false); }
   }

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://site360skillvue.vercel.app/sitemap.xml

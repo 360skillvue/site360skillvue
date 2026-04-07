@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ChevronDown, Mail, Check, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useLanguage } from '../i18n';
+import PageMeta from '../components/PageMeta';
 
 /* ── Helpers ─────────────────────────────────────────────── */
 
@@ -27,6 +29,7 @@ const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 
 export default function EntreprisesPage() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const stats    = t.entreprises.stats;
   const problems = t.entreprises.problems;
   const features = t.entreprises.features;
@@ -39,6 +42,11 @@ export default function EntreprisesPage() {
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white">
+      <PageMeta
+        title="Entreprises & DRH — Dépistage TMS & RPS"
+        description="Dépistez les risques TMS et RPS de vos équipes sans audit. Résultats en 48h, dès 5€ par évaluation."
+        path="/entreprises-drh"
+      />
 
       <style>{`
         @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
@@ -80,12 +88,14 @@ export default function EntreprisesPage() {
 
           <Reveal delay={0.15} className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+              onClick={() => navigate('/aide-support')}
               className="bg-scanup-blue text-white px-8 py-3.5 rounded-full font-semibold text-[15px] hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/25 flex items-center gap-2 group"
             >
               {t.entreprises.heroCtaPrimary}
               <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
             </motion.button>
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+              onClick={() => navigate('/aide-support')}
               className="text-scanup-navy px-8 py-3.5 rounded-full font-semibold text-[15px] border border-black/10 hover:border-scanup-blue hover:text-scanup-blue transition-all"
             >
               {t.entreprises.heroCtaSecondary}
@@ -153,6 +163,7 @@ export default function EntreprisesPage() {
                 {t.entreprises.featuresSubtitle}
               </p>
               <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                onClick={() => navigate('/aide-support')}
                 className="bg-scanup-blue text-white px-6 py-3 rounded-full font-semibold text-[14px] hover:bg-blue-700 transition-colors"
               >
                 {t.entreprises.featuresCtaButton}
@@ -322,7 +333,9 @@ export default function EntreprisesPage() {
                       </li>
                     ))}
                   </ul>
-                  <button className={`w-full py-2.5 rounded-xl font-semibold text-[13px] transition-all ${
+                  <button
+                    onClick={() => navigate('/aide-support')}
+                    className={`w-full py-2.5 rounded-xl font-semibold text-[13px] transition-all ${
                     plan.featured
                       ? 'bg-white text-scanup-navy hover:bg-scanup-turquoise'
                       : 'border border-black/10 hover:border-scanup-blue hover:text-scanup-blue'
@@ -396,11 +409,13 @@ export default function EntreprisesPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+              onClick={() => navigate('/aide-support')}
               className="bg-scanup-blue text-white px-8 py-4 rounded-full font-semibold text-[15px] hover:bg-blue-700 transition-colors shadow-xl shadow-scanup-blue/20"
             >
               {t.entreprises.ctaPrimary}
             </motion.button>
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+              onClick={() => navigate('/aide-support')}
               className="text-scanup-navy px-8 py-4 rounded-full font-semibold text-[15px] border border-black/10 hover:border-scanup-blue hover:text-scanup-blue transition-all"
             >
               {t.entreprises.ctaSecondary}

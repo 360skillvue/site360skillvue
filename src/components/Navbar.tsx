@@ -225,10 +225,14 @@ export default function Navbar() {
               <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-5 w-auto" />
             </motion.a>
 
-            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+            <motion.a
+              href="https://scanup.360skillvue.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="hidden sm:flex bg-scanup-blue text-white px-4 py-2 rounded-full text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-scanup-blue/20">
               {t.nav.trial}
-            </motion.button>
+            </motion.a>
 
             {/* Hamburger — mobile only */}
             <button
@@ -382,9 +386,14 @@ export default function Navbar() {
 
               {/* Mobile CTA */}
               <div className="p-4 border-t border-black/[0.06]">
-                <button className="w-full bg-scanup-blue text-white py-3 rounded-full text-[14px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20">
+                <a
+                  href="https://scanup.360skillvue.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full bg-scanup-blue text-white py-3 rounded-full text-[14px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20 text-center"
+                >
                   {t.nav.trial}
-                </button>
+                </a>
               </div>
             </motion.div>
           </>

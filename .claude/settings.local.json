@@ -17,7 +17,32 @@
       "Bash(curl -sO \"https://360skillvue.com/wp-content/uploads/2025/roche.png\")",
       "Bash(curl -sO \"https://360skillvue.com/wp-content/uploads/2025/cerba.png\")",
       "Bash(curl -sO \"https://360skillvue.com/wp-content/uploads/2025/LogoHCL.jpg\")",
-      "Bash(curl -sO \"https://360skillvue.com/wp-content/uploads/2025/Bic.png\")"
+      "Bash(curl -sO \"https://360skillvue.com/wp-content/uploads/2025/Bic.png\")",
+      "Bash(find:*)",
+      "Bash(grep -r \"aria-\" /c/Users/Adam/Documents/GitHub/site360skillvue/src/pages/*.tsx)",
+      "Bash(grep -n \"alt=\" /c/Users/Adam/Documents/GitHub/site360skillvue/src/pages/*.tsx)",
+      "Bash(grep -n \"<img\" /c/Users/Adam/Documents/GitHub/site360skillvue/src/pages/*.tsx)",
+      "Bash(npm run:*)",
+      "WebSearch",
+      "Bash(curl -s -L https://360skillvue.com/comparaison-rapide-concurrence -H 'User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36' -o /tmp/page360.html)",
+      "Bash(python3:*)",
+      "Bash(where python3:*)",
+      "Bash(where python:*)",
+      "Bash(where py:*)",
+      "Bash(curl -L \"https://picsum.photos/seed/insurance/800/600?blur=2\" -o /tmp/img1.jpg -s)",
+      "Bash(curl -L \"https://picsum.photos/seed/data/800/600?blur=2\" -o /tmp/img2.jpg -s)",
+      "Bash(curl -L \"https://picsum.photos/seed/dashboard/800/600?blur=2\" -o /tmp/img3.jpg -s)",
+      "Bash(curl -L \"https://picsum.photos/seed/dashboard2/800/600?blur=2\" -o /tmp/img4.jpg -s)",
+      "Bash(curl -L \"https://picsum.photos/seed/medical/800/600?blur=2\" -o /tmp/img5.jpg -s)",
+      "Bash(ls /tmp/img*.jpg)",
+      "Bash(ls -lh /tmp/img*.jpg)",
+      "WebFetch(domain:picsum.photos)",
+      "WebFetch(domain:fastly.picsum.photos)",
+      "Read(//c/Users/Adam/AppData/Local/Temp/**)",
+      "Bash(curl -sL \"https://picsum.photos/seed/insurance/800/600\" -o img1.jpg)",
+      "Bash(curl -sL \"https://picsum.photos/seed/data/800/600\" -o img2.jpg)",
+      "Bash(curl -sL \"https://picsum.photos/seed/dashboard/800/600\" -o img3.jpg)",
+      "Bash(curl -sL \"https://picsum.photos/seed/dashboard2/800/600\" -o img4.jpg)"
     ]
   }
 }

@@ -7,6 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useLanguage } from '../i18n';
+import PageMeta from '../components/PageMeta';
 import { MapContainer, TileLayer, CircleMarker, Circle, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -520,6 +521,11 @@ export default function PartenairesPage() {
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white">
+      <PageMeta
+        title="Réseau de professionnels de la prévention"
+        description="Trouvez un ergonome, psychologue ou consultant en prévention près de chez vous. Réseau de professionnels qualifiés."
+        path="/partenaires"
+      />
 
       <Navbar />
 

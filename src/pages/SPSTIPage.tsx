@@ -13,6 +13,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useLanguage } from '../i18n';
+import PageMeta from '../components/PageMeta';
 
 const FadeIn: React.FC<{ children: React.ReactNode, delay?: number, className?: string }> = ({ children, delay = 0, className = "" }) => (
   <motion.div
@@ -37,6 +38,11 @@ export default function SPSTIPage() {
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-warning/20">
+      <PageMeta
+        title="SPSTI — Détection précoce & Maintien dans l'emploi"
+        description="Outil de dépistage TMS et RPS pour équipes pluridisciplinaires. Traçabilité complète de vos actions de prévention."
+        path="/spsti"
+      />
       <Navbar />
 
       {/* Hero Section */}
@@ -76,8 +82,8 @@ export default function SPSTIPage() {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-warning/20 to-scanup-blue/20 rounded-2xl transform translate-x-4 translate-y-4 blur-sm"></div>
               <img 
-                src="https://picsum.photos/seed/medical/800/600?blur=2" 
-                alt="Équipe médicale SPSTI" 
+                src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80"
+                alt="Médecin du travail SPSTI"
                 className="relative rounded-2xl shadow-2xl border border-scanup-white/50 w-full object-cover"
                 referrerPolicy="no-referrer"
               />
@@ -149,11 +155,13 @@ export default function SPSTIPage() {
           <FadeIn delay={0.2}>
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-warning to-scanup-blue rounded-2xl transform translate-x-3 translate-y-3 opacity-20 transition-transform duration-500"></div>
-              <img 
-                src="https://picsum.photos/seed/spsti/800/600?blur=2" 
-                alt="Outil de suivi médical" 
+              <img
+                src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80"
+                alt="Outil de suivi médical"
                 className="relative rounded-2xl shadow-xl border border-scanup-white w-full object-cover"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </FadeIn>

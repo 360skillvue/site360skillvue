@@ -13,6 +13,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useLanguage } from '../i18n';
+import PageMeta from '../components/PageMeta';
 
 const FadeIn: React.FC<{ children: React.ReactNode, delay?: number, className?: string }> = ({ children, delay = 0, className = "" }) => (
   <motion.div
@@ -37,6 +38,11 @@ export default function AssureursPage() {
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-blue/20">
+      <PageMeta
+        title="Assureurs & Mutuelles — Pilotage du risque santé"
+        description="Segmentez vos populations et optimisez votre tarification avec des données de dépistage TMS et RPS en temps réel."
+        path="/assureurs-mutuelles"
+      />
       <Navbar />
 
       {/* Hero Section */}
@@ -76,8 +82,8 @@ export default function AssureursPage() {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue/20 to-scanup-turquoise/20 rounded-2xl transform translate-x-4 translate-y-4 blur-sm"></div>
               <img 
-                src="https://picsum.photos/seed/insurance/800/600?blur=2" 
-                alt="Data Analytics Assureurs" 
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80"
+                alt="Réunion professionnelle assureurs"
                 className="relative rounded-2xl shadow-2xl border border-scanup-white/50 w-full object-cover"
                 referrerPolicy="no-referrer"
               />
@@ -149,11 +155,13 @@ export default function AssureursPage() {
           <FadeIn delay={0.2}>
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue to-scanup-turquoise rounded-2xl transform translate-x-3 translate-y-3 opacity-20 transition-transform duration-500"></div>
-              <img 
-                src="https://picsum.photos/seed/data/800/600?blur=2" 
-                alt="Visualisation de données" 
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+                alt="Visualisation de données"
                 className="relative rounded-2xl shadow-xl border border-scanup-white w-full object-cover"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </FadeIn>

@@ -22,6 +22,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useLanguage } from '../i18n';
+import PageMeta from '../components/PageMeta';
 
 const FadeIn: React.FC<{ children: React.ReactNode, delay?: number, className?: string }> = ({ children, delay = 0, className = "" }) => (
   <motion.div
@@ -117,8 +118,13 @@ export default function CertificationPage() {
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-blue/20">
+      <PageMeta
+        title="Certification Périodique Santé"
+        description="Pilotez la certification périodique de vos professionnels de santé avec 360SkillVue. Conforme à l'arrêté du 26 février 2026."
+        path="/certification-periodique-sante"
+      />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrgData) }} />
-      
+
       <Navbar />
 
       {/* Section 1: Hero */}
@@ -169,8 +175,8 @@ export default function CertificationPage() {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue/20 to-scanup-turquoise/20 rounded-2xl transform translate-x-4 translate-y-4 blur-sm"></div>
               <img 
-                src="https://picsum.photos/seed/dashboard/800/600?blur=2" 
-                alt="Tableau de bord RH 360SkillVue" 
+                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80"
+                alt="Certification qualité santé travail"
                 className="relative rounded-2xl shadow-2xl border border-scanup-white/50 w-full object-cover"
                 referrerPolicy="no-referrer"
               />
@@ -319,11 +325,13 @@ export default function CertificationPage() {
             <FadeIn delay={0.3}>
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue to-scanup-turquoise rounded-2xl transform translate-x-3 translate-y-3 opacity-20 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-500"></div>
-                <img 
-                  src="https://picsum.photos/seed/dashboard2/800/600?blur=2" 
-                  alt="Tableau de bord 360SkillVue" 
+                <img
+                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+                  alt="Tableau de bord 360SkillVue"
                   className="relative rounded-2xl shadow-xl border border-scanup-white w-full object-cover transition-transform duration-500 group-hover:-translate-y-1"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </FadeIn>
@@ -451,7 +459,7 @@ export default function CertificationPage() {
 
       {/* Section 8: CTA final */}
       <section className="bg-scanup-navy py-24 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/pattern/1920/1080?blur=10')] opacity-10 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=60')] opacity-10 mix-blend-overlay"></div>
         <div className="max-w-3xl mx-auto px-6 relative z-10">
           <FadeIn>
             <h2 className="text-[32px] md:text-[48px] font-bold mb-10 text-scanup-white tracking-tight leading-tight">

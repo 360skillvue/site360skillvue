@@ -11,6 +11,7 @@ const SPSTIPage         = lazy(() => import('./pages/SPSTIPage'));
 const PartenairesPage   = lazy(() => import('./pages/PartenairesPage'));
 const AidePage          = lazy(() => import('./pages/AidePage'));
 const NotFoundPage        = lazy(() => import('./pages/NotFoundPage'));
+const TarifsPage                   = lazy(() => import('./pages/TarifsPage'));
 const MentionsLegalesPage          = lazy(() => import('./pages/MentionsLegalesPage'));
 const CGUPage                      = lazy(() => import('./pages/CGUPage'));
 const CGVPage                      = lazy(() => import('./pages/CGVPage'));
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/spsti" element={<SPSTIPage />} />
             <Route path="/partenaires" element={<PartenairesPage />} />
             <Route path="/aide-support" element={<AidePage />} />
+            <Route path="/tarifs" element={<TarifsPage />} />
             <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
             <Route path="/cgu" element={<CGUPage />} />
             <Route path="/cgv" element={<CGVPage />} />

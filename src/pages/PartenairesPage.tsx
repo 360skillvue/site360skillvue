@@ -4,7 +4,7 @@ import {
   ArrowRight, Users, Search, Loader2, AlertCircle,
   Mail, Phone, Globe, MapPin, Maximize2, Minimize2, X,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';
@@ -248,6 +248,7 @@ ProCard.displayName = 'ProCard';
 
 export default function PartenairesPage() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const FILTERS = [
     { key: 'all', label: t.partenaires.filterAll, color: '#0068FF' },
@@ -671,6 +672,7 @@ export default function PartenairesPage() {
             </p>
             <motion.button
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+              onClick={() => navigate('/aide-support')}
               className="bg-scanup-blue text-white px-8 py-3.5 rounded-full font-semibold text-[14px] hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/20 inline-flex items-center gap-2 group"
             >
               {t.partenaires.ctaButton}

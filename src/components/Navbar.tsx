@@ -55,6 +55,7 @@ export default function Navbar() {
   const isReseau     = location.pathname === '/partenaires';
   const isAide       = location.pathname === '/aide-support';
   const isTarifs     = location.pathname === '/tarifs';
+  const isAPropos    = location.pathname === '/a-propos';
 
   return (
     <>
@@ -133,6 +134,11 @@ export default function Navbar() {
               <Link to="/tarifs" className={`transition-colors font-medium relative ${isTarifs ? 'text-scanup-blue' : 'text-scanup-graytext hover:text-scanup-navy'}`}>
                 Tarifs
                 {isTarifs && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-scanup-blue rounded-full" />}
+              </Link>
+
+              <Link to="/a-propos" className={`transition-colors font-medium relative ${isAPropos ? 'text-scanup-blue' : 'text-scanup-graytext hover:text-scanup-navy'}`}>
+                À propos
+                {isAPropos && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-scanup-blue rounded-full" />}
               </Link>
 
               <Link to="/aide-support" className={`transition-colors font-medium relative ${isAide ? 'text-scanup-blue' : 'text-scanup-graytext hover:text-scanup-navy'}`}>
@@ -342,6 +348,13 @@ export default function Navbar() {
                     isTarifs ? 'bg-scanup-blue/[0.07] text-scanup-blue' : 'text-scanup-navy hover:bg-[#f8f9fb]'
                   }`}>
                   Tarifs
+                </Link>
+
+                <Link to="/a-propos"
+                  className={`flex items-center px-3 py-3 rounded-xl text-[14px] font-medium transition-colors mb-1 ${
+                    isAPropos ? 'bg-scanup-blue/[0.07] text-scanup-blue' : 'text-scanup-navy hover:bg-[#f8f9fb]'
+                  }`}>
+                  À propos
                 </Link>
 
                 <Link to="/aide-support"

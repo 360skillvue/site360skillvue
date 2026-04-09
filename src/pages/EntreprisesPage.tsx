@@ -36,8 +36,6 @@ export default function EntreprisesPage() {
   const features = t.entreprises.features;
   const personas = t.entreprises.personas;
   const faqs     = t.entreprises.faqs;
-  const plans    = t.entreprises.plans.map((p, i) => ({ ...p, featured: i === 2 }));
-
   const [activePersona, setActivePersona] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -303,67 +301,6 @@ export default function EntreprisesPage() {
         </div>
       </section>
 
-      {/* ── Pricing ──────────────────────────────────────────── */}
-      <section className="py-24 px-6 bg-[#F8F9FC]">
-        <div className="max-w-5xl mx-auto">
-          <Reveal className="text-center mb-16">
-            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.entreprises.pricingLabel}</p>
-            <h2 className="text-[32px] md:text-[44px] font-bold tracking-[-0.02em] mb-4">{t.entreprises.pricingTitle}</h2>
-            <p className="text-[16px] text-scanup-graytext">{t.entreprises.pricingSubtitle}</p>
-          </Reveal>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {plans.map((plan, i) => (
-              <Reveal key={i} delay={i * 0.06}>
-                <motion.div whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
-                  transition={{ duration: 0.25 }}
-                  className={`rounded-2xl p-7 h-full flex flex-col transition-shadow relative ${
-                    plan.featured ? 'bg-scanup-navy text-white' : 'bg-white border border-black/[0.07]'
-                  }`}
-                >
-                  {plan.featured && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-scanup-blue text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-wide">
-                      {t.entreprises.pricingPopular}
-                    </div>
-                  )}
-                  <div className={`text-[11px] font-semibold uppercase tracking-widest mb-3 ${plan.featured ? 'text-scanup-turquoise' : 'text-scanup-blue'}`}>
-                    {plan.name}
-                  </div>
-                  <div className={`text-[30px] font-bold tracking-tight leading-none mb-1 ${plan.featured ? 'text-white' : 'text-scanup-navy'}`}>
-                    {plan.price}
-                  </div>
-                  <div className={`text-[12px] mb-6 ${plan.featured ? 'text-white/40' : 'text-scanup-graytext'}`}>{plan.sub}</div>
-                  <ul className="space-y-2.5 flex-grow mb-7">
-                    {plan.items.map((item, j) => (
-                      <li key={j} className={`flex items-center gap-2 text-[13px] ${plan.featured ? 'text-white/70' : 'text-scanup-graytext'}`}>
-                        <Check size={11} className={plan.featured ? 'text-scanup-turquoise' : 'text-scanup-blue'} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={() => navigate('/aide-support')}
-                    className={`w-full py-2.5 rounded-xl font-semibold text-[13px] transition-all ${
-                      plan.featured
-                        ? 'bg-white text-scanup-navy hover:bg-scanup-turquoise'
-                        : 'border border-black/10 hover:border-scanup-blue hover:text-scanup-blue'
-                    }`}>
-                    {plan.cta}
-                  </button>
-                </motion.div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="mt-8 flex flex-wrap justify-center gap-6">
-            {t.entreprises.pricingGuarantees.map((item, i) => (
-              <div key={i} className="flex items-center gap-2 text-[13px] text-scanup-graytext">
-                <Check size={11} className="text-scanup-blue" />{item}
-              </div>
-            ))}
-          </Reveal>
-        </div>
-      </section>
 
       {/* ── FAQ ──────────────────────────────────────────────── */}
       <section className="py-24 px-6">

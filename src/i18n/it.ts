@@ -1,6 +1,6 @@
 export const it = {
   nav: {
-    certification: 'Certificazione Sanitaria',
+    certification: 'Solutions',
     network: 'La nostra rete',
     help: 'Assistenza & Supporto',
     login: 'Accedi',

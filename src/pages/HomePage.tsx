@@ -348,14 +348,14 @@ export default function HomePage() {
                   {t.home.compareRows.map((row, i) => {
                     const isLast = i === t.home.compareRows.length - 1;
                     const cell = (val: boolean | string, isScanup = false) => {
-                      if (typeof val === 'string') return (
+                      if (val === true) return <td className={`px-4 py-4 text-center ${!isLast ? 'border-b border-black/[0.04]' : ''}`}><span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-600 font-bold text-[13px]">✓</span></td>;
+                      if (val === false) return <td className={`px-4 py-4 text-center ${!isLast ? 'border-b border-black/[0.04]' : ''}`}><span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 text-slate-400 text-[15px]">—</span></td>;
+                      if (val === 'partial') return <td className={`px-4 py-4 text-center ${!isLast ? 'border-b border-black/[0.04]' : ''}`}><span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-100 text-amber-600 font-bold text-[13px]">◐</span></td>;
+                      return (
                         <td className={`px-4 py-4 text-center text-[13px] font-semibold ${isScanup ? 'text-scanup-blue' : 'text-scanup-navy'} ${!isLast ? 'border-b border-black/[0.04]' : ''}`}>
                           {val}
                         </td>
                       );
-                      if (val === true) return <td className={`px-4 py-4 text-center ${!isLast ? 'border-b border-black/[0.04]' : ''}`}><span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-600 font-bold text-[13px]">✓</span></td>;
-                      if (val === 'partial') return <td className={`px-4 py-4 text-center ${!isLast ? 'border-b border-black/[0.04]' : ''}`}><span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-100 text-amber-600 font-bold text-[13px]">◐</span></td>;
-                      return <td className={`px-4 py-4 text-center ${!isLast ? 'border-b border-black/[0.04]' : ''}`}><span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 text-slate-400 text-[15px]">—</span></td>;
                     };
                     return (
                       <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-[#fafbfc]'}>

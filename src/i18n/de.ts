@@ -1,6 +1,6 @@
 export const de = {
   nav: {
-    certification: 'Gesundheitszertifizierung',
+    certification: 'Solutions',
     network: 'Unser Netzwerk',
     help: 'Hilfe & Support',
     login: 'Anmelden',

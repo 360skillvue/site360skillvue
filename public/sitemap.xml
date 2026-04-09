@@ -1,62 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://site360skillvue.vercel.app/</loc>
-    <lastmod>2026-04-07</lastmod>
+    <loc>https://360skillvue.com/</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://site360skillvue.vercel.app/certification-periodique-sante</loc>
-    <lastmod>2026-04-07</lastmod>
+    <loc>https://360skillvue.com/certification-periodique-sante</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site360skillvue.vercel.app/entreprises-drh</loc>
-    <lastmod>2026-04-07</lastmod>
+    <loc>https://360skillvue.com/entreprises-drh</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site360skillvue.vercel.app/assureurs-mutuelles</loc>
-    <lastmod>2026-04-07</lastmod>
+    <loc>https://360skillvue.com/assureurs-mutuelles</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site360skillvue.vercel.app/spsti</loc>
-    <lastmod>2026-04-07</lastmod>
+    <loc>https://360skillvue.com/spsti</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site360skillvue.vercel.app/partenaires</loc>
-    <lastmod>2026-04-07</lastmod>
+    <loc>https://360skillvue.com/partenaires</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site360skillvue.vercel.app/aide-support</loc>
-    <lastmod>2026-04-07</lastmod>
+    <loc>https://360skillvue.com/aide-support</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site360skillvue.vercel.app/mentions-legales</loc>
-    <lastmod>2026-03-23</lastmod>
+    <loc>https://360skillvue.com/mentions-legales</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://site360skillvue.vercel.app/cgu</loc>
-    <lastmod>2026-03-23</lastmod>
+    <loc>https://360skillvue.com/cgu</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://site360skillvue.vercel.app/politique-confidentialite</loc>
-    <lastmod>2026-03-23</lastmod>
+    <loc>https://360skillvue.com/cgv</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/politique-confidentialite</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

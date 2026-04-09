@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';
 import PageMeta from '../components/PageMeta';
 import { MapContainer, TileLayer, CircleMarker, Circle, Popup, useMap } from 'react-leaflet';
@@ -307,7 +308,7 @@ export default function PartenairesPage() {
 
   // ── Sidebar ────────────────────────────────────────────────────────────────
   const sidebar = (
-    <div className={`flex flex-col bg-[#f8f9fb] border-l border-black/[0.06] flex-shrink-0 ${fullscreen ? 'w-[360px]' : 'w-full md:w-[340px] lg:w-[380px]'}`}>
+    <div className={`flex flex-col bg-[#f8f9fb] border-l border-black/[0.06] flex-shrink-0 ${fullscreen ? 'w-[min(360px,100vw)]' : 'w-full md:w-[340px] lg:w-[380px]'}`}>
 
       {/* Sidebar header */}
       <div className="px-4 pt-4 pb-3 border-b border-black/[0.06] flex-shrink-0 bg-white">
@@ -679,6 +680,8 @@ export default function PartenairesPage() {
           </div>
         </section>
       )}
+
+      <Footer />
     </div>
   );
 }

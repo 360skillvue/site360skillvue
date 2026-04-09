@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';
 import PageMeta from '../components/PageMeta';
 
@@ -190,6 +191,8 @@ export default function SPSTIPage() {
           </FadeIn>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import PageMeta from '../components/PageMeta';
 
 const SECTIONS = [
@@ -95,7 +96,7 @@ const SECTIONS = [
 
 export default function MentionsLegalesPage() {
   return (
-    <div className="min-h-screen bg-white font-sans text-scanup-navy">
+    <div className="min-h-screen bg-white font-sans text-scanup-navy flex flex-col">
       <PageMeta
         title="Mentions légales"
         description="Mentions légales de 360SkillVue Sàrl — éditeur de ScanUp, plateforme de prévention TMS & RPS."
@@ -151,6 +152,8 @@ export default function MentionsLegalesPage() {
           <Link to="/" className="text-[13px] text-scanup-blue hover:underline">← Retour à l'accueil</Link>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }

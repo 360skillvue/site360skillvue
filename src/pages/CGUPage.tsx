@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import PageMeta from '../components/PageMeta';
 
 const SECTIONS = [
@@ -95,7 +96,7 @@ const SECTIONS = [
 
 export default function CGUPage() {
   return (
-    <div className="min-h-screen bg-white font-sans text-scanup-navy">
+    <div className="min-h-screen bg-white font-sans text-scanup-navy flex flex-col">
       <PageMeta
         title="Conditions Générales d'Utilisation"
         description="Conditions générales d'utilisation de ScanUp by 360SkillVue Sàrl — plateforme de prévention TMS & RPS."
@@ -151,6 +152,8 @@ export default function CGUPage() {
           <Link to="/" className="text-[13px] text-scanup-blue hover:underline">← Retour à l'accueil</Link>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ChevronDown, Mail, Check, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';
 import PageMeta from '../components/PageMeta';
 
@@ -117,7 +118,7 @@ export default function EntreprisesPage() {
               <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ delay: 0.25 + i * 0.07, duration: 0.5 }}
               >
-                <div className="text-[36px] font-bold tracking-tight text-scanup-navy leading-none mb-1">{s.value}</div>
+                <div className="text-[28px] sm:text-[36px] font-bold tracking-tight text-scanup-navy leading-none mb-1">{s.value}</div>
                 <div className="text-[13px] text-scanup-graytext">{s.label}</div>
               </motion.div>
             ))}
@@ -435,6 +436,8 @@ export default function EntreprisesPage() {
           </a>
         </Reveal>
       </section>
+
+      <Footer />
     </div>
   );
 }

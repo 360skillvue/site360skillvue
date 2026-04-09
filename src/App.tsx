@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './i18n';
+import CookieConsent from './components/CookieConsent';
 
 const HomePage          = lazy(() => import('./pages/HomePage'));
 const CertificationPage = lazy(() => import('./pages/CertificationPage'));
@@ -10,8 +11,9 @@ const SPSTIPage         = lazy(() => import('./pages/SPSTIPage'));
 const PartenairesPage   = lazy(() => import('./pages/PartenairesPage'));
 const AidePage          = lazy(() => import('./pages/AidePage'));
 const NotFoundPage        = lazy(() => import('./pages/NotFoundPage'));
-const MentionsLegalesPage = lazy(() => import('./pages/MentionsLegalesPage'));
+const MentionsLegalesPage          = lazy(() => import('./pages/MentionsLegalesPage'));
 const CGUPage                      = lazy(() => import('./pages/CGUPage'));
+const CGVPage                      = lazy(() => import('./pages/CGVPage'));
 const PolitiqueConfidentialitePage = lazy(() => import('./pages/PolitiqueConfidentialitePage'));
 
 export default function App() {
@@ -23,6 +25,7 @@ export default function App() {
             <div className="w-8 h-8 border-2 border-scanup-blue/20 border-t-scanup-blue rounded-full animate-spin" />
           </div>
         }>
+          <CookieConsent />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/certification-periodique-sante" element={<CertificationPage />} />
@@ -33,6 +36,7 @@ export default function App() {
             <Route path="/aide-support" element={<AidePage />} />
             <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
             <Route path="/cgu" element={<CGUPage />} />
+            <Route path="/cgv" element={<CGVPage />} />
             <Route path="/politique-confidentialite" element={<PolitiqueConfidentialitePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

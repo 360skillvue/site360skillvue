@@ -8,7 +8,7 @@ interface Props {
   schema?: object;
 }
 
-const BASE = 'https://site360skillvue.vercel.app';
+const BASE = 'https://360skillvue.com';
 const DEFAULT_OG_IMAGE = `${BASE}/og-image.svg`;
 
 export default function PageMeta({ title, description, path, ogImage, schema }: Props) {

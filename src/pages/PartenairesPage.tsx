@@ -308,7 +308,7 @@ export default function PartenairesPage() {
 
   // ── Sidebar ────────────────────────────────────────────────────────────────
   const sidebar = (
-    <div className={`flex flex-col bg-[#f8f9fb] border-l border-black/[0.06] flex-shrink-0 ${fullscreen ? 'w-[min(360px,100vw)]' : 'w-full md:w-[340px] lg:w-[380px]'}`}>
+    <div className={`flex flex-col bg-[#f8f9fb] border-l border-black/[0.06] flex-shrink-0 ${fullscreen ? 'w-[min(360px,100vw)] h-full' : 'w-full h-[340px] md:h-auto md:w-[340px] lg:w-[380px]'}`}>
 
       {/* Sidebar header */}
       <div className="px-4 pt-4 pb-3 border-b border-black/[0.06] flex-shrink-0 bg-white">
@@ -403,7 +403,7 @@ export default function PartenairesPage() {
 
   // ── Map block ──────────────────────────────────────────────────────────────
   const mapBlock = (
-    <div className="relative flex-1 min-h-0">
+    <div className="relative h-[280px] md:h-auto md:flex-1 md:min-h-0">
       <MapContainer
         center={[46.85, 2.35]}
         zoom={6}
@@ -630,8 +630,7 @@ export default function PartenairesPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl overflow-hidden border border-black/[0.07] shadow-xl shadow-black/[0.04] flex flex-col md:flex-row"
-            style={{ height: 'min(560px, calc(100vh - 120px))' }}
+            className="rounded-2xl overflow-hidden border border-black/[0.07] shadow-xl shadow-black/[0.04] flex flex-col md:flex-row md:h-[560px]"
           >
             {mapBlock}
             {sidebar}

@@ -1,43 +1,39 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Phone, ChevronDown, Building2, Shield, Stethoscope, Award, Menu, X, Globe } from 'lucide-react';
+import { ChevronDown, Building2, Shield, Stethoscope, Award, Menu, X, Globe } from 'lucide-react';
 import { useLanguage, LANGUAGES } from '../i18n';
 
 const CERTIFICATION_HREFS = [
-  { href: '/entreprises-drh',              icon: Building2  },
-  { href: '/assureurs-mutuelles',          icon: Shield     },
+  { href: '/entreprises-drh',              icon: Building2   },
+  { href: '/assureurs-mutuelles',          icon: Shield      },
   { href: '/spsti',                        icon: Stethoscope },
-  { href: '/certification-periodique-sante', icon: Award    },
+  { href: '/certification-periodique-sante', icon: Award     },
 ];
 
 export default function Navbar() {
-  const location                      = useLocation();
-  const { lang, setLang, t }          = useLanguage();
-  const [phoneOpen, setPhoneOpen]     = useState(false);
-  const [certOpen, setCertOpen]       = useState(false);
-  const [langOpen, setLangOpen]       = useState(false);
-  const [mobileOpen, setMobileOpen]   = useState(false);
-  const [mobileCertOpen, setMobileCertOpen] = useState(false);
-  const certTimeout                   = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const location                             = useLocation();
+  const { lang, setLang, t }                 = useLanguage();
+  const [certOpen, setCertOpen]              = useState(false);
+  const [langOpen, setLangOpen]              = useState(false);
+  const [mobileOpen, setMobileOpen]          = useState(false);
+  const [mobileCertOpen, setMobileCertOpen]  = useState(false);
+  const certTimeout                          = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const certItems = [
-    { ...CERTIFICATION_HREFS[0], label: t.nav.certItems.entreprises.label, desc: t.nav.certItems.entreprises.desc },
-    { ...CERTIFICATION_HREFS[1], label: t.nav.certItems.assureurs.label,   desc: t.nav.certItems.assureurs.desc   },
-    { ...CERTIFICATION_HREFS[2], label: t.nav.certItems.spsti.label,       desc: t.nav.certItems.spsti.desc       },
+    { ...CERTIFICATION_HREFS[0], label: t.nav.certItems.entreprises.label,   desc: t.nav.certItems.entreprises.desc   },
+    { ...CERTIFICATION_HREFS[1], label: t.nav.certItems.assureurs.label,     desc: t.nav.certItems.assureurs.desc     },
+    { ...CERTIFICATION_HREFS[2], label: t.nav.certItems.spsti.label,         desc: t.nav.certItems.spsti.desc         },
     { ...CERTIFICATION_HREFS[3], label: t.nav.certItems.certification.label, desc: t.nav.certItems.certification.desc },
   ];
 
-  // Close everything on route change
   useEffect(() => {
     setCertOpen(false);
-    setPhoneOpen(false);
     setLangOpen(false);
     setMobileOpen(false);
     setMobileCertOpen(false);
   }, [location.pathname]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -57,108 +53,113 @@ export default function Navbar() {
   const isTarifs     = location.pathname === '/tarifs';
   const isAPropos    = location.pathname === '/a-propos';
 
+  const navLink = (active: boolean) =>
+    `transition-colors font-medium relative py-1 text-[14px] ${active ? 'text-scanup-blue' : 'text-scanup-graytext hover:text-scanup-navy'}`;
+
+  const activeLine = (active: boolean) => active
+    ? <div className="absolute -bottom-0.5 left-0 right-0 h-[2px] bg-scanup-blue rounded-full" />
+    : null;
+
   return (
     <>
       {/* Top accent bar */}
-      <div className="h-[4px] w-full bg-gradient-to-r from-scanup-blue via-scanup-turquoise to-scanup-blue fixed top-0 z-50" />
+      <div className="h-[3px] w-full bg-gradient-to-r from-scanup-blue via-scanup-turquoise to-scanup-blue fixed top-0 z-50" />
 
-      <nav className="sticky top-[4px] z-40 bg-white/95 backdrop-blur-xl border-b border-black/[0.06]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center gap-8">
+      <nav className="sticky top-[3px] z-40 bg-white/95 backdrop-blur-xl border-b border-black/[0.06]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
 
-          {/* Logo */}
-          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+          {/* ── Logo ───────────────────────────────────────────── */}
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
             <Link to="/" className="flex items-center gap-2">
-              <span className="font-bold text-xl tracking-tight text-scanup-blue">ScanUp</span>
-              <span className="text-scanup-graytext text-sm">by</span>
-              <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-7 w-auto" />
+              <span className="font-bold text-[18px] tracking-tight text-scanup-blue">ScanUp</span>
+              <span className="text-scanup-graytext text-[13px]">by</span>
+              <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-6 w-auto" />
             </Link>
           </motion.div>
 
-          {/* Desktop nav links — centre */}
-          <div className="hidden md:flex items-center gap-6 text-[14px]">
+          {/* ── Desktop nav — truly centred ─────────────────────── */}
+          <div className="hidden md:flex items-center justify-center gap-7">
 
-              {/* Certification dropdown */}
-              <div className="relative" onMouseEnter={onCertEnter} onMouseLeave={onCertLeave}>
-                <button className={`flex items-center gap-1 transition-colors font-medium ${
-                  isCertActive ? 'text-scanup-blue' : 'text-scanup-graytext hover:text-scanup-navy'
-                }`}>
-                  {t.nav.certification}
-                  <motion.span animate={{ rotate: certOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                    <ChevronDown size={13} />
-                  </motion.span>
-                </button>
-                {isCertActive && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-scanup-blue rounded-full" />}
+            {/* Solutions dropdown */}
+            <div className="relative" onMouseEnter={onCertEnter} onMouseLeave={onCertLeave}>
+              <button className={`flex items-center gap-1 ${navLink(isCertActive)}`}>
+                {t.nav.certification}
+                <motion.span animate={{ rotate: certOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                  <ChevronDown size={12} />
+                </motion.span>
+              </button>
+              {activeLine(isCertActive)}
 
-                <AnimatePresence>
-                  {certOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.97 }}
-                      transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                      onMouseEnter={onCertEnter}
-                      onMouseLeave={onCertLeave}
-                      className="absolute top-[calc(100%+12px)] right-0 w-[320px] bg-white rounded-2xl border border-black/[0.08] shadow-xl shadow-black/[0.08] p-2 z-50"
-                    >
-                      {certItems.map(item => {
-                        const Icon   = item.icon;
-                        const active = location.pathname === item.href;
-                        return (
-                          <Link key={item.href} to={item.href}
-                            className={`flex items-start gap-3 p-3 rounded-xl transition-colors group ${
-                              active ? 'bg-scanup-blue/[0.06]' : 'hover:bg-[#f8f9fb]'
-                            }`}>
-                            <div className={`flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 transition-colors ${
-                              active ? 'bg-scanup-blue text-white' : 'bg-[#f1f5f9] text-scanup-graytext group-hover:bg-scanup-blue/10 group-hover:text-scanup-blue'
-                            }`}>
-                              <Icon size={14} />
-                            </div>
-                            <div className="min-w-0">
-                              <p className={`text-[13px] font-semibold leading-tight ${active ? 'text-scanup-blue' : 'text-scanup-navy'}`}>{item.label}</p>
-                              <p className="text-[11px] text-scanup-graytext mt-0.5 leading-snug">{item.desc}</p>
-                            </div>
-                          </Link>
-                        );
-                      })}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+              <AnimatePresence>
+                {certOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                    transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                    onMouseEnter={onCertEnter}
+                    onMouseLeave={onCertLeave}
+                    className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[320px] bg-white rounded-2xl border border-black/[0.08] shadow-xl shadow-black/[0.08] p-2 z-50"
+                  >
+                    {certItems.map(item => {
+                      const Icon   = item.icon;
+                      const active = location.pathname === item.href;
+                      return (
+                        <Link key={item.href} to={item.href}
+                          className={`flex items-start gap-3 p-3 rounded-xl transition-colors group ${
+                            active ? 'bg-scanup-blue/[0.06]' : 'hover:bg-[#f8f9fb]'
+                          }`}>
+                          <div className={`flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 transition-colors ${
+                            active ? 'bg-scanup-blue text-white' : 'bg-[#f1f5f9] text-scanup-graytext group-hover:bg-scanup-blue/10 group-hover:text-scanup-blue'
+                          }`}>
+                            <Icon size={14} />
+                          </div>
+                          <div className="min-w-0">
+                            <p className={`text-[13px] font-semibold leading-tight ${active ? 'text-scanup-blue' : 'text-scanup-navy'}`}>{item.label}</p>
+                            <p className="text-[11px] text-scanup-graytext mt-0.5 leading-snug">{item.desc}</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
-              <Link to="/partenaires" className={`transition-colors font-medium relative ${isReseau ? 'text-scanup-blue' : 'text-scanup-graytext hover:text-scanup-navy'}`}>
-                {t.nav.network}
-                {isReseau && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-scanup-blue rounded-full" />}
-              </Link>
+            <Link to="/partenaires" className={navLink(isReseau)}>
+              {t.nav.network}
+              {activeLine(isReseau)}
+            </Link>
 
-              <Link to="/tarifs" className={`transition-colors font-medium relative ${isTarifs ? 'text-scanup-blue' : 'text-scanup-graytext hover:text-scanup-navy'}`}>
-                Tarifs
-                {isTarifs && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-scanup-blue rounded-full" />}
-              </Link>
+            <Link to="/tarifs" className={navLink(isTarifs)}>
+              {t.nav.pricing}
+              {activeLine(isTarifs)}
+            </Link>
 
-              <Link to="/a-propos" className={`transition-colors font-medium relative ${isAPropos ? 'text-scanup-blue' : 'text-scanup-graytext hover:text-scanup-navy'}`}>
-                À propos
-                {isAPropos && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-scanup-blue rounded-full" />}
-              </Link>
+            <Link to="/a-propos" className={navLink(isAPropos)}>
+              {t.nav.about}
+              {activeLine(isAPropos)}
+            </Link>
 
-              <Link to="/aide-support" className={`transition-colors font-medium relative ${isAide ? 'text-scanup-blue' : 'text-scanup-graytext hover:text-scanup-navy'}`}>
-                {t.nav.help}
-                {isAide && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-scanup-blue rounded-full" />}
-              </Link>
+            <Link to="/aide-support" className={navLink(isAide)}>
+              {t.nav.help}
+              {activeLine(isAide)}
+            </Link>
           </div>
 
-          {/* Right actions */}
-          <div className="flex items-center gap-2 sm:gap-3 ml-auto">
+          {/* ── Right actions ───────────────────────────────────── */}
+          <div className="flex items-center justify-end gap-2">
 
             {/* Language selector */}
             <div className="relative">
               <motion.button
                 whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                onClick={() => { setLangOpen(o => !o); setPhoneOpen(false); }}
+                onClick={() => setLangOpen(o => !o)}
                 className="flex items-center gap-1.5 text-[13px] font-medium text-scanup-navy hover:text-scanup-blue transition-colors border border-black/[0.08] hover:border-scanup-blue/30 rounded-full px-3 py-2"
               >
-                <img src={LANGUAGES.find(l => l.code === lang)?.flagUrl} alt={lang} className="w-5 h-3.5 object-cover rounded-[2px]" />
-                <span className="hidden sm:block text-[12px]">{lang.toUpperCase()}</span>
+                <Globe size={13} />
+                <span className="text-[12px]">{lang.toUpperCase()}</span>
               </motion.button>
 
               <AnimatePresence>
@@ -190,57 +191,23 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {/* Phone button — desktop only */}
-            <div className="relative hidden sm:block">
-              <motion.button
-                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                onClick={() => { setPhoneOpen(o => !o); setLangOpen(false); }}
-                className="flex items-center gap-2 text-[13px] font-medium text-scanup-navy hover:text-scanup-blue transition-colors border border-black/[0.08] hover:border-scanup-blue/30 rounded-full px-3 py-2"
-              >
-                <Phone size={13} />
-                <span className="hidden lg:block">{t.nav.call}</span>
-              </motion.button>
-
-              <AnimatePresence>
-                {phoneOpen && (
-                  <>
-                    <div className="fixed inset-0 z-[100]" onClick={() => setPhoneOpen(false)} />
-                    <motion.div
-                      initial={{ opacity: 0, y: 6, scale: 0.97 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 6, scale: 0.97 }}
-                      transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute right-0 top-[calc(100%+8px)] z-[101] bg-white rounded-2xl border border-black/[0.08] shadow-xl shadow-black/[0.08] p-5 w-[220px]"
-                    >
-                      <p className="text-[10px] font-semibold text-scanup-graytext uppercase tracking-widest mb-2">{t.nav.phoneLabel}</p>
-                      <a href="tel:+33450279102" className="text-[20px] font-bold text-scanup-navy hover:text-scanup-blue transition-colors tracking-tight block mb-3">
-                        {t.nav.phone}
-                      </a>
-                      <a href="tel:+33450279102"
-                        className="flex items-center justify-center gap-2 w-full bg-scanup-blue text-white rounded-xl py-2 text-[12px] font-semibold hover:bg-blue-700 transition-colors">
-                        <Phone size={11} /> {t.nav.callNow}
-                      </a>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </div>
-
+            {/* Accès plateforme — desktop */}
             <motion.a
               href="https://scanup.360skillvue.com/"
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-              className="hidden md:flex items-center gap-1.5 border border-black/[0.08] hover:border-scanup-blue/30 rounded-full px-3 py-1.5 transition-colors"
+              whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+              className="hidden md:flex items-center gap-1.5 border border-black/[0.08] hover:border-scanup-blue/30 rounded-full px-3 py-2 transition-colors whitespace-nowrap"
             >
-              <span className="font-bold text-[13px] text-scanup-blue tracking-tight">ScanUp</span>
-              <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-5 w-auto" />
+              <span className="font-bold text-[13px] text-scanup-blue tracking-tight">Se connecter</span>
             </motion.a>
 
+            {/* CTA — desktop */}
             <motion.a
               href="/aide-support#contact"
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-              className="hidden sm:flex bg-scanup-blue text-white px-4 py-2 rounded-full text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-scanup-blue/20">
+              className="hidden sm:flex bg-scanup-blue text-white px-4 py-2 rounded-full text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-scanup-blue/20 whitespace-nowrap"
+            >
               {t.nav.trial}
             </motion.a>
 
@@ -256,11 +223,10 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ── Mobile menu ────────────────────────────────────────────── */}
+      {/* ── Mobile menu ─────────────────────────────────────────────── */}
       <AnimatePresence>
         {mobileOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -275,12 +241,13 @@ export default function Navbar() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: '100%' }}
               transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed top-0 right-0 bottom-0 z-40 w-[85vw] max-w-[340px] bg-white shadow-2xl flex flex-col"
+              className="fixed top-0 right-0 bottom-0 z-40 w-[85vw] max-w-[320px] bg-white shadow-2xl flex flex-col"
             >
               {/* Mobile header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-black/[0.06]">
                 <Link to="/" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
-                  <span className="font-bold text-lg text-scanup-blue">ScanUp</span>
+                  <span className="font-bold text-[17px] text-scanup-blue">ScanUp</span>
+                  <span className="text-scanup-graytext text-[12px]">by 360SkillVue</span>
                 </Link>
                 <button onClick={() => setMobileOpen(false)}
                   className="w-8 h-8 flex items-center justify-center rounded-lg text-scanup-graytext hover:bg-[#f8f9fb] transition-colors">
@@ -289,10 +256,10 @@ export default function Navbar() {
               </div>
 
               {/* Mobile nav links */}
-              <div className="flex-1 overflow-y-auto py-4 px-4">
+              <div className="flex-1 overflow-y-auto py-3 px-3">
 
-                {/* Certification dropdown */}
-                <div className="mb-1">
+                {/* Solutions dropdown */}
+                <div className="mb-0.5">
                   <button
                     onClick={() => setMobileCertOpen(o => !o)}
                     className="w-full flex items-center justify-between px-3 py-3 rounded-xl text-[14px] font-medium text-scanup-navy hover:bg-[#f8f9fb] transition-colors"
@@ -336,38 +303,24 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
 
-                <Link to="/partenaires"
-                  className={`flex items-center px-3 py-3 rounded-xl text-[14px] font-medium transition-colors mb-1 ${
-                    isReseau ? 'bg-scanup-blue/[0.07] text-scanup-blue' : 'text-scanup-navy hover:bg-[#f8f9fb]'
-                  }`}>
-                  {t.nav.network}
-                </Link>
-
-                <Link to="/tarifs"
-                  className={`flex items-center px-3 py-3 rounded-xl text-[14px] font-medium transition-colors mb-1 ${
-                    isTarifs ? 'bg-scanup-blue/[0.07] text-scanup-blue' : 'text-scanup-navy hover:bg-[#f8f9fb]'
-                  }`}>
-                  Tarifs
-                </Link>
-
-                <Link to="/a-propos"
-                  className={`flex items-center px-3 py-3 rounded-xl text-[14px] font-medium transition-colors mb-1 ${
-                    isAPropos ? 'bg-scanup-blue/[0.07] text-scanup-blue' : 'text-scanup-navy hover:bg-[#f8f9fb]'
-                  }`}>
-                  À propos
-                </Link>
-
-                <Link to="/aide-support"
-                  className={`flex items-center px-3 py-3 rounded-xl text-[14px] font-medium transition-colors mb-1 ${
-                    isAide ? 'bg-scanup-blue/[0.07] text-scanup-blue' : 'text-scanup-navy hover:bg-[#f8f9fb]'
-                  }`}>
-                  {t.nav.help}
-                </Link>
+                {[
+                  { to: '/partenaires', label: t.nav.network,  active: isReseau  },
+                  { to: '/tarifs',      label: t.nav.pricing,   active: isTarifs  },
+                  { to: '/a-propos',    label: t.nav.about,     active: isAPropos },
+                  { to: '/aide-support', label: t.nav.help,     active: isAide    },
+                ].map(item => (
+                  <Link key={item.to} to={item.to}
+                    className={`flex items-center px-3 py-3 rounded-xl text-[14px] font-medium transition-colors mb-0.5 ${
+                      item.active ? 'bg-scanup-blue/[0.07] text-scanup-blue' : 'text-scanup-navy hover:bg-[#f8f9fb]'
+                    }`}>
+                    {item.label}
+                  </Link>
+                ))}
 
                 <div className="my-4 border-t border-black/[0.06]" />
 
                 {/* Language selector */}
-                <div className="px-3 py-2 mb-1">
+                <div className="px-3 py-2">
                   <p className="text-[10px] font-semibold text-scanup-graytext uppercase tracking-widest mb-2 flex items-center gap-1.5">
                     <Globe size={10} /> Langue
                   </p>
@@ -381,35 +334,24 @@ export default function Navbar() {
                             : 'text-scanup-navy border-black/[0.08] hover:bg-[#f8f9fb]'
                         }`}
                       >
-                        <img src={l.flagUrl} alt={l.code} className="w-5 h-3.5 object-cover rounded-[2px]" /> {l.label}
+                        <img src={l.flagUrl} alt={l.code} className="w-5 h-3.5 object-cover rounded-[2px]" />
+                        {l.label}
                       </button>
                     ))}
                   </div>
                 </div>
+              </div>
 
-                <div className="my-2 border-t border-black/[0.06]" />
-
-                <a href="tel:+33450279102"
-                  className="flex items-center gap-3 px-3 py-3 rounded-xl text-[14px] font-medium text-scanup-navy hover:bg-[#f8f9fb] transition-colors mb-1">
-                  <div className="w-7 h-7 rounded-lg bg-scanup-blue/[0.08] flex items-center justify-center">
-                    <Phone size={13} className="text-scanup-blue" />
-                  </div>
-                  {t.nav.phone}
-                </a>
-
+              {/* Mobile CTAs */}
+              <div className="p-4 border-t border-black/[0.06] flex flex-col gap-2">
                 <a
                   href="https://scanup.360skillvue.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-[#f8f9fb] transition-colors w-full mb-1"
+                  className="block w-full border border-scanup-blue/30 text-scanup-blue py-3 rounded-full text-[14px] font-semibold hover:bg-scanup-blue/5 transition-colors text-center"
                 >
-                  <span className="font-bold text-[14px] text-scanup-blue tracking-tight">ScanUp</span>
-                  <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue" className="h-5 w-auto" />
+                  Se connecter
                 </a>
-              </div>
-
-              {/* Mobile CTA */}
-              <div className="p-4 border-t border-black/[0.06]">
                 <a
                   href="/aide-support#contact"
                   className="block w-full bg-scanup-blue text-white py-3 rounded-full text-[14px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20 text-center"

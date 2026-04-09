@@ -35,8 +35,6 @@ const refs = [
   { name: "Revima", src: "/partners/Revima.png" },
 ];
 
-type Audience = { label: string; link: string };
-
 export default function HomePage() {
   const { t } = useLanguage();
 
@@ -59,27 +57,18 @@ export default function HomePage() {
     { tag: t.home.productTagReglementation, name: t.home.product3Name, desc: t.home.product3Desc, icon: FileCheck, link: "/certification-periodique-sante", accent: "#16A34A", accentLight: "rgba(22,163,74,0.07)", highlight: true },
   ];
 
-  const [open, setOpen]         = useState(false);
-  const [selected, setSelected]  = useState<Audience | null>(null);
-  const [cycleIdx, setCycleIdx]  = useState(0);
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<{ label: string; link: string } | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setOpen(false);
     };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
   }, []);
-
-  useEffect(() => {
-    if (selected) return;
-    const timer = setInterval(() => setCycleIdx(i => (i + 1) % audiences.length), 5000);
-    return () => clearInterval(timer);
-  }, [selected, audiences.length]);
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-blue/20">
@@ -107,7 +96,6 @@ export default function HomePage() {
             className="absolute -bottom-24 -right-24 w-[500px] h-[500px] rounded-full"
             style={{ background: "radial-gradient(circle, rgba(51,255,204,0.1) 0%, transparent 70%)" }}
           />
-          {/* Dot grid */}
           <div
             className="absolute inset-0 opacity-[0.035]"
             style={{
@@ -122,30 +110,30 @@ export default function HomePage() {
             <h1 className="text-[22px] sm:text-[42px] md:text-[62px] lg:text-[76px] font-bold leading-[1.2] sm:leading-[1.15] tracking-tight mb-6">
               <span className="block mb-2">{t.home.heroTitle}</span>
 
-              {/* Animated label slot */}
               <span className="relative inline-block" ref={dropdownRef}>
                 <button
                   onClick={() => setOpen(o => !o)}
                   className="inline-flex items-center gap-2 sm:gap-3 focus:outline-none group"
                 >
-                  {/* Spacer (invisible longest label) keeps width stable */}
                   <span className="relative inline-block">
-                    <span
-                      aria-hidden
-                      className="invisible sm:whitespace-nowrap select-none pointer-events-none"
-                    >
+                    {/* Spacer invisible pour stabiliser la largeur */}
+                    <span aria-hidden className="invisible sm:whitespace-nowrap select-none pointer-events-none">
                       Assureurs &amp; Mutuelles ?
                     </span>
                     <AnimatePresence mode="wait">
                       <motion.span
-                        key={selected ? selected.label : audiences[cycleIdx].label}
+                        key={selected ? selected.label : 'placeholder'}
                         initial={{ opacity: 0, y: 28 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -28 }}
-                        transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-                        className="absolute inset-0 flex items-center justify-center text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise sm:whitespace-nowrap"
+                        transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+                        className={`absolute inset-0 flex items-center justify-center sm:whitespace-nowrap ${
+                          selected
+                            ? 'text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise'
+                            : 'text-scanup-blue/40'
+                        }`}
                       >
-                        {selected ? selected.label : audiences[cycleIdx].label} ?
+                        {selected ? `${selected.label} ?` : 'Choisissez une option'}
                       </motion.span>
                     </AnimatePresence>
                   </span>
@@ -153,11 +141,22 @@ export default function HomePage() {
                   <motion.span
                     animate={{ rotate: open ? 180 : 0 }}
                     transition={{ duration: 0.22 }}
-                    className="text-scanup-blue/60 group-hover:text-scanup-blue transition-colors inline-flex"
+                    className="text-scanup-blue group-hover:text-scanup-blue transition-colors inline-flex"
                   >
-                    <ChevronDown size={36} strokeWidth={2.5} />
+                    <ChevronDown size={52} strokeWidth={2} />
                   </motion.span>
                 </button>
+
+                {!selected && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    className="absolute left-1/2 -translate-x-1/2 top-full mt-3 text-[12px] font-medium text-scanup-graytext whitespace-nowrap tracking-wide"
+                  >
+                    ↑ cliquez pour sélectionner
+                  </motion.p>
+                )}
 
                 <AnimatePresence>
                   {open && (
@@ -220,6 +219,34 @@ export default function HomePage() {
               />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ─── VISION FONDATRICE ─────────────────────────────────── */}
+      <section className="py-20 px-6 bg-[#f8f9fb]">
+        <div className="max-w-5xl mx-auto">
+          <FadeIn className="text-center mb-10">
+            <h2 className="text-[26px] sm:text-[34px] font-bold tracking-tight mb-3">
+              La vision de la fondatrice
+            </h2>
+            <p className="text-[15px] text-scanup-graytext max-w-xl mx-auto">
+              Laure Dellamonica, fondatrice de 360SkillVue, vous explique pourquoi ScanUp existe.
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.1} className="flex justify-center">
+            <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-black/10 border border-black/[0.06]"
+              style={{ width: '100%', maxWidth: 360 }}>
+              <div style={{ paddingTop: '177.78%', position: 'relative' }}>
+                <iframe
+                  src="https://www.youtube.com/embed/PlirT4EdL6g"
+                  title="La vision de Laure Dellamonica, fondatrice de 360SkillVue"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                />
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 

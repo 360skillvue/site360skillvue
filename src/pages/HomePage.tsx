@@ -117,22 +117,22 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="max-w-5xl mx-auto px-6 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <FadeIn>
-            <h1 className="text-[36px] sm:text-[48px] md:text-[62px] lg:text-[76px] font-bold leading-[1.15] tracking-tight mb-6">
+            <h1 className="text-[22px] sm:text-[42px] md:text-[62px] lg:text-[76px] font-bold leading-[1.2] sm:leading-[1.15] tracking-tight mb-6">
               <span className="block mb-2">{t.home.heroTitle}</span>
 
               {/* Animated label slot */}
               <span className="relative inline-block" ref={dropdownRef}>
                 <button
                   onClick={() => setOpen(o => !o)}
-                  className="inline-flex items-center gap-3 focus:outline-none group"
+                  className="inline-flex items-center gap-2 sm:gap-3 focus:outline-none group"
                 >
                   {/* Spacer (invisible longest label) keeps width stable */}
                   <span className="relative inline-block">
                     <span
                       aria-hidden
-                      className="invisible whitespace-nowrap select-none pointer-events-none"
+                      className="invisible sm:whitespace-nowrap select-none pointer-events-none"
                     >
                       Assureurs &amp; Mutuelles ?
                     </span>
@@ -143,7 +143,7 @@ export default function HomePage() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -28 }}
                         transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-                        className="absolute inset-0 flex items-center justify-center text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise whitespace-nowrap"
+                        className="absolute inset-0 flex items-center justify-center text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise sm:whitespace-nowrap"
                       >
                         {selected ? selected.label : audiences[cycleIdx].label} ?
                       </motion.span>

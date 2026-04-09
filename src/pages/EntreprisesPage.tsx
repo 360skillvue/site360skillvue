@@ -318,9 +318,7 @@ export default function EntreprisesPage() {
                 <motion.div whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
                   transition={{ duration: 0.25 }}
                   className={`rounded-2xl p-7 h-full flex flex-col transition-shadow relative ${
-                    plan.featured
-                      ? 'bg-scanup-navy text-white'
-                      : 'bg-white border border-black/[0.07]'
+                    plan.featured ? 'bg-scanup-navy text-white' : 'bg-white border border-black/[0.07]'
                   }`}
                 >
                   {plan.featured && (
@@ -346,10 +344,10 @@ export default function EntreprisesPage() {
                   <button
                     onClick={() => navigate('/aide-support')}
                     className={`w-full py-2.5 rounded-xl font-semibold text-[13px] transition-all ${
-                    plan.featured
-                      ? 'bg-white text-scanup-navy hover:bg-scanup-turquoise'
-                      : 'border border-black/10 hover:border-scanup-blue hover:text-scanup-blue'
-                  }`}>
+                      plan.featured
+                        ? 'bg-white text-scanup-navy hover:bg-scanup-turquoise'
+                        : 'border border-black/10 hover:border-scanup-blue hover:text-scanup-blue'
+                    }`}>
                     {plan.cta}
                   </button>
                 </motion.div>

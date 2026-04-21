@@ -39,6 +39,8 @@ export default function Footer() {
           <Link to="/cgv" className="hover:text-white transition-colors">CGV</Link>
           <span aria-hidden="true">·</span>
           <Link to="/politique-confidentialite" className="hover:text-white transition-colors">Politique de confidentialité</Link>
+          <span aria-hidden="true">·</span>
+          <Link to="/revue-de-presse" className="hover:text-white transition-colors">Revue de presse</Link>
         </div>
         <p className="text-center">© {new Date().getFullYear()} 360SkillVue Sàrl — Tous droits réservés</p>
       </div>

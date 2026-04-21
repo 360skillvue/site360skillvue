@@ -8,7 +8,11 @@ import {
   ArrowRight,
   Mail,
   ClipboardCheck,
-  HeartPulse
+  HeartPulse,
+  Lock,
+  Scale,
+  Flag,
+  Hospital
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -166,6 +170,70 @@ export default function SPSTIPage() {
               />
             </div>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* Sécurité & Conformité */}
+      <section className="py-24 px-6 bg-[#f8f9fb]">
+        <div className="max-w-5xl mx-auto">
+          <FadeIn className="text-center mb-14">
+            <span className="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-scanup-blue mb-4">
+              Sécurité &amp; Conformité
+            </span>
+            <h2 className="text-[28px] md:text-[40px] font-bold tracking-tight mb-4">
+              Vos données de santé entre de bonnes mains
+            </h2>
+            <p className="text-[16px] text-scanup-graytext max-w-xl mx-auto leading-relaxed">
+              La confiance est au cœur de notre plateforme. Nous appliquons les standards les plus exigeants.
+            </p>
+          </FadeIn>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                icon: Hospital,
+                color: 'text-scanup-blue',
+                bg: 'bg-scanup-blue/8',
+                title: 'Hébergement HDS',
+                desc: 'Infrastructure certifiée Hébergeur de Données de Santé, conformément aux exigences du Code de la santé publique.',
+              },
+              {
+                icon: Lock,
+                color: 'text-scanup-turquoise',
+                bg: 'bg-scanup-turquoise/10',
+                title: 'Anonymisation native',
+                desc: 'Les données collectées sont anonymisées dès leur réception. Aucun témoignage ne peut être relié à un salarié identifié.',
+              },
+              {
+                icon: Scale,
+                color: 'text-scanup-warning',
+                bg: 'bg-scanup-warning/10',
+                title: 'Conformité RGPD',
+                desc: 'Traitement des données en totale conformité avec le Règlement Général sur la Protection des Données.',
+              },
+              {
+                icon: Flag,
+                color: 'text-scanup-success',
+                bg: 'bg-scanup-success/10',
+                title: 'Souveraineté française',
+                desc: 'Toutes les données sont hébergées en France, sur des serveurs situés sur le territoire national.',
+              },
+            ].map((item, i) => (
+              <FadeIn key={i} delay={i * 0.08}>
+                <motion.div
+                  whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0,0,0,0.07)' }}
+                  transition={{ duration: 0.25 }}
+                  className="bg-white rounded-2xl border border-black/[0.07] p-6 h-full flex flex-col"
+                >
+                  <div className={`w-11 h-11 rounded-xl ${item.bg} flex items-center justify-center mb-4 flex-shrink-0`}>
+                    <item.icon className={item.color} size={20} strokeWidth={1.75} />
+                  </div>
+                  <h3 className="text-[15px] font-bold text-scanup-navy mb-2">{item.title}</h3>
+                  <p className="text-[13px] text-scanup-graytext leading-relaxed flex-grow">{item.desc}</p>
+                </motion.div>
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -17,6 +17,7 @@ const CGUPage                      = lazy(() => import('./pages/CGUPage'));
 const CGVPage                      = lazy(() => import('./pages/CGVPage'));
 const PolitiqueConfidentialitePage = lazy(() => import('./pages/PolitiqueConfidentialitePage'));
 const AProposPage                  = lazy(() => import('./pages/AProposPage'));
+const RevueDePressePage            = lazy(() => import('./pages/RevueDePressePage'));
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/cgv" element={<CGVPage />} />
             <Route path="/politique-confidentialite" element={<PolitiqueConfidentialitePage />} />
             <Route path="/a-propos" element={<AProposPage />} />
+            <Route path="/revue-de-presse" element={<RevueDePressePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>

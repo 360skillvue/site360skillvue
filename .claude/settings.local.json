@@ -44,7 +44,9 @@
       "Bash(curl -sL \"https://picsum.photos/seed/dashboard/800/600\" -o img3.jpg)",
       "Bash(curl -sL \"https://picsum.photos/seed/dashboard2/800/600\" -o img4.jpg)",
       "Bash(grep -r \"Footer\\\\|footer\\\\|<footer\" /c/Users/Adam/Documents/GitHub/site360skillvue/src/pages/*.tsx)",
-      "Bash(grep -r \"viewport\\\\|meta.*mobile\\\\|tailwind\" /c/Users/Adam/Documents/GitHub/site360skillvue/index.html /c/Users/Adam/Documents/GitHub/site360skillvue/tailwind.config.*)"
+      "Bash(grep -r \"viewport\\\\|meta.*mobile\\\\|tailwind\" /c/Users/Adam/Documents/GitHub/site360skillvue/index.html /c/Users/Adam/Documents/GitHub/site360skillvue/tailwind.config.*)",
+      "Bash(magick --version)",
+      "Bash(convert --version)"
     ]
   }
 }

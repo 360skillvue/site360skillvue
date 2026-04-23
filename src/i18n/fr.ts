@@ -634,4 +634,31 @@ export const fr = {
     ctaButton: 'Demander une démo SPSTI',
     ctaEmail: 'contact@360skillvue.com',
   },
+  revueDePresse: {
+    metaTitle: 'Revue de presse — 360SkillVue',
+    metaDescription: 'Retrouvez les articles, interviews et mentions de 360SkillVue dans les médias.',
+    badge: 'Médias & presse',
+    title: 'Revue de presse',
+    subtitle: 'Articles, interviews et mentions de 360SkillVue dans les médias spécialisés.',
+    items: [
+      {
+        date: '16 avril 2026',
+        label: 'Communiqué de presse',
+        title: 'Communiqué de presse — 360SkillVue',
+        description: 'Découvrez les dernières actualités et annonces officielles de 360SkillVue.',
+        href: '/CP_360SKILLVUE_20260416.pdf.pdf',
+      },
+    ],
+  },
+  footer: {
+    about: 'À propos',
+    legal: 'Mentions légales',
+    cgu: 'CGU',
+    cgv: 'CGV',
+    privacy: 'Politique de confidentialité',
+    press: 'Revue de presse',
+    login: 'Se connecter',
+    langLabel: 'Langue',
+    rights: 'Tous droits réservés',
+  },
 };

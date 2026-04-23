@@ -4,24 +4,7 @@ import { Newspaper, FileText, ExternalLink } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageMeta from '../components/PageMeta';
-
-type PressItem = {
-  date: string;
-  label: string;
-  title: string;
-  description: string;
-  href: string;
-};
-
-const PRESS_ITEMS: PressItem[] = [
-  {
-    date: '16 avril 2026',
-    label: 'Communiqué de presse',
-    title: 'Communiqué de presse — 360SkillVue',
-    description: 'Découvrez les dernières actualités et annonces officielles de 360SkillVue.',
-    href: '/CP_360SKILLVUE_20260416.pdf.pdf',
-  },
-];
+import { useLanguage } from '../i18n';
 
 const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: string }> = ({
   children, delay = 0, className = '',
@@ -38,11 +21,14 @@ const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 );
 
 export default function RevueDePressePage() {
+  const { t } = useLanguage();
+  const rp = t.revueDePresse;
+
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white flex flex-col">
       <PageMeta
-        title="Revue de presse — 360SkillVue"
-        description="Retrouvez les articles, interviews et mentions de 360SkillVue dans les médias."
+        title={rp.metaTitle}
+        description={rp.metaDescription}
         path="/revue-de-presse"
       />
       <Navbar />
@@ -59,17 +45,17 @@ export default function RevueDePressePage() {
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-scanup-blue/20 bg-scanup-blue/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-scanup-blue mb-6">
               <Newspaper size={14} />
-              Médias & presse
+              {rp.badge}
             </span>
           </Reveal>
           <Reveal delay={0.08}>
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-6">
-              Revue de presse
+              {rp.title}
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="text-lg text-scanup-navy/60 max-w-xl mx-auto">
-              Articles, interviews et mentions de 360SkillVue dans les médias spécialisés.
+              {rp.subtitle}
             </p>
           </Reveal>
         </div>
@@ -77,7 +63,7 @@ export default function RevueDePressePage() {
 
       <section className="flex-1 bg-gray-50/60 py-16 px-6">
         <div className="max-w-4xl mx-auto flex flex-col gap-6">
-          {PRESS_ITEMS.map((item, i) => (
+          {rp.items.map((item, i) => (
             <Reveal key={item.href} delay={i * 0.06}>
               <a
                 href={item.href}

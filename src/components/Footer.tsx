@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../i18n';
 
 export default function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="bg-scanup-navy border-t border-white/5 py-10 text-white/40 text-sm">
       <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-4">
@@ -30,19 +32,19 @@ export default function Footer() {
           </a>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-          <Link to="/a-propos" className="hover:text-white transition-colors">À propos</Link>
+          <Link to="/a-propos" className="hover:text-white transition-colors">{t.footer.about}</Link>
           <span aria-hidden="true">·</span>
-          <Link to="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</Link>
+          <Link to="/mentions-legales" className="hover:text-white transition-colors">{t.footer.legal}</Link>
           <span aria-hidden="true">·</span>
-          <Link to="/cgu" className="hover:text-white transition-colors">CGU</Link>
+          <Link to="/cgu" className="hover:text-white transition-colors">{t.footer.cgu}</Link>
           <span aria-hidden="true">·</span>
-          <Link to="/cgv" className="hover:text-white transition-colors">CGV</Link>
+          <Link to="/cgv" className="hover:text-white transition-colors">{t.footer.cgv}</Link>
           <span aria-hidden="true">·</span>
-          <Link to="/politique-confidentialite" className="hover:text-white transition-colors">Politique de confidentialité</Link>
+          <Link to="/politique-confidentialite" className="hover:text-white transition-colors">{t.footer.privacy}</Link>
           <span aria-hidden="true">·</span>
-          <Link to="/revue-de-presse" className="hover:text-white transition-colors">Revue de presse</Link>
+          <Link to="/revue-de-presse" className="hover:text-white transition-colors">{t.footer.press}</Link>
         </div>
-        <p className="text-center">© {new Date().getFullYear()} 360SkillVue Sàrl — Tous droits réservés</p>
+        <p className="text-center">© {new Date().getFullYear()} 360SkillVue Sàrl — {t.footer.rights}</p>
       </div>
     </footer>
   );

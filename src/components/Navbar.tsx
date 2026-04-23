@@ -199,7 +199,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="hidden md:flex items-center gap-1.5 border border-black/[0.08] hover:border-scanup-blue/30 rounded-full px-3 py-2 transition-colors whitespace-nowrap"
             >
-              <span className="font-bold text-[13px] text-scanup-blue tracking-tight">Se connecter</span>
+              <span className="font-bold text-[13px] text-scanup-blue tracking-tight">{t.nav.login}</span>
             </motion.a>
 
             {/* CTA — desktop */}
@@ -322,7 +322,7 @@ export default function Navbar() {
                 {/* Language selector */}
                 <div className="px-3 py-2">
                   <p className="text-[10px] font-semibold text-scanup-graytext uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                    <Globe size={10} /> Langue
+                    <Globe size={10} /> {t.footer.langLabel}
                   </p>
                   <div className="flex gap-2 flex-wrap">
                     {LANGUAGES.map(l => (
@@ -350,7 +350,7 @@ export default function Navbar() {
                   rel="noopener noreferrer"
                   className="block w-full border border-scanup-blue/30 text-scanup-blue py-3 rounded-full text-[14px] font-semibold hover:bg-scanup-blue/5 transition-colors text-center"
                 >
-                  Se connecter
+                  {t.nav.login}
                 </a>
                 <a
                   href="/aide-support#contact"

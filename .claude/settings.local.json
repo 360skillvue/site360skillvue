@@ -46,7 +46,11 @@
       "Bash(grep -r \"Footer\\\\|footer\\\\|<footer\" /c/Users/Adam/Documents/GitHub/site360skillvue/src/pages/*.tsx)",
       "Bash(grep -r \"viewport\\\\|meta.*mobile\\\\|tailwind\" /c/Users/Adam/Documents/GitHub/site360skillvue/index.html /c/Users/Adam/Documents/GitHub/site360skillvue/tailwind.config.*)",
       "Bash(magick --version)",
-      "Bash(convert --version)"
+      "Bash(convert --version)",
+      "Bash(awk -F/ '{print $2}')",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3002/)",
+      "Bash(curl -s http://localhost:3002/)",
+      "Bash(/usr/bin/grep *)"
     ]
   }
 }

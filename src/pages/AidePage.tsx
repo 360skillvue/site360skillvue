@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  ChevronDown, Mail, Phone, Clock, CheckCircle2, ArrowRight, CalendarDays,
+  ChevronDown, Mail, Clock, CheckCircle2, ArrowRight, CalendarDays,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -287,7 +287,6 @@ export default function AidePage() {
                     {/* Contact info strip */}
                     <div className="border-t border-black/[0.05] bg-[#f8f9fb] px-7 py-4 flex flex-wrap gap-5">
                       {[
-                        { icon: Phone, value: t.aide.contactPhone, href: 'tel:+33450279102' },
                         { icon: Mail,  value: t.aide.contactEmail, href: 'mailto:support@360skillvue.com' },
                         { icon: Clock, value: t.aide.contactHours, href: undefined },
                       ].map(({ icon: Icon, value, href }) => (

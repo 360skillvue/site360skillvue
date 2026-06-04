@@ -120,7 +120,7 @@ export default function CertificationPage() {
         event_label: 'Landing Page Certification'
       });
     }
-    if (eventName.includes('demo')) navigate('/aide-support');
+    navigate('/aide-support');
   };
 
   return (
@@ -181,11 +181,12 @@ export default function CertificationPage() {
               className="relative z-10"
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue/20 to-scanup-turquoise/20 rounded-2xl transform translate-x-4 translate-y-4 blur-sm"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80"
-                alt="Certification qualité santé travail"
+              <img
+                src="/medecin-certification.webp"
+                alt="Médecin remplissant un dossier de certification"
                 className="relative rounded-2xl shadow-2xl border border-scanup-white/50 w-full object-cover"
-                referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
           </FadeIn>
@@ -333,10 +334,9 @@ export default function CertificationPage() {
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue to-scanup-turquoise rounded-2xl transform translate-x-3 translate-y-3 opacity-20 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-500"></div>
                 <img
-                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
-                  alt="Tableau de bord 360SkillVue"
+                  src="/dashboard-rh.webp"
+                  alt="Tableau de bord 360SkillVue — suivi de la certification"
                   className="relative rounded-2xl shadow-xl border border-scanup-white w-full object-cover transition-transform duration-500 group-hover:-translate-y-1"
-                  referrerPolicy="no-referrer"
                   loading="lazy"
                   decoding="async"
                 />

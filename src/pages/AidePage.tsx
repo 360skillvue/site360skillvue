@@ -287,7 +287,7 @@ export default function AidePage() {
                     {/* Contact info strip */}
                     <div className="border-t border-black/[0.05] bg-[#f8f9fb] px-7 py-4 flex flex-wrap gap-5">
                       {[
-                        { icon: Mail,  value: t.aide.contactEmail, href: 'mailto:support@360skillvue.com' },
+                        { icon: Mail,  value: t.aide.contactEmail, href: 'mailto:hello@360skillvue.com' },
                         { icon: Clock, value: t.aide.contactHours, href: undefined },
                       ].map(({ icon: Icon, value, href }) => (
                         href ? (

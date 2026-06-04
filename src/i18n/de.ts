@@ -11,10 +11,11 @@ export const de = {
     phone: '+33 4 50 27 91 02',
     phoneLabel: 'Telefon',
     callNow: 'Jetzt anrufen',
+    maintenance: 'ScanUp wird mittwochs von 12 bis 14 Uhr gewartet.',
     certItems: {
       entreprises: { label: 'Unternehmen & HR', desc: 'Verwalten Sie die Gesundheit Ihrer Mitarbeitenden am Arbeitsplatz' },
       assureurs: { label: 'Versicherer & Kassen', desc: 'Reduzieren Sie Gesundheitsrisiken und -kosten' },
-      spsti: { label: 'SPSTI', desc: 'Arbeitsmedizinische Präventionsdienste' },
+      spsti: { label: 'Akteure der Arbeitsmedizin', desc: 'Arbeitsmedizinische Präventionsdienste' },
       certification: { label: 'Gesundheitszertifizierung', desc: 'Periodische Zertifizierung und regulatorische Überwachung' },
     },
   },
@@ -24,7 +25,7 @@ export const de = {
     audiences: {
       assureurs: 'Versicherer & Kassen',
       entreprises: 'Unternehmen & HR',
-      spsti: 'SPSTI',
+      spsti: 'Akteur der Arbeitsmedizin',
       sante: 'Gesundheitswesen',
     },
     trustStrip: 'Sie vertrauen uns',
@@ -120,7 +121,7 @@ export const de = {
     faq: [
       {
         q: 'Wie funktioniert ScanUp?',
-        a: 'ScanUp ist ein Screening-Tool für die Gesundheit am Arbeitsplatz, das Ihren Mitarbeitenden regelmässig Fragebögen zusendet. Unsere KI-Analyse erkennt schwache Signale und erstellt individuelle sowie kollektive Auswertungen in Echtzeit.',
+        a: 'ScanUp ist ein Screening-Tool für die Gesundheit am Arbeitsplatz, das auf Audio- und Videoaufnahmen in realen Arbeitssituationen basiert. Unsere Experten — Ergonomen und Arbeitspsychologen — analysieren jede Aufnahme, um schwache Signale von MSE und PSR zu erkennen, und erstellen individuelle sowie kollektive Auswertungen in Echtzeit.',
       },
       {
         q: 'Wer kann ScanUp nutzen?',
@@ -148,7 +149,7 @@ export const de = {
       },
       {
         q: 'Wie kontaktiere ich den Support?',
-        a: 'Per E-Mail an support@360skillvue.com oder telefonisch unter +33 4 50 27 91 02, Montag bis Freitag von 9 bis 18 Uhr. Premium-Kunden profitieren von einem bevorzugten Zugang.',
+        a: 'Per E-Mail an hello@360skillvue.com oder telefonisch unter +33 4 50 27 91 02, Montag bis Freitag von 9 bis 18 Uhr. Premium-Kunden profitieren von einem bevorzugten Zugang.',
       },
     ],
     contactBadge: 'Kontakt',
@@ -182,7 +183,7 @@ export const de = {
     calendlyTitle: 'Präsentation buchen',
     calendlySubtitle: 'Wählen Sie einen Termin mit unserem Team',
     contactPhone: '+33 4 50 27 91 02',
-    contactEmail: 'support@360skillvue.com',
+    contactEmail: 'hello@360skillvue.com',
     contactHours: 'Mo–Fr, 9–18 Uhr',
   },
   certification: {
@@ -431,10 +432,10 @@ export const de = {
     badge: 'Preise',
     title: 'Ein Angebot für jede',
     titleHighlight: 'Organisation.',
-    subtitle: '14 Tage kostenlos testen · ab 10 €/Nutzer/Jahr eigenständig · schlüsselfertige Pakete mit unseren Experten.',
+    subtitle: '',
     plans: [
       { name: 'Kostenlose Testversion', price: 'Kostenlos', sub: '14-Tage-Test', items: ['5 Screenings', 'Dashboard', 'Expertenanalyse'], cta: 'Starten' },
-      { name: 'Zugangspaket', price: '10 €', sub: '/ Nutzer / Jahr zzgl. MwSt.', items: ['Unbegrenzte Screenings', 'Massgeschneiderte MSE & PSR Module', 'Ihre Experten eigenständig'], cta: 'Termin vereinbaren' },
+      { name: 'Zugangspaket', price: 'Ab 500 €', sub: '/ Experte / Monat zzgl. MwSt.', items: ['Unbegrenzte Screenings', 'Massgeschneiderte MSE & PSR Module', 'Ihre Experten eigenständig'], cta: 'Termin vereinbaren' },
       { name: 'Pack 100', price: '2.700 €', sub: 'zzgl. MwSt. · 100 Screenings', items: ['Massgeschneiderte Module', 'Qualifizierung durch unsere Experten', 'Team-Dashboard'], cta: 'Termin vereinbaren' },
       { name: 'Pack Impact 50', price: '4.475 €', sub: 'zzgl. MwSt. · 50 Screenings', items: ['Individuelles Management-Feedback', 'Präventionsaktionsplan', 'Mit der Geschäftsführung erarbeitet'], cta: 'Termin vereinbaren' },
     ],
@@ -450,7 +451,7 @@ export const de = {
     q1: 'Haben Sie interne Ergonomen oder Arbeitspsychologen?',
     q1Yes: 'JA', q1YesPlan: 'Zugangspaket',
     q1YesDesc: 'Ihre Experten nutzen die Plattform eigenständig. Sie erstellen Module, führen Bewertungen durch und qualifizieren Screenings.',
-    q1YesPrice: '10 €/Nutzer/Jahr',
+    q1YesPrice: 'Ab 500 €/Experte/Monat',
     q1No: 'NEIN', q1NoPlan: 'Pack 100 oder Pack Impact 50',
     q1NoDesc: 'Unsere Ergonomen und Psychologen führen die Screenings für Sie durch.',
     q1NoNext: 'Weiter zu Frage 2',
@@ -465,7 +466,7 @@ export const de = {
     faqs: [
       { q: 'Was sind ScanUp PSR und MSE?', a: 'Wissenschaftlich validierte Bewertungsmodule zur Erkennung von psychosozialen Risiken und Muskel-Skelett-Erkrankungen. Ergebnisse in 48 Stunden.' },
       { q: 'Sind die Mitarbeiterdaten vertraulich?', a: 'Absolut. Individualdaten sind streng vertraulich. Die Personalabteilung hat nur Zugang zu aggregierten, anonymisierten Daten.' },
-      { q: 'Was ist der Unterschied zwischen dem Zugangspaket und den Packs?', a: 'Das Zugangspaket (10 €/Nutzer/Jahr) ist für Organisationen mit internen Experten gedacht. Pack 100 und Impact 50 beinhalten Screenings durch unsere eigenen Experten.' },
+      { q: 'Was ist der Unterschied zwischen dem Zugangspaket und den Packs?', a: 'Das Zugangspaket (ab 500 €/Experte/Monat) ist für Organisationen mit internen Experten gedacht — die Abrechnung erfolgt nach der Anzahl der Bewertenden. Pack 100 und Impact 50 beinhalten Screenings durch unsere eigenen Experten.' },
       { q: 'Ersetzt dies das Gefährdungsbeurteilungsdokument?', a: 'Nein, es ergänzt es. Unsere Dashboards liefern objektive Daten zur Aktualisierung und Begründung von Aktionsplänen.' },
       { q: 'Wie lange dauert es bis zum Start?', a: '48 Stunden. Ihre Mitarbeitenden greifen per QR-Code oder E-Mail auf die Fragebögen zu, ohne Download, von jedem Gerät aus.' },
       { q: 'Gibt es eine Mindestlaufzeit?', a: 'Keine Mindestlaufzeit. Credits sind 12 Monate gültig. Abonnements können jederzeit ohne Gebühren oder Kündigungsfristen gekündigt werden.' },
@@ -518,6 +519,24 @@ export const de = {
     subtitle: 'Die gesuchte Seite existiert nicht oder wurde verschoben.',
     button: 'Zurück zur Startseite',
   },
+  confirmation: {
+    badge: 'Anfrage erhalten',
+    title: 'Vielen Dank, Ihr Termin ist bestätigt',
+    subtitle: 'Wir haben Ihre Buchung erhalten. Sie erhalten eine Bestätigungs-E-Mail mit dem Videokonferenz-Link und eine automatische Erinnerung vor dem Termin.',
+    step1Title: 'E-Mail-Bestätigung',
+    step1Desc: 'Prüfen Sie Ihren Posteingang (und Spam-Ordner) für die Termindetails.',
+    step2Title: 'Bereiten Sie Ihre Fragen vor',
+    step2Desc: 'Notieren Sie sich die Themen, die Sie besprechen möchten, um den größten Nutzen aus der Präsentation zu ziehen.',
+    step3Title: 'Bis bald',
+    step3Desc: 'Unser Team wird Sie zum vereinbarten Zeitpunkt kontaktieren, um Ihnen ScanUp und 360SkillVue vorzustellen.',
+    exploreTitle: 'Entdecken Sie in der Zwischenzeit unsere Lösungen',
+    exploreSubtitle: 'Einige nützliche Seiten zur Vorbereitung auf Ihr Gespräch.',
+    linkCertification: 'Periodische Gesundheitszertifizierung',
+    linkEntreprises: 'Unternehmen & HR',
+    linkSpsti: 'Arbeitsmedizinische Dienste',
+    backHome: 'Zurück zur Startseite',
+    contact: 'Eine Frage? Kontaktieren Sie uns',
+  },
   spsti: {
     heroBadge: 'Primärprävention & Arbeitsplatzsicherung',
     heroTitle: 'Früherkennung und',
@@ -536,8 +555,29 @@ export const de = {
     team1Desc: 'Teilen Sie Informationen und koordinieren Sie Ihre Präventionsmassnahmen in Echtzeit.',
     team2Title: 'Rückverfolgbarkeit der Massnahmen',
     team2Desc: 'Gewährleisten Sie eine rigorose und konforme Nachverfolgung jeder Intervention und Empfehlung.',
+    featuresLabel: 'Über das Screening hinaus',
+    featuresTitle: 'Eine vollständige Plattform zur Begleitung Ihrer Mitarbeitenden',
+    featuresSubtitle: 'Vom schwachen Signal zur konkreten Massnahme: 360SkillVue endet nicht bei der Erkennung.',
+    features: [
+      {
+        title: 'Weiterleitung an ein geeignetes Angebot',
+        desc: 'Nach Erkennung eines Risikos kann der Experte den Teilnehmenden direkt an ein geeignetes Angebot weiterleiten — Ergonome, Psychologe, Arbeitsmediziner, individuelle Begleitung.',
+      },
+      {
+        title: 'Erstellung von Schulungsmodulen',
+        desc: 'Entwickeln und verteilen Sie Ihre eigenen Online-Schulungs- und Sensibilisierungsmodule direkt über die Plattform, ohne technische Kenntnisse.',
+      },
+      {
+        title: 'Qualiopi-konform',
+        desc: 'Plattform konform mit der Qualiopi-Zertifizierung. IEF Biologie, ein Qualiopi-zertifizierter Schulungsanbieter, nutzt 360SkillVue bereits für seine Lehrpfade.',
+      },
+      {
+        title: 'Mehrsprachige Plattform',
+        desc: 'Oberfläche und Pfade verfügbar auf Französisch, Englisch, Deutsch und Italienisch, um Ihre internationalen Teams zu unterstützen.',
+      },
+    ],
     ctaTitle: 'Optimieren Sie Ihre Präventionsmassnahmen',
-    ctaButton: 'SPSTI-Demo anfordern',
+    ctaButton: 'Demo anfordern',
     ctaEmail: 'contact@360skillvue.com',
   },
   revueDePresse: {
@@ -547,6 +587,14 @@ export const de = {
     title: 'Pressespiegel',
     subtitle: 'Artikel, Interviews und Erwähnungen von 360SkillVue in Fachmedien.',
     items: [
+      {
+        date: '27. Mai 2026',
+        label: 'Bilan.ch',
+        title: 'Kartografie des Unwohlseins im Unternehmen',
+        description: 'Porträt von Laure Dellamonica und 360SkillVue, der in Saint-Sulpice entwickelten Lösung zur Früherkennung von Arbeitsausfällen.',
+        href: 'https://epaper.bilan.ch/read/600/600/2026-05-27/89',
+        image: '/bilan-cartographie-mal-etre.webp',
+      },
       {
         date: '16. April 2026',
         label: 'Pressemitteilung',

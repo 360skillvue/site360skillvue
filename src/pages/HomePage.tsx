@@ -81,7 +81,7 @@ export default function HomePage() {
       <Navbar />
 
       {/* ─── HERO ──────────────────────────────────────────────── */}
-      <section className="relative flex flex-col items-center justify-center min-h-[78vh] pt-16 pb-20 overflow-hidden">
+      <section className="relative flex flex-col items-center justify-center min-h-[78vh] pt-16 pb-20">
         {/* Background orbs */}
         <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
           <motion.div

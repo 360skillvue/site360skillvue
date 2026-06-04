@@ -64,7 +64,7 @@ export default function AssureursPage() {
           <FadeIn delay={0.2} className="relative">
             <motion.div animate={{ y: [-8, 8, -8] }} transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }} className="relative z-10">
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue/20 to-scanup-turquoise/20 rounded-2xl transform translate-x-4 translate-y-4 blur-sm" />
-              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" alt="Réunion professionnelle assureurs"
+              <img src="/salarie-capture.webp" alt="Captation audio sur smartphone par un salarié"
                 className="relative rounded-2xl shadow-2xl border border-white/50 w-full object-cover" loading="lazy" decoding="async" />
             </motion.div>
           </FadeIn>
@@ -114,7 +114,7 @@ export default function AssureursPage() {
           <FadeIn delay={0.2}>
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue to-scanup-turquoise rounded-2xl transform translate-x-3 translate-y-3 opacity-15" />
-              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Visualisation de données"
+              <img src="/psychologue-analyse.webp" alt="Analyse d'une captation audio par un psychologue"
                 className="relative rounded-2xl shadow-xl border border-white w-full object-cover" loading="lazy" decoding="async" />
             </div>
           </FadeIn>
@@ -174,18 +174,22 @@ export default function AssureursPage() {
               <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-2">{ta.kpiLabel}</p>
               <h3 className="text-[20px] md:text-[26px] font-bold mb-3 tracking-tight">{ta.kpiTitle}</h3>
               <p className="text-[14px] text-scanup-graytext mb-8 leading-relaxed max-w-2xl">{ta.kpiSubtitle}</p>
-              <div className="flex flex-col sm:flex-row gap-6">
-                {ta.kpiSteps.map((k: any, i: number) => (
-                  <div key={i} className="flex gap-3 items-start flex-1">
-                    <div className="w-7 h-7 rounded-full bg-scanup-blue text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
-                      {i + 1}
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="flex flex-col gap-6">
+                  {ta.kpiSteps.map((k: any, i: number) => (
+                    <div key={i} className="flex gap-3 items-start">
+                      <div className="w-7 h-7 rounded-full bg-scanup-blue text-white text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                        {i + 1}
+                      </div>
+                      <div>
+                        <p className="text-[14px] font-semibold">{k.title}</p>
+                        <p className="text-[12px] text-scanup-graytext leading-relaxed">{k.body}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[14px] font-semibold">{k.title}</p>
-                      <p className="text-[12px] text-scanup-graytext leading-relaxed">{k.body}</p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <img src="/dashboard-rh.webp" alt="Tableau de bord 360SkillVue : taux de dépistage positif et cartographie des risques"
+                  className="w-full rounded-xl" loading="lazy" decoding="async" />
               </div>
             </div>
           </FadeIn>

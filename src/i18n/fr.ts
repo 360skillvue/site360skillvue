@@ -11,10 +11,11 @@ export const fr = {
     phone: '+33 4 50 27 91 02',
     phoneLabel: 'Téléphone',
     callNow: 'Appeler maintenant',
+    maintenance: 'ScanUp est en maintenance le mercredi de 12h à 14h.',
     certItems: {
       entreprises: { label: 'Entreprises & DRH', desc: 'Gérez la santé au travail de vos collaborateurs' },
       assureurs: { label: 'Assureurs & Mutuelles', desc: 'Réduisez les risques et les coûts de santé' },
-      spsti: { label: 'SPSTI', desc: 'Services de prévention et santé au travail' },
+      spsti: { label: 'Acteurs de la Santé au travail', desc: 'Services de prévention et santé au travail' },
       certification: { label: 'Certification Santé', desc: 'Certification périodique et suivi réglementaire' },
     },
   },
@@ -24,7 +25,7 @@ export const fr = {
     audiences: {
       assureurs: 'Assureurs & Mutuelles',
       entreprises: 'Entreprises & DRH',
-      spsti: 'SPSTI',
+      spsti: 'Acteur de la Santé au travail',
       sante: 'Secteur santé',
     },
     trustStrip: 'Ils nous font confiance',
@@ -120,7 +121,7 @@ export const fr = {
     faq: [
       {
         q: 'Comment fonctionne ScanUp ?',
-        a: 'ScanUp est un outil de screening santé au travail qui soumet des questionnaires périodiques à vos collaborateurs. Notre moteur d\'analyse IA identifie les signaux faibles et génère des bilans individuels et collectifs en temps réel.',
+        a: 'ScanUp est un outil de dépistage santé au travail basé sur des captations audio et vidéo réalisées en situation réelle. Nos experts — ergonomes, psychologues du travail — analysent chaque captation pour identifier les signaux faibles de TMS et RPS, et génèrent des bilans individuels et collectifs en temps réel.',
       },
       {
         q: 'Qui peut utiliser ScanUp ?',
@@ -148,7 +149,7 @@ export const fr = {
       },
       {
         q: 'Comment contacter le support ?',
-        a: 'Par email à support@360skillvue.com ou par téléphone au +33 4 50 27 91 02, du lundi au vendredi de 9h à 18h. Les clients premium bénéficient d\'un accès prioritaire.',
+        a: 'Par email à hello@360skillvue.com ou par téléphone au +33 4 50 27 91 02, du lundi au vendredi de 9h à 18h. Les clients premium bénéficient d\'un accès prioritaire.',
       },
     ],
     contactBadge: 'Contact',
@@ -182,7 +183,7 @@ export const fr = {
     calendlyTitle: 'Réserver une présentation',
     calendlySubtitle: 'Choisissez un créneau avec notre équipe',
     contactPhone: '+33 4 50 27 91 02',
-    contactEmail: 'support@360skillvue.com',
+    contactEmail: 'hello@360skillvue.com',
     contactHours: 'Lun–Ven, 9h–18h',
   },
   certification: {
@@ -248,7 +249,7 @@ export const fr = {
       {
         section: 'Le cadre réglementaire',
         q: 'Qu\'est-ce que la certification périodique ?',
-        a: 'C\'est une obligation légale instaurée par la loi du 24 juillet 2019 qui impose aux professionnels de santé à ordre de valider un parcours de maintien des compétences sur un cycle de 6 ans. Ce parcours est structuré autour de 4 axes : actualisation des connaissances et compétences, renforcement de la qualité des pratiques professionnelles, amélioration de la relation avec le patient, et prise en compte de la santé personnelle du professionnel.',
+        a: 'C\'est une obligation légale instaurée par la loi du 24 juillet 2019 qui impose aux professionnels de santé à ordre de valider un parcours de maintien des compétences. À titre exceptionnel, le premier cycle court jusqu\'au 31 décembre 2031 (9 ans) ; les cycles suivants seront de 6 ans. Ce parcours est structuré autour de 4 axes : actualisation des connaissances et compétences, renforcement de la qualité des pratiques professionnelles, amélioration de la relation avec le patient, et prise en compte de la santé personnelle du professionnel.',
       },
       {
         section: 'Le cadre réglementaire',
@@ -258,7 +259,7 @@ export const fr = {
       {
         section: 'Le cadre réglementaire',
         q: 'Combien d\'actions chaque professionnel doit-il valider ?',
-        a: 'Un minimum de 8 actions sur 6 ans, soit au moins 2 par axe. Les actions éligibles sont variées : formations (DPC ou non), analyses de pratiques, simulation, activités d\'enseignement, d\'encadrement, démarches de qualité ou de sécurité, missions de santé publique, recherche, publications, etc. Les 52 référentiels détaillant les actions éligibles par spécialité ont été publiés par l\'arrêté du 26 février 2026 — soit 1 438 pages couvrant l\'ensemble des professions concernées.',
+        a: 'Un minimum de 8 actions par cycle, soit au moins 2 par axe (cycle de 9 ans pour le premier cycle, puis 6 ans). Les actions éligibles sont variées : formations (DPC ou non), analyses de pratiques, simulation, activités d\'enseignement, d\'encadrement, démarches de qualité ou de sécurité, missions de santé publique, recherche, publications, etc. Les 52 référentiels détaillant les actions éligibles par spécialité ont été publiés par l\'arrêté du 26 février 2026 — soit 1 438 pages couvrant l\'ensemble des professions concernées.',
       },
       {
         section: 'Le cadre réglementaire',
@@ -284,13 +285,13 @@ export const fr = {
       {
         section: 'Vos obligations en tant qu\'employeur',
         q: 'Comment coordonner des dizaines, voire des centaines de professionnels ?',
-        a: 'Avec 7 professions, 52 référentiels différents et 4 axes à suivre par professionnel sur 6 ans, le suivi individuel est complexe. C\'est pourquoi un outil de pilotage interne, en complément du téléservice national, est fortement recommandé pour garder une vision d\'ensemble et anticiper les retards.',
+        a: 'Avec 7 professions, 52 référentiels différents et 4 axes à suivre par professionnel sur 9 ans pour le premier cycle (puis 6 ans pour les cycles suivants), le suivi individuel est complexe. C\'est pourquoi un outil de pilotage interne, en complément du téléservice national, est fortement recommandé pour garder une vision d\'ensemble et anticiper les retards.',
       },
       // ── Ma Certif'Pro Santé ─────────────────────────────────────
       {
         section: 'Ma Certif\'Pro Santé — le téléservice national',
         q: 'Qu\'est-ce que Ma Certif\'Pro Santé ?',
-        a: 'C\'est le téléservice national développé par l\'Agence du Numérique en Santé (ANS), destiné à rassembler les comptes individuels de certification de l\'ensemble des professionnels concernés. Chaque professionnel y disposera d\'un compte personnel pour suivre son parcours sur les 4 axes réglementaires et l\'intégralité du cycle de 6 ans.',
+        a: 'C\'est le téléservice national développé par l\'Agence du Numérique en Santé (ANS), destiné à rassembler les comptes individuels de certification de l\'ensemble des professionnels concernés. Chaque professionnel y disposera d\'un compte personnel pour suivre son parcours sur les 4 axes réglementaires et l\'intégralité du cycle (9 ans pour le premier cycle, puis 6 ans).',
       },
       {
         section: 'Ma Certif\'Pro Santé — le téléservice national',
@@ -311,13 +312,13 @@ export const fr = {
       {
         section: 'Calendrier et échéances',
         q: 'Quelles sont les dates clés à retenir ?',
-        a: '1er janvier 2023 — Entrée en vigueur de la certification périodique. 22 mars 2024 — Décret d\'application. 26 décembre 2025 — Décret sur les modalités de contrôle. 26 février 2026 — Publication des 52 référentiels. Novembre 2026 — Ouverture de Ma Certif\'Pro Santé. 31 décembre 2028 — Fin du premier cycle de 6 ans.',
+        a: '1er janvier 2023 — Entrée en vigueur de la certification périodique. 22 mars 2024 — Décret d\'application. 26 décembre 2025 — Décret sur les modalités de contrôle. 26 février 2026 — Publication des 52 référentiels. Novembre 2026 — Ouverture de Ma Certif\'Pro Santé. 31 décembre 2031 — Fin du premier cycle (9 ans, à titre exceptionnel). À compter de 2032, les cycles suivants seront de 6 ans.',
       },
       // ── En pratique ─────────────────────────────────────────────
       {
         section: 'En pratique dans votre établissement',
         q: 'Par où commencer en tant que responsable formation ?',
-        a: 'Trois priorités immédiates : (1) Recenser l\'ensemble de vos professionnels de santé à ordre salariés, par profession et spécialité. (2) Identifier les actions déjà réalisées depuis janvier 2023 et s\'assurer que les attestations sont conservées. (3) Planifier les actions restantes à réaliser d\'ici fin 2028 pour que chaque professionnel valide ses 8 actions minimales sur les 4 axes.',
+        a: 'Trois priorités immédiates : (1) Recenser l\'ensemble de vos professionnels de santé à ordre salariés, par profession et spécialité. (2) Identifier les actions déjà réalisées depuis janvier 2023 et s\'assurer que les attestations sont conservées. (3) Planifier les actions restantes à réaliser d\'ici fin 2031 pour que chaque professionnel valide ses 8 actions minimales sur les 4 axes.',
       },
       {
         section: 'En pratique dans votre établissement',
@@ -327,7 +328,7 @@ export const fr = {
       {
         section: 'En pratique dans votre établissement',
         q: 'Quels sont les risques si je ne m\'organise pas dès maintenant ?',
-        a: 'Le cycle a démarré en 2023. Il reste moins de 3 ans avant la première échéance. Sans anticipation, vous risquez de vous retrouver avec un grand nombre de professionnels en retard sur leurs axes, des alertes de l\'Ordre signalant des risques de non-réalisation, et une charge administrative concentrée sur les derniers mois du cycle.',
+        a: 'Le cycle a démarré en 2023 et s\'achève fin 2031. Il reste environ 5 ans avant la première échéance. Sans anticipation, vous risquez de vous retrouver avec un grand nombre de professionnels en retard sur leurs axes, des alertes de l\'Ordre signalant des risques de non-réalisation, et une charge administrative concentrée sur les derniers mois du cycle.',
       },
       // ── Comment ScanUp vous accompagne ──────────────────────────
       {
@@ -525,10 +526,10 @@ export const fr = {
     badge: 'Tarifs',
     title: 'Une offre pour chaque',
     titleHighlight: 'organisation.',
-    subtitle: 'Essai gratuit 14 jours · dès 10 €/utilisateur/an en autonomie · packs clé-en-main avec nos experts.',
+    subtitle: '',
     plans: [
       { name: 'Essai gratuit', price: 'Gratuit', sub: '14 jours d\'essai', items: ['5 dépistages', 'Tableau de bord', 'Analyse par nos experts'], cta: 'Démarrer' },
-      { name: 'Formule Accès', price: '10 €', sub: '/ utilisateur / an HT', items: ['Dépistages illimités', 'Modules TMS & RPS sur-mesure', 'Vos experts en autonomie'], cta: 'Prendre RDV' },
+      { name: 'Formule Accès', price: 'Dès 500 €', sub: '/ expert / mois HT', items: ['Dépistages illimités', 'Modules TMS & RPS sur-mesure', 'Vos experts en autonomie'], cta: 'Prendre RDV' },
       { name: 'Pack 100', price: '2 700 €', sub: 'HT · 100 dépistages', items: ['Modules sur mesure', 'Qualification par nos experts', 'Dashboard par équipe'], cta: 'Prendre RDV' },
       { name: 'Pack Impact 50', price: '4 475 €', sub: 'HT · 50 dépistages', items: ['Retours individuels direction', 'Plan d\'action prévention', 'Co-construction direction'], cta: 'Prendre RDV' },
     ],
@@ -544,7 +545,7 @@ export const fr = {
     q1: 'Disposez-vous d\'ergonomes ou de psychologues du travail en interne ?',
     q1Yes: 'OUI', q1YesPlan: 'Formule Accès',
     q1YesDesc: 'Vos experts utilisent la plateforme en autonomie. Ils créent les modules, réalisent les évaluations et qualifient les dépistages.',
-    q1YesPrice: '10 €/utilisateur/an',
+    q1YesPrice: 'Dès 500 €/expert/mois',
     q1No: 'NON', q1NoPlan: 'Pack 100 ou Pack Impact 50',
     q1NoDesc: 'Nos ergonomes et psychologues réalisent les dépistages pour vous.',
     q1NoNext: 'Passez à la question 2',
@@ -559,7 +560,7 @@ export const fr = {
     faqs: [
       { q: 'Qu\'est-ce que ScanUp RPS et TMS ?', a: 'Des modules d\'évaluation scientifiquement validés pour dépister les Risques Psycho-Sociaux et les Troubles Musculo-Squelettiques au sein de vos équipes. Résultats en 48 h.' },
       { q: 'Les données des salariés sont-elles confidentielles ?', a: 'Absolument. Les données individuelles sont strictement confidentielles. Les RH n\'accèdent qu\'à des données agrégées et anonymisées. L\'email est facultatif.' },
-      { q: 'Quelle est la différence entre la Formule Accès et les Packs ?', a: 'La Formule Accès (10 €/utilisateur/an) est conçue pour les organisations disposant d\'ergonomes ou psychologues en interne. Les Packs 100 et Impact 50 incluent la réalisation des dépistages par nos propres experts.' },
+      { q: 'Quelle est la différence entre la Formule Accès et les Packs ?', a: 'La Formule Accès (dès 500 €/expert/mois) est conçue pour les organisations disposant d\'ergonomes ou psychologues en interne — la facturation se fait en fonction du nombre d\'évaluateurs. Les Packs 100 et Impact 50 incluent la réalisation des dépistages par nos propres experts.' },
       { q: 'Cela remplace-t-il le Document Unique (DUERP) ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre DUERP et justifier vos plans d\'action.' },
       { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Vos collaborateurs accèdent aux questionnaires par QR code ou email, sans téléchargement, depuis n\'importe quel appareil.' },
       { q: 'Y a-t-il un engagement de durée ?', a: 'Aucun engagement de durée. Les crédits sont valables 12 mois. Les abonnements sont résiliables à tout moment, sans frais ni préavis.' },
@@ -612,6 +613,24 @@ export const fr = {
     subtitle: 'La page que vous recherchez n\'existe pas ou a été déplacée.',
     button: 'Retour à l\'accueil',
   },
+  confirmation: {
+    badge: 'Demande bien reçue',
+    title: 'Merci, votre rendez-vous est confirmé',
+    subtitle: 'Nous avons bien reçu votre réservation. Vous allez recevoir un e-mail de confirmation avec le lien de la visioconférence et un rappel automatique avant l\'échange.',
+    step1Title: 'Confirmation par e-mail',
+    step1Desc: 'Vérifiez votre boîte de réception (et vos spams) pour retrouver les détails du rendez-vous.',
+    step2Title: 'Préparez vos questions',
+    step2Desc: 'Notez les sujets que vous souhaitez aborder pour tirer le meilleur parti de la présentation.',
+    step3Title: 'On se retrouve bientôt',
+    step3Desc: 'Notre équipe vous contactera à l\'horaire choisi pour vous présenter ScanUp et 360SkillVue.',
+    exploreTitle: 'En attendant, découvrez nos solutions',
+    exploreSubtitle: 'Quelques pages utiles pour préparer votre échange.',
+    linkCertification: 'Certification périodique santé',
+    linkEntreprises: 'Entreprises & DRH',
+    linkSpsti: 'SPSTI',
+    backHome: 'Retour à l\'accueil',
+    contact: 'Une question ? Contactez-nous',
+  },
   spsti: {
     heroBadge: 'Prévention primaire & désinsertion',
     heroTitle: 'Détection précoce et',
@@ -630,8 +649,29 @@ export const fr = {
     team1Desc: 'Partagez les informations et coordonnez vos actions de prévention en temps réel.',
     team2Title: 'Traçabilité des actions',
     team2Desc: 'Assurez un suivi rigoureux et conforme de chaque intervention et recommandation.',
+    featuresLabel: 'Au-delà du dépistage',
+    featuresTitle: 'Une plateforme complète pour accompagner vos salariés',
+    featuresSubtitle: 'Du signal faible à l\'action concrète : 360SkillVue ne s\'arrête pas à la détection.',
+    features: [
+      {
+        title: 'Orientation vers un dispositif adapté',
+        desc: 'Suite à un risque détecté, l\'expert peut directement orienter le participant vers un dispositif adapté — ergonome, psychologue, médecin du travail, accompagnement spécifique.',
+      },
+      {
+        title: 'Création de modules de formation',
+        desc: 'Concevez et déployez vos propres modules de formation et de sensibilisation en ligne depuis la plateforme, sans compétence technique.',
+      },
+      {
+        title: 'Conformité Qualiopi',
+        desc: 'Plateforme conforme à la certification Qualiopi. IEF Biologie, organisme de formation certifié Qualiopi, utilise déjà 360SkillVue pour ses parcours.',
+      },
+      {
+        title: 'Plateforme multilingue',
+        desc: 'Interface et parcours disponibles en français, anglais, allemand et italien pour accompagner vos équipes internationales.',
+      },
+    ],
     ctaTitle: 'Optimisez votre action de prévention',
-    ctaButton: 'Demander une démo SPSTI',
+    ctaButton: 'Demander une démo',
     ctaEmail: 'contact@360skillvue.com',
   },
   revueDePresse: {
@@ -641,6 +681,14 @@ export const fr = {
     title: 'Revue de presse',
     subtitle: 'Articles, interviews et mentions de 360SkillVue dans les médias spécialisés.',
     items: [
+      {
+        date: '27 mai 2026',
+        label: 'Bilan.ch',
+        title: 'Cartographie du mal-être en entreprise',
+        description: 'Portrait de Laure Dellamonica et de 360SkillVue, solution de dépistage précoce des arrêts de travail développée à Saint-Sulpice.',
+        href: 'https://epaper.bilan.ch/read/600/600/2026-05-27/89',
+        image: '/bilan-cartographie-mal-etre.webp',
+      },
       {
         date: '16 avril 2026',
         label: 'Communiqué de presse',

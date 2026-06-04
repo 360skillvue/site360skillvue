@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronDown, Building2, Shield, Stethoscope, Award, Menu, X, Globe } from 'lucide-react';
+import { ChevronDown, Building2, Shield, Stethoscope, Award, Menu, X, Globe, Wrench } from 'lucide-react';
 import { useLanguage, LANGUAGES } from '../i18n';
 
 const CERTIFICATION_HREFS = [
@@ -65,7 +65,15 @@ export default function Navbar() {
       {/* Top accent bar */}
       <div className="h-[3px] w-full bg-gradient-to-r from-scanup-blue via-scanup-turquoise to-scanup-blue fixed top-0 z-50" />
 
-      <nav className="sticky top-[3px] z-40 bg-white/95 backdrop-blur-xl border-b border-black/[0.06]">
+      {/* Maintenance banner */}
+      <div className="pt-[3px] w-full bg-amber-50 border-b border-amber-200/70">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 flex items-center justify-center gap-2 text-amber-900 text-[12px] sm:text-[13px] font-medium text-center">
+          <Wrench size={13} className="flex-shrink-0 text-amber-700" />
+          <span>{t.nav.maintenance}</span>
+        </div>
+      </div>
+
+      <nav className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-black/[0.06]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
 
           {/* ── Logo ───────────────────────────────────────────── */}

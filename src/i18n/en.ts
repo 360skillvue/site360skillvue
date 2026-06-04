@@ -11,10 +11,11 @@ export const en = {
     phone: '+33 4 50 27 91 02',
     phoneLabel: 'Phone',
     callNow: 'Call now',
+    maintenance: 'ScanUp is under maintenance on Wednesdays from 12pm to 2pm.',
     certItems: {
       entreprises: { label: 'Companies & HR', desc: 'Manage workplace health for your employees' },
       assureurs: { label: 'Insurers & Mutuals', desc: 'Reduce health risks and costs' },
-      spsti: { label: 'SPSTI', desc: 'Occupational health and prevention services' },
+      spsti: { label: 'Occupational health actors', desc: 'Occupational health and prevention services' },
       certification: { label: 'Health Certification', desc: 'Periodic certification and regulatory compliance' },
     },
   },
@@ -24,7 +25,7 @@ export const en = {
     audiences: {
       assureurs: 'Insurers & Mutuals',
       entreprises: 'Companies & HR',
-      spsti: 'SPSTI',
+      spsti: 'Occupational health actor',
       sante: 'Healthcare sector',
     },
     trustStrip: 'They trust us',
@@ -120,7 +121,7 @@ export const en = {
     faq: [
       {
         q: 'How does ScanUp work?',
-        a: 'ScanUp is an occupational health screening tool that sends periodic questionnaires to your employees. Our AI analysis engine identifies weak signals and generates individual and collective reports in real time.',
+        a: 'ScanUp is an occupational health screening tool based on audio and video captures recorded in real-life situations. Our experts — ergonomists and occupational psychologists — review each capture to identify weak signals of MSD and PSR, and generate individual and collective reports in real time.',
       },
       {
         q: 'Who can use ScanUp?',
@@ -148,7 +149,7 @@ export const en = {
       },
       {
         q: 'How do I contact support?',
-        a: 'By email at support@360skillvue.com or by phone at +33 4 50 27 91 02, Monday to Friday from 9am to 6pm. Premium clients benefit from priority access.',
+        a: 'By email at hello@360skillvue.com or by phone at +33 4 50 27 91 02, Monday to Friday from 9am to 6pm. Premium clients benefit from priority access.',
       },
     ],
     contactBadge: 'Contact',
@@ -182,7 +183,7 @@ export const en = {
     calendlyTitle: 'Book a presentation',
     calendlySubtitle: 'Choose a time slot with our team',
     contactPhone: '+33 4 50 27 91 02',
-    contactEmail: 'support@360skillvue.com',
+    contactEmail: 'hello@360skillvue.com',
     contactHours: 'Mon–Fri, 9am–6pm',
   },
   certification: {
@@ -431,10 +432,10 @@ export const en = {
     badge: 'Pricing',
     title: 'An offer for every',
     titleHighlight: 'organisation.',
-    subtitle: 'Free 14-day trial · from €10/user/year in-house · turnkey packs with our experts.',
+    subtitle: '',
     plans: [
       { name: 'Free Trial', price: 'Free', sub: '14-day trial', items: ['5 screenings', 'Dashboard', 'Expert analysis'], cta: 'Get started' },
-      { name: 'Access Plan', price: '€10', sub: '/ user / year excl. VAT', items: ['Unlimited screenings', 'Custom TMS & PSR modules', 'Your experts independently'], cta: 'Book a call' },
+      { name: 'Access Plan', price: 'From €500', sub: '/ expert / month excl. VAT', items: ['Unlimited screenings', 'Custom TMS & PSR modules', 'Your experts independently'], cta: 'Book a call' },
       { name: 'Pack 100', price: '€2,700', sub: 'excl. VAT · 100 screenings', items: ['Custom modules', 'Qualified by our experts', 'Team dashboard'], cta: 'Book a call' },
       { name: 'Pack Impact 50', price: '€4,475', sub: 'excl. VAT · 50 screenings', items: ['Individual management feedback', 'Prevention action plan', 'Co-built with management'], cta: 'Book a call' },
     ],
@@ -450,7 +451,7 @@ export const en = {
     q1: 'Do you have in-house ergonomists or occupational psychologists?',
     q1Yes: 'YES', q1YesPlan: 'Access Plan',
     q1YesDesc: 'Your experts use the platform independently. They create modules, conduct assessments and qualify screenings.',
-    q1YesPrice: '€10/user/year',
+    q1YesPrice: 'From €500/expert/month',
     q1No: 'NO', q1NoPlan: 'Pack 100 or Pack Impact 50',
     q1NoDesc: 'Our ergonomists and psychologists perform the screenings for you.',
     q1NoNext: 'Move to question 2',
@@ -465,7 +466,7 @@ export const en = {
     faqs: [
       { q: 'What are ScanUp PSR and MSD?', a: 'Scientifically validated assessment modules to screen for Psychosocial Risks and Musculoskeletal Disorders in your teams. Results in 48 hours.' },
       { q: 'Is employee data confidential?', a: 'Absolutely. Individual data is strictly confidential. HR only accesses aggregated, anonymised data. Email is optional.' },
-      { q: 'What is the difference between the Access Plan and Packs?', a: 'The Access Plan (€10/user/year) is designed for organisations with in-house ergonomists or psychologists. Packs 100 and Impact 50 include screenings carried out by our own experts.' },
+      { q: 'What is the difference between the Access Plan and Packs?', a: 'The Access Plan (from €500/expert/month) is designed for organisations with in-house ergonomists or psychologists — billing is based on the number of evaluators. Packs 100 and Impact 50 include screenings carried out by our own experts.' },
       { q: 'Does this replace the Risk Assessment Document?', a: 'No, it feeds it. Our dashboards provide objective data to update your risk assessment document and justify your action plans.' },
       { q: 'How long to get started?', a: 'Within 48 hours. Your employees access questionnaires via QR code or email, no download required, from any device.' },
       { q: 'Is there a commitment period?', a: 'No commitment period. Credits are valid for 12 months. Subscriptions can be cancelled at any time, with no fees or notice.' },
@@ -518,6 +519,24 @@ export const en = {
     subtitle: 'The page you are looking for does not exist or has been moved.',
     button: 'Back to home',
   },
+  confirmation: {
+    badge: 'Request received',
+    title: 'Thank you, your appointment is confirmed',
+    subtitle: 'We have received your booking. You will receive a confirmation email with the video call link and an automatic reminder before the meeting.',
+    step1Title: 'Email confirmation',
+    step1Desc: 'Check your inbox (and your spam folder) for the meeting details.',
+    step2Title: 'Prepare your questions',
+    step2Desc: 'Note the topics you want to cover to make the most of the demo.',
+    step3Title: 'See you soon',
+    step3Desc: 'Our team will contact you at the scheduled time to walk you through ScanUp and 360SkillVue.',
+    exploreTitle: 'In the meantime, explore our solutions',
+    exploreSubtitle: 'A few useful pages to prepare for our discussion.',
+    linkCertification: 'Periodic health certification',
+    linkEntreprises: 'Companies & HR',
+    linkSpsti: 'Occupational health services',
+    backHome: 'Back to home',
+    contact: 'Got a question? Contact us',
+  },
   spsti: {
     heroBadge: 'Primary prevention & job retention',
     heroTitle: 'Early detection and',
@@ -536,8 +555,29 @@ export const en = {
     team1Desc: 'Share information and coordinate your prevention actions in real time.',
     team2Title: 'Action traceability',
     team2Desc: 'Ensure rigorous and compliant monitoring of every intervention and recommendation.',
+    featuresLabel: 'Beyond screening',
+    featuresTitle: 'A complete platform to support your employees',
+    featuresSubtitle: 'From weak signal to concrete action: 360SkillVue does not stop at detection.',
+    features: [
+      {
+        title: 'Referral to a suitable programme',
+        desc: 'After a risk is detected, the expert can directly refer the participant to a suitable programme — ergonomist, psychologist, occupational physician, dedicated support.',
+      },
+      {
+        title: 'Create training modules',
+        desc: 'Design and deploy your own online training and awareness modules directly from the platform, without any technical skills required.',
+      },
+      {
+        title: 'Qualiopi compliant',
+        desc: 'The platform complies with Qualiopi certification. IEF Biologie, a Qualiopi-certified training organisation, already uses 360SkillVue for its training pathways.',
+      },
+      {
+        title: 'Multilingual platform',
+        desc: 'Interface and pathways available in French, English, German and Italian to support your international teams.',
+      },
+    ],
     ctaTitle: 'Optimize your prevention action',
-    ctaButton: 'Request an SPSTI demo',
+    ctaButton: 'Request a demo',
     ctaEmail: 'contact@360skillvue.com',
   },
   revueDePresse: {
@@ -547,6 +587,14 @@ export const en = {
     title: 'Press coverage',
     subtitle: 'Articles, interviews and mentions of 360SkillVue in specialist media.',
     items: [
+      {
+        date: 'May 27, 2026',
+        label: 'Bilan.ch',
+        title: 'Mapping workplace ill-being',
+        description: 'A profile of Laure Dellamonica and 360SkillVue, the early-detection solution for work absences developed in Saint-Sulpice.',
+        href: 'https://epaper.bilan.ch/read/600/600/2026-05-27/89',
+        image: '/bilan-cartographie-mal-etre.webp',
+      },
       {
         date: 'April 16, 2026',
         label: 'Press release',

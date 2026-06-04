@@ -18,6 +18,7 @@ const CGVPage                      = lazy(() => import('./pages/CGVPage'));
 const PolitiqueConfidentialitePage = lazy(() => import('./pages/PolitiqueConfidentialitePage'));
 const AProposPage                  = lazy(() => import('./pages/AProposPage'));
 const RevueDePressePage            = lazy(() => import('./pages/RevueDePressePage'));
+const ConfirmationPage             = lazy(() => import('./pages/ConfirmationPage'));
 
 export default function App() {
   return (
@@ -44,6 +45,12 @@ export default function App() {
             <Route path="/politique-confidentialite" element={<PolitiqueConfidentialitePage />} />
             <Route path="/a-propos" element={<AProposPage />} />
             <Route path="/revue-de-presse" element={<RevueDePressePage />} />
+            <Route path="/demande-calendly-bien-recue" element={<ConfirmationPage forcedLang="fr" path="/demande-calendly-bien-recue/" />} />
+            <Route path="/demande-calendly-bien-recue/" element={<ConfirmationPage forcedLang="fr" path="/demande-calendly-bien-recue/" />} />
+            <Route path="/en/appointment-confirmation" element={<ConfirmationPage forcedLang="en" path="/en/appointment-confirmation/" />} />
+            <Route path="/en/appointment-confirmation/" element={<ConfirmationPage forcedLang="en" path="/en/appointment-confirmation/" />} />
+            <Route path="/de/terminbestaetigung" element={<ConfirmationPage forcedLang="de" path="/de/terminbestaetigung/" />} />
+            <Route path="/de/terminbestaetigung/" element={<ConfirmationPage forcedLang="de" path="/de/terminbestaetigung/" />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>

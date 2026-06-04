@@ -71,9 +71,20 @@ export default function RevueDePressePage() {
                 rel="noopener noreferrer"
                 className="group flex items-start gap-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-scanup-blue/20 transition-all duration-200 p-6"
               >
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-scanup-blue/8 flex items-center justify-center text-scanup-blue">
-                  <FileText size={22} />
-                </div>
+                {item.image ? (
+                  <div className="flex-shrink-0 w-20 h-24 sm:w-24 sm:h-28 rounded-xl overflow-hidden bg-gray-100 border border-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-scanup-blue/8 flex items-center justify-center text-scanup-blue">
+                    <FileText size={22} />
+                  </div>
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
                     <span className="text-xs font-semibold uppercase tracking-widest text-scanup-blue/70">{item.label}</span>

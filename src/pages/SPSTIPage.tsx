@@ -4,7 +4,6 @@ import {
   Stethoscope,
   Activity,
   Users,
-  ShieldCheck,
   ArrowRight,
   Mail,
   ClipboardCheck,
@@ -12,7 +11,11 @@ import {
   Lock,
   Scale,
   Flag,
-  Hospital
+  Hospital,
+  Compass,
+  BookOpen,
+  Award,
+  Globe,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -44,8 +47,8 @@ export default function SPSTIPage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-warning/20">
       <PageMeta
-        title="SPSTI — Détection précoce & Maintien dans l'emploi"
-        description="Outil de dépistage TMS et RPS pour équipes pluridisciplinaires. Traçabilité complète de vos actions de prévention."
+        title="Acteurs de la Santé au travail — Détection précoce & Maintien dans l'emploi"
+        description="Outil de dépistage TMS et RPS pour équipes pluridisciplinaires : orientation, formation Qualiopi, plateforme multilingue. Traçabilité complète de vos actions de prévention."
         path="/spsti"
       />
       <Navbar />
@@ -161,15 +164,54 @@ export default function SPSTIPage() {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-warning to-scanup-blue rounded-2xl transform translate-x-3 translate-y-3 opacity-20 transition-transform duration-500"></div>
               <img
-                src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80"
-                alt="Outil de suivi médical"
+                src="/psychologue-analyse.webp"
+                alt="Psychologue analysant une captation audio sur 360SkillVue"
                 className="relative rounded-2xl shadow-xl border border-scanup-white w-full object-cover"
-                referrerPolicy="no-referrer"
                 loading="lazy"
                 decoding="async"
               />
             </div>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* Au-delà du dépistage */}
+      <section className="py-24 px-6 bg-scanup-graylight">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn className="text-center mb-14">
+            <span className="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-scanup-blue mb-4">
+              {(t.spsti as any).featuresLabel}
+            </span>
+            <h2 className="text-[28px] md:text-[40px] font-bold tracking-tight mb-4">
+              {(t.spsti as any).featuresTitle}
+            </h2>
+            <p className="text-[16px] text-scanup-graytext max-w-2xl mx-auto leading-relaxed">
+              {(t.spsti as any).featuresSubtitle}
+            </p>
+          </FadeIn>
+
+          <div className="grid sm:grid-cols-2 gap-5">
+            {[Compass, BookOpen, Award, Globe].map((Icon, i) => {
+              const feat = (t.spsti as any).features[i];
+              return (
+                <FadeIn key={i} delay={i * 0.08}>
+                  <motion.div
+                    whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.07)' }}
+                    transition={{ duration: 0.25 }}
+                    className="bg-white rounded-2xl border border-black/[0.07] p-7 h-full flex gap-5"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-scanup-blue/8 flex items-center justify-center flex-shrink-0">
+                      <Icon className="text-scanup-blue" size={22} strokeWidth={1.75} />
+                    </div>
+                    <div>
+                      <h3 className="text-[17px] font-bold text-scanup-navy mb-2">{feat.title}</h3>
+                      <p className="text-[14px] text-scanup-graytext leading-relaxed">{feat.desc}</p>
+                    </div>
+                  </motion.div>
+                </FadeIn>
+              );
+            })}
+          </div>
         </div>
       </section>
 

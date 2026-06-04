@@ -48,7 +48,7 @@ export default function TarifsPage() {
     <div className="min-h-screen font-sans text-scanup-navy bg-white flex flex-col">
       <PageMeta
         title="Tarifs ScanUp — Prévention TMS & RPS"
-        description="Essai gratuit 14 jours, Formule Accès dès 10 €/utilisateur/an, Pack 100 à 2 700 € HT. Données hébergées en France (HDS). Aucune carte bancaire requise."
+        description="Essai gratuit 14 jours, Formule Accès dès 500 €/expert/mois, Pack 100 à 2 700 € HT. Données hébergées en France (HDS). Aucune carte bancaire requise."
         path="/tarifs"
       />
       <Navbar />
@@ -73,9 +73,11 @@ export default function TarifsPage() {
               </span>
             </h1>
           </Reveal>
-          <Reveal delay={0.1}>
-            <p className="text-[17px] text-scanup-graytext leading-relaxed max-w-xl mx-auto">{tr.subtitle}</p>
-          </Reveal>
+          {tr.subtitle && (
+            <Reveal delay={0.1}>
+              <p className="text-[17px] text-scanup-graytext leading-relaxed max-w-xl mx-auto">{tr.subtitle}</p>
+            </Reveal>
+          )}
         </div>
       </section>
 

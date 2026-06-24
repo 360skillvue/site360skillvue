@@ -589,6 +589,14 @@ export const it = {
     items: [
       {
         date: '27 maggio 2026',
+        label: 'Social CSE',
+        title: 'Rilevare i segnali deboli prima della malattia',
+        description: 'ScanUp trasferisce lo screening medico alla salute sul lavoro: una piattaforma digitale per identificare precocemente le situazioni a rischio e oggettivare le problematiche legate a DMS e rischi psicosociali.',
+        href: 'https://socialcse.fr/detecter-les-signaux-faibles-avant-larret-maladie-scanup-transpose-le-depistage-medical-a-la-sante-au-travail/',
+        image: '/socialcse-signaux-faibles.jpg',
+      },
+      {
+        date: '27 maggio 2026',
         label: 'Bilan.ch',
         title: 'Cartografia del malessere in azienda',
         description: 'Ritratto di Laure Dellamonica e di 360SkillVue, soluzione di rilevamento precoce delle assenze dal lavoro sviluppata a Saint-Sulpice.',

@@ -589,6 +589,14 @@ export const de = {
     items: [
       {
         date: '27. Mai 2026',
+        label: 'Social CSE',
+        title: 'Schwache Signale vor der Krankschreibung erkennen',
+        description: 'ScanUp überträgt das medizinische Screening auf die Arbeitsmedizin: eine digitale Plattform zur frühzeitigen Erkennung von Risikosituationen und zur Objektivierung von MSE- und psychosozialen Risiken.',
+        href: 'https://socialcse.fr/detecter-les-signaux-faibles-avant-larret-maladie-scanup-transpose-le-depistage-medical-a-la-sante-au-travail/',
+        image: '/socialcse-signaux-faibles.jpg',
+      },
+      {
+        date: '27. Mai 2026',
         label: 'Bilan.ch',
         title: 'Kartografie des Unwohlseins im Unternehmen',
         description: 'Porträt von Laure Dellamonica und 360SkillVue, der in Saint-Sulpice entwickelten Lösung zur Früherkennung von Arbeitsausfällen.',

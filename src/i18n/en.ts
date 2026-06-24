@@ -589,6 +589,14 @@ export const en = {
     items: [
       {
         date: 'May 27, 2026',
+        label: 'Social CSE',
+        title: 'Detecting weak signals before sick leave',
+        description: 'ScanUp brings medical screening to occupational health: a digital platform to identify at-risk situations early and objectify MSD and psychosocial risk issues.',
+        href: 'https://socialcse.fr/detecter-les-signaux-faibles-avant-larret-maladie-scanup-transpose-le-depistage-medical-a-la-sante-au-travail/',
+        image: '/socialcse-signaux-faibles.jpg',
+      },
+      {
+        date: 'May 27, 2026',
         label: 'Bilan.ch',
         title: 'Mapping workplace ill-being',
         description: 'A profile of Laure Dellamonica and 360SkillVue, the early-detection solution for work absences developed in Saint-Sulpice.',

@@ -683,6 +683,14 @@ export const fr = {
     items: [
       {
         date: '27 mai 2026',
+        label: 'Social CSE',
+        title: 'Détecter les signaux faibles avant l\'arrêt maladie',
+        description: 'ScanUp transpose le dépistage médical à la santé au travail : une plateforme digitale pour identifier précocement les situations à risque et objectiver les problématiques TMS et RPS.',
+        href: 'https://socialcse.fr/detecter-les-signaux-faibles-avant-larret-maladie-scanup-transpose-le-depistage-medical-a-la-sante-au-travail/',
+        image: '/socialcse-signaux-faibles.jpg',
+      },
+      {
+        date: '27 mai 2026',
         label: 'Bilan.ch',
         title: 'Cartographie du mal-être en entreprise',
         description: 'Portrait de Laure Dellamonica et de 360SkillVue, solution de dépistage précoce des arrêts de travail développée à Saint-Sulpice.',

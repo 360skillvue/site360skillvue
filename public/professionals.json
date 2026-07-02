@@ -16,22 +16,6 @@
     "lng": 1.8883335
   },
   {
-    "id": 38,
-    "name": "Marie Terrier",
-    "company": "Arwen prevention",
-    "competences": [
-      "non_defini"
-    ],
-    "email": "arwenprevention@gmail.com",
-    "phone": "06 83 65 46 33",
-    "website": "https://www.arwenprevention.fr/",
-    "description": "Intégration d'exosquelettes, conseils, commercialisation et accompagnement\nSécurité prévention",
-    "zone": "Grand Est, France",
-    "radius": 150000,
-    "lat": 48.4845157,
-    "lng": 6.113035
-  },
-  {
     "id": 43,
     "name": "Virginie GABEL",
     "company": "Clock&me",
@@ -78,22 +62,6 @@
     "radius": 150000,
     "lat": 42.188098,
     "lng": 9.0683139
-  },
-  {
-    "id": 47,
-    "name": "Pascal Chatelain",
-    "company": "EFFIPREV",
-    "competences": [
-      "non_defini"
-    ],
-    "email": "pascal.chatelain@effiprev.fr",
-    "phone": "06 64 54 14 56",
-    "website": "https://www.effiprev.fr/",
-    "description": "Préventeur - Formateur santé sécurité au travail.\nErgonomie\nFormations santé\nAnalyse de pratique \nAutre : CSE SSCT - incendie - secourisme - prévention du risque lié à l'activité physique IBC (PRAP IBC) - évaluation des risques professionnels et document unique.\n\nIPRP enregistré auprès de la DREETS Occitanie, j'interviens sur l'ensemble du territoire régional.\nFormation et accompagnement sur toutes les thématiques concernant la santé sécurité au travail et en particulier l'incendie, le secourisme, la prévention du risque lié à l'activité physique - TMS (PRAP IBC), l'évaluation des risques professionnels et l'élaboration/actualisation du Document Unique. J'accompagne aussi les organisations à la mise en place du CSE et/ou à la formation de ses membres (SSCT).",
-    "zone": "Béziers, France",
-    "radius": 30000,
-    "lat": 43.3426562,
-    "lng": 3.2131307
   },
   {
     "id": 48,
@@ -590,22 +558,6 @@
     "radius": 500000,
     "lat": 46.603354,
     "lng": 1.8883335
-  },
-  {
-    "id": 747,
-    "name": "Samia  Ben Smida",
-    "company": "A rythme ethique",
-    "competences": [
-      "formation"
-    ],
-    "email": "contact@arythmeethique-formations.fr",
-    "phone": "+33 4 82 83 94 65",
-    "website": "https://arythmeethique-formations.fr/",
-    "description": "Fondatrice - Dirigeante \"A Rythme Éthique\" Formation professionnelle & Intervention en prévention des risques professionnels Spécialisé Petite enfance - Services à la personne, et services médico-sociaux.",
-    "zone": "Rhône-Alpes, France",
-    "radius": 30000,
-    "lat": 45.3175313,
-    "lng": 5.7212944
   },
   {
     "id": 749,

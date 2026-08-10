@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, X, ArrowRight, Shield, Clock, Database } from 'lucide-react';
+import { Check, ArrowRight, Shield, Users, UserCog, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -21,40 +21,80 @@ const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: 
   </motion.div>
 );
 
-// true = ✓, false = ✗ — order matches i18n features array
-const FEATURE_VALUES: { essai: boolean; acces: boolean; pack100: boolean; impact50: boolean }[] = [
-  { essai: false, acces: false, pack100: true,  impact50: true  },
-  { essai: false, acces: true,  pack100: true,  impact50: true  },
-  { essai: false, acces: true,  pack100: true,  impact50: true  },
-  { essai: true,  acces: false, pack100: true,  impact50: true  },
-  { essai: true,  acces: true,  pack100: true,  impact50: true  },
-  { essai: true,  acces: true,  pack100: true,  impact50: true  },
-  { essai: true,  acces: true,  pack100: true,  impact50: true  },
-  { essai: false, acces: true,  pack100: true,  impact50: true  },
-  { essai: false, acces: false, pack100: false, impact50: true  },
-  { essai: false, acces: false, pack100: false, impact50: true  },
-  { essai: false, acces: false, pack100: false, impact50: true  },
-];
+type Plan = {
+  name: string;
+  price: string;
+  sub: string;
+  badge: string;
+  items: string[];
+  cta: string;
+};
 
-const GUARANTEE_ICONS = [Shield, Clock, Database];
+const PlanCard: React.FC<{ plan: Plan; featured?: boolean; onCta: () => void }> = ({ plan, featured = false, onCta }) => (
+  <motion.div
+    whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
+    transition={{ duration: 0.25 }}
+    className={`rounded-2xl p-7 h-full flex flex-col relative ${
+      featured ? 'bg-scanup-navy text-white' : 'bg-white border border-black/[0.07] shadow-sm'
+    }`}
+  >
+    {plan.badge && (
+      <div className={`absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold px-3 py-1 rounded-full tracking-wide whitespace-nowrap ${
+        featured ? 'bg-scanup-turquoise text-scanup-navy' : 'bg-scanup-blue text-white'
+      }`}>
+        {plan.badge}
+      </div>
+    )}
+    <div className={`text-[11px] font-semibold uppercase tracking-widest mb-3 ${featured ? 'text-scanup-turquoise' : 'text-scanup-blue'}`}>
+      {plan.name}
+    </div>
+    <div className={`text-[28px] font-bold tracking-tight leading-none mb-1 ${featured ? 'text-white' : 'text-scanup-navy'}`}>
+      {plan.price}
+    </div>
+    <div className={`text-[12px] leading-snug mb-6 ${featured ? 'text-white/40' : 'text-scanup-graytext'}`}>
+      {plan.sub}
+    </div>
+    <ul className="space-y-2.5 flex-grow mb-7">
+      {plan.items.map((item, j) => (
+        <li key={j} className={`flex items-start gap-2 text-[13px] leading-snug ${featured ? 'text-white/70' : 'text-scanup-graytext'}`}>
+          <Check size={11} className={`flex-shrink-0 mt-1 ${featured ? 'text-scanup-turquoise' : 'text-scanup-blue'}`} />
+          {item}
+        </li>
+      ))}
+    </ul>
+    <button
+      onClick={onCta}
+      className={`w-full py-2.5 rounded-xl font-semibold text-[13px] transition-all mt-2 ${
+        featured
+          ? 'bg-white text-scanup-navy hover:bg-scanup-turquoise'
+          : 'border border-black/10 hover:border-scanup-blue hover:text-scanup-blue'
+      }`}
+    >
+      {plan.cta}
+    </button>
+  </motion.div>
+);
+
+const NOTE_ICONS = [Shield, Users, UserCog];
 
 export default function TarifsPage() {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const tr = t.tarifs;
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const goContact = () => navigate('/aide-support');
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white flex flex-col">
       <PageMeta
         title="Tarifs ScanUp — Prévention TMS & RPS"
-        description="Essai gratuit 14 jours, Formule Accès dès 500 €/expert/mois, Pack 100 à 2 700 € HT. Données hébergées en France (HDS). Aucune carte bancaire requise."
+        description="Dépistage RPS dès 27 € et dépistage TMS dès 55 € HT par collaborateur, analyse par nos experts incluse. Essai gratuit 14 jours, sans carte bancaire. Hébergement certifié HDS."
         path="/tarifs"
       />
       <Navbar />
 
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="relative pt-24 pb-16 px-6 text-center overflow-hidden">
+      <section className="relative pt-24 pb-12 px-6 text-center overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px]"
             style={{ background: 'radial-gradient(ellipse at center top, rgba(0,104,255,0.07) 0%, transparent 65%)' }} />
@@ -75,217 +115,113 @@ export default function TarifsPage() {
           </Reveal>
           {tr.subtitle && (
             <Reveal delay={0.1}>
-              <p className="text-[17px] text-scanup-graytext leading-relaxed max-w-xl mx-auto">{tr.subtitle}</p>
+              <p className="text-[17px] text-scanup-graytext leading-relaxed max-w-xl mx-auto mb-8">{tr.subtitle}</p>
             </Reveal>
           )}
+          <Reveal delay={0.15}>
+            <motion.button
+              whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
+              onClick={goContact}
+              className="bg-scanup-blue text-white px-8 py-3.5 rounded-full font-bold text-[15px] hover:brightness-110 transition-all shadow-lg shadow-scanup-blue/25 inline-flex items-center gap-2"
+            >
+              {tr.trial.cta} <ArrowRight size={15} />
+            </motion.button>
+          </Reveal>
         </div>
       </section>
 
-      {/* ── Plans ────────────────────────────────────────────── */}
-      <section className="px-4 sm:px-6 pb-12">
+      {/* ── Dépistage RPS ────────────────────────────────────── */}
+      <section className="px-4 sm:px-6 py-10">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {tr.plans.map((plan: any, i: number) => (
+          <Reveal className="mb-8">
+            <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight">{tr.rps.title}</h2>
+            <p className="text-[15px] text-scanup-graytext mt-1">{tr.rps.subtitle}</p>
+          </Reveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
+            {tr.rps.plans.map((plan, i) => (
               <Reveal key={i} delay={i * 0.07}>
-                <motion.div
-                  whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
-                  transition={{ duration: 0.25 }}
-                  className={`rounded-2xl p-7 h-full flex flex-col relative ${
-                    i === 2 ? 'bg-scanup-navy text-white' : 'bg-white border border-black/[0.07] shadow-sm'
-                  }`}
-                >
-                  {i === 2 && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-scanup-blue text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-wide whitespace-nowrap">
-                      {tr.popular}
-                    </div>
-                  )}
-                  <div className={`text-[11px] font-semibold uppercase tracking-widest mb-3 ${i === 2 ? 'text-scanup-turquoise' : 'text-scanup-blue'}`}>
-                    {plan.name}
-                  </div>
-                  <div className={`text-[28px] font-bold tracking-tight leading-none mb-1 ${i === 2 ? 'text-white' : 'text-scanup-navy'}`}>
-                    {plan.price}
-                  </div>
-                  <div className={`text-[12px] mb-6 ${i === 2 ? 'text-white/40' : 'text-scanup-graytext'}`}>
-                    {plan.sub}
-                  </div>
-                  <ul className="space-y-2.5 flex-grow mb-7">
-                    {plan.items.map((item: string, j: number) => (
-                      <li key={j} className={`flex items-center gap-2 text-[13px] ${i === 2 ? 'text-white/70' : 'text-scanup-graytext'}`}>
-                        <Check size={11} className={`flex-shrink-0 ${i === 2 ? 'text-scanup-turquoise' : 'text-scanup-blue'}`} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={() => navigate('/aide-support')}
-                    className={`w-full py-2.5 rounded-xl font-semibold text-[13px] transition-all mt-2 ${
-                      i === 2
-                        ? 'bg-white text-scanup-navy hover:bg-scanup-turquoise'
-                        : 'border border-black/10 hover:border-scanup-blue hover:text-scanup-blue'
-                    }`}
-                  >
-                    {plan.cta}
-                  </button>
-                </motion.div>
+                <PlanCard plan={plan} featured={!!plan.badge} onCta={goContact} />
               </Reveal>
             ))}
           </div>
-
-          <Reveal className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-3">
-            {tr.guarantees.map((text: string, i: number) => {
-              const Icon = GUARANTEE_ICONS[i];
-              return (
-                <div key={i} className="flex items-center gap-2 text-[13px] text-scanup-graytext">
-                  <Icon size={13} className="text-scanup-blue flex-shrink-0" />
-                  {text}
-                </div>
-              );
-            })}
-          </Reveal>
         </div>
       </section>
 
-      {/* ── Comparison table ─────────────────────────────────── */}
-      <section className="py-16 px-4 sm:px-6 bg-[#f8f9fb]">
+      {/* ── Dépistage TMS ────────────────────────────────────── */}
+      <section className="px-4 sm:px-6 py-10">
         <div className="max-w-5xl mx-auto">
-          <Reveal className="text-center mb-10">
-            <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-2">{tr.tableTitle}</h2>
-            <p className="text-[15px] text-scanup-graytext">{tr.tableSubtitle}</p>
+          <Reveal className="mb-8">
+            <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight">{tr.tms.title}</h2>
+            <p className="text-[15px] text-scanup-graytext mt-1">{tr.tms.subtitle}</p>
           </Reveal>
-          <Reveal>
-            <div className="overflow-x-auto rounded-2xl shadow-md border border-black/[0.07]">
-              <table className="w-full min-w-[560px] text-[13px] border-collapse">
-                <colgroup>
-                  <col style={{ width: '38%' }} />
-                  <col style={{ backgroundColor: '#ffffff' }} />
-                  <col style={{ backgroundColor: '#eff6ff' }} />
-                  <col style={{ backgroundColor: '#0f1f3d' }} />
-                  <col style={{ backgroundColor: '#f0fdf4' }} />
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th className="text-left px-5 py-4 bg-white rounded-tl-2xl" />
-                    <th className="text-center px-3 py-4 font-bold text-[12px] text-gray-500 uppercase tracking-wide bg-white">
-                      {tr.plans[0].name}
-                    </th>
-                    <th className="text-center px-3 py-4 font-bold text-[12px] text-blue-700 uppercase tracking-wide" style={{ backgroundColor: '#dbeafe' }}>
-                      {tr.plans[1].name}
-                    </th>
-                    <th className="text-center px-3 py-4 font-bold text-[12px] text-white uppercase tracking-wide" style={{ backgroundColor: '#0f1f3d' }}>
-                      {tr.plans[2].name}
-                      <div className="text-[10px] font-normal text-white/50 mt-0.5 normal-case tracking-normal">{tr.popular}</div>
-                    </th>
-                    <th className="text-center px-3 py-4 font-bold text-[12px] text-emerald-700 uppercase tracking-wide rounded-tr-2xl" style={{ backgroundColor: '#bbf7d0' }}>
-                      {tr.plans[3].name}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tr.features.map((label: string, i: number) => {
-                    const row = FEATURE_VALUES[i];
-                    return (
-                      <tr key={i} style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
-                        <td className="px-5 py-3.5 font-medium text-scanup-navy bg-white">{label}</td>
-                        <td className="px-3 py-3.5 text-center">
-                          {row.essai ? <Check size={18} className="text-green-500 mx-auto" strokeWidth={2.5} /> : <X size={16} className="text-gray-300 mx-auto" strokeWidth={2} />}
-                        </td>
-                        <td className="px-3 py-3.5 text-center">
-                          {row.acces ? <Check size={18} className="text-blue-600 mx-auto" strokeWidth={2.5} /> : <X size={16} className="text-blue-200 mx-auto" strokeWidth={2} />}
-                        </td>
-                        <td className="px-3 py-3.5 text-center" style={{ backgroundColor: '#0f1f3d' }}>
-                          {row.pack100 ? <Check size={18} className="text-emerald-400 mx-auto" strokeWidth={2.5} /> : <X size={16} className="text-white/20 mx-auto" strokeWidth={2} />}
-                        </td>
-                        <td className="px-3 py-3.5 text-center">
-                          {row.impact50 ? <Check size={18} className="text-emerald-600 mx-auto" strokeWidth={2.5} /> : <X size={16} className="text-emerald-200 mx-auto" strokeWidth={2} />}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                  <tr style={{ borderTop: '2px solid rgba(0,0,0,0.1)' }}>
-                    <td className="px-5 py-4 font-bold text-scanup-navy bg-white rounded-bl-2xl">{tr.tableTarif}</td>
-                    <td className="px-3 py-4 text-center bg-white">
-                      <div className="font-bold text-[15px] text-scanup-navy">{tr.plans[0].price}</div>
-                      <div className="text-[11px] text-gray-400 mt-0.5">{tr.plans[0].sub}</div>
-                    </td>
-                    <td className="px-3 py-4 text-center" style={{ backgroundColor: '#dbeafe' }}>
-                      <div className="font-bold text-[15px] text-blue-700">{tr.plans[1].price}</div>
-                      <div className="text-[11px] text-blue-400 mt-0.5">{tr.plans[1].sub}</div>
-                    </td>
-                    <td className="px-3 py-4 text-center" style={{ backgroundColor: '#0f1f3d' }}>
-                      <div className="font-bold text-[15px] text-white">{tr.plans[2].price}</div>
-                      <div className="text-[11px] text-white/40 mt-0.5">{tr.plans[2].sub}</div>
-                    </td>
-                    <td className="px-3 py-4 text-center rounded-br-2xl" style={{ backgroundColor: '#bbf7d0' }}>
-                      <div className="font-bold text-[15px] text-emerald-800">{tr.plans[3].price}</div>
-                      <div className="text-[11px] text-emerald-600 mt-0.5">{tr.plans[3].sub}</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
+            {tr.tms.plans.map((plan, i) => (
+              <Reveal key={i} delay={i * 0.07}>
+                <PlanCard plan={plan} onCta={goContact} />
+              </Reveal>
+            ))}
+            {/* CTA essai gratuit — à côté des cartes */}
+            <Reveal delay={tr.tms.plans.length * 0.07}>
+              <div className="rounded-2xl p-7 h-full flex flex-col bg-gradient-to-br from-scanup-blue/[0.06] to-scanup-turquoise/[0.12] border-2 border-dashed border-scanup-blue/30">
+                <div className="w-10 h-10 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center mb-4">
+                  <Sparkles size={18} />
+                </div>
+                <div className="text-[20px] font-bold tracking-tight mb-2 text-scanup-navy">{tr.trial.title}</div>
+                <p className="text-[13px] text-scanup-graytext leading-relaxed flex-grow">{tr.trial.desc}</p>
+                <motion.button
+                  whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                  onClick={goContact}
+                  className="w-full py-3 rounded-xl font-bold text-[13px] bg-scanup-blue text-white hover:brightness-110 transition-all mt-6 inline-flex items-center justify-center gap-2"
+                >
+                  {tr.trial.cta} <ArrowRight size={13} />
+                </motion.button>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Encart — l'ergonomie centrée sur les personnes */}
+          <Reveal delay={0.1} className="mt-8">
+            <div className="rounded-2xl bg-scanup-navy text-white p-8 sm:p-10 relative overflow-hidden">
+              <div className="pointer-events-none absolute -right-20 -top-20 w-[280px] h-[280px] rounded-full border border-scanup-turquoise/15" />
+              <div className="w-12 h-1 rounded-full bg-scanup-turquoise mb-6" />
+              <p className="text-[16px] sm:text-[18px] leading-relaxed text-white/85 max-w-3xl">
+                {tr.tms.highlight}
+              </p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── Decision guide ───────────────────────────────────── */}
-      <section className="py-16 px-6">
-        <div className="max-w-3xl mx-auto">
-          <Reveal className="text-center mb-10">
-            <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-3">{tr.decisionTitle}</h2>
-            <p className="text-[15px] text-scanup-graytext">{tr.decisionSubtitle}</p>
-          </Reveal>
-
-          <Reveal delay={0.05}>
-            <div className="mb-5">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-7 h-7 rounded-full bg-scanup-blue text-white flex items-center justify-center text-[12px] font-bold flex-shrink-0">1</div>
-                <p className="font-semibold text-[16px]">{tr.q1}</p>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-3 pl-10">
-                <div className="bg-[#f8f9fb] rounded-2xl border border-black/[0.07] p-5">
-                  <div className="text-[11px] font-bold text-scanup-blue uppercase tracking-wide mb-2">{tr.q1Yes}</div>
-                  <p className="font-semibold text-scanup-navy mb-1">{tr.q1YesPlan}</p>
-                  <p className="text-[13px] text-scanup-graytext leading-relaxed">{tr.q1YesDesc}</p>
-                  <p className="text-[13px] font-bold text-scanup-navy mt-3">{tr.q1YesPrice}</p>
+      {/* ── Notes ────────────────────────────────────────────── */}
+      <section className="px-4 sm:px-6 pt-4 pb-16">
+        <div className="max-w-3xl mx-auto space-y-3">
+          {tr.notes.map((note, i) => {
+            const Icon = NOTE_ICONS[i];
+            const clickable = i > 0;
+            const inner = (
+              <>
+                <Icon size={16} className="text-scanup-blue flex-shrink-0 mt-0.5" />
+                <span className="text-[14px] leading-relaxed text-scanup-graytext">{note}</span>
+                {clickable && <ArrowRight size={14} className="text-scanup-blue flex-shrink-0 mt-1 ml-auto" />}
+              </>
+            );
+            return clickable ? (
+              <Reveal key={i} delay={i * 0.05}>
+                <button
+                  onClick={goContact}
+                  className="w-full flex items-start gap-3 text-left rounded-xl border border-black/[0.07] bg-[#f8f9fb] px-5 py-4 hover:border-scanup-blue/40 transition-colors"
+                >
+                  {inner}
+                </button>
+              </Reveal>
+            ) : (
+              <Reveal key={i} delay={i * 0.05}>
+                <div className="flex items-start gap-3 rounded-xl border border-black/[0.07] bg-[#f8f9fb] px-5 py-4">
+                  {inner}
                 </div>
-                <div className="bg-[#f8f9fb] rounded-2xl border border-black/[0.07] p-5">
-                  <div className="text-[11px] font-bold text-scanup-graytext uppercase tracking-wide mb-2">{tr.q1No}</div>
-                  <p className="font-semibold text-scanup-navy mb-1">{tr.q1NoPlan}</p>
-                  <p className="text-[13px] text-scanup-graytext leading-relaxed">{tr.q1NoDesc}</p>
-                  <p className="text-[13px] text-scanup-blue font-medium mt-3 flex items-center gap-1">{tr.q1NoNext} <ArrowRight size={12} /></p>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-7 h-7 rounded-full bg-scanup-blue/20 text-scanup-blue flex items-center justify-center text-[12px] font-bold flex-shrink-0">2</div>
-                <p className="font-semibold text-[16px]">{tr.q2}</p>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-3 pl-10">
-                <div className="bg-[#f8f9fb] rounded-2xl border border-black/[0.07] p-5">
-                  <p className="font-semibold text-scanup-navy mb-2">{tr.q2Option1Label}</p>
-                  <p className="text-[13px] text-scanup-graytext leading-relaxed mb-3">{tr.q2Option1Desc}</p>
-                  <div className="border-t border-black/[0.06] pt-3">
-                    <p className="text-[12px] font-bold text-scanup-blue uppercase tracking-wide">{tr.q2Option1Plan}</p>
-                    <p className="text-[20px] font-bold text-scanup-navy">{tr.q2Option1Price}</p>
-                    <p className="text-[12px] text-scanup-graytext">{tr.q2Option1Sub}</p>
-                  </div>
-                </div>
-                <div className="bg-scanup-navy rounded-2xl p-5">
-                  <p className="font-semibold text-white mb-2">{tr.q2Option2Label}</p>
-                  <p className="text-[13px] text-white/60 leading-relaxed mb-3">{tr.q2Option2Desc}</p>
-                  <div className="border-t border-white/10 pt-3">
-                    <p className="text-[12px] font-bold text-scanup-turquoise uppercase tracking-wide">{tr.q2Option2Plan}</p>
-                    <p className="text-[20px] font-bold text-white">{tr.q2Option2Price}</p>
-                    <p className="text-[12px] text-white/40">{tr.q2Option2Sub}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
@@ -296,7 +232,7 @@ export default function TarifsPage() {
             <h2 className="text-[26px] sm:text-[36px] font-bold tracking-tight">{tr.faqTitle}</h2>
           </Reveal>
           <div className="border-t border-black/[0.06]">
-            {tr.faqs.map((faq: any, i: number) => (
+            {tr.faqs.map((faq, i) => (
               <Reveal key={i} delay={i * 0.04}>
                 <div className="border-b border-black/[0.06]">
                   <button
@@ -339,14 +275,14 @@ export default function TarifsPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <motion.button
               whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-              onClick={() => navigate('/aide-support')}
+              onClick={goContact}
               className="bg-scanup-turquoise text-scanup-navy px-8 py-3.5 rounded-full font-bold text-[15px] hover:brightness-105 transition-all shadow-lg shadow-scanup-turquoise/20 inline-flex items-center gap-2"
             >
               {tr.ctaStart} <ArrowRight size={15} />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-              onClick={() => navigate('/aide-support')}
+              onClick={goContact}
               className="text-white/70 px-8 py-3.5 rounded-full font-medium text-[15px] border border-white/20 hover:border-white/50 hover:text-white transition-all"
             >
               {tr.ctaDemo}

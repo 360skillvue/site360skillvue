@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, ArrowRight, Shield, Users, UserCog, Sparkles } from 'lucide-react';
+import { Check, X, ArrowRight, Shield, Users, UserCog, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -29,6 +29,34 @@ type Plan = {
   items: string[];
   cta: string;
 };
+
+// true = ✓, false = ✗ — row order matches i18n rps.features / tms.features
+const RPS_FEATURE_VALUES: boolean[][] = [
+  [true, true, true],   // Dépistage questionnaire + témoignage audio
+  [true, true, true],   // Analyse psychologue du travail
+  [true, true, true],   // Retour individuel confidentiel
+  [true, true, true],   // Conduites à tenir personnalisées
+  [true, true, true],   // Indicateurs agrégés anonymisés
+  [false, true, true],  // Téléconsultation 30 min
+  [false, false, true], // Plan d'action de prévention
+  [false, false, true], // Restitution direction
+];
+
+const TMS_FEATURE_VALUES: boolean[][] = [
+  [true, true],   // Dépistage par vidéos
+  [true, true],   // Qualification par un ergonome
+  [true, false],  // Coaching vidéo personnalisé
+  [false, true],  // Étude de poste exhaustive IPRP
+  [false, true],  // Rapport complet
+  [false, true],  // Plan d'action TMS + restitution direction
+];
+
+// column palettes for non-featured plans, in order of appearance
+const COL_STYLES = [
+  { col: '#ffffff', head: '#ffffff', headText: 'text-gray-500', check: 'text-green-500', x: 'text-gray-300', price: 'text-scanup-navy', sub: 'text-gray-400' },
+  { col: '#eff6ff', head: '#dbeafe', headText: 'text-blue-700', check: 'text-blue-600', x: 'text-blue-200', price: 'text-blue-700', sub: 'text-blue-400' },
+  { col: '#f0fdf4', head: '#bbf7d0', headText: 'text-emerald-700', check: 'text-emerald-600', x: 'text-emerald-200', price: 'text-emerald-800', sub: 'text-emerald-600' },
+];
 
 const PlanCard: React.FC<{ plan: Plan; featured?: boolean; onCta: () => void }> = ({ plan, featured = false, onCta }) => (
   <motion.div
@@ -75,6 +103,90 @@ const PlanCard: React.FC<{ plan: Plan; featured?: boolean; onCta: () => void }> 
   </motion.div>
 );
 
+const CompareTable: React.FC<{
+  plans: Plan[];
+  features: string[];
+  values: boolean[][];
+  tarifLabel: string;
+}> = ({ plans, features, values, tarifLabel }) => {
+  // assign a palette slot to each non-featured column, featured column gets navy
+  let slot = 0;
+  const styles = plans.map((plan) => {
+    if (plan.badge && plans.length > 2) return null; // featured → navy
+    return COL_STYLES[Math.min(slot++, COL_STYLES.length - 1)];
+  });
+  return (
+    <div className="overflow-x-auto rounded-2xl shadow-md border border-black/[0.07]">
+      <table className="w-full min-w-[520px] text-[13px] border-collapse">
+        <colgroup>
+          <col style={{ width: '40%' }} />
+          {plans.map((_, i) => (
+            <col key={i} style={{ backgroundColor: styles[i] ? styles[i]!.col : '#0f1f3d' }} />
+          ))}
+        </colgroup>
+        <thead>
+          <tr>
+            <th className="text-left px-5 py-4 bg-white rounded-tl-2xl" />
+            {plans.map((plan, i) => {
+              const s = styles[i];
+              return s ? (
+                <th key={i} className={`text-center px-3 py-4 font-bold text-[12px] uppercase tracking-wide ${s.headText} ${i === plans.length - 1 ? 'rounded-tr-2xl' : ''}`}
+                  style={{ backgroundColor: s.head }}>
+                  {plan.name}
+                  {plan.badge && <div className="text-[10px] font-normal opacity-60 mt-0.5 normal-case tracking-normal">{plan.badge}</div>}
+                </th>
+              ) : (
+                <th key={i} className={`text-center px-3 py-4 font-bold text-[12px] text-white uppercase tracking-wide ${i === plans.length - 1 ? 'rounded-tr-2xl' : ''}`}
+                  style={{ backgroundColor: '#0f1f3d' }}>
+                  {plan.name}
+                  {plan.badge && <div className="text-[10px] font-normal text-white/50 mt-0.5 normal-case tracking-normal">{plan.badge}</div>}
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {features.map((label, i) => (
+            <tr key={i} style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+              <td className="px-5 py-3.5 font-medium text-scanup-navy bg-white">{label}</td>
+              {plans.map((_, j) => {
+                const s = styles[j];
+                const on = values[i][j];
+                return s ? (
+                  <td key={j} className="px-3 py-3.5 text-center">
+                    {on ? <Check size={18} className={`${s.check} mx-auto`} strokeWidth={2.5} /> : <X size={16} className={`${s.x} mx-auto`} strokeWidth={2} />}
+                  </td>
+                ) : (
+                  <td key={j} className="px-3 py-3.5 text-center" style={{ backgroundColor: '#0f1f3d' }}>
+                    {on ? <Check size={18} className="text-emerald-400 mx-auto" strokeWidth={2.5} /> : <X size={16} className="text-white/20 mx-auto" strokeWidth={2} />}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+          <tr style={{ borderTop: '2px solid rgba(0,0,0,0.1)' }}>
+            <td className="px-5 py-4 font-bold text-scanup-navy bg-white rounded-bl-2xl">{tarifLabel}</td>
+            {plans.map((plan, i) => {
+              const s = styles[i];
+              return s ? (
+                <td key={i} className={`px-3 py-4 text-center ${i === plans.length - 1 ? 'rounded-br-2xl' : ''}`} style={{ backgroundColor: s.head }}>
+                  <div className={`font-bold text-[15px] ${s.price}`}>{plan.price}</div>
+                  <div className={`text-[11px] mt-0.5 ${s.sub}`}>{plan.sub}</div>
+                </td>
+              ) : (
+                <td key={i} className={`px-3 py-4 text-center ${i === plans.length - 1 ? 'rounded-br-2xl' : ''}`} style={{ backgroundColor: '#0f1f3d' }}>
+                  <div className="font-bold text-[15px] text-white">{plan.price}</div>
+                  <div className="text-[11px] text-white/40 mt-0.5">{plan.sub}</div>
+                </td>
+              );
+            })}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
 const NOTE_ICONS = [Shield, Users, UserCog];
 
 export default function TarifsPage() {
@@ -82,7 +194,27 @@ export default function TarifsPage() {
   const { t } = useLanguage();
   const tr = t.tarifs;
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [tab, setTab] = useState<'rps' | 'tms'>('rps');
   const goContact = () => navigate('/aide-support');
+
+  const TrialBanner = (
+    <div className="rounded-2xl bg-gradient-to-br from-scanup-blue/[0.06] to-scanup-turquoise/[0.12] border-2 border-dashed border-scanup-blue/30 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div className="w-10 h-10 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center flex-shrink-0">
+        <Sparkles size={18} />
+      </div>
+      <div className="flex-grow">
+        <div className="text-[16px] font-bold text-scanup-navy">{tr.trial.title}</div>
+        <p className="text-[13px] text-scanup-graytext leading-relaxed">{tr.trial.desc}</p>
+      </div>
+      <motion.button
+        whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+        onClick={goContact}
+        className="py-3 px-6 rounded-xl font-bold text-[13px] bg-scanup-blue text-white hover:brightness-110 transition-all inline-flex items-center gap-2 flex-shrink-0"
+      >
+        {tr.trial.cta} <ArrowRight size={13} />
+      </motion.button>
+    </div>
+  );
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white flex flex-col">
@@ -94,7 +226,7 @@ export default function TarifsPage() {
       <Navbar />
 
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="relative pt-24 pb-12 px-6 text-center overflow-hidden">
+      <section className="relative pt-24 pb-10 px-6 text-center overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px]"
             style={{ background: 'radial-gradient(ellipse at center top, rgba(0,104,255,0.07) 0%, transparent 65%)' }} />
@@ -130,70 +262,115 @@ export default function TarifsPage() {
         </div>
       </section>
 
-      {/* ── Dépistage RPS ────────────────────────────────────── */}
-      <section className="px-4 sm:px-6 py-10">
+      {/* ── Switch RPS / TMS ─────────────────────────────────── */}
+      <section className="px-4 sm:px-6 pb-16">
         <div className="max-w-5xl mx-auto">
-          <Reveal className="mb-8">
-            <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight">{tr.rps.title}</h2>
-            <p className="text-[15px] text-scanup-graytext mt-1">{tr.rps.subtitle}</p>
-          </Reveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
-            {tr.rps.plans.map((plan, i) => (
-              <Reveal key={i} delay={i * 0.07}>
-                <PlanCard plan={plan} featured={!!plan.badge} onCta={goContact} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Dépistage TMS ────────────────────────────────────── */}
-      <section className="px-4 sm:px-6 py-10">
-        <div className="max-w-5xl mx-auto">
-          <Reveal className="mb-8">
-            <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight">{tr.tms.title}</h2>
-            <p className="text-[15px] text-scanup-graytext mt-1">{tr.tms.subtitle}</p>
-          </Reveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
-            {tr.tms.plans.map((plan, i) => (
-              <Reveal key={i} delay={i * 0.07}>
-                <PlanCard plan={plan} onCta={goContact} />
-              </Reveal>
-            ))}
-            {/* CTA essai gratuit — à côté des cartes */}
-            <Reveal delay={tr.tms.plans.length * 0.07}>
-              <div className="rounded-2xl p-7 h-full flex flex-col bg-gradient-to-br from-scanup-blue/[0.06] to-scanup-turquoise/[0.12] border-2 border-dashed border-scanup-blue/30">
-                <div className="w-10 h-10 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center mb-4">
-                  <Sparkles size={18} />
-                </div>
-                <div className="text-[20px] font-bold tracking-tight mb-2 text-scanup-navy">{tr.trial.title}</div>
-                <p className="text-[13px] text-scanup-graytext leading-relaxed flex-grow">{tr.trial.desc}</p>
-                <motion.button
-                  whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                  onClick={goContact}
-                  className="w-full py-3 rounded-xl font-bold text-[13px] bg-scanup-blue text-white hover:brightness-110 transition-all mt-6 inline-flex items-center justify-center gap-2"
+          <Reveal className="flex justify-center mb-4">
+            <div className="inline-flex rounded-full border border-black/10 bg-[#f8f9fb] p-1">
+              {(['rps', 'tms'] as const).map((k) => (
+                <button
+                  key={k}
+                  onClick={() => setTab(k)}
+                  className={`relative px-6 sm:px-8 py-2.5 rounded-full text-[14px] font-semibold transition-colors ${
+                    tab === k ? 'text-white' : 'text-scanup-graytext hover:text-scanup-navy'
+                  }`}
                 >
-                  {tr.trial.cta} <ArrowRight size={13} />
-                </motion.button>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Encart — l'ergonomie centrée sur les personnes */}
-          <Reveal delay={0.1} className="mt-8">
-            <div className="rounded-2xl bg-scanup-navy text-white p-8 sm:p-10 relative overflow-hidden">
-              <div className="pointer-events-none absolute -right-20 -top-20 w-[280px] h-[280px] rounded-full border border-scanup-turquoise/15" />
-              <div className="w-12 h-1 rounded-full bg-scanup-turquoise mb-6" />
-              <p className="text-[16px] sm:text-[18px] leading-relaxed text-white/85 max-w-3xl">
-                {tr.tms.highlight}
-              </p>
+                  {tab === k && (
+                    <motion.div
+                      layoutId="tarifs-tab-pill"
+                      className="absolute inset-0 bg-scanup-blue rounded-full"
+                      transition={{ duration: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
+                    />
+                  )}
+                  <span className="relative">{k === 'rps' ? tr.rps.title : tr.tms.title}</span>
+                </button>
+              ))}
             </div>
           </Reveal>
+          <p className="text-center text-[15px] text-scanup-graytext mb-10">
+            {tab === 'rps' ? tr.rps.subtitle : tr.tms.subtitle}
+          </p>
+
+          {tab === 'rps' ? (
+            <div key="rps">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
+                {tr.rps.plans.map((plan, i) => (
+                  <Reveal key={i} delay={i * 0.07}>
+                    <PlanCard plan={plan} featured={!!plan.badge} onCta={goContact} />
+                  </Reveal>
+                ))}
+              </div>
+              <Reveal delay={0.15} className="mt-6">{TrialBanner}</Reveal>
+              <Reveal delay={0.1} className="mt-14">
+                <div className="text-center mb-8">
+                  <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight mb-1">{tr.tableTitle}</h2>
+                  <p className="text-[15px] text-scanup-graytext">{tr.tableSubtitle}</p>
+                </div>
+                <CompareTable
+                  plans={tr.rps.plans}
+                  features={tr.rps.features}
+                  values={RPS_FEATURE_VALUES}
+                  tarifLabel={tr.tableTarif}
+                />
+              </Reveal>
+            </div>
+          ) : (
+            <div key="tms">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
+                {tr.tms.plans.map((plan, i) => (
+                  <Reveal key={i} delay={i * 0.07}>
+                    <PlanCard plan={plan} onCta={goContact} />
+                  </Reveal>
+                ))}
+                {/* CTA essai gratuit — à côté des cartes */}
+                <Reveal delay={tr.tms.plans.length * 0.07}>
+                  <div className="rounded-2xl p-7 h-full flex flex-col bg-gradient-to-br from-scanup-blue/[0.06] to-scanup-turquoise/[0.12] border-2 border-dashed border-scanup-blue/30">
+                    <div className="w-10 h-10 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center mb-4">
+                      <Sparkles size={18} />
+                    </div>
+                    <div className="text-[20px] font-bold tracking-tight mb-2 text-scanup-navy">{tr.trial.title}</div>
+                    <p className="text-[13px] text-scanup-graytext leading-relaxed flex-grow">{tr.trial.desc}</p>
+                    <motion.button
+                      whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                      onClick={goContact}
+                      className="w-full py-3 rounded-xl font-bold text-[13px] bg-scanup-blue text-white hover:brightness-110 transition-all mt-6 inline-flex items-center justify-center gap-2"
+                    >
+                      {tr.trial.cta} <ArrowRight size={13} />
+                    </motion.button>
+                  </div>
+                </Reveal>
+              </div>
+
+              {/* Encart — l'ergonomie centrée sur les personnes */}
+              <Reveal delay={0.1} className="mt-8">
+                <div className="rounded-2xl bg-scanup-navy text-white p-8 sm:p-10 relative overflow-hidden">
+                  <div className="pointer-events-none absolute -right-20 -top-20 w-[280px] h-[280px] rounded-full border border-scanup-turquoise/15" />
+                  <div className="w-12 h-1 rounded-full bg-scanup-turquoise mb-6" />
+                  <p className="text-[16px] sm:text-[18px] leading-relaxed text-white/85 max-w-3xl">
+                    {tr.tms.highlight}
+                  </p>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.1} className="mt-14">
+                <div className="text-center mb-8">
+                  <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight mb-1">{tr.tableTitle}</h2>
+                  <p className="text-[15px] text-scanup-graytext">{tr.tableSubtitle}</p>
+                </div>
+                <CompareTable
+                  plans={tr.tms.plans}
+                  features={tr.tms.features}
+                  values={TMS_FEATURE_VALUES}
+                  tarifLabel={tr.tableTarif}
+                />
+              </Reveal>
+            </div>
+          )}
         </div>
       </section>
 
       {/* ── Notes ────────────────────────────────────────────── */}
-      <section className="px-4 sm:px-6 pt-4 pb-16">
+      <section className="px-4 sm:px-6 pb-16">
         <div className="max-w-3xl mx-auto space-y-3">
           {tr.notes.map((note, i) => {
             const Icon = NOTE_ICONS[i];

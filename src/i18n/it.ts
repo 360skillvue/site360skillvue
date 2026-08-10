@@ -532,15 +532,13 @@ export const it = {
     tableTitle: 'Confronto dettagliato',
     tableSubtitle: 'Tutte le prestazioni, pack per pack.',
     tableTarif: 'Prezzo',
-    notes: [
-      'Risultati individuali strettamente riservati — il datore di lavoro riceve solo indicatori aggregati e anonimizzati. Hosting certificato HDS. Crediti validi 12 mesi.',
-      'Più di 500 collaboratori, partner e rivenditori: contattateci.',
-      'Disponete di esperti interni (servizio di prevenzione, IPRP)? Esiste una formula in autonomia — contattateci.',
-    ],
+    autonomyNote: 'Disponete di esperti interni (servizio di prevenzione, IPRP)? Esiste una formula in autonomia — contattateci.',
     faqTitle: 'Domande frequenti',
     faqs: [
       { q: 'Cosa sono ScanUp RPS e DMS?', a: 'Moduli di valutazione scientificamente validati per individuare i Rischi Psicosociali e i Disturbi Muscoloscheletrici nei vostri team. Risultati in 48 ore.' },
       { q: 'I dati dei dipendenti sono riservati?', a: 'Assolutamente. I risultati individuali sono strettamente riservati. Il datore di lavoro riceve solo indicatori aggregati e anonimizzati.' },
+      { q: 'Dove sono ospitati i dati?', a: 'A scelta: in Francia 🇫🇷 su un\'infrastruttura certificata HDS (certificazione francese per l\'hosting di dati sanitari), oppure in Svizzera 🇨🇭 presso Infomaniak. I dati non vengono mai venduti né condivisi.' },
+      { q: 'Più di 500 collaboratori, partner o rivenditori?', a: 'Contattateci: costruiremo una proposta adatta al vostro volume e alla vostra organizzazione.' },
       { q: 'Abbiamo esperti interni (servizio di prevenzione, IPRP) — esiste una formula adatta?', a: 'Sì. Esiste una formula in autonomia: i vostri ergonomi e psicologi del lavoro utilizzano la piattaforma per effettuare e qualificare gli screening in autonomia. Contattateci per parlarne.' },
       { q: 'Questo sostituisce il documento di valutazione dei rischi?', a: 'No, lo alimenta. Le nostre dashboard forniscono dati oggettivi per aggiornare il documento e giustificare i piani d\'azione.' },
       { q: 'Quanto tempo ci vuole per iniziare?', a: '48 ore. I vostri collaboratori accedono ai questionari tramite QR code o email, senza download, da qualsiasi dispositivo.' },

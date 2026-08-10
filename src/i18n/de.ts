@@ -532,15 +532,13 @@ export const de = {
     tableTitle: 'Detaillierter Vergleich',
     tableSubtitle: 'Alle Leistungen, Paket für Paket.',
     tableTarif: 'Preis',
-    notes: [
-      'Individuelle Ergebnisse sind streng vertraulich — der Arbeitgeber erhält nur aggregierte, anonymisierte Indikatoren. HDS-zertifiziertes Hosting. Credits 12 Monate gültig.',
-      'Mehr als 500 Mitarbeitende, Partner und Wiederverkäufer: Kontaktieren Sie uns.',
-      'Sie haben eigene Experten (Präventionsdienst, IPRP)? Es gibt ein Selbstbedienungspaket — kontaktieren Sie uns.',
-    ],
+    autonomyNote: 'Sie haben eigene Experten (Präventionsdienst, IPRP)? Es gibt ein Selbstbedienungspaket — kontaktieren Sie uns.',
     faqTitle: 'Häufig gestellte Fragen',
     faqs: [
       { q: 'Was sind ScanUp PSR und MSE?', a: 'Wissenschaftlich validierte Bewertungsmodule zur Erkennung von psychosozialen Risiken und Muskel-Skelett-Erkrankungen. Ergebnisse in 48 Stunden.' },
       { q: 'Sind die Mitarbeiterdaten vertraulich?', a: 'Absolut. Individuelle Ergebnisse sind streng vertraulich. Der Arbeitgeber erhält nur aggregierte, anonymisierte Indikatoren.' },
+      { q: 'Wo werden die Daten gehostet?', a: 'Nach Wahl: in Frankreich 🇫🇷 auf HDS-zertifizierter Infrastruktur (französische Zertifizierung für das Hosting von Gesundheitsdaten) oder in der Schweiz 🇨🇭 bei Infomaniak. Daten werden niemals verkauft oder weitergegeben.' },
+      { q: 'Mehr als 500 Mitarbeitende, Partner oder Wiederverkäufer?', a: 'Kontaktieren Sie uns: Wir erstellen ein Angebot, das zu Ihrem Volumen und Ihrer Organisation passt.' },
       { q: 'Wir haben eigene Experten (Präventionsdienst, IPRP) — gibt es ein passendes Paket?', a: 'Ja. Es gibt ein Selbstbedienungspaket: Ihre Ergonomen und Arbeitspsychologen nutzen die Plattform, um Screenings selbst durchzuführen und zu qualifizieren. Kontaktieren Sie uns.' },
       { q: 'Ersetzt dies das Gefährdungsbeurteilungsdokument?', a: 'Nein, es ergänzt es. Unsere Dashboards liefern objektive Daten zur Aktualisierung und Begründung von Aktionsplänen.' },
       { q: 'Wie lange dauert es bis zum Start?', a: '48 Stunden. Ihre Mitarbeitenden greifen per QR-Code oder E-Mail auf die Fragebögen zu, ohne Download, von jedem Gerät aus.' },

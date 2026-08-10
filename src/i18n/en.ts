@@ -532,15 +532,13 @@ export const en = {
     tableTitle: 'Detailed comparison',
     tableSubtitle: 'All services, pack by pack.',
     tableTarif: 'Price',
-    notes: [
-      'Individual results are strictly confidential — the employer only receives aggregated, anonymised indicators. HDS-certified hosting. Credits valid for 12 months.',
-      'More than 500 employees, partners and resellers: contact us.',
-      'Do you have your own experts (prevention service, IPRP)? A self-service plan exists — contact us.',
-    ],
+    autonomyNote: 'Do you have your own experts (prevention service, IPRP)? A self-service plan exists — contact us.',
     faqTitle: 'Frequently asked questions',
     faqs: [
       { q: 'What are ScanUp PSR and MSD?', a: 'Scientifically validated assessment modules to screen for Psychosocial Risks and Musculoskeletal Disorders in your teams. Results in 48 hours.' },
       { q: 'Is employee data confidential?', a: 'Absolutely. Individual results are strictly confidential. The employer only receives aggregated, anonymised indicators. Email is optional.' },
+      { q: 'Where is the data hosted?', a: 'Your choice: in France 🇫🇷 on HDS-certified infrastructure (the French health-data hosting certification), or in Switzerland 🇨🇭 with Infomaniak. Data is never sold or shared.' },
+      { q: 'More than 500 employees, or a partner or reseller?', a: 'Contact us: we will build a proposal suited to your volume and organisation.' },
       { q: 'We have our own experts (prevention service, IPRP) — is there a suitable plan?', a: 'Yes. A self-service plan exists: your ergonomists and occupational psychologists use the platform to carry out and qualify screenings themselves. Contact us to discuss it.' },
       { q: 'Does this replace the Risk Assessment Document?', a: 'No, it feeds it. Our dashboards provide objective data to update your risk assessment document and justify your action plans.' },
       { q: 'How long to get started?', a: 'Within 48 hours. Your employees access questionnaires via QR code or email, no download required, from any device.' },

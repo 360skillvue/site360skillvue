@@ -626,15 +626,13 @@ export const fr = {
     tableTitle: 'Comparatif détaillé',
     tableSubtitle: 'Toutes les prestations, pack par pack.',
     tableTarif: 'Tarif',
-    notes: [
-      'Résultats individuels strictement confidentiels — l\'employeur ne reçoit que des indicateurs agrégés et anonymisés. Hébergement certifié HDS. Crédits valables 12 mois.',
-      'Plus de 500 collaborateurs, partenaires et revendeurs : contactez-nous.',
-      'Vous disposez de vos propres experts (service de prévention, IPRP) ? Une formule en autonomie existe — contactez-nous.',
-    ],
+    autonomyNote: 'Vous disposez de vos propres experts (service de prévention, IPRP) ? Une formule en autonomie existe — contactez-nous.',
     faqTitle: 'Questions fréquentes',
     faqs: [
       { q: 'Qu\'est-ce que ScanUp RPS et TMS ?', a: 'Des modules d\'évaluation scientifiquement validés pour dépister les Risques Psycho-Sociaux et les Troubles Musculo-Squelettiques au sein de vos équipes. Résultats en 48 h.' },
       { q: 'Les données des salariés sont-elles confidentielles ?', a: 'Absolument. Les résultats individuels sont strictement confidentiels. L\'employeur ne reçoit que des indicateurs agrégés et anonymisés. L\'email est facultatif.' },
+      { q: 'Où sont hébergées les données ?', a: 'Au choix : en France 🇫🇷 sur une infrastructure certifiée HDS (Hébergeur de Données de Santé), ou en Suisse 🇨🇭 chez Infomaniak. Les données ne sont jamais revendues ni partagées.' },
+      { q: 'Plus de 500 collaborateurs, partenaire ou revendeur ?', a: 'Contactez-nous : nous construisons une proposition adaptée à votre volume et à votre organisation.' },
       { q: 'Nous disposons de nos propres experts (service de prévention, IPRP) — existe-t-il une formule adaptée ?', a: 'Oui. Une formule en autonomie existe : vos ergonomes et psychologues du travail utilisent la plateforme pour réaliser et qualifier eux-mêmes les dépistages. Contactez-nous pour en discuter.' },
       { q: 'Cela remplace-t-il le Document Unique (DUERP) ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre DUERP et justifier vos plans d\'action.' },
       { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Vos collaborateurs accèdent aux questionnaires par QR code ou email, sans téléchargement, depuis n\'importe quel appareil.' },

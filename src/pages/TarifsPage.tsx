@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, X, ArrowRight, Shield, Users, UserCog, Sparkles } from 'lucide-react';
+import { Check, X, ArrowRight, UserCog, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -116,10 +116,10 @@ const CompareTable: React.FC<{
     return COL_STYLES[Math.min(slot++, COL_STYLES.length - 1)];
   });
   return (
-    <div className="overflow-x-auto rounded-2xl shadow-md border border-black/[0.07]">
-      <table className="w-full min-w-[520px] text-[13px] border-collapse">
+    <div className={`overflow-x-auto rounded-2xl shadow-md border border-black/[0.07] ${plans.length === 2 ? 'max-w-2xl mx-auto' : ''}`}>
+      <table className="w-full min-w-[440px] text-[13px] border-collapse">
         <colgroup>
-          <col style={{ width: '40%' }} />
+          <col style={{ width: plans.length === 2 ? '46%' : '40%' }} />
           {plans.map((_, i) => (
             <col key={i} style={{ backgroundColor: styles[i] ? styles[i]!.col : '#0f1f3d' }} />
           ))}
@@ -186,8 +186,6 @@ const CompareTable: React.FC<{
     </div>
   );
 };
-
-const NOTE_ICONS = [Shield, Users, UserCog];
 
 export default function TarifsPage() {
   const navigate = useNavigate();
@@ -369,36 +367,19 @@ export default function TarifsPage() {
         </div>
       </section>
 
-      {/* ── Notes ────────────────────────────────────────────── */}
+      {/* ── Formule en autonomie ─────────────────────────────── */}
       <section className="px-4 sm:px-6 pb-16">
-        <div className="max-w-3xl mx-auto space-y-3">
-          {tr.notes.map((note, i) => {
-            const Icon = NOTE_ICONS[i];
-            const clickable = i > 0;
-            const inner = (
-              <>
-                <Icon size={16} className="text-scanup-blue flex-shrink-0 mt-0.5" />
-                <span className="text-[14px] leading-relaxed text-scanup-graytext">{note}</span>
-                {clickable && <ArrowRight size={14} className="text-scanup-blue flex-shrink-0 mt-1 ml-auto" />}
-              </>
-            );
-            return clickable ? (
-              <Reveal key={i} delay={i * 0.05}>
-                <button
-                  onClick={goContact}
-                  className="w-full flex items-start gap-3 text-left rounded-xl border border-black/[0.07] bg-[#f8f9fb] px-5 py-4 hover:border-scanup-blue/40 transition-colors"
-                >
-                  {inner}
-                </button>
-              </Reveal>
-            ) : (
-              <Reveal key={i} delay={i * 0.05}>
-                <div className="flex items-start gap-3 rounded-xl border border-black/[0.07] bg-[#f8f9fb] px-5 py-4">
-                  {inner}
-                </div>
-              </Reveal>
-            );
-          })}
+        <div className="max-w-3xl mx-auto">
+          <Reveal>
+            <button
+              onClick={goContact}
+              className="w-full flex items-start gap-3 text-left rounded-xl border border-black/[0.07] bg-[#f8f9fb] px-5 py-4 hover:border-scanup-blue/40 transition-colors"
+            >
+              <UserCog size={16} className="text-scanup-blue flex-shrink-0 mt-0.5" />
+              <span className="text-[14px] leading-relaxed text-scanup-graytext">{tr.autonomyNote}</span>
+              <ArrowRight size={14} className="text-scanup-blue flex-shrink-0 mt-1 ml-auto" />
+            </button>
+          </Reveal>
         </div>
       </section>
 

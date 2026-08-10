@@ -116,10 +116,10 @@ const CompareTable: React.FC<{
     return COL_STYLES[Math.min(slot++, COL_STYLES.length - 1)];
   });
   return (
-    <div className={`overflow-x-auto rounded-2xl shadow-md border border-black/[0.07] ${plans.length === 2 ? 'max-w-2xl mx-auto' : ''}`}>
-      <table className="w-full min-w-[440px] text-[13px] border-collapse">
+    <div className={`overflow-x-auto rounded-2xl shadow-md border border-black/[0.07] bg-white ${plans.length === 2 ? 'max-w-3xl mx-auto' : ''}`}>
+      <table className={`w-full text-[13px] border-collapse ${plans.length === 2 ? 'min-w-[480px]' : 'min-w-[560px]'}`}>
         <colgroup>
-          <col style={{ width: plans.length === 2 ? '46%' : '40%' }} />
+          <col style={{ width: plans.length === 2 ? '42%' : '38%' }} />
           {plans.map((_, i) => (
             <col key={i} style={{ backgroundColor: styles[i] ? styles[i]!.col : '#0f1f3d' }} />
           ))}
@@ -130,13 +130,13 @@ const CompareTable: React.FC<{
             {plans.map((plan, i) => {
               const s = styles[i];
               return s ? (
-                <th key={i} className={`text-center px-3 py-4 font-bold text-[12px] uppercase tracking-wide ${s.headText} ${i === plans.length - 1 ? 'rounded-tr-2xl' : ''}`}
+                <th key={i} className={`text-center px-3 py-4 font-bold text-[12px] uppercase tracking-wide whitespace-nowrap ${s.headText} ${i === plans.length - 1 ? 'rounded-tr-2xl' : ''}`}
                   style={{ backgroundColor: s.head }}>
                   {plan.name}
                   {plan.badge && <div className="text-[10px] font-normal opacity-60 mt-0.5 normal-case tracking-normal">{plan.badge}</div>}
                 </th>
               ) : (
-                <th key={i} className={`text-center px-3 py-4 font-bold text-[12px] text-white uppercase tracking-wide ${i === plans.length - 1 ? 'rounded-tr-2xl' : ''}`}
+                <th key={i} className={`text-center px-3 py-4 font-bold text-[12px] text-white uppercase tracking-wide whitespace-nowrap ${i === plans.length - 1 ? 'rounded-tr-2xl' : ''}`}
                   style={{ backgroundColor: '#0f1f3d' }}>
                   {plan.name}
                   {plan.badge && <div className="text-[10px] font-normal text-white/50 mt-0.5 normal-case tracking-normal">{plan.badge}</div>}
@@ -299,18 +299,6 @@ export default function TarifsPage() {
                 ))}
               </div>
               <Reveal delay={0.15} className="mt-6">{TrialBanner}</Reveal>
-              <Reveal delay={0.1} className="mt-14">
-                <div className="text-center mb-8">
-                  <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight mb-1">{tr.tableTitle}</h2>
-                  <p className="text-[15px] text-scanup-graytext">{tr.tableSubtitle}</p>
-                </div>
-                <CompareTable
-                  plans={tr.rps.plans}
-                  features={tr.rps.features}
-                  values={RPS_FEATURE_VALUES}
-                  tarifLabel={tr.tableTarif}
-                />
-              </Reveal>
             </div>
           ) : (
             <div key="tms">
@@ -349,21 +337,35 @@ export default function TarifsPage() {
                   </p>
                 </div>
               </Reveal>
-
-              <Reveal delay={0.1} className="mt-14">
-                <div className="text-center mb-8">
-                  <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight mb-1">{tr.tableTitle}</h2>
-                  <p className="text-[15px] text-scanup-graytext">{tr.tableSubtitle}</p>
-                </div>
-                <CompareTable
-                  plans={tr.tms.plans}
-                  features={tr.tms.features}
-                  values={TMS_FEATURE_VALUES}
-                  tarifLabel={tr.tableTarif}
-                />
-              </Reveal>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ── Comparatif détaillé ──────────────────────────────── */}
+      <section className="py-16 px-4 sm:px-6 bg-[#f8f9fb]">
+        <div className="max-w-5xl mx-auto">
+          <Reveal className="text-center mb-10">
+            <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-2">{tr.tableTitle}</h2>
+            <p className="text-[15px] text-scanup-graytext">{tr.tableSubtitle}</p>
+          </Reveal>
+          <Reveal>
+            {tab === 'rps' ? (
+              <CompareTable
+                plans={tr.rps.plans}
+                features={tr.rps.features}
+                values={RPS_FEATURE_VALUES}
+                tarifLabel={tr.tableTarif}
+              />
+            ) : (
+              <CompareTable
+                plans={tr.tms.plans}
+                features={tr.tms.features}
+                values={TMS_FEATURE_VALUES}
+                tarifLabel={tr.tableTarif}
+              />
+            )}
+          </Reveal>
         </div>
       </section>
 

@@ -51,12 +51,13 @@ const TMS_FEATURE_VALUES: boolean[][] = [
   [false, true],  // Plan d'action TMS + restitution direction
 ];
 
-// column palettes for non-featured plans, in order of appearance
-const COL_STYLES = [
-  { col: '#ffffff', head: '#ffffff', headText: 'text-gray-500', check: 'text-green-500', x: 'text-gray-300', price: 'text-scanup-navy', sub: 'text-gray-400' },
-  { col: '#eff6ff', head: '#dbeafe', headText: 'text-blue-700', check: 'text-blue-600', x: 'text-blue-200', price: 'text-blue-700', sub: 'text-blue-400' },
-  { col: '#f0fdf4', head: '#bbf7d0', headText: 'text-emerald-700', check: 'text-emerald-600', x: 'text-emerald-200', price: 'text-emerald-800', sub: 'text-emerald-600' },
-];
+// column palettes — same tints as the original comparison table
+type PaletteKey = 'white' | 'blue' | 'navy' | 'green';
+const COL_STYLES: Record<Exclude<PaletteKey, 'navy'>, { col: string; head: string; headText: string; check: string; x: string; price: string; sub: string }> = {
+  white: { col: '#ffffff', head: '#ffffff', headText: 'text-gray-500', check: 'text-green-500', x: 'text-gray-300', price: 'text-scanup-navy', sub: 'text-gray-400' },
+  blue:  { col: '#eff6ff', head: '#dbeafe', headText: 'text-blue-700', check: 'text-blue-600', x: 'text-blue-200', price: 'text-blue-700', sub: 'text-blue-400' },
+  green: { col: '#f0fdf4', head: '#bbf7d0', headText: 'text-emerald-700', check: 'text-emerald-600', x: 'text-emerald-200', price: 'text-emerald-800', sub: 'text-emerald-600' },
+};
 
 const PlanCard: React.FC<{ plan: Plan; featured?: boolean; onCta: () => void }> = ({ plan, featured = false, onCta }) => (
   <motion.div
@@ -108,13 +109,9 @@ const CompareTable: React.FC<{
   features: string[];
   values: boolean[][];
   tarifLabel: string;
-}> = ({ plans, features, values, tarifLabel }) => {
-  // assign a palette slot to each non-featured column, featured column gets navy
-  let slot = 0;
-  const styles = plans.map((plan) => {
-    if (plan.badge && plans.length > 2) return null; // featured → navy
-    return COL_STYLES[Math.min(slot++, COL_STYLES.length - 1)];
-  });
+  palette: PaletteKey[];
+}> = ({ plans, features, values, tarifLabel, palette }) => {
+  const styles = plans.map((_, i) => (palette[i] === 'navy' ? null : COL_STYLES[palette[i] as Exclude<PaletteKey, 'navy'>]));
   return (
     <div className={`overflow-x-auto rounded-2xl shadow-md border border-black/[0.07] bg-white ${plans.length === 2 ? 'max-w-3xl mx-auto' : ''}`}>
       <table className={`w-full text-[13px] border-collapse ${plans.length === 2 ? 'min-w-[480px]' : 'min-w-[560px]'}`}>
@@ -356,6 +353,7 @@ export default function TarifsPage() {
                 features={tr.rps.features}
                 values={RPS_FEATURE_VALUES}
                 tarifLabel={tr.tableTarif}
+                palette={['white', 'navy', 'green']}
               />
             ) : (
               <CompareTable
@@ -363,6 +361,7 @@ export default function TarifsPage() {
                 features={tr.tms.features}
                 values={TMS_FEATURE_VALUES}
                 tarifLabel={tr.tableTarif}
+                palette={['blue', 'navy']}
               />
             )}
           </Reveal>

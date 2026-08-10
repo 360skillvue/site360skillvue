@@ -514,6 +514,7 @@ export const de = {
             'Umfassende Arbeitsplatzstudie durch eine:n IPRP-Ergonom:in',
             'Vollständiger Bericht',
             'Alle Mitarbeitenden des Arbeitsplatzes analysiert',
+            'Personalisiertes Video-Coaching (Bewegungen und Haltungen)',
             'MSE-Präventionsaktionsplan und Management-Präsentation ab 10 Studien inklusive',
           ],
           cta: 'Termin vereinbaren',

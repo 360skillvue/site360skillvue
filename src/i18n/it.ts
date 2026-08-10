@@ -514,6 +514,7 @@ export const it = {
             'Studio esaustivo della postazione da parte di un ergonomo IPRP',
             'Rapporto completo',
             'Tutti i collaboratori della postazione analizzati',
+            'Coaching video personalizzato (gesti e posture)',
             'Piano d\'azione di prevenzione DMS e restituzione alla direzione inclusi a partire da 10 studi',
           ],
           cta: 'Prenota',

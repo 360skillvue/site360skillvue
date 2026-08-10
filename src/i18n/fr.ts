@@ -608,6 +608,7 @@ export const fr = {
             'Étude de poste exhaustive par un ergonome IPRP',
             'Rapport complet',
             'Tous les collaborateurs du poste analysés',
+            'Coaching vidéo personnalisé (gestes et postures)',
             'Plan d\'action de prévention TMS et restitution direction offerts dès 10 études',
           ],
           cta: 'Prendre RDV',

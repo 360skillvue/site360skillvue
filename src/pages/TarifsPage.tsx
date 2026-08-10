@@ -45,7 +45,7 @@ const RPS_FEATURE_VALUES: boolean[][] = [
 const TMS_FEATURE_VALUES: boolean[][] = [
   [true, true],   // Dépistage par vidéos
   [true, true],   // Qualification par un ergonome
-  [true, false],  // Coaching vidéo personnalisé
+  [true, true],   // Coaching vidéo personnalisé
   [false, true],  // Étude de poste exhaustive IPRP
   [false, true],  // Rapport complet
   [false, true],  // Plan d'action TMS + restitution direction
@@ -116,9 +116,9 @@ const CompareTable: React.FC<{
     <div className={`overflow-x-auto rounded-2xl shadow-md border border-black/[0.07] bg-white ${plans.length === 2 ? 'max-w-3xl mx-auto' : ''}`}>
       <table className={`w-full text-[13px] border-collapse ${plans.length === 2 ? 'min-w-[480px]' : 'min-w-[560px]'}`}>
         <colgroup>
-          <col style={{ width: plans.length === 2 ? '42%' : '38%' }} />
+          <col style={{ width: `${100 / (plans.length + 1)}%` }} />
           {plans.map((_, i) => (
-            <col key={i} style={{ backgroundColor: styles[i] ? styles[i]!.col : '#0f1f3d' }} />
+            <col key={i} style={{ width: `${100 / (plans.length + 1)}%`, backgroundColor: styles[i] ? styles[i]!.col : '#0f1f3d' }} />
           ))}
         </colgroup>
         <thead>

@@ -514,6 +514,7 @@ export const en = {
             'Comprehensive workstation study by an IPRP ergonomist',
             'Full report',
             'Every employee on the workstation analysed',
+            'Personalised video coaching (movements and postures)',
             'MSD prevention action plan and management debrief included from 10 studies',
           ],
           cta: 'Book a call',

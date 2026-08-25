@@ -430,6 +430,14 @@ export default function HomePage() {
             >
               {t.home.ctaButtonTrial}
             </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              onClick={() => { window.location.href = '/simulateur-cout-tms-rps'; }}
+              className="text-white px-8 py-4 rounded-[12px] font-bold text-[16px] border border-white/25 hover:border-white transition-all"
+            >
+              {t.home.ctaButtonSimulateur}
+            </motion.button>
           </div>
         </FadeIn>
       </section>

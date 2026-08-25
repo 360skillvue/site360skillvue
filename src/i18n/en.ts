@@ -75,6 +75,7 @@ export const en = {
     ctaSubtitle: 'Deploy ScanUp in just a few hours. Free 14-day trial, no credit card required.',
     ctaButtonTrial: 'Start free trial',
     ctaButtonDemo: 'Request a demo',
+    ctaButtonSimulateur: 'Estimate your cost',
     footer: '© 2026 360SkillVue. All rights reserved.',
   },
   partenaires: {
@@ -283,7 +284,7 @@ export const en = {
     heroTitleEnd: 'risks without an audit in 48h.',
     heroSubtitle: 'Collect authentic field testimonials and anticipate risks with an anonymous feedback platform. From €27 per employee.',
     heroCtaPrimary: 'Start for free',
-    heroCtaSecondary: 'See a demo',
+    heroCtaSecondary: 'Estimate your cost',
     stats: [
       { value: '+650', label: 'active users' },
       { value: '43%', label: 'burnout detected earlier' },

@@ -75,6 +75,7 @@ export const fr = {
     ctaSubtitle: 'Déployez ScanUp en quelques heures. Essai gratuit 14 jours, sans carte bancaire.',
     ctaButtonTrial: 'Démarrer l\'essai gratuit',
     ctaButtonDemo: 'Demander une démo',
+    ctaButtonSimulateur: 'Estimer votre coût',
     footer: '© 2026 360SkillVue. Tous droits réservés.',
   },
   partenaires: {
@@ -370,7 +371,7 @@ export const fr = {
     heroTitleEnd: 'sans audit en 48h.',
     heroSubtitle: 'Recueillez des témoignages terrain authentiques et anticipez les risques grâce à une plateforme de feedback anonyme. Dès 27 € par collaborateur.',
     heroCtaPrimary: 'Commencer gratuitement',
-    heroCtaSecondary: 'Voir une démo',
+    heroCtaSecondary: 'Estimer votre coût',
     stats: [
       { value: '+650', label: 'utilisateurs actifs' },
       { value: '43%', label: 'burn-out détecté plus tôt' },

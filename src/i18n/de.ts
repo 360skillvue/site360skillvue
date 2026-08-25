@@ -75,6 +75,7 @@ export const de = {
     ctaSubtitle: 'Starten Sie ScanUp in wenigen Stunden. 14 Tage kostenlos testen, keine Kreditkarte erforderlich.',
     ctaButtonTrial: 'Kostenlose Testphase starten',
     ctaButtonDemo: 'Demo anfordern',
+    ctaButtonSimulateur: 'Ihre Kosten schätzen',
     footer: '© 2026 360SkillVue. Alle Rechte vorbehalten.',
   },
   partenaires: {
@@ -283,7 +284,7 @@ export const de = {
     heroTitleEnd: 'ohne Audit in 48 Stunden.',
     heroSubtitle: 'Sammeln Sie authentische Erfahrungsberichte aus der Praxis und antizipieren Sie Risiken mit einer anonymen Feedback-Plattform. Ab 27 € pro Mitarbeitendem.',
     heroCtaPrimary: 'Kostenlos starten',
-    heroCtaSecondary: 'Demo ansehen',
+    heroCtaSecondary: 'Ihre Kosten schätzen',
     stats: [
       { value: '+650', label: 'aktive Nutzer' },
       { value: '43%', label: 'Burnout früher erkannt' },

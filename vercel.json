@@ -1,6 +1,13 @@
 {
   "outputDirectory": "www",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/simulateur-cout-tms-rps",
+      "destination": "/simulateur-cout-tms-rps.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

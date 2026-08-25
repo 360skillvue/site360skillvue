@@ -369,7 +369,7 @@ export const fr = {
     heroTitleHighlight: 'TMS & RPS',
     heroTitleEnd: 'sans audit en 48h.',
     heroSubtitle: 'Recueillez des témoignages terrain authentiques et anticipez les risques grâce à une plateforme de feedback anonyme. Dès 27 € par collaborateur.',
-    heroCtaPrimary: 'Commencer gratuitement',
+    heroCtaPrimary: 'Simuler mon coût gratuitement',
     heroCtaSecondary: 'Voir une démo',
     stats: [
       { value: '+650', label: 'utilisateurs actifs' },
@@ -391,7 +391,7 @@ export const fr = {
     featuresTitle: 'Une plateforme.',
     featuresTitleEnd: 'Cinq leviers.',
     featuresSubtitle: 'Conçue pour les DRH, responsables QVT et dirigeants qui veulent des résultats concrets, pas de la théorie.',
-    featuresCtaButton: 'Commencer gratuitement',
+    featuresCtaButton: 'Simuler mon coût gratuitement',
     features: [
       { label: 'Dépistage', title: 'Campagnes RPS & TMS en continu', body: 'Identifiez les situations à risque grâce aux taux de dépistage positif par équipe — pas une fois par an, en permanence.' },
       { label: 'Expertise', title: 'Ergonomes & psys du travail', body: 'Modules sur-mesure construits après entretien exploratoire. Des humains analysent vos données terrain.' },

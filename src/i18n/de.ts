@@ -282,7 +282,7 @@ export const de = {
     heroTitleHighlight: 'MSE- & PSR-Risiken',
     heroTitleEnd: 'ohne Audit in 48 Stunden.',
     heroSubtitle: 'Sammeln Sie authentische Erfahrungsberichte aus der Praxis und antizipieren Sie Risiken mit einer anonymen Feedback-Plattform. Ab 27 € pro Mitarbeitendem.',
-    heroCtaPrimary: 'Kostenlos starten',
+    heroCtaPrimary: 'Kosten kostenlos simulieren',
     heroCtaSecondary: 'Demo ansehen',
     stats: [
       { value: '+650', label: 'aktive Nutzer' },
@@ -304,7 +304,7 @@ export const de = {
     featuresTitle: 'Eine Plattform.',
     featuresTitleEnd: 'Fünf Hebel.',
     featuresSubtitle: 'Entwickelt für Personalleiter, QWL-Verantwortliche und Führungskräfte, die konkrete Ergebnisse wollen, nicht Theorie.',
-    featuresCtaButton: 'Kostenlos starten',
+    featuresCtaButton: 'Kosten kostenlos simulieren',
     features: [
       { label: 'Screening', title: 'Kontinuierliche PSR- & MSE-Kampagnen', body: 'Identifizieren Sie Risikosituationen anhand der positiven Screening-Raten pro Team — nicht einmal im Jahr, sondern kontinuierlich.' },
       { label: 'Expertise', title: 'Ergonomen & Arbeitspsychologen', body: 'Massgeschneiderte Module nach einem Erkundungsgespräch. Menschen analysieren Ihre Praxisdaten.' },

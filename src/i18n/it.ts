@@ -282,7 +282,7 @@ export const it = {
     heroTitleHighlight: 'DMS & RPS',
     heroTitleEnd: 'senza audit in 48 ore.',
     heroSubtitle: 'Raccogliete testimonianze autentiche dal campo e anticipate i rischi con una piattaforma di feedback anonimo. A partire da 27 € per collaboratore.',
-    heroCtaPrimary: 'Inizia gratuitamente',
+    heroCtaPrimary: 'Simula il mio costo gratis',
     heroCtaSecondary: 'Vedi una demo',
     stats: [
       { value: '+650', label: 'utenti attivi' },
@@ -304,7 +304,7 @@ export const it = {
     featuresTitle: 'Una piattaforma.',
     featuresTitleEnd: 'Cinque leve.',
     featuresSubtitle: 'Progettata per i direttori HR, i responsabili QWL e i dirigenti che vogliono risultati concreti, non teoria.',
-    featuresCtaButton: 'Inizia gratuitamente',
+    featuresCtaButton: 'Simula il mio costo gratis',
     features: [
       { label: 'Screening', title: 'Campagne RPS & DMS continue', body: 'Identificate le situazioni a rischio grazie ai tassi di screening positivo per team — non una volta all\'anno, continuativamente.' },
       { label: 'Competenza', title: 'Ergonomi & psicologi del lavoro', body: 'Moduli su misura costruiti dopo un colloquio esplorativo. Esseri umani analizzano i vostri dati dal campo.' },

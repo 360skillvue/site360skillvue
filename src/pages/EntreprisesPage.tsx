@@ -96,7 +96,7 @@ export default function EntreprisesPage() {
 
           <Reveal delay={0.15} className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-              onClick={() => navigate('/aide-support')}
+              onClick={() => { window.location.href = '/simulateur-cout-tms-rps'; }}
               className="bg-scanup-blue text-white px-8 py-3.5 rounded-full font-semibold text-[15px] hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/25 flex items-center gap-2 group"
             >
               {t.entreprises.heroCtaPrimary}
@@ -171,7 +171,7 @@ export default function EntreprisesPage() {
                 {t.entreprises.featuresSubtitle}
               </p>
               <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                onClick={() => navigate('/aide-support')}
+                onClick={() => { window.location.href = '/simulateur-cout-tms-rps'; }}
                 className="bg-scanup-blue text-white px-6 py-3 rounded-full font-semibold text-[14px] hover:bg-blue-700 transition-colors"
               >
                 {t.entreprises.featuresCtaButton}

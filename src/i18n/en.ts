@@ -282,7 +282,7 @@ export const en = {
     heroTitleHighlight: 'MSD & PSR',
     heroTitleEnd: 'risks without an audit in 48h.',
     heroSubtitle: 'Collect authentic field testimonials and anticipate risks with an anonymous feedback platform. From €27 per employee.',
-    heroCtaPrimary: 'Start for free',
+    heroCtaPrimary: 'Simulate my cost for free',
     heroCtaSecondary: 'See a demo',
     stats: [
       { value: '+650', label: 'active users' },
@@ -304,7 +304,7 @@ export const en = {
     featuresTitle: 'One platform.',
     featuresTitleEnd: 'Five levers.',
     featuresSubtitle: 'Designed for HR directors, QWL managers and executives who want concrete results, not theory.',
-    featuresCtaButton: 'Start for free',
+    featuresCtaButton: 'Simulate my cost for free',
     features: [
       { label: 'Screening', title: 'Continuous PSR & MSD campaigns', body: 'Identify at-risk situations through positive screening rates by team — not once a year, continuously.' },
       { label: 'Expertise', title: 'Ergonomists & occupational psychologists', body: 'Custom modules built after exploratory interviews. Humans analyze your field data.' },

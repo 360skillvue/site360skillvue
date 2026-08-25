@@ -20,6 +20,47 @@
   .svue-page-title{max-width:1280px;margin:0 auto 24px;padding:48px 24px 0;
     font-size:32px;line-height:1.2;font-weight:600;color:#1C244B;letter-spacing:-.01em}
   @media (max-width:600px){.svue-page-title{font-size:24px;padding-top:32px}}
+
+  /* ── Header (miroir de la navbar du site) ─────────────────────── */
+  .svue-nav-accent{height:3px;background:linear-gradient(90deg,#0068FF,#33FFCC,#0068FF)}
+  .svue-nav-maint{background:#FFFBEB;border-bottom:1px solid #FDE68A}
+  .svue-nav-maint-inner{max-width:1280px;margin:0 auto;padding:6px 24px;display:flex;
+    align-items:center;justify-content:center;gap:6px;color:#92400E;font-size:13px;
+    font-weight:500;text-align:center}
+  .svue-nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06)}
+  .svue-nav-inner{max-width:1280px;margin:0 auto;padding:12px 24px;display:flex;
+    align-items:center;justify-content:space-between;gap:16px}
+  .svue-nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+  .svue-nav-logo:hover{text-decoration:none}
+  .svue-nav-logo .brand{font-weight:700;font-size:18px;letter-spacing:-.01em;color:#0068FF}
+  .svue-nav-logo .by{color:#64748B;font-size:13px}
+  .svue-nav-logo img{height:24px;width:auto}
+  .svue-nav-links{display:none;align-items:center;gap:28px}
+  .svue-nav-links a{color:#64748B;font-size:14px;font-weight:500;text-decoration:none;transition:color .15s}
+  .svue-nav-links a:hover{color:#1C244B;text-decoration:none}
+  .svue-nav-actions{display:flex;align-items:center;gap:8px}
+  .svue-nav-login{display:none;align-items:center;border:1px solid rgba(0,0,0,.08);
+    border-radius:999px;padding:8px 12px;font-size:13px;font-weight:700;color:#0068FF;
+    text-decoration:none;white-space:nowrap}
+  .svue-nav-login:hover{text-decoration:none;border-color:rgba(0,104,255,.3)}
+  .svue-nav-cta{display:none;background:#0068FF;color:#fff;padding:8px 16px;border-radius:999px;
+    font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+  .svue-nav-cta:hover{background:#1d4ed8;text-decoration:none}
+  .svue-nav-burger{display:flex;align-items:center;justify-content:center;width:36px;height:36px;
+    border-radius:10px;border:1px solid rgba(0,0,0,.08);background:none;cursor:pointer;color:#1C244B}
+  .svue-nav-mobile{display:none;flex-direction:column;padding:8px 24px 16px;border-top:1px solid rgba(0,0,0,.06)}
+  .svue-nav-mobile a{padding:10px 4px;color:#1C244B;font-size:14px;font-weight:500;
+    text-decoration:none;border-bottom:1px solid rgba(0,0,0,.04)}
+  .svue-nav-mobile a:hover{color:#0068FF;text-decoration:none}
+  .svue-nav-mobile.open{display:flex}
+  @media (min-width:768px){
+    .svue-nav-links{display:flex}
+    .svue-nav-login{display:flex}
+    .svue-nav-burger{display:none}
+    .svue-nav-mobile{display:none!important}
+  }
+  @media (min-width:640px){.svue-nav-cta{display:inline-flex}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication",
@@ -32,6 +73,50 @@
 </script>
 </head>
 <body>
+<div class="svue-nav-accent"></div>
+<div class="svue-nav-maint">
+  <div class="svue-nav-maint-inner">🔧 ScanUp est en maintenance le mercredi de 12h à 14h.</div>
+</div>
+<nav class="svue-nav">
+  <div class="svue-nav-inner">
+    <a href="/" class="svue-nav-logo">
+      <span class="brand">ScanUp</span><span class="by">by</span>
+      <img src="/Logo360skillvue-200x55.webp" alt="360SkillVue">
+    </a>
+    <div class="svue-nav-links">
+      <a href="/entreprises-drh">Solutions</a>
+      <a href="/partenaires">Notre Réseau</a>
+      <a href="/tarifs">Tarifs</a>
+      <a href="/a-propos">À propos</a>
+      <a href="/aide-support">Aide &amp; Support</a>
+    </div>
+    <div class="svue-nav-actions">
+      <a href="https://scanup.360skillvue.com/" target="_blank" rel="noopener noreferrer" class="svue-nav-login">Connexion</a>
+      <a href="/aide-support#contact" class="svue-nav-cta">Essai gratuit</a>
+      <button class="svue-nav-burger" id="svue-nav-burger" aria-label="Menu" aria-expanded="false" aria-controls="svue-nav-mobile">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="svue-nav-mobile" id="svue-nav-mobile">
+    <a href="/entreprises-drh">Solutions</a>
+    <a href="/partenaires">Notre Réseau</a>
+    <a href="/tarifs">Tarifs</a>
+    <a href="/a-propos">À propos</a>
+    <a href="/aide-support">Aide &amp; Support</a>
+    <a href="https://scanup.360skillvue.com/" target="_blank" rel="noopener noreferrer">Connexion</a>
+    <a href="/aide-support#contact">Essai gratuit</a>
+  </div>
+</nav>
+<script>
+(function(){
+  var btn=document.getElementById('svue-nav-burger'), menu=document.getElementById('svue-nav-mobile');
+  btn.addEventListener('click',function(){
+    var open=menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open?'true':'false');
+  });
+})();
+</script>
 <h1 class="svue-page-title">Simulateur du coût des TMS et des RPS</h1>
 <style>
 .svue-sim{

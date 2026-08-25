@@ -75,6 +75,7 @@ export const en = {
     ctaSubtitle: 'Deploy ScanUp in just a few hours. Free 14-day trial, no credit card required.',
     ctaButtonTrial: 'Start free trial',
     ctaButtonDemo: 'Request a demo',
+    ctaButtonSimulateur: 'Estimate my cost',
     footer: '© 2026 360SkillVue. All rights reserved.',
   },
   partenaires: {

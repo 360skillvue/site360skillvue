@@ -75,6 +75,7 @@ export const de = {
     ctaSubtitle: 'Starten Sie ScanUp in wenigen Stunden. 14 Tage kostenlos testen, keine Kreditkarte erforderlich.',
     ctaButtonTrial: 'Kostenlose Testphase starten',
     ctaButtonDemo: 'Demo anfordern',
+    ctaButtonSimulateur: 'Meine Kosten schätzen',
     footer: '© 2026 360SkillVue. Alle Rechte vorbehalten.',
   },
   partenaires: {

@@ -354,7 +354,7 @@ export default function EntreprisesPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-              onClick={() => navigate('/aide-support')}
+              onClick={() => { window.location.href = '/simulateur-cout-tms-rps'; }}
               className="bg-scanup-blue text-white px-8 py-4 rounded-full font-semibold text-[15px] hover:bg-blue-700 transition-colors shadow-xl shadow-scanup-blue/20"
             >
               {t.entreprises.ctaPrimary}

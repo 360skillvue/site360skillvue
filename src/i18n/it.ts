@@ -75,6 +75,7 @@ export const it = {
     ctaSubtitle: 'Implementate ScanUp in poche ore. Prova gratuita di 14 giorni, senza carta di credito.',
     ctaButtonTrial: 'Inizia la prova gratuita',
     ctaButtonDemo: 'Richiedi una demo',
+    ctaButtonSimulateur: 'Stima il mio costo',
     footer: '© 2026 360SkillVue. Tutti i diritti riservati.',
   },
   partenaires: {

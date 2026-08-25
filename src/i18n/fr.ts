@@ -75,6 +75,7 @@ export const fr = {
     ctaSubtitle: 'Déployez ScanUp en quelques heures. Essai gratuit 14 jours, sans carte bancaire.',
     ctaButtonTrial: 'Démarrer l\'essai gratuit',
     ctaButtonDemo: 'Demander une démo',
+    ctaButtonSimulateur: 'Simuler mon coût',
     footer: '© 2026 360SkillVue. Tous droits réservés.',
   },
   partenaires: {

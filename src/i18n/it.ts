@@ -495,21 +495,6 @@ export const it = {
       subtitle: 'Disturbi muscoloscheletrici.',
       plans: [
         {
-          name: 'Formula tutto compreso',
-          price: '105 €',
-          sub: '+ IVA per collaboratore all\'anno, secondo il vostro settore',
-          badge: 'La più semplice',
-          items: [
-            'Screening video in situazioni reali di lavoro',
-            'Qualificazione da parte di un ergonomo',
-            'Coaching video personalizzato (gesti e posture) per ogni collaboratore a rischio',
-            'Studio completo della postazione e rapporto individuale per i collaboratori individuati, fino al 25 % dell\'organico',
-            'Piano d\'azione di prevenzione DMS e restituzione alla direzione',
-            'Tariffa indicizzata sull\'incidenza DMS del vostro settore, da 70 a 150 € + IVA',
-          ],
-          cta: 'Prenota',
-        },
-        {
           name: 'Pack Essential',
           price: '55 €',
           sub: '+ IVA per collaboratore',
@@ -531,6 +516,21 @@ export const it = {
             'Studio completo della postazione a distanza da parte di un ergonomo IPRP, per ogni collaboratore individuato',
             'Rapporto individuale',
             'Piano d\'azione di prevenzione DMS in opzione, 750 € + IVA ogni 50 collaboratori',
+          ],
+          cta: 'Prenota',
+        },
+        {
+          name: 'Formula tutto compreso',
+          price: '105 €',
+          sub: '+ IVA per collaboratore all\'anno, secondo il vostro settore',
+          badge: 'La più semplice',
+          items: [
+            'Screening video in situazioni reali di lavoro',
+            'Qualificazione da parte di un ergonomo',
+            'Coaching video personalizzato (gesti e posture) per ogni collaboratore a rischio',
+            'Studio completo della postazione e rapporto individuale per i collaboratori individuati, fino al 25 % dell\'organico',
+            'Piano d\'azione di prevenzione DMS e restituzione alla direzione',
+            'Tariffa indicizzata sull\'incidenza DMS del vostro settore, da 70 a 150 € + IVA',
           ],
           cta: 'Prenota',
         },

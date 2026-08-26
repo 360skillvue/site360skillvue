@@ -426,15 +426,15 @@
               <label class="scn"><input type="radio" name="svrps" value="40"><span>Premium<small>40 € HT par collaborateur</small></span></label>
               <label class="scn"><input type="radio" name="svrps" value="impact"><span>Impact<small>40 € HT, plus 750 € HT par tranche de 50 dépistés</small></span></label>
             </div>
-            <p class="hint">Le dépistage porte sur l'ensemble de l'effectif : son coût est proportionnel au nombre de collaborateurs.</p>
+            <p class="hint">Le dépistage porte sur l'ensemble de l'effectif, son coût est donc proportionnel au nombre de collaborateurs. Dans les trois formules, il associe un questionnaire et un témoignage audio, et c'est un psychologue du travail qui décide, à partir de ces deux éléments, si la personne présente un risque. Ce qui change ensuite, c'est ce que reçoit le salarié repéré. Avec Essential, un retour individuel confidentiel par courriel, avec les conduites à tenir personnalisées. Avec Premium, ce même retour prend la forme d'une téléconsultation de trente minutes avec un psychologue du travail. Impact y ajoute, à l'échelle de l'entreprise, la cartographie anonymisée et le plan d'action de prévention.</p>
           </div>
 
           <div class="field">
             <label>Votre formule TMS</label>
             <div class="scn-set">
-              <label class="scn"><input type="radio" name="svtms" value="forfait" checked><span>Forfait tout compris<small id="sv-lab-forfait">par collaborateur et par an</small></span></label>
               <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>55 € HT par collaborateur</small></span></label>
               <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>55 € HT, plus 250 € HT par étude de poste</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="forfait" checked><span>Forfait tout compris<small id="sv-lab-forfait">par collaborateur et par an</small></span></label>
             </div>
             <p class="hint" id="sv-hint-tms"></p>
           </div>
@@ -799,10 +799,12 @@ function calcule(){
       " ici, contre 105 € en moyenne nationale. Le client connaît son budget d'avance, quel que soit le "+
       "taux de salariés finalement repérés.";
   } else {
-    $("sv-hint-tms").textContent="Les deux formules à l'acte : vous ne payez que ce que vous consommez. "+
-      "Essential se limite au dépistage et au coaching ; Premium y ajoute l'étude de poste complète avec "+
-      "rapport individuel, facturée pour les seuls salariés repérés. Le plan d'action de prévention reste "+
-      "une option, à 750 € HT par tranche de 50 collaborateurs.";
+    $("sv-hint-tms").textContent="Les formules à l'acte : vous ne payez que ce que vous consommez. Le "+
+      "dépistage est le même dans les deux cas, une captation vidéo en situation réelle de travail, "+
+      "qualifiée par un ergonome, suivie d'un coaching gestes et postures pour chaque collaborateur à "+
+      "risque. Avec Essential, cela s'arrête là. Avec Premium, les salariés repérés font en plus l'objet "+
+      "d'une étude de poste complète avec rapport individuel, facturée 250 € HT par personne. Le plan "+
+      "d'action de prévention reste une option, à 750 € HT par tranche de 50 collaborateurs.";
   }
   var desc2="Le raisonnement change d'unité : on ne part plus du poste mais de la personne. Le travail est "+
     "capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Les "+

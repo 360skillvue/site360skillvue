@@ -495,21 +495,6 @@ export const en = {
       subtitle: 'Musculoskeletal disorders.',
       plans: [
         {
-          name: 'All-inclusive plan',
-          price: '€105',
-          sub: 'excl. VAT per employee per year, based on your sector',
-          badge: 'Simplest option',
-          items: [
-            'Video screening in real work situations',
-            'Qualification by an ergonomist',
-            'Personalised video coaching (movements and postures) for every at-risk employee',
-            'Full workstation study and individual report for flagged employees, up to 25% of the workforce',
-            'MSD prevention action plan and management debrief',
-            'Rate indexed on your sector\'s MSD incidence, from €70 to €150 excl. VAT',
-          ],
-          cta: 'Book a call',
-        },
-        {
           name: 'Essential Pack',
           price: '€55',
           sub: 'excl. VAT per employee',
@@ -531,6 +516,21 @@ export const en = {
             'Full remote workstation study by an IPRP ergonomist for each flagged employee',
             'Individual report',
             'Optional MSD prevention action plan, €750 excl. VAT per 50 employees',
+          ],
+          cta: 'Book a call',
+        },
+        {
+          name: 'All-inclusive plan',
+          price: '€105',
+          sub: 'excl. VAT per employee per year, based on your sector',
+          badge: 'Simplest option',
+          items: [
+            'Video screening in real work situations',
+            'Qualification by an ergonomist',
+            'Personalised video coaching (movements and postures) for every at-risk employee',
+            'Full workstation study and individual report for flagged employees, up to 25% of the workforce',
+            'MSD prevention action plan and management debrief',
+            'Rate indexed on your sector\'s MSD incidence, from €70 to €150 excl. VAT',
           ],
           cta: 'Book a call',
         },

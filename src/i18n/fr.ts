@@ -589,21 +589,6 @@ export const fr = {
       subtitle: 'Troubles musculo-squelettiques.',
       plans: [
         {
-          name: 'Forfait tout compris',
-          price: '105 €',
-          sub: 'HT / collaborateur / an, selon votre secteur d\'activité',
-          badge: 'Le plus simple',
-          items: [
-            'Dépistage par vidéos en situation réelle de travail',
-            'Qualification par un ergonome',
-            'Coaching vidéo personnalisé (gestes et postures) pour chaque collaborateur à risque',
-            'Étude de poste complète et rapport individuel pour les salariés repérés, jusqu\'à 25 % de l\'effectif',
-            'Plan d\'action de prévention TMS et restitution direction',
-            'Tarif indexé sur la sinistralité TMS de votre secteur, de 70 à 150 € HT',
-          ],
-          cta: 'Prendre RDV',
-        },
-        {
           name: 'Pack Essential',
           price: '55 €',
           sub: 'HT / collaborateur',
@@ -625,6 +610,21 @@ export const fr = {
             'Étude de poste complète à distance par un ergonome IPRP, pour chaque salarié repéré',
             'Rapport individuel',
             'Plan d\'action de prévention TMS en option, 750 € HT par tranche de 50 collaborateurs',
+          ],
+          cta: 'Prendre RDV',
+        },
+        {
+          name: 'Forfait tout compris',
+          price: '105 €',
+          sub: 'HT / collaborateur / an, selon votre secteur d\'activité',
+          badge: 'Le plus simple',
+          items: [
+            'Dépistage par vidéos en situation réelle de travail',
+            'Qualification par un ergonome',
+            'Coaching vidéo personnalisé (gestes et postures) pour chaque collaborateur à risque',
+            'Étude de poste complète et rapport individuel pour les salariés repérés, jusqu\'à 25 % de l\'effectif',
+            'Plan d\'action de prévention TMS et restitution direction',
+            'Tarif indexé sur la sinistralité TMS de votre secteur, de 70 à 150 € HT',
           ],
           cta: 'Prendre RDV',
         },

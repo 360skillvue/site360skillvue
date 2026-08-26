@@ -495,21 +495,6 @@ export const de = {
       subtitle: 'Muskel-Skelett-Erkrankungen.',
       plans: [
         {
-          name: 'All-inclusive-Paket',
-          price: '105 €',
-          sub: 'zzgl. MwSt. pro Mitarbeitenden und Jahr, je nach Branche',
-          badge: 'Am einfachsten',
-          items: [
-            'Video-Screening in realen Arbeitssituationen',
-            'Qualifizierung durch eine:n Ergonom:in',
-            'Personalisiertes Video-Coaching (Bewegungen und Haltungen) für jede Person mit Risiko',
-            'Vollständige Arbeitsplatzstudie und individueller Bericht für erkannte Mitarbeitende, bis zu 25 % der Belegschaft',
-            'MSE-Präventionsaktionsplan und Management-Präsentation',
-            'Preis nach MSE-Häufigkeit Ihrer Branche, von 70 bis 150 € zzgl. MwSt.',
-          ],
-          cta: 'Termin vereinbaren',
-        },
-        {
           name: 'Pack Essential',
           price: '55 €',
           sub: 'zzgl. MwSt. pro Mitarbeitenden',
@@ -531,6 +516,21 @@ export const de = {
             'Vollständige Arbeitsplatzstudie aus der Ferne durch eine:n IPRP-Ergonom:in für jede erkannte Person',
             'Individueller Bericht',
             'Optionaler MSE-Präventionsaktionsplan, 750 € zzgl. MwSt. je 50 Mitarbeitende',
+          ],
+          cta: 'Termin vereinbaren',
+        },
+        {
+          name: 'All-inclusive-Paket',
+          price: '105 €',
+          sub: 'zzgl. MwSt. pro Mitarbeitenden und Jahr, je nach Branche',
+          badge: 'Am einfachsten',
+          items: [
+            'Video-Screening in realen Arbeitssituationen',
+            'Qualifizierung durch eine:n Ergonom:in',
+            'Personalisiertes Video-Coaching (Bewegungen und Haltungen) für jede Person mit Risiko',
+            'Vollständige Arbeitsplatzstudie und individueller Bericht für erkannte Mitarbeitende, bis zu 25 % der Belegschaft',
+            'MSE-Präventionsaktionsplan und Management-Präsentation',
+            'Preis nach MSE-Häufigkeit Ihrer Branche, von 70 bis 150 € zzgl. MwSt.',
           ],
           cta: 'Termin vereinbaren',
         },

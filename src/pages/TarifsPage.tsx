@@ -43,13 +43,13 @@ const RPS_FEATURE_VALUES: boolean[][] = [
 ];
 
 const TMS_FEATURE_VALUES: boolean[][] = [
-  // colonnes : Forfait tout compris, Pack Essential, Pack Premium
+  // colonnes : Pack Essential, Pack Premium, Forfait tout compris
   [true, true, true],    // Dépistage par vidéos
   [true, true, true],    // Qualification par un ergonome
   [true, true, true],    // Coaching vidéo personnalisé
-  [true, false, true],   // Étude de poste complète IPRP
-  [true, false, true],   // Rapport individuel
-  [true, false, false],  // Plan d'action TMS + restitution direction
+  [false, true, true],   // Étude de poste complète IPRP
+  [false, true, true],   // Rapport individuel
+  [false, false, true],  // Plan d'action TMS + restitution direction
 ];
 
 // column palettes — same tints as the original comparison table
@@ -335,7 +335,7 @@ export default function TarifsPage() {
                 features={tr.tms.features}
                 values={TMS_FEATURE_VALUES}
                 tarifLabel={tr.tableTarif}
-                palette={['blue', 'white', 'navy']}
+                palette={['white', 'blue', 'navy']}
               />
             )}
           </Reveal>

@@ -5,7 +5,7 @@ import {
   ScanLine, Brain, ShieldCheck,
   BarChart3, Users, FileCheck
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';
@@ -134,7 +134,7 @@ export default function HomePage() {
                             : 'text-scanup-blue/40'
                         }`}
                       >
-                        {selected ? `${selected.label} ?` : 'Choisissez une option'}
+                        {selected ? `${selected.label} ?` : t.home.heroPlaceholder}
                       </motion.span>
                     </AnimatePresence>
                   </span>
@@ -155,7 +155,7 @@ export default function HomePage() {
                     transition={{ delay: 0.8 }}
                     className="absolute left-1/2 -translate-x-1/2 top-full mt-3 text-[12px] font-medium text-scanup-graytext whitespace-nowrap tracking-wide"
                   >
-                    ↑ cliquez pour sélectionner
+                    {t.home.heroHint}
                   </motion.p>
                 )}
 
@@ -325,6 +325,9 @@ export default function HomePage() {
               </h3>
               <p className="text-[15px] text-scanup-graytext leading-relaxed max-w-3xl">
                 {t.home.levelsPackDesc}
+              </p>
+              <p className="text-[15px] text-scanup-navy font-medium leading-relaxed max-w-3xl mt-3">
+                {t.home.levelsIntl}
               </p>
               <div className="flex flex-wrap gap-x-8 gap-y-3 mt-6">
                 <Link

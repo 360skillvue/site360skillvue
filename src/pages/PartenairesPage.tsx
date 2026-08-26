@@ -4,7 +4,7 @@ import {
   ArrowRight, Users, Search, Loader2, AlertCircle,
   Mail, Phone, Globe, MapPin, Maximize2, Minimize2, X,
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../i18n/Link';
 import { useLanguage } from '../i18n';
 
 export default function Footer() {

@@ -1,87 +1,1095 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://360skillvue.com/</loc>
-    <lastmod>2026-04-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/"/>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://360skillvue.com/certification-periodique-sante</loc>
-    <lastmod>2026-04-09</lastmod>
+    <loc>https://360skillvue.com/en</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/"/>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/entreprises-drh</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/assureurs-mutuelles</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/spsti</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/partenaires</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/tarifs</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://360skillvue.com/aide-support</loc>
-    <lastmod>2026-04-09</lastmod>
+    <loc>https://360skillvue.com/de</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/certification-periodique-sante</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/certification-periodique-sante"/>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://360skillvue.com/a-propos</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://360skillvue.com/en/certification-periodique-sante</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/certification-periodique-sante"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://360skillvue.com/de/certification-periodique-sante</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/certification-periodique-sante"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/certification-periodique-sante</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/certification-periodique-sante"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/certification-periodique-sante</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/certification-periodique-sante"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/certification-periodique-sante</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/certification-periodique-sante"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/certification-periodique-sante"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/entreprises-drh</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/entreprises-drh"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/entreprises-drh</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/entreprises-drh"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/entreprises-drh</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/entreprises-drh"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/entreprises-drh</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/entreprises-drh"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/entreprises-drh</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/entreprises-drh"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/entreprises-drh</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/entreprises-drh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/entreprises-drh"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/assureurs-mutuelles</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/assureurs-mutuelles</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/assureurs-mutuelles</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/assureurs-mutuelles</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/assureurs-mutuelles</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/assureurs-mutuelles</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/assureurs-mutuelles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/assureurs-mutuelles"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/spsti</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/spsti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/spsti"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/spsti"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/spsti"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/spsti"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/spsti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/spsti"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/spsti</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/spsti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/spsti"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/spsti"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/spsti"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/spsti"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/spsti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/spsti"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/spsti</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/spsti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/spsti"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/spsti"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/spsti"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/spsti"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/spsti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/spsti"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/spsti</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/spsti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/spsti"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/spsti"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/spsti"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/spsti"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/spsti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/spsti"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/spsti</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/spsti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/spsti"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/spsti"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/spsti"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/spsti"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/spsti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/spsti"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/spsti</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/spsti"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/spsti"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/spsti"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/spsti"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/spsti"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/spsti"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/spsti"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/partenaires</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/partenaires"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/partenaires</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/partenaires"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/partenaires</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/partenaires"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/partenaires</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/partenaires"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/partenaires</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/partenaires"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/partenaires</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/partenaires"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/partenaires"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/tarifs</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/tarifs"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/tarifs</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/tarifs"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/tarifs</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/tarifs"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/tarifs</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/tarifs"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/tarifs</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/tarifs"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/tarifs</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/tarifs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/tarifs"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/aide-support</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/aide-support"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/aide-support</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/aide-support"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/aide-support</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/aide-support"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/aide-support</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/aide-support"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/aide-support</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/aide-support"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/aide-support</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/aide-support"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/aide-support"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/a-propos</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/a-propos"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/a-propos</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/a-propos"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/a-propos</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/a-propos"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/a-propos</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/a-propos"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/a-propos</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/a-propos"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/a-propos</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/a-propos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/a-propos"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://360skillvue.com/mentions-legales</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>yearly</changefreq>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/mentions-legales"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/mentions-legales</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/mentions-legales"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/mentions-legales</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/mentions-legales"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/mentions-legales</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/mentions-legales"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/mentions-legales</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/mentions-legales"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/mentions-legales</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/mentions-legales"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://360skillvue.com/cgu</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>yearly</changefreq>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgu"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgu"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgu"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgu"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgu"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/cgu</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgu"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgu"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgu"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgu"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgu"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/cgu</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgu"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgu"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgu"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgu"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgu"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/cgu</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgu"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgu"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgu"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgu"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgu"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/cgu</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgu"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgu"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgu"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgu"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgu"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/cgu</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgu"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgu"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgu"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgu"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgu"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://360skillvue.com/cgv</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>yearly</changefreq>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgv"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgv"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgv"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgv"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgv"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgv"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/cgv</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgv"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgv"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgv"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgv"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgv"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgv"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/cgv</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgv"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgv"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgv"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgv"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgv"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgv"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/cgv</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgv"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgv"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgv"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgv"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgv"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgv"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/cgv</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgv"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgv"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgv"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgv"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgv"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgv"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/cgv</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/cgv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/cgv"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/cgv"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/cgv"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/cgv"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/cgv"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/cgv"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://360skillvue.com/politique-confidentialite</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>yearly</changefreq>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/politique-confidentialite"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/politique-confidentialite</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/politique-confidentialite"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/politique-confidentialite</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/politique-confidentialite"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/politique-confidentialite</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/politique-confidentialite"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/politique-confidentialite</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/politique-confidentialite"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/politique-confidentialite</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/politique-confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/politique-confidentialite"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://360skillvue.com/simulateur-cout-tms-rps</loc>
-    <lastmod>2026-08-25</lastmod>
-    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/simulateur-cout-tms-rps</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/simulateur-cout-tms-rps</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/simulateur-cout-tms-rps</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/simulateur-cout-tms-rps</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/simulateur-cout-tms-rps</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

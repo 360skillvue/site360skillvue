@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Link } from '../i18n/Link';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, Building2, Shield, Stethoscope, Award, Menu, X, Globe, Wrench } from 'lucide-react';
 import { useLanguage, LANGUAGES } from '../i18n';

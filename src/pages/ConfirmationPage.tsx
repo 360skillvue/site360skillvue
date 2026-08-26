@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../i18n/Link';
 import { motion } from 'motion/react';
 import {
   CheckCircle2, Mail, ListChecks, CalendarDays, ArrowRight, Home,

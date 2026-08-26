@@ -22,6 +22,8 @@ export const fr = {
   home: {
     heroTitle: 'Vous êtes',
     heroSubtitle: 'Sélectionnez votre profil pour découvrir la solution ScanUp adaptée à vos enjeux de prévention et de conformité.',
+    heroPlaceholder: 'Choisissez une option',
+    heroHint: '↑ cliquez pour sélectionner',
     audiences: {
       assureurs: 'Assureurs & Mutuelles',
       entreprises: 'Entreprises & DRH',
@@ -50,6 +52,7 @@ export const fr = {
     level3Price: 'Sur devis, ou compris dans le forfait tout compris',
     levelsPackTitle: 'Groupes et déploiements multisites',
     levelsPackDesc: 'Nous proposons des packs d\'études de poste prépayées et des formules d\'abonnement, avec la possibilité de prescrire une étude au fil de l\'eau, quand le besoin apparaît. Les études sont réalisées par notre réseau d\'ergonomes. Conditions sur demande.',
+    levelsIntl: 'Vous opérez dans plusieurs pays ? ScanUp s\'adapte à la réglementation en vigueur dans chacun d\'eux.',
     levelsPackNetwork: 'Voir notre réseau d\'ergonomes',
     levelsPackContact: 'Nous consulter',
     levelsQuote: 'L\'ergonomie classique échantillonne : deux ou trois personnes observées, même quand dix tournent sur le poste. ScanUp voit chacun, chaque morphologie, chaque façon de travailler.',
@@ -645,7 +648,7 @@ export const fr = {
           badge: '',
           items: [
             'Tout le Pack Premium',
-            'Étude de poste complète et rapport individuel pour les salariés repérés, jusqu\'à 25 % de l\'effectif',
+            'Étude de poste complète et rapport individuel pour les salariés repérés, dans la limite d\'un plafond indexé sur votre secteur, de 5 à 40 % de l\'effectif',
             'Plan d\'action de prévention TMS et restitution direction',
             'Tarif indexé sur la sinistralité TMS de votre secteur, de 70 à 150 € HT',
           ],

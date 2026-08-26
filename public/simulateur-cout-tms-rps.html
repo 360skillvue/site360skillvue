@@ -674,6 +674,14 @@ function forfaitSecteur(t){
   if(v>150){ v=150; }
   return Math.round(v/5)*5;
 }
+// plafond d'etudes incluses dans le forfait, indexe comme le tarif :
+// 5 % a 70 euros, 40 % a 150 euros, lineaire entre les deux
+function plafondSecteur(p){
+  var c=5+0.4375*(p-70);
+  if(c<5){ c=5; }
+  if(c>40){ c=40; }
+  return Math.round(c);
+}
 function tranche(jours){ for(var i=0;i<BORNES.length;i++){ if(jours<=BORNES[i]) return i; } return 5; }
 
 var selS=$("sv-secteur"), selA=$("sv-activite");
@@ -793,14 +801,15 @@ function calcule(){
   var fSect=forfaitSecteur(s.tms10k);
   var c2dep, c2tms, lib2dep, lib2tms;
   if(packTms==="forfait"){
-    var plaf=Math.round(eff*0.25);
+    var pctPlaf=plafondSecteur(fSect);
+    var plaf=Math.round(eff*pctPlaf/100);
     var sup=nbEtudes-plaf;
     if(sup<0){ sup=0; }
     c2dep=eff*fSect;
     c2tms=sup*250;
     lib2dep="Forfait, tarif de votre secteur, "+num(eff,0)+" × "+eur(fSect);
-    lib2tms="Aucun supplément, plafond de 25 % non atteint";
-    if(sup>0){ lib2tms="Études au-delà du plafond de 25 %, "+num(sup,0)+" × 250 €"; }
+    lib2tms="Études incluses jusqu'à "+pctPlaf+" % de l'effectif, soit "+num(plaf,0)+" salariés, plafond non atteint";
+    if(sup>0){ lib2tms="Études au-delà du plafond de "+pctPlaf+" %, "+num(sup,0)+" × 250 €"; }
   } else if(packTms==="essential"){
     c2dep=eff*40; c2tms=0; nbEtudes=0;
     lib2dep="Dépistage TMS, "+num(eff,0)+" × 40 €";

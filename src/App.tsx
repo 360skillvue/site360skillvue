@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LanguageProvider } from './i18n';
+import { LanguageProvider, PREFIXED_LANGS } from './i18n';
 import CookieConsent from './components/CookieConsent';
 
 const HomePage          = lazy(() => import('./pages/HomePage'));
@@ -20,10 +20,32 @@ const AProposPage                  = lazy(() => import('./pages/AProposPage'));
 const RevueDePressePage            = lazy(() => import('./pages/RevueDePressePage'));
 const ConfirmationPage             = lazy(() => import('./pages/ConfirmationPage'));
 
+/**
+ * Chemins publics du site, sans prefixe de langue.
+ * Le francais vit a la racine ; chaque autre langue reprend les memes
+ * chemins sous son prefixe, par exemple /es/tarifs.
+ */
+const PAGES: { path: string; element: React.ReactNode }[] = [
+  { path: '/',                              element: <HomePage /> },
+  { path: '/certification-periodique-sante', element: <CertificationPage /> },
+  { path: '/entreprises-drh',               element: <EntreprisesPage /> },
+  { path: '/assureurs-mutuelles',           element: <AssureursPage /> },
+  { path: '/spsti',                         element: <SPSTIPage /> },
+  { path: '/partenaires',                   element: <PartenairesPage /> },
+  { path: '/aide-support',                  element: <AidePage /> },
+  { path: '/tarifs',                        element: <TarifsPage /> },
+  { path: '/mentions-legales',              element: <MentionsLegalesPage /> },
+  { path: '/cgu',                           element: <CGUPage /> },
+  { path: '/cgv',                           element: <CGVPage /> },
+  { path: '/politique-confidentialite',     element: <PolitiqueConfidentialitePage /> },
+  { path: '/a-propos',                      element: <AProposPage /> },
+  { path: '/revue-de-presse',               element: <RevueDePressePage /> },
+];
+
 export default function App() {
   return (
-    <LanguageProvider>
-      <Router>
+    <Router>
+      <LanguageProvider>
         <Suspense fallback={
           <div className="min-h-screen flex items-center justify-center bg-white">
             <div className="w-8 h-8 border-2 border-scanup-blue/20 border-t-scanup-blue rounded-full animate-spin" />
@@ -31,30 +53,31 @@ export default function App() {
         }>
           <CookieConsent />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/certification-periodique-sante" element={<CertificationPage />} />
-            <Route path="/entreprises-drh" element={<EntreprisesPage />} />
-            <Route path="/assureurs-mutuelles" element={<AssureursPage />} />
-            <Route path="/spsti" element={<SPSTIPage />} />
-            <Route path="/partenaires" element={<PartenairesPage />} />
-            <Route path="/aide-support" element={<AidePage />} />
-            <Route path="/tarifs" element={<TarifsPage />} />
-            <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
-            <Route path="/cgu" element={<CGUPage />} />
-            <Route path="/cgv" element={<CGVPage />} />
-            <Route path="/politique-confidentialite" element={<PolitiqueConfidentialitePage />} />
-            <Route path="/a-propos" element={<AProposPage />} />
-            <Route path="/revue-de-presse" element={<RevueDePressePage />} />
+            {PAGES.map(p => (
+              <Route key={p.path} path={p.path} element={p.element} />
+            ))}
+            {PREFIXED_LANGS.flatMap(lg =>
+              PAGES.map(p => (
+                <Route
+                  key={`${lg}${p.path}`}
+                  path={p.path === '/' ? `/${lg}` : `/${lg}${p.path}`}
+                  element={p.element}
+                />
+              ))
+            )}
+
+            {/* Pages de confirmation Calendly, adresses figees par langue */}
             <Route path="/demande-calendly-bien-recue" element={<ConfirmationPage forcedLang="fr" path="/demande-calendly-bien-recue/" />} />
             <Route path="/demande-calendly-bien-recue/" element={<ConfirmationPage forcedLang="fr" path="/demande-calendly-bien-recue/" />} />
             <Route path="/en/appointment-confirmation" element={<ConfirmationPage forcedLang="en" path="/en/appointment-confirmation/" />} />
             <Route path="/en/appointment-confirmation/" element={<ConfirmationPage forcedLang="en" path="/en/appointment-confirmation/" />} />
             <Route path="/de/terminbestaetigung" element={<ConfirmationPage forcedLang="de" path="/de/terminbestaetigung/" />} />
             <Route path="/de/terminbestaetigung/" element={<ConfirmationPage forcedLang="de" path="/de/terminbestaetigung/" />} />
+
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
-      </Router>
-    </LanguageProvider>
+      </LanguageProvider>
+    </Router>
   );
 }

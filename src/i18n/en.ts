@@ -122,7 +122,7 @@ export const en = {
     faq: [
       {
         q: 'How does ScanUp work?',
-        a: 'ScanUp is an occupational health screening tool based on audio and video captures recorded in real-life situations. Our experts — ergonomists and occupational psychologists — review each capture to identify weak signals of MSD and PSR, and generate individual and collective reports in real time.',
+        a: 'ScanUp is an occupational health screening tool based on audio and video captures recorded in real-life situations. Our experts — ergonomists and occupational psychologists — review each capture to identify weak signals of MSD and PSR risk, and generate individual and collective reports in real time.',
       },
       {
         q: 'Who can use ScanUp?',
@@ -509,13 +509,14 @@ export const en = {
         {
           name: 'Premium Pack',
           price: '€432',
-          sub: 'excl. VAT per workstation study — up to 3 employees filmed, then €60 excl. VAT per additional employee',
+          sub: 'excl. VAT per workstation study, personalised study for each operator',
           badge: '',
           items: [
-            'Comprehensive workstation study by an IPRP ergonomist',
+            'Comprehensive remote workstation study by an IPRP ergonomist',
             'Full report',
             'Every employee on the workstation analysed',
             'Personalised video coaching (movements and postures)',
+            'Support for job retention and prevention of occupational exclusion (PDP)',
             'MSD prevention action plan and management debrief included from 10 studies',
           ],
           cta: 'Book a call',

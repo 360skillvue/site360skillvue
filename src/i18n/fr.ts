@@ -122,7 +122,7 @@ export const fr = {
     faq: [
       {
         q: 'Comment fonctionne ScanUp ?',
-        a: 'ScanUp est un outil de dépistage santé au travail basé sur des captations audio et vidéo réalisées en situation réelle. Nos experts — ergonomes, psychologues du travail — analysent chaque captation pour identifier les signaux faibles de TMS et RPS, et génèrent des bilans individuels et collectifs en temps réel.',
+        a: 'ScanUp est un outil de dépistage santé au travail basé sur des captations audio et vidéo réalisées en situation réelle. Nos experts — ergonomes, psychologues du travail — analysent chaque captation pour identifier les signaux faibles de risque TMS et RPS, et génèrent des bilans individuels et collectifs en temps réel.',
       },
       {
         q: 'Qui peut utiliser ScanUp ?',
@@ -603,13 +603,14 @@ export const fr = {
         {
           name: 'Pack Premium',
           price: '432 €',
-          sub: 'HT l\'étude de poste — jusqu\'à 3 collaborateurs filmés, puis 60 € HT par collaborateur supplémentaire',
+          sub: 'HT l\'étude de poste, étude personnalisée par opérateur',
           badge: '',
           items: [
-            'Étude de poste exhaustive par un ergonome IPRP',
+            'Étude de poste exhaustive à distance par un ergonome IPRP',
             'Rapport complet',
             'Tous les collaborateurs du poste analysés',
             'Coaching vidéo personnalisé (gestes et postures)',
+            'Appui au maintien dans l\'emploi et à la prévention de la désinsertion professionnelle (PDP)',
             'Plan d\'action de prévention TMS et restitution direction offerts dès 10 études',
           ],
           cta: 'Prendre RDV',
@@ -619,7 +620,7 @@ export const fr = {
         'Dépistage vidéo en situation réelle',
         'Qualification par un ergonome',
         'Coaching vidéo gestes & postures',
-        'Étude de poste par un ergonome IPRP',
+        'Étude de poste à distance par un ergonome IPRP',
         'Rapport complet — tout le poste analysé',
         'Plan d\'action & restitution (dès 10 études)',
       ],

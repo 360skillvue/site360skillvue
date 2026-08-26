@@ -122,7 +122,7 @@ export const de = {
     faq: [
       {
         q: 'Wie funktioniert ScanUp?',
-        a: 'ScanUp ist ein Screening-Tool für die Gesundheit am Arbeitsplatz, das auf Audio- und Videoaufnahmen in realen Arbeitssituationen basiert. Unsere Experten — Ergonomen und Arbeitspsychologen — analysieren jede Aufnahme, um schwache Signale von MSE und PSR zu erkennen, und erstellen individuelle sowie kollektive Auswertungen in Echtzeit.',
+        a: 'ScanUp ist ein Screening-Tool für die Gesundheit am Arbeitsplatz, das auf Audio- und Videoaufnahmen in realen Arbeitssituationen basiert. Unsere Experten — Ergonomen und Arbeitspsychologen — analysieren jede Aufnahme, um schwache Signale für MSE- und PSR-Risiken zu erkennen, und erstellen individuelle sowie kollektive Auswertungen in Echtzeit.',
       },
       {
         q: 'Wer kann ScanUp nutzen?',
@@ -509,13 +509,14 @@ export const de = {
         {
           name: 'Pack Premium',
           price: '432 €',
-          sub: 'zzgl. MwSt. pro Arbeitsplatzstudie — bis zu 3 gefilmte Mitarbeitende, danach 60 € zzgl. MwSt. pro weitere Person',
+          sub: 'zzgl. MwSt. pro Arbeitsplatzstudie, personalisierte Studie pro Mitarbeitenden',
           badge: '',
           items: [
-            'Umfassende Arbeitsplatzstudie durch eine:n IPRP-Ergonom:in',
+            'Umfassende Arbeitsplatzstudie aus der Ferne durch eine:n IPRP-Ergonom:in',
             'Vollständiger Bericht',
             'Alle Mitarbeitenden des Arbeitsplatzes analysiert',
             'Personalisiertes Video-Coaching (Bewegungen und Haltungen)',
+            'Unterstützung beim Erhalt der Beschäftigung und bei der Prävention beruflicher Ausgrenzung (PDP)',
             'MSE-Präventionsaktionsplan und Management-Präsentation ab 10 Studien inklusive',
           ],
           cta: 'Termin vereinbaren',

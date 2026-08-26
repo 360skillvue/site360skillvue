@@ -122,7 +122,7 @@ export const it = {
     faq: [
       {
         q: 'Come funziona ScanUp?',
-        a: 'ScanUp è uno strumento di screening per la salute sul lavoro basato su registrazioni audio e video realizzate in situazioni reali di lavoro. I nostri esperti — ergonomi e psicologi del lavoro — analizzano ogni registrazione per identificare i segnali deboli di DMS e RPS, e generano bilanci individuali e collettivi in tempo reale.',
+        a: 'ScanUp è uno strumento di screening per la salute sul lavoro basato su registrazioni audio e video realizzate in situazioni reali di lavoro. I nostri esperti — ergonomi e psicologi del lavoro — analizzano ogni registrazione per identificare i segnali deboli di rischio DMS e RPS, e generano bilanci individuali e collettivi in tempo reale.',
       },
       {
         q: 'Chi può utilizzare ScanUp?',
@@ -509,13 +509,14 @@ export const it = {
         {
           name: 'Pack Premium',
           price: '432 €',
-          sub: '+ IVA per studio della postazione — fino a 3 collaboratori filmati, poi 60 € + IVA per collaboratore aggiuntivo',
+          sub: '+ IVA per studio della postazione, studio personalizzato per operatore',
           badge: '',
           items: [
-            'Studio esaustivo della postazione da parte di un ergonomo IPRP',
+            'Studio esaustivo della postazione a distanza da parte di un ergonomo IPRP',
             'Rapporto completo',
             'Tutti i collaboratori della postazione analizzati',
             'Coaching video personalizzato (gesti e posture)',
+            'Supporto al mantenimento dell\'occupazione e alla prevenzione dell\'esclusione professionale (PDP)',
             'Piano d\'azione di prevenzione DMS e restituzione alla direzione inclusi a partire da 10 studi',
           ],
           cta: 'Prenota',

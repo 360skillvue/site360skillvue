@@ -430,9 +430,9 @@
             <label>Votre formule TMS</label>
             <div class="scn-set scn-2">
               <label class="scn"><input type="radio" name="svtms" value="essential" checked><span>Essential<small>55 € HT par collaborateur</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>432 € HT l'étude de poste</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>432 € HT l'étude personnalisée par opérateur</small></span></label>
             </div>
-            <p class="hint">Deux assiettes différentes. Le pack Essential dépiste tout l'effectif par vidéo, au collaborateur. Le pack Premium se facture à l'étude de poste : elle n'est déclenchée que pour les postes repérés, elle est menée par un ergonome IPRP et couvre jusqu'à trois collaborateurs filmés, puis 60 € HT par collaborateur supplémentaire.</p>
+            <p class="hint">Deux assiettes différentes. Le pack Essential dépiste tout l'effectif par vidéo, au collaborateur. Le pack Premium se facture à l'étude de poste, menée par un ergonome IPRP : une étude personnalisée par opérateur, déclenchée pour les seuls salariés repérés.</p>
           </div>
 
           <div id="sv-f-etudes" hidden>
@@ -442,13 +442,9 @@
                 <span class="sl-val" id="sv-nb-etudes-val"></span>
               </div>
               <input type="range" id="sv-nb-etudes" min="0" max="20" step="0.5" value="3">
-              <p class="hint">C'est ce nombre, et non l'effectif total, qui détermine le coût du volet TMS en pack Premium.</p>
+              <p class="hint">Une étude par opérateur concerné. C'est ce nombre, et non l'effectif total, qui détermine le coût du volet TMS en pack Premium.</p>
             </div>
-            <div class="field">
-              <label for="sv-collabs">Collaborateurs filmés par étude de poste</label>
-              <input type="number" id="sv-collabs" min="1" max="20" step="1" value="3">
-              <p class="hint">Trois collaborateurs sont compris dans le tarif ; au-delà, 60 € HT par collaborateur supplémentaire. Lorsqu'une dizaine de personnes occupent le même poste, une intervention en présentiel reste plus adaptée.</p>
-            </div>
+
           </div>
         </div>
       </div>
@@ -722,12 +718,7 @@ function calcule(){
     var tauxEtudes=parseFloat($("sv-nb-etudes").value);
     if(isNaN(tauxEtudes)){ tauxEtudes=0; }
     nbEtudes=eff*tauxEtudes/100;
-    var col=parseFloat($("sv-collabs").value);
-    if(isNaN(col)){ col=3; }
-    if(col<1){ col=1; }
-    var sup=col-3;
-    if(sup<0){ sup=0; }
-    var unitTms=432+sup*60;
+    var unitTms=432;
     depTms=nbEtudes*unitTms;
     libTms="Pack Premium ("+num(nbEtudes,1)+" étude"+(nbEtudes>=2?"s":"")+" × "+eur(unitTms)+")";
     $("sv-f-etudes").hidden=false;
@@ -873,7 +864,7 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-salaire","sv-desorg","sv-rps",
- "sv-ev-rps","sv-ev-tms","sv-ev-duree","sv-nb-etudes","sv-collabs"].forEach(function(id){
+ "sv-ev-rps","sv-ev-tms","sv-ev-duree","sv-nb-etudes"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);

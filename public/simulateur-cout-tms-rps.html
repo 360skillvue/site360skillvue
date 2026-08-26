@@ -538,7 +538,7 @@
         </div>
       </aside>
     </div>
-    <p class="note">Estimation statistique appliquée à un effectif, et non un diagnostic de votre entreprise. Votre sinistralité réelle dépend de vos postes, de votre pyramide des âges et de votre organisation ; elle peut être très inférieure ou très supérieure à la moyenne de votre secteur. Les résultats ne constituent ni un conseil juridique, ni un engagement contractuel.</p>
+    <p class="note">Champ des données : régime général de l'Assurance Maladie. Sont exclus les exploitants et salariés agricoles, qui relèvent du régime agricole, les personnels des fonctions publiques, couverts par leur administration, et les travailleurs indépendants n'ayant pas souscrit à l'assurance volontaire AT/MP. Les maladies professionnelles sont comptées en premier règlement, l'année de leur première indemnisation, et non l'année de leur déclaration. Estimation statistique appliquée à un effectif, et non un diagnostic de votre entreprise. Votre sinistralité réelle dépend de vos postes, de votre pyramide des âges et de votre organisation ; elle peut être très inférieure ou très supérieure à la moyenne de votre secteur. Les résultats ne constituent ni un conseil juridique, ni un engagement contractuel.</p>
   </section>
 
   <section id="svp-data" role="tabpanel" aria-labelledby="svt-data" hidden>
@@ -801,15 +801,18 @@ function calcule(){
   if(sec1.psy19>=10){
     tend="Dans ce secteur, les affections psychiques reconnues comme maladies professionnelles sont passées de "+
       num(sec1.psy19,0)+" cas en 2019 à "+num(sec1.psy24,0)+" en 2024, soit une multiplication par "+
-      num(sec1.psy24/sec1.psy19,1)+" (source : data.ameli.fr). ";
+      num(sec1.psy24/sec1.psy19,1)+". ";
   } else {
     tend="Au niveau national, les affections psychiques reconnues comme maladies professionnelles sont passées de "+
-      "320 cas en 2015 à 1 805 en 2024, soit une multiplication par 5,6 (source : data.ameli.fr). ";
+      "320 cas en 2015 à 1 805 en 2024, soit une multiplication par 5,6. ";
   }
-  tend=tend+"Ces cas reconnus ne sont que la pointe visible du sujet : les affections psychiques ne font l'objet "+
-    "d'aucun tableau de maladies professionnelles. La reconnaissance passe par un comité régional et suppose "+
-    "un taux d'incapacité permanente prévisible d'au moins 25 %, ce que la très grande majorité des situations "+
-    "de souffrance au travail n'atteint jamais.";
+  tend=tend+"Le décompte suit la définition de l'Assurance Maladie : maladies professionnelles psychiques "+
+    "en premier règlement, c'est-à-dire indemnisées pour la première fois dans l'année. Ces affections ne "+
+    "figurent dans aucun tableau de maladies professionnelles ; elles ne peuvent donc être reconnues que "+
+    "hors tableau, lorsqu'il est établi qu'elles sont directement causées par le travail habituel de la "+
+    "victime. La demande passe par un comité régional et suppose un taux d'incapacité permanente prévisible "+
+    "d'au moins 25 %, que la très grande majorité des situations de souffrance au travail n'atteint jamais. "+
+    "Ces cas ne sont donc que la pointe visible du sujet.";
   $("sv-tendance").textContent=tend;
 
   $("sv-note").innerHTML="Dans le secteur <strong>"+s.lib.toLowerCase()+"</strong>, l'Assurance Maladie a recensé en 2024 <strong>"+

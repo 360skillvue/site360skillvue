@@ -240,6 +240,10 @@
   font-variant-numeric:tabular-nums;line-height:1.2}
 .svue-sim .roi-sub{margin:4px 0 0;font-size:13px;color:var(--gris-texte);line-height:1.5}
 .svue-sim .roi-rows{margin-top:12px;border-top:1px solid var(--bordure)}
+.svue-sim .roi-fam{margin-top:12px;border-top:1px solid var(--bordure);padding-top:8px}
+.svue-sim .roi-fam-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  font-size:13px;font-weight:600;color:var(--nuit);margin-bottom:4px}
+.svue-sim .roi-fam-head b{color:var(--bleu);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .svue-sim .roi-row{display:flex;justify-content:space-between;gap:16px;font-size:14px;
   padding:6px 0;color:var(--gris-texte)}
 .svue-sim .roi-row b{font-weight:500;color:var(--nuit);font-variant-numeric:tabular-nums}
@@ -410,12 +414,16 @@
               <span class="sl-val" id="sv-ev-tms-val"></span>
             </div>
             <input type="range" id="sv-ev-tms" min="0" max="50" step="1" value="20">
-            <p class="hint">Les troubles musculo-squelettiques relèvent d'une logique différente des RPS : ils se traitent par l'étude de poste. Menée à distance, elle coûte moins cher qu'une visite sur site et atteint des salariés qu'on ne voit pratiquement jamais en présentiel : établissements du secteur protégé, sites dispersés, postes itinérants, télétravail. Le coût évité retenu est celui d'un cas reconnu dans votre secteur, barème et désorganisation compris.</p>
+            <p class="hint">Les troubles musculo-squelettiques relèvent d'une logique différente des RPS : ils se traitent par l'étude de poste. Menée à distance, elle coûte moins cher qu'une visite sur site et atteint des salariés qu'on ne voit pratiquement jamais en présentiel : établissements du secteur protégé, sites dispersés, postes itinérants, télétravail, et plus largement tout salarié seul à son poste, qu'une visite sur site ne rencontrera pratiquement jamais. Le coût évité retenu est celui d'un cas reconnu dans votre secteur, barème et désorganisation compris.</p>
           </div>
           <div class="field">
-            <label for="sv-prix">Coût du dépistage, par salarié et par an</label>
-            <input type="number" id="sv-prix" min="0" max="500" step="1" value="27">
-            <p class="hint">Remplacez cette valeur par le tarif qui vous a été proposé pour obtenir votre propre retour sur investissement.</p>
+            <label for="sv-prix-rps">Coût du dépistage RPS, par salarié et par an</label>
+            <input type="number" id="sv-prix-rps" min="0" max="500" step="1" value="27">
+          </div>
+          <div class="field">
+            <label for="sv-prix-tms">Coût de l'étude de poste TMS, par salarié et par an</label>
+            <input type="number" id="sv-prix-tms" min="0" max="500" step="1" value="27">
+            <p class="hint">Les deux prestations ne coûtent pas la même chose : l'étude de poste mobilise du temps d'ergonome. Remplacez ces deux valeurs par les tarifs qui vous ont été proposés pour obtenir votre propre retour sur investissement, famille par famille.</p>
           </div>
         </div>
       </div>
@@ -483,13 +491,20 @@
           <div class="stat"><span>Journées d'absence associées</span><b id="sv-s-jours"></b></div>
           
           <div class="roi">
-            <p class="roi-l">Retour sur investissement du dépistage</p>
+            <p class="roi-l">Retour sur investissement</p>
             <p class="roi-h" id="sv-roi">&mdash;</p>
             <p class="roi-sub" id="sv-roi-sub"></p>
+            <div class="roi-fam">
+              <div class="roi-fam-head"><span>Risques psychosociaux</span><b id="sv-roi-r-rps"></b></div>
+              <div class="roi-row"><span>Coût évité</span><b id="sv-roi-rps"></b></div>
+              <div class="roi-row"><span>Coût du dépistage</span><b id="sv-roi-c-rps"></b></div>
+            </div>
+            <div class="roi-fam">
+              <div class="roi-fam-head"><span>Troubles musculo-squelettiques</span><b id="sv-roi-r-tms"></b></div>
+              <div class="roi-row"><span>Coût évité</span><b id="sv-roi-tms"></b></div>
+              <div class="roi-row"><span>Coût de l'étude de poste</span><b id="sv-roi-c-tms"></b></div>
+            </div>
             <div class="roi-rows">
-              <div class="roi-row"><span>Coût évité, RPS</span><b id="sv-roi-rps"></b></div>
-              <div class="roi-row"><span>Coût évité, TMS</span><b id="sv-roi-tms"></b></div>
-              <div class="roi-row"><span>Coût du dépistage</span><b id="sv-roi-cout"></b></div>
               <div class="roi-row roi-net"><span>Gain net sur l'année</span><b id="sv-roi-net"></b></div>
             </div>
             <p class="roi-note" id="sv-roi-note"></p>
@@ -664,10 +679,13 @@ function calcule(){
   $("sv-s-at").textContent=freq(nbAt);
   $("sv-s-jours").textContent=num((nbTms+nbPsy)*joursOuv,0)+" jours ouvrés";
 
-  var prix=parseFloat($("sv-prix").value);
-  if(isNaN(prix)){ prix=PRIX_DEP; }
-  if(prix<0){ prix=0; }
-  var dep=eff*prix;
+  var prixRps=parseFloat($("sv-prix-rps").value);
+  if(isNaN(prixRps)){ prixRps=PRIX_DEP; }
+  if(prixRps<0){ prixRps=0; }
+  var prixTms=parseFloat($("sv-prix-tms").value);
+  if(isNaN(prixTms)){ prixTms=PRIX_DEP; }
+  if(prixTms<0){ prixTms=0; }
+  var depRps=eff*prixRps, depTms=eff*prixTms, dep=depRps+depTms;
 
   // 04 : ce qu'un dépistage peut éviter
   var evRps=parseFloat($("sv-ev-rps").value), pctTms=parseFloat($("sv-ev-tms").value)/100;
@@ -679,16 +697,23 @@ function calcule(){
 
   $("sv-roi-rps").textContent=eur(gainRps);
   $("sv-roi-tms").textContent=eur(gainTms);
-  $("sv-roi-cout").textContent="− "+eur(dep);
+  $("sv-roi-c-rps").textContent="− "+eur(depRps);
+  $("sv-roi-c-tms").textContent="− "+eur(depTms);
   $("sv-roi-net").textContent=(net>=0?"+ ":"− ")+eur(Math.abs(net));
+  function rapport(g,c){
+    if(c<=0){ return "sans coût"; }
+    return num(g/c,1)+" € pour 1 €";
+  }
+  $("sv-roi-r-rps").textContent=rapport(gainRps,depRps);
+  $("sv-roi-r-tms").textContent=rapport(gainTms,depTms);
   if(dep>0){
     $("sv-roi").textContent=num(gain/dep,1)+" € pour 1 € investi";
   } else {
     $("sv-roi").textContent="—";
   }
   if(total>0){
-    $("sv-roi-sub").textContent="Le dépistage de votre effectif représente "+eur(dep)+
-      " par an, soit "+num(dep/total*100,0)+" % du coût estimé ci-dessus. Il est remboursé dès qu'il en évite cette part.";
+    $("sv-roi-sub").textContent="Les deux prestations représentent ensemble "+eur(dep)+
+      " par an, soit "+num(dep/total*100,0)+" % du coût estimé ci-dessus. Elles sont remboursées dès qu'elles en évitent cette part.";
   } else {
     $("sv-roi-sub").textContent="";
   }
@@ -791,7 +816,7 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-salaire","sv-desorg","sv-rps",
- "sv-ev-rps","sv-ev-tms","sv-ev-duree","sv-prix"].forEach(function(id){
+ "sv-ev-rps","sv-ev-tms","sv-ev-duree","sv-prix-rps","sv-prix-tms"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);

@@ -432,11 +432,11 @@
           <div class="field">
             <label>Votre formule TMS</label>
             <div class="scn-set">
+              <label class="scn"><input type="radio" name="svtms" value="forfait" checked><span>Forfait tout compris<small id="sv-lab-forfait">par collaborateur et par an</small></span></label>
               <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>55 € HT par collaborateur</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Premium<small>55 € HT, plus 250 € HT par étude de poste</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="impact"><span>Impact<small>Premium, plus 750 € HT par tranche de 50 collaborateurs</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>55 € HT, plus 250 € HT par étude de poste</small></span></label>
             </div>
-            <p class="hint">Même logique que pour les risques psychosociaux. Le dépistage par vidéo porte sur tout l'effectif et donne à chacun son coaching gestes et postures. Au-delà, l'étude de poste complète avec rapport individuel n'est facturée que pour les salariés que le dépistage a désignés, et le plan d'action de prévention se déclenche à l'échelle de l'entreprise.</p>
+            <p class="hint" id="sv-hint-tms"></p>
           </div>
 
           <div class="field">
@@ -646,6 +646,15 @@ function eur(n){return fEur.format(n);}
 function num(n,d){d=d||0;return new Intl.NumberFormat("fr-FR",{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
 // ordre de grandeur d'un diagnostic RPS en presentiel : forfait de base plus part variable
 function auditRef(eff){ return Math.round((5900+eff*24)/100)*100; }
+// forfait TMS indexe sur l'incidence TMS du secteur, la moitie de l'ecart repercutee
+function forfaitSecteur(t){
+  var ref=21.5, base=105;
+  if(!t){ return base; }
+  var v=base*(1+0.5*(t/ref-1));
+  if(v<70){ v=70; }
+  if(v>150){ v=150; }
+  return Math.round(v/5)*5;
+}
 function tranche(jours){ for(var i=0;i<BORNES.length;i++){ if(jours<=BORNES[i]) return i; } return 5; }
 
 var selS=$("sv-secteur"), selA=$("sv-activite");
@@ -761,13 +770,40 @@ function calcule(){
   if(isNaN(pctEtude)){ pctEtude=0; }
   var packTms=document.querySelector('input[name="svtms"]:checked').value;
   var nbEtudes=Math.round(nbCibles*pctEtude/100);
-  if(packTms==="essential"){ nbEtudes=0; }
-  var c2dep=eff*55, c2tms=nbEtudes*250;
-  if(packTms==="impact"){ c2tms=c2tms+Math.ceil(eff/50)*750; }
-  var lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
-  var lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × 250 €";
-  if(packTms==="essential"){ lib2tms="Aucune étude de poste, formule Essential"; }
-  if(packTms==="impact"){ lib2tms="Études de poste, "+num(nbEtudes,0)+" × 250 €, plus le plan d'action"; }
+  var fSect=forfaitSecteur(s.tms10k);
+  var c2dep, c2tms, lib2dep, lib2tms;
+  if(packTms==="forfait"){
+    var plaf=Math.round(eff*0.25);
+    var sup=nbEtudes-plaf;
+    if(sup<0){ sup=0; }
+    c2dep=eff*fSect;
+    c2tms=sup*250;
+    lib2dep="Forfait tout compris, "+num(eff,0)+" × "+eur(fSect);
+    lib2tms="Aucun supplément, plafond de 25 % non atteint";
+    if(sup>0){ lib2tms="Études au-delà du plafond de 25 %, "+num(sup,0)+" × 250 €"; }
+  } else if(packTms==="essential"){
+    c2dep=eff*55; c2tms=0; nbEtudes=0;
+    lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
+    lib2tms="Aucune étude de poste, formule Essential";
+  } else {
+    c2dep=eff*55; c2tms=nbEtudes*250;
+    lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
+    lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × 250 €";
+  }
+  $("sv-lab-forfait").textContent=eur(fSect)+" HT par collaborateur et par an";
+  if(packTms==="forfait"){
+    $("sv-hint-tms").textContent="Le forfait couvre tout : le dépistage de l'ensemble de l'effectif, le "+
+      "coaching gestes et postures, l'étude de poste complète avec rapport individuel pour les salariés "+
+      "repérés dans la limite de 25 % de l'effectif, et le plan d'action de prévention. Son montant est "+
+      "indexé sur la sinistralité TMS de votre secteur, publiée par l'Assurance Maladie : "+eur(fSect)+
+      " ici, contre 105 € en moyenne nationale. Le client connaît son budget d'avance, quel que soit le "+
+      "taux de salariés finalement repérés.";
+  } else {
+    $("sv-hint-tms").textContent="Les deux formules à l'acte : vous ne payez que ce que vous consommez. "+
+      "Essential se limite au dépistage et au coaching ; Premium y ajoute l'étude de poste complète avec "+
+      "rapport individuel, facturée pour les seuls salariés repérés. Le plan d'action de prévention reste "+
+      "une option, à 750 € HT par tranche de 50 collaborateurs.";
+  }
   var desc2="Le raisonnement change d'unité : on ne part plus du poste mais de la personne. Le travail est "+
     "capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Les "+
     "deux dépistages couvrent l'ensemble de l'effectif, y compris les salariés isolés qu'une visite sur site "+

@@ -43,12 +43,13 @@ const RPS_FEATURE_VALUES: boolean[][] = [
 ];
 
 const TMS_FEATURE_VALUES: boolean[][] = [
-  [true, true],   // Dépistage par vidéos
-  [true, true],   // Qualification par un ergonome
-  [true, true],   // Coaching vidéo personnalisé
-  [false, true],  // Étude de poste exhaustive IPRP
-  [false, true],  // Rapport complet
-  [false, true],  // Plan d'action TMS + restitution direction
+  // colonnes : Forfait tout compris, Pack Essential, Pack Premium
+  [true, true, true],    // Dépistage par vidéos
+  [true, true, true],    // Qualification par un ergonome
+  [true, true, true],    // Coaching vidéo personnalisé
+  [true, false, true],   // Étude de poste complète IPRP
+  [true, false, true],   // Rapport individuel
+  [true, false, false],  // Plan d'action TMS + restitution direction
 ];
 
 // column palettes — same tints as the original comparison table
@@ -302,38 +303,11 @@ export default function TarifsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
                 {tr.tms.plans.map((plan, i) => (
                   <Reveal key={i} delay={i * 0.07}>
-                    <PlanCard plan={plan} onCta={goContact} />
+                    <PlanCard plan={plan} featured={!!plan.badge} onCta={goContact} />
                   </Reveal>
                 ))}
-                {/* CTA essai gratuit — à côté des cartes */}
-                <Reveal delay={tr.tms.plans.length * 0.07}>
-                  <div className="rounded-2xl p-7 h-full flex flex-col bg-gradient-to-br from-scanup-blue/[0.06] to-scanup-turquoise/[0.12] border-2 border-dashed border-scanup-blue/30">
-                    <div className="w-10 h-10 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center mb-4">
-                      <Sparkles size={18} />
-                    </div>
-                    <div className="text-[20px] font-bold tracking-tight mb-2 text-scanup-navy">{tr.trial.title}</div>
-                    <p className="text-[13px] text-scanup-graytext leading-relaxed flex-grow">{tr.trial.desc}</p>
-                    <motion.button
-                      whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                      onClick={goContact}
-                      className="w-full py-3 rounded-xl font-bold text-[13px] bg-scanup-blue text-white hover:brightness-110 transition-all mt-6 inline-flex items-center justify-center gap-2"
-                    >
-                      {tr.trial.cta} <ArrowRight size={13} />
-                    </motion.button>
-                  </div>
-                </Reveal>
               </div>
-
-              {/* Encart — l'ergonomie centrée sur les personnes */}
-              <Reveal delay={0.1} className="mt-8">
-                <div className="rounded-2xl bg-scanup-navy text-white p-8 sm:p-10 relative overflow-hidden">
-                  <div className="pointer-events-none absolute -right-20 -top-20 w-[280px] h-[280px] rounded-full border border-scanup-turquoise/15" />
-                  <div className="w-12 h-1 rounded-full bg-scanup-turquoise mb-6" />
-                  <p className="text-[16px] sm:text-[18px] leading-relaxed text-white/85 max-w-3xl">
-                    {tr.tms.highlight}
-                  </p>
-                </div>
-              </Reveal>
+              <Reveal delay={0.15} className="mt-6">{TrialBanner}</Reveal>
             </div>
           )}
         </div>
@@ -361,7 +335,7 @@ export default function TarifsPage() {
                 features={tr.tms.features}
                 values={TMS_FEATURE_VALUES}
                 tarifLabel={tr.tableTarif}
-                palette={['blue', 'navy']}
+                palette={['blue', 'white', 'navy']}
               />
             )}
           </Reveal>

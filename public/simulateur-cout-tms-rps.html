@@ -417,21 +417,38 @@
             <p class="hint">Les troubles musculo-squelettiques relèvent d'une logique différente des RPS : ils se traitent par l'étude de poste. L'analyse est individuelle, un rapport par salarié, parce que deux personnes au même poste n'ont ni la même morphologie, ni les mêmes gestes, ni le même historique. Menée à distance, elle atteint des salariés qu'une visite sur site ne rencontrera pratiquement jamais : secteur protégé, sites dispersés, postes itinérants, télétravail, et plus largement tout salarié seul à son poste. À l'inverse, lorsqu'une dizaine de personnes occupent un poste identique, une intervention en présentiel reste plus adaptée. Le coût évité retenu est celui d'un cas reconnu dans votre secteur, barème et désorganisation compris.</p>
           </div>
           <div class="field">
-            <div class="sl-head">
-              <label for="sv-nb-etudes">Études de poste réalisées, pour 100 salariés</label>
-              <span class="sl-val" id="sv-nb-etudes-val"></span>
+            <label>Votre formule de dépistage RPS</label>
+            <div class="scn-set">
+              <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Essential<small>27 € HT par collaborateur</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="40"><span>Premium<small>40 € HT par collaborateur</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="impact"><span>Impact<small>40 € HT, plus 750 € HT par tranche de 50 dépistés</small></span></label>
             </div>
-            <input type="range" id="sv-nb-etudes" min="0" max="20" step="0.5" value="3">
-            <p class="hint">L'étude de poste ne concerne pas tout l'effectif : elle est déclenchée pour les salariés repérés, un rapport par personne. C'est ce nombre, et non l'effectif total, qui détermine le coût du volet TMS.</p>
+            <p class="hint">Le dépistage des risques psychosociaux porte sur l'ensemble de l'effectif : son coût est proportionnel au nombre de collaborateurs.</p>
           </div>
+
           <div class="field">
-            <label for="sv-prix-rps">Coût du dépistage RPS, par salarié et par an</label>
-            <input type="number" id="sv-prix-rps" min="0" max="500" step="1" value="27">
+            <label>Votre formule TMS</label>
+            <div class="scn-set scn-2">
+              <label class="scn"><input type="radio" name="svtms" value="essential" checked><span>Essential<small>55 € HT par collaborateur</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>432 € HT l'étude de poste</small></span></label>
+            </div>
+            <p class="hint">Deux assiettes différentes. Le pack Essential dépiste tout l'effectif par vidéo, au collaborateur. Le pack Premium se facture à l'étude de poste : elle n'est déclenchée que pour les postes repérés, elle est menée par un ergonome IPRP et couvre jusqu'à trois collaborateurs filmés, puis 60 € HT par collaborateur supplémentaire.</p>
           </div>
-          <div class="field">
-            <label for="sv-prix-tms">Coût d'une étude de poste individuelle</label>
-            <input type="number" id="sv-prix-tms" min="0" max="5000" step="1" value="432">
-            <p class="hint">Les deux prestations n'ont ni le même prix ni la même assiette. Le dépistage des risques psychosociaux porte sur l'ensemble de l'effectif ; l'étude de poste mobilise du temps d'ergonome et se facture à l'unité, pour le salarié concerné, rapport individuel et préconisations d'aménagement compris. Remplacez ces deux valeurs par vos tarifs pour obtenir votre propre retour sur investissement, famille par famille.</p>
+
+          <div id="sv-f-etudes" hidden>
+            <div class="field">
+              <div class="sl-head">
+                <label for="sv-nb-etudes">Études de poste réalisées, pour 100 salariés</label>
+                <span class="sl-val" id="sv-nb-etudes-val"></span>
+              </div>
+              <input type="range" id="sv-nb-etudes" min="0" max="20" step="0.5" value="3">
+              <p class="hint">C'est ce nombre, et non l'effectif total, qui détermine le coût du volet TMS en pack Premium.</p>
+            </div>
+            <div class="field">
+              <label for="sv-collabs">Collaborateurs filmés par étude de poste</label>
+              <input type="number" id="sv-collabs" min="1" max="20" step="1" value="3">
+              <p class="hint">Trois collaborateurs sont compris dans le tarif ; au-delà, 60 € HT par collaborateur supplémentaire. Lorsqu'une dizaine de personnes occupent le même poste, une intervention en présentiel reste plus adaptée.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -505,7 +522,7 @@
             <div class="roi-fam">
               <div class="roi-fam-head"><span>Risques psychosociaux</span><b id="sv-roi-r-rps"></b></div>
               <div class="roi-row"><span>Coût évité</span><b id="sv-roi-rps"></b></div>
-              <div class="roi-row"><span>Coût du dépistage</span><b id="sv-roi-c-rps"></b></div>
+              <div class="roi-row"><span id="sv-roi-l-rps">Coût du dépistage</span><b id="sv-roi-c-rps"></b></div>
             </div>
             <div class="roi-fam">
               <div class="roi-fam-head"><span>Troubles musculo-squelettiques</span><b id="sv-roi-r-tms"></b></div>
@@ -687,16 +704,40 @@ function calcule(){
   $("sv-s-at").textContent=freq(nbAt);
   $("sv-s-jours").textContent=num((nbTms+nbPsy)*joursOuv,0)+" jours ouvrés";
 
-  var prixRps=parseFloat($("sv-prix-rps").value);
-  if(isNaN(prixRps)){ prixRps=PRIX_DEP; }
-  if(prixRps<0){ prixRps=0; }
-  var prixTms=parseFloat($("sv-prix-tms").value);
-  if(isNaN(prixTms)){ prixTms=PRIX_DEP; }
-  if(prixTms<0){ prixTms=0; }
-  var tauxEtudes=parseFloat($("sv-nb-etudes").value);
-  if(isNaN(tauxEtudes)){ tauxEtudes=0; }
-  var nbEtudes=eff*tauxEtudes/100;
-  var depRps=eff*prixRps, depTms=nbEtudes*prixTms, dep=depRps+depTms;
+  // grille tarifaire ScanUp
+  var packRps=document.querySelector('input[name="svrps"]:checked').value;
+  var depRps, libRps;
+  if(packRps==="impact"){
+    depRps=eff*40+Math.ceil(eff/50)*750;
+    libRps="Pack Impact, 40 € par collaborateur et 750 € par tranche de 50";
+  } else {
+    var pu=parseFloat(packRps);
+    depRps=eff*pu;
+    libRps="Pack "+(pu===27?"Essential":"Premium")+" ("+num(eff,0)+" × "+eur(pu)+")";
+  }
+
+  var packTms=document.querySelector('input[name="svtms"]:checked').value;
+  var depTms, libTms, nbEtudes=0;
+  if(packTms==="premium"){
+    var tauxEtudes=parseFloat($("sv-nb-etudes").value);
+    if(isNaN(tauxEtudes)){ tauxEtudes=0; }
+    nbEtudes=eff*tauxEtudes/100;
+    var col=parseFloat($("sv-collabs").value);
+    if(isNaN(col)){ col=3; }
+    if(col<1){ col=1; }
+    var sup=col-3;
+    if(sup<0){ sup=0; }
+    var unitTms=432+sup*60;
+    depTms=nbEtudes*unitTms;
+    libTms="Pack Premium ("+num(nbEtudes,1)+" étude"+(nbEtudes>=2?"s":"")+" × "+eur(unitTms)+")";
+    $("sv-f-etudes").hidden=false;
+    $("sv-nb-etudes-val").textContent=num(tauxEtudes,1)+" pour 100 salariés · "+num(nbEtudes,1)+" études";
+  } else {
+    depTms=eff*55;
+    libTms="Pack Essential ("+num(eff,0)+" × 55 €)";
+    $("sv-f-etudes").hidden=true;
+  }
+  var dep=depRps+depTms;
 
   // 04 : ce qu'un dépistage peut éviter
   var evRps=parseFloat($("sv-ev-rps").value), pctTms=parseFloat($("sv-ev-tms").value)/100;
@@ -710,8 +751,8 @@ function calcule(){
   $("sv-roi-tms").textContent=eur(gainTms);
   $("sv-roi-c-rps").textContent="− "+eur(depRps);
   $("sv-roi-c-tms").textContent="− "+eur(depTms);
-  $("sv-roi-l-tms").textContent="Études de poste ("+num(nbEtudes,1)+" × "+eur(prixTms)+")";
-  $("sv-nb-etudes-val").textContent=num(tauxEtudes,1)+" pour 100 salariés · "+num(nbEtudes,1)+" études";
+  $("sv-roi-l-tms").textContent=libTms;
+  $("sv-roi-l-rps").textContent=libRps;
   $("sv-roi-net").textContent=(net>=0?"+ ":"− ")+eur(Math.abs(net));
   function rapport(g,c){
     if(c<=0){ return "sans coût"; }
@@ -829,10 +870,13 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-salaire","sv-desorg","sv-rps",
- "sv-ev-rps","sv-ev-tms","sv-ev-duree","sv-nb-etudes","sv-prix-rps","sv-prix-tms"].forEach(function(id){
+ "sv-ev-rps","sv-ev-tms","sv-ev-duree","sv-nb-etudes","sv-collabs"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);
+});
+Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],input[name="svtms"]'),function(r){
+  r.addEventListener("change",calcule);
 });
 Array.prototype.forEach.call(document.querySelectorAll('input[name="svscn"]'),function(r){
   r.addEventListener("change",calcule);

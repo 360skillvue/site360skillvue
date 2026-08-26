@@ -430,12 +430,12 @@
           </div>
 
           <div class="field">
-            <label>Votre formule TMS</label>
-            <div class="scn-set scn-2">
-              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>55 € HT par collaborateur, tout l'effectif</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Premium<small>432 € HT l'étude personnalisée par opérateur</small></span></label>
+            <div class="sl-head">
+              <label for="sv-part-etude">Part des salariés repérés relevant d'une étude complète</label>
+              <span class="sl-val" id="sv-part-etude-val"></span>
             </div>
-            <p class="hint">Le pack Essential dépiste tout l'effectif par vidéo. Le pack Premium se facture à l'étude de poste, menée à distance par un ergonome IPRP : une étude personnalisée par opérateur, réservée aux salariés repérés.</p>
+            <input type="range" id="sv-part-etude" min="0" max="100" step="5" value="40">
+            <p class="hint">Le dépistage TMS par vidéo, à 55 € HT par collaborateur, sert précisément à répondre à cette question : il porte sur tout l'effectif et désigne ceux dont la situation justifie une étude de poste complète, avec rapport individuel, facturée 432 € HT. Les autres relèvent d'un coaching gestes et postures, compris dans le dépistage.</p>
           </div>
         </div>
       </div>
@@ -530,7 +530,8 @@
             <div class="roi-fam">
               <div class="roi-fam-head"><span>Avec ScanUp</span><b id="sv-cmp-b2"></b></div>
               <div class="roi-row"><span id="sv-c2-l-rps">Dépistage RPS de tout l'effectif</span><b id="sv-c2-rps"></b></div>
-              <div class="roi-row"><span id="sv-c2-l-tms">Études personnalisées</span><b id="sv-c2-tms"></b></div>
+              <div class="roi-row"><span id="sv-c2-l-dep">Dépistage TMS de tout l'effectif</span><b id="sv-c2-dep"></b></div>
+              <div class="roi-row"><span id="sv-c2-l-tms">Études de poste complètes</span><b id="sv-c2-tms"></b></div>
               <p class="bd-desc" id="sv-c2-desc"></p>
             </div>
 
@@ -746,18 +747,18 @@ function calcule(){
     c2rps=eff*pu;
     lib2rps="Dépistage RPS, "+num(eff,0)+" × "+eur(pu);
   }
-  var packTms=document.querySelector('input[name="svtms"]:checked').value;
-  var c2tms, lib2tms, desc2;
-  if(packTms==="premium"){
-    c2tms=nbCibles*432;
-    lib2tms="Études personnalisées, "+num(nbCibles,0)+" × 432 €";
-    desc2="Le raisonnement change d'unité : on ne part plus du poste mais de la personne. Le travail est capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Le dépistage couvre tout l'effectif, puis chacun des salariés repérés fait l'objet d'une étude personnalisée, avec son propre rapport. Le présentiel reste possible, engagé sur les seules situations qui le justifient.";
-  } else {
-    c2tms=eff*55;
-    lib2tms="Dépistage TMS par vidéo, "+num(eff,0)+" × 55 €";
-    desc2="Le travail est capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Le dépistage couvre l'ensemble de l'effectif sur les deux volets, psychosocial et gestes et postures, et rend un retour individuel à chaque salarié. Les études de poste et le présentiel ne sont ensuite engagés que sur les situations qui les justifient.";
-  }
-  var c2=c2rps+c2tms;
+  var pctEtude=parseFloat($("sv-part-etude").value);
+  if(isNaN(pctEtude)){ pctEtude=0; }
+  var nbEtudes=Math.round(nbCibles*pctEtude/100);
+  var c2dep=eff*55, c2tms=nbEtudes*432;
+  var lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
+  var lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × 432 €";
+  var desc2="Le raisonnement change d'unité : on ne part plus du poste mais de la personne. Le travail est "+
+    "capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Les "+
+    "deux dépistages couvrent l'ensemble de l'effectif, y compris les salariés isolés qu'une visite sur site "+
+    "ne rencontrerait jamais ; l'étude de poste complète, avec rapport individuel, n'est ensuite engagée que "+
+    "sur les situations que le dépistage a désignées. Le présentiel reste possible au-delà.";
+  var c2=c2rps+c2dep+c2tms;
 
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-tms").textContent=eur(c1tms);
@@ -766,7 +767,9 @@ function calcule(){
   $("sv-cmp-b1").textContent=eur(c1);
   $("sv-c2-rps").textContent=eur(c2rps);
   $("sv-c2-tms").textContent=eur(c2tms);
+  $("sv-c2-dep").textContent=eur(c2dep);
   $("sv-c2-l-rps").textContent=lib2rps;
+  $("sv-c2-l-dep").textContent=lib2dep;
   $("sv-c2-l-tms").textContent=lib2tms;
   $("sv-c2-desc").textContent=desc2;
   $("sv-cmp-t2").textContent=eur(c2);
@@ -790,11 +793,13 @@ function calcule(){
   var note="Les deux approches font analyser le travail réel par un professionnel : c'est ce qui les "+
     "rapproche. Ce qui les sépare est l'unité de raisonnement et la couverture. Le présentiel étudie un "+
     "poste, pour tous ceux qui l'occupent, sur les situations que vous aurez désignées. ScanUp dépiste "+
-    "les "+num(eff,0)+" salariés, puis produit une étude personnalisée pour chacune des "+num(nbCibles,0)+
-    " personnes repérées, y compris celles qu'une visite sur site ne rencontrerait jamais.";
+    "les "+num(eff,0)+" salariés sur les deux volets, repère "+num(nbCibles,0)+" personnes, puis réserve "+
+    "l'étude de poste complète aux "+num(nbEtudes,0)+" dont la situation la justifie. Le dépistage sert "+
+    "précisément à ne pas payer une analyse lourde pour tout le monde.";
   note=note+" ScanUp ne fait pas baisser l'absentéisme par lui-même : il dit où porter l'effort, et à quel "+
     "prix. Ce que devient le risque ensuite dépend de l'accompagnement mis en place, qui ne relève pas de ScanUp.";
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
+  $("sv-part-etude-val").textContent=num(pctEtude,0)+" % · "+num(nbEtudes,0)+" études";
 
   if(s.cout){
     $("sv-hint-salaire").textContent="Salaire brut augmenté des charges patronales. La valeur proposée, "+
@@ -891,12 +896,12 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-salaire","sv-desorg","sv-rps",
- "sv-part","sv-p-audit","sv-p-poste"].forEach(function(id){
+ "sv-part","sv-part-etude","sv-p-audit","sv-p-poste"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);
 });
-Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],input[name="svtms"]'),function(r){
+Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"]'),function(r){
   r.addEventListener("change",calcule);
 });
 Array.prototype.forEach.call(document.querySelectorAll('input[name="svscn"]'),function(r){

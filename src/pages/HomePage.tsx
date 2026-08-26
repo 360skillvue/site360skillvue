@@ -256,6 +256,115 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── NIVEAUX D'ACCOMPAGNEMENT ──────────────────────────── */}
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn className="text-center mb-14">
+            <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">
+              {t.home.levelsLabel}
+            </p>
+            <h2 className="text-[32px] md:text-[42px] font-bold tracking-tight mb-5">
+              {t.home.levelsTitle}
+            </h2>
+            <p className="text-[15px] text-scanup-graytext max-w-3xl mx-auto leading-relaxed">
+              {t.home.levelsSubtitle}
+            </p>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {[
+              { n: '01', title: t.home.level1Title, desc: t.home.level1Desc, price: t.home.level1Price, hi: false },
+              { n: '02', title: t.home.level2Title, desc: t.home.level2Desc, price: t.home.level2Price, hi: false },
+              { n: '03', title: t.home.level3Title, desc: t.home.level3Desc, price: t.home.level3Price, hi: true },
+            ].map((lv, i) => (
+              <FadeIn key={lv.n} delay={i * 0.1}>
+                <div
+                  className={`h-full flex flex-col rounded-[20px] p-8 border transition-shadow duration-300 ${
+                    lv.hi
+                      ? 'bg-scanup-navy text-white border-scanup-navy shadow-xl shadow-scanup-navy/15'
+                      : 'bg-scanup-white border-scanup-graylight hover:shadow-xl hover:shadow-scanup-navy/5'
+                  }`}
+                >
+                  <span
+                    className={`text-[28px] font-bold tracking-tight mb-4 ${
+                      lv.hi ? 'text-scanup-turquoise' : 'text-scanup-blue'
+                    }`}
+                  >
+                    {lv.n}
+                  </span>
+                  <h3
+                    className={`text-[20px] font-bold tracking-tight mb-3 leading-snug ${
+                      lv.hi ? 'text-white' : 'text-scanup-navy'
+                    }`}
+                  >
+                    {lv.title}
+                  </h3>
+                  <p
+                    className={`text-[15px] leading-relaxed flex-grow ${
+                      lv.hi ? 'text-white/80' : 'text-scanup-graytext'
+                    }`}
+                  >
+                    {lv.desc}
+                  </p>
+                  <p
+                    className={`text-[14px] font-semibold mt-6 pt-5 border-t ${
+                      lv.hi ? 'text-scanup-turquoise border-white/15' : 'text-scanup-navy border-scanup-graylight'
+                    }`}
+                  >
+                    {lv.price}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn delay={0.15} className="mb-12">
+            <div className="rounded-[20px] bg-scanup-lightblue/50 border border-scanup-blue/15 p-8 md:p-9">
+              <h3 className="text-[18px] font-bold tracking-tight text-scanup-navy mb-3">
+                {t.home.levelsPackTitle}
+              </h3>
+              <p className="text-[15px] text-scanup-graytext leading-relaxed max-w-3xl">
+                {t.home.levelsPackDesc}
+              </p>
+              <div className="flex flex-wrap gap-x-8 gap-y-3 mt-6">
+                <Link
+                  to="/partenaires"
+                  className="inline-flex items-center gap-2 text-[14px] font-semibold text-scanup-blue hover:gap-3 transition-all duration-300"
+                >
+                  {t.home.levelsPackNetwork}
+                  <ArrowRight size={16} />
+                </Link>
+                <Link
+                  to="/aide-support"
+                  className="inline-flex items-center gap-2 text-[14px] font-semibold text-scanup-blue hover:gap-3 transition-all duration-300"
+                >
+                  {t.home.levelsPackContact}
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.2}>
+            <blockquote className="max-w-3xl mx-auto text-center border-l-2 border-scanup-blue pl-6 md:border-l-0 md:pl-0">
+              <p className="text-[17px] md:text-[19px] leading-relaxed text-scanup-navy italic">
+                {t.home.levelsQuote}
+              </p>
+            </blockquote>
+          </FadeIn>
+
+          <FadeIn delay={0.2} className="text-center mt-10">
+            <Link
+              to="/tarifs"
+              className="inline-flex items-center gap-2 text-[15px] font-semibold text-scanup-blue hover:gap-3 transition-all duration-300"
+            >
+              {t.home.levelsCta}
+              <ArrowRight size={18} />
+            </Link>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ─── VISION FONDATRICE ─────────────────────────────────── */}
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">

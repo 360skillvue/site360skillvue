@@ -206,12 +206,20 @@
 .svue-sim .panel{position:sticky;top:24px;background:var(--carte);border:1px solid var(--bordure);
   border-radius:16px;overflow:hidden}
 @media (max-width:980px){.svue-sim .panel{position:static}}
-.svue-sim .p-head{padding:24px;border-bottom:1px solid var(--bordure)}
-.svue-sim .p-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-texte);margin:0 0 8px}
-.svue-sim .headline{font-size:40px;font-weight:600;line-height:1.2;color:var(--bleu);
+.svue-sim .p-head{padding:24px;background:var(--nuit);color:#FFFFFF}
+.svue-sim .p-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--turquoise);margin:0 0 8px;font-weight:600}
+.svue-sim .headline{font-size:40px;font-weight:600;line-height:1.2;color:#FFFFFF;
   font-variant-numeric:tabular-nums;margin:0;letter-spacing:-.01em}
-.svue-sim .headline-sub{font-size:14px;color:var(--gris-texte);margin:8px 0 0;line-height:1.5}
+.svue-sim .headline-sub{font-size:14px;color:rgba(255,255,255,.7);margin:8px 0 0;line-height:1.5}
 .svue-sim .split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.svue-sim .p-head .split-c{border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:12px;
+  background:rgba(255,255,255,.06)}
+.svue-sim .p-head .split-l{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);margin-bottom:4px}
+.svue-sim .p-head .split-v{display:block;font-size:22px;font-weight:600;color:#FFFFFF;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.svue-sim .p-head .split-p{display:block;font-size:12px;color:rgba(255,255,255,.6);margin-top:2px}
 .svue-sim .split-c{border:1px solid var(--bordure);border-radius:10px;padding:12px;background:var(--page)}
 .svue-sim .split-l{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--gris-texte);margin-bottom:4px}
@@ -246,8 +254,13 @@
 .svue-sim .compare{margin-top:16px;padding:16px;border-radius:10px;background:var(--bleu-clair)}
 .svue-sim .compare p{margin:0;font-size:14px;line-height:1.5;color:var(--nuit)}
 .svue-sim .compare .big{font-weight:600;color:var(--bleu)}
-.svue-sim .roi{margin-top:16px;padding:16px;border-radius:10px;border:1px solid var(--bleu);background:var(--carte)}
-.svue-sim .roi-l{margin:0;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-texte)}
+.svue-sim .roi{margin-top:0;padding:20px;border-radius:12px;border:1px solid var(--bleu);
+  background:var(--bleu-clair)}
+.svue-sim .roi .split-c{background:var(--carte);border-color:rgba(0,104,255,.2)}
+.svue-sim .roi .roi-fam{background:var(--carte);border-radius:10px;padding:14px;border:1px solid rgba(0,104,255,.15)}
+.svue-sim .roi-l{margin:2px 0 0;font-size:18px;font-weight:600;color:var(--nuit);letter-spacing:-.01em}
+.svue-sim .roi-sur{margin:0;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--bleu);font-weight:600}
 .svue-sim .roi-h{margin:4px 0 0;font-size:30px;font-weight:600;color:var(--bleu);
   font-variant-numeric:tabular-nums;line-height:1.2}
 .svue-sim .roi-sub{margin:4px 0 0;font-size:13px;color:var(--gris-texte);line-height:1.5}
@@ -468,7 +481,7 @@
 
       <aside class="panel" aria-live="polite">
         <div class="p-head">
-          <p class="p-label" id="sv-p-label">Coût annuel estimé</p>
+          <p class="p-label" id="sv-p-label">Ce que le risque vous coûte</p>
           <p class="headline" id="sv-total">&mdash;</p>
           <p class="headline-sub" id="sv-total-sub"></p>
           <div class="split" id="sv-split">
@@ -518,7 +531,8 @@
         </details>
         <div class="p-foot">
           <div class="roi">
-            <p class="roi-l" id="sv-roi-l">Agir : les dispositifs et leur coût</p>
+            <p class="roi-sur" id="sv-roi-sur">Agir sur les RPS et les TMS</p>
+            <p class="roi-l" id="sv-roi-l">Ce qu'il faut investir pour agir</p>
             <div class="split">
               <div class="split-c">
                 <span class="split-l">Méthodes classiques</span>
@@ -810,8 +824,9 @@ function calcule(){
   var libPer="Agir sur les RPS et les TMS";
   if(perim==="rps"){ libPer="Agir sur les risques psychosociaux"; }
   if(perim==="tms"){ libPer="Agir sur les troubles musculo-squelettiques"; }
-  $("sv-roi-l").textContent=libPer;
-  $("sv-p-label").textContent=(perim==="deux"?"Coût annuel estimé":(perim==="rps"?"Coût annuel estimé des RPS":"Coût annuel estimé des TMS"));
+  $("sv-roi-l").textContent="Ce qu'il faut investir pour agir";
+  $("sv-p-label").textContent=(perim==="deux"?"Ce que le risque vous coûte":(perim==="rps"?"Ce que les RPS vous coûtent":"Ce que les TMS vous coûtent"));
+  $("sv-roi-sur").textContent=libPer;
   $("sv-lab-forfait").textContent=eur(fSect)+" HT dans votre secteur, 105 € en moyenne";
   if(packTms==="forfait"){
     $("sv-hint-tms").textContent="Tout est compris : les deux dépistages, le coaching, l'étude de poste "+

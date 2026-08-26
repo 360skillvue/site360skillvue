@@ -412,8 +412,8 @@
 
           <div class="field">
             <label for="sv-p-audit">Coût d'un audit RPS collectif en présentiel</label>
-            <input type="number" id="sv-p-audit" min="0" max="50000" step="100" value="3500">
-            <p class="hint">Forfait pour l'entreprise, questionnaire, entretiens et restitution compris. Les tarifs observés sur le marché vont de 1 500 à 3 500 € HT pour un diagnostic standard, et de 2 300 à 7 000 € pour un diagnostic complet.</p>
+            <input type="number" id="sv-p-audit" min="0" max="500000" step="100" value="11900">
+            <p class="hint" id="sv-hint-audit"></p>
           </div>
 
           <div class="field">
@@ -631,6 +631,8 @@ function $(id){return document.getElementById(id);}
 var fEur = new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0});
 function eur(n){return fEur.format(n);}
 function num(n,d){d=d||0;return new Intl.NumberFormat("fr-FR",{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
+// ordre de grandeur d'un diagnostic RPS en presentiel : forfait de base plus part variable
+function auditRef(eff){ return Math.round((5900+eff*24)/100)*100; }
 function tranche(jours){ for(var i=0;i<BORNES.length;i++){ if(jours<=BORNES[i]) return i; } return 5; }
 
 var selS=$("sv-secteur"), selA=$("sv-activite");
@@ -719,7 +721,11 @@ function calcule(){
     if(v<0){ v=0; }
     return v;
   }
-  var pQuest=lire("sv-p-quest",1800), pAudit=lire("sv-p-audit",3500), pPoste=lire("sv-p-poste",1200);
+  var pQuest=lire("sv-p-quest",1800), pAudit=lire("sv-p-audit",auditRef(eff)), pPoste=lire("sv-p-poste",1200);
+  $("sv-hint-audit").textContent="Un diagnostic RPS sérieux ne se facture pas au forfait : il dépend de "+
+    "l'effectif, du nombre de sites et du nombre d'entretiens. Les cabinets annoncent un point de départ "+
+    "autour de 5 900 € HT, et de 9 000 à 18 000 € HT pour une PME de taille moyenne. La valeur proposée, "+
+    eur(auditRef(eff))+", suit cet ordre de grandeur pour "+num(eff,0)+" salariés ; remplacez-la par votre devis.";
 
   // scénario 0 : questionnaire en ligne
   var c0=pQuest;
@@ -790,6 +796,11 @@ function calcule(){
     "que sur les "+num(nbCibles,0)+" situations repérées au lieu d'être décidée à l'aveugle. "+
     "ScanUp ne fait pas baisser l'absentéisme par lui-même : il dit où porter l'effort. Ce que devient "+
     "le risque ensuite dépend de l'accompagnement mis en place, qui ne relève pas de ScanUp.";
+  if(c2rps>pAudit){
+    note=note+" Cas particulier ici : avec cet effectif, le dépistage individuel revient plus cher que "+
+      "l'audit collectif, de "+eur(c2rps-pAudit)+". C'est le prix du passage d'une photographie par service "+
+      "à une liste de personnes à voir.";
+  }
   $("sv-cmp-note").textContent=note;
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
 
@@ -869,6 +880,15 @@ TABS.forEach(function(pair){
     });
   });
 });
+var auditTouche=false;
+$("sv-p-audit").addEventListener("input",function(){auditTouche=true;});
+$("sv-p-audit").addEventListener("change",function(){auditTouche=true;});
+function majAudit(){
+  if(auditTouche){ return; }
+  var e=Math.max(1,+$("sv-effectif").value||1);
+  $("sv-p-audit").value=auditRef(e);
+}
+$("sv-effectif").addEventListener("input",majAudit);
 var salaireTouche=false;
 $("sv-salaire").addEventListener("input",function(){salaireTouche=true;});
 $("sv-salaire").addEventListener("change",function(){salaireTouche=true;});
@@ -890,7 +910,7 @@ Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],inpu
 Array.prototype.forEach.call(document.querySelectorAll('input[name="svscn"]'),function(r){
   r.addEventListener("change",calcule);
 });
-fillAct(); majSalaire(); calcule(); renderTable();
+fillAct(); majSalaire(); majAudit(); calcule(); renderTable();
 })();
 </script>
 

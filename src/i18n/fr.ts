@@ -617,7 +617,7 @@ export const fr = {
         {
           name: 'Forfait tout compris',
           price: '105 €',
-          sub: 'HT / collaborateur / an, selon votre secteur d\'activité',
+          sub: 'HT / collaborateur / an en moyenne, de 70 à 150 € selon la sinistralité de votre secteur',
           badge: '',
           items: [
             'Tout le Pack Premium',

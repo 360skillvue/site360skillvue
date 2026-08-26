@@ -523,7 +523,7 @@ export const de = {
         {
           name: 'All-inclusive-Paket',
           price: '105 €',
-          sub: 'zzgl. MwSt. pro Mitarbeitenden und Jahr, je nach Branche',
+          sub: 'zzgl. MwSt. pro Mitarbeitenden und Jahr im Durchschnitt, 70 bis 150 € je nach Branche',
           badge: '',
           items: [
             'Alles aus dem Pack Premium',

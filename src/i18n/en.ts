@@ -523,7 +523,7 @@ export const en = {
         {
           name: 'All-inclusive plan',
           price: '€105',
-          sub: 'excl. VAT per employee per year, based on your sector',
+          sub: 'excl. VAT per employee per year on average, €70 to €150 depending on your sector',
           badge: '',
           items: [
             'Everything in the Premium Pack',

@@ -523,7 +523,7 @@ export const it = {
         {
           name: 'Formula tutto compreso',
           price: '105 €',
-          sub: '+ IVA per collaboratore all\'anno, secondo il vostro settore',
+          sub: '+ IVA per collaboratore all\'anno in media, da 70 a 150 € secondo il vostro settore',
           badge: '',
           items: [
             'Tutto il Pack Premium',

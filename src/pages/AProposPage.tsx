@@ -81,7 +81,7 @@ export default function AProposPage() {
                 {/* Photo — pleine hauteur, pas de maxHeight */}
                 <div className="md:w-[55%]">
                   <img
-                    src="/preventica-award-2025.jpg"
+                    src="/preventica-award-2025.webp"
                     alt={tr.awardCaption}
                     className="w-full h-full object-cover object-center"
                     style={{ minHeight: 260, display: 'block' }}

@@ -27,13 +27,13 @@ const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 );
 
 const refs = [
-  { name: "Roche",  src: "/partners/roche.png" },
-  { name: "Cerba",  src: "/partners/cerba.png" },
-  { name: "HCL",    src: "/partners/LogoHCL.jpg" },
-  { name: "BIC",    src: "/partners/Bic.png" },
-  { name: "HPS",    src: "/partners/HPS.png" },
-  { name: "CDE",    src: "/partners/cde.png" },
-  { name: "Revima", src: "/partners/Revima.png" },
+  { name: "Roche",  src: "/partners/roche.webp" },
+  { name: "Cerba",  src: "/partners/cerba.webp" },
+  { name: "HCL",    src: "/partners/LogoHCL.webp" },
+  { name: "BIC",    src: "/partners/Bic.webp" },
+  { name: "HPS",    src: "/partners/HPS.webp" },
+  { name: "CDE",    src: "/partners/cde.webp" },
+  { name: "Revima", src: "/partners/Revima.webp" },
 ];
 
 export default function HomePage() {
@@ -238,19 +238,19 @@ export default function HomePage() {
             </p>
           </FadeIn>
 
-          <div className="flex flex-col md:flex-row md:items-start justify-center gap-8 md:gap-10">
-            <FadeIn delay={0.1} className="flex-1 max-w-[640px] w-full">
-              <p className="text-[14px] font-semibold text-scanup-navy mb-3 text-center md:text-left">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
+            <FadeIn delay={0.1}>
+              <p className="text-[14px] font-semibold text-scanup-navy mb-3">
                 🇫🇷 {t.home.videosFrLabel}
               </p>
-              <VideoEmbed id="PgL46oFdz2M" title={t.home.videosFrLabel} ratio="16/9" />
+              <VideoEmbed id="Jivo0CdLXFg" title={t.home.videosFrLabel} ratio="16/9" />
             </FadeIn>
 
-            <FadeIn delay={0.2} className="w-full max-w-[280px] mx-auto md:mx-0 shrink-0">
-              <p className="text-[14px] font-semibold text-scanup-navy mb-3 text-center md:text-left">
+            <FadeIn delay={0.2}>
+              <p className="text-[14px] font-semibold text-scanup-navy mb-3">
                 🇨🇭 {t.home.videosChLabel}
               </p>
-              <VideoEmbed id="5dQb9b1o82s" title={t.home.videosChLabel} ratio="9/16" />
+              <VideoEmbed id="m3yYau_tWvM" title={t.home.videosChLabel} ratio="16/9" />
             </FadeIn>
           </div>
         </div>

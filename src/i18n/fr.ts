@@ -32,7 +32,7 @@ export const fr = {
     videosLabel: 'Le parcours du salarié',
     videosTitle: 'Ce que voit le salarié, ce que voit l\'employeur',
     videosSubtitle: 'Le dépistage des risques psychosociaux, écran par écran. Chaque salarié est écouté individuellement et reçoit un retour confidentiel ; l\'employeur ne reçoit jamais les réponses individuelles, seulement une vision collective et un plan d\'action.',
-    videosFrLabel: 'Le parcours du salarié, version France',
+    videosFrLabel: 'Version France',
     videosChLabel: 'Version Suisse',
     founderTitle: 'La vision de la fondatrice',
     founderSubtitle: 'Laure Dellamonica, fondatrice de 360SkillVue, vous explique pourquoi ScanUp existe.',

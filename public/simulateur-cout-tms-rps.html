@@ -187,7 +187,7 @@
 .svue-sim select:focus,.svue-sim input:focus{border-color:var(--bleu);outline:3px solid rgba(0,104,255,.5);outline-offset:0}
 .svue-sim .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:560px){.svue-sim .row2{grid-template-columns:1fr}}
-.svue-sim .hint{font-size:14px;color:var(--gris-texte);margin:8px 0 0;line-height:1.5}
+.svue-sim .hint{font-size:13px;color:var(--gris-texte);margin:8px 0 0;line-height:1.45}
 .svue-sim input[type="range"]{width:100%;accent-color:var(--bleu);margin:8px 0 0;padding:0}
 .svue-sim .sl-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
 .svue-sim .sl-val{font-size:14px;font-weight:500;color:var(--bleu);font-variant-numeric:tabular-nums}
@@ -328,9 +328,9 @@
       <p class="intro-lead">Les accidents du travail reculent de 31 % en vingt ans ; les maladies professionnelles, elles, repartent à la hausse, et les affections psychiques y sont le poste qui progresse le plus vite : multipliées par 5,6 depuis 2015 dans les données de l'Assurance Maladie. Ce simulateur distingue les deux familles, risques psychosociaux et troubles musculo-squelettiques, en appliquant à votre effectif les taux réellement observés dans votre secteur et le barème officiel des coûts moyens AT/MP.</p>
     </div>
     <div class="keyfigs">
-      <div class="kf accent"><b>44 723</b><span>troubles musculo-squelettiques reconnus en 2024</span></div>
-      <div class="kf accent"><b>&times;&nbsp;5,6</b><span>d'affections psychiques reconnues depuis 2015</span></div>
-      <div class="kf"><b>317 jours</b><span>d'arrêt en moyenne par maladie professionnelle</span></div>
+      <div class="kf accent"><b>44 723</b><span>troubles musculo-squelettiques reconnus comme maladies professionnelles en France en 2024</span></div>
+      <div class="kf accent"><b>&times;&nbsp;5,6</b><span>d'affections psychiques reconnues entre 2015 et 2024, de 320 à 1 805 cas</span></div>
+      <div class="kf"><b>317 jours</b><span>indemnisés en moyenne pour une maladie professionnelle reconnue, cumul de tous les arrêts qu'elle entraîne</span></div>
     </div>
   </div>
 
@@ -366,6 +366,16 @@
           <p class="step-note">Le montant ci-contre dit ce que le risque coûte. Il ne dit pas où agir. Pour le savoir il faut regarder les situations de travail, et cela a un prix : voici les deux façons de le payer.</p>
 
           <div class="field">
+            <label>Ce que vous voulez chiffrer</label>
+            <div class="scn-set">
+              <label class="scn"><input type="radio" name="svperim" value="deux" checked><span>Les deux<small>RPS et TMS</small></span></label>
+              <label class="scn"><input type="radio" name="svperim" value="rps"><span>RPS seuls<small>risques psychosociaux</small></span></label>
+              <label class="scn"><input type="radio" name="svperim" value="tms"><span>TMS seuls<small>gestes et postures</small></span></label>
+            </div>
+            <p class="hint">Les deux dispositifs sont indépendants et se vendent séparément. Choisissez celui qui vous intéresse, ou les deux : les montants ne s'additionnent que si vous prenez les deux.</p>
+          </div>
+
+          <div class="field">
             <div class="sl-head">
               <label for="sv-part">Part de l'effectif identifiée à risque</label>
               <span class="sl-val" id="sv-part-val"></span>
@@ -374,7 +384,7 @@
             <p class="hint">Le dépistage porte sur tout le monde ; l'analyse approfondie ne concerne ensuite que les salariés repérés, de l'ordre de 20 % de l'effectif.</p>
           </div>
 
-          <div class="field">
+          <div class="field" id="sv-f-rps">
             <label>Votre formule de dépistage RPS</label>
             <div class="scn-set">
               <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Essential<small>27 € HT, retour par courriel</small></span></label>
@@ -383,7 +393,7 @@
             </div>
           </div>
 
-          <div class="field">
+          <div class="field" id="sv-f-tms">
             <label>Votre formule TMS</label>
             <div class="scn-set">
               <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>40 € HT, sans coaching</small></span></label>
@@ -458,10 +468,10 @@
 
       <aside class="panel" aria-live="polite">
         <div class="p-head">
-          <p class="p-label">Coût annuel estimé</p>
+          <p class="p-label" id="sv-p-label">Coût annuel estimé</p>
           <p class="headline" id="sv-total">&mdash;</p>
           <p class="headline-sub" id="sv-total-sub"></p>
-          <div class="split">
+          <div class="split" id="sv-split">
             <div class="split-c">
               <span class="split-l">Dont RPS</span>
               <span class="split-v" id="sv-h-rps">&mdash;</span>
@@ -508,7 +518,7 @@
         </details>
         <div class="p-foot">
           <div class="roi">
-            <p class="roi-l">Agir : les dispositifs et leur coût</p>
+            <p class="roi-l" id="sv-roi-l">Agir : les dispositifs et leur coût</p>
             <div class="split">
               <div class="split-c">
                 <span class="split-l">Méthodes classiques</span>
@@ -525,16 +535,16 @@
 
             <div class="roi-fam">
               <div class="roi-fam-head"><span>Méthodes classiques, en présentiel</span><b id="sv-cmp-b1"></b></div>
-              <div class="roi-row"><span>Audit RPS collectif</span><b id="sv-c1-rps"></b></div>
-              <div class="roi-row"><span id="sv-c1-l-tms">Études de poste par un ergonome</span><b id="sv-c1-tms"></b></div>
+              <div class="roi-row" id="sv-r1-rps"><span>Audit RPS collectif</span><b id="sv-c1-rps"></b></div>
+              <div class="roi-row" id="sv-r1-tms"><span id="sv-c1-l-tms">Études de poste par un ergonome</span><b id="sv-c1-tms"></b></div>
               <p class="bd-desc">Un professionnel vient voir le travail : l'analyse est réelle. Mais elle raisonne par poste, pas par personne, et l'audit psychosocial reste collectif, il décrit des services. Faute de donnée individuelle pour choisir, c'est vous qui désignez les situations à étudier.</p>
             </div>
 
             <div class="roi-fam">
               <div class="roi-fam-head"><span>Avec ScanUp</span><b id="sv-cmp-b2"></b></div>
-              <div class="roi-row"><span id="sv-c2-l-rps">Dépistage RPS de tout l'effectif</span><b id="sv-c2-rps"></b></div>
-              <div class="roi-row"><span id="sv-c2-l-dep">Dépistage TMS de tout l'effectif</span><b id="sv-c2-dep"></b></div>
-              <div class="roi-row"><span id="sv-c2-l-tms">Études de poste complètes</span><b id="sv-c2-tms"></b></div>
+              <div class="roi-row" id="sv-r2-rps"><span id="sv-c2-l-rps">Dépistage RPS de tout l'effectif</span><b id="sv-c2-rps"></b></div>
+              <div class="roi-row" id="sv-r2-dep"><span id="sv-c2-l-dep">Dépistage TMS de tout l'effectif</span><b id="sv-c2-dep"></b></div>
+              <div class="roi-row" id="sv-r2-tms"><span id="sv-c2-l-tms">Études de poste complètes</span><b id="sv-c2-tms"></b></div>
               <p class="bd-desc" id="sv-c2-desc"></p>
             </div>
 
@@ -739,14 +749,15 @@ function calcule(){
     return v;
   }
   var pAudit=lire("sv-p-audit",auditRef(eff)), pPoste=lire("sv-p-poste",1200);
-  $("sv-hint-audit").textContent="Un diagnostic RPS sérieux ne se facture pas au forfait : il dépend de "+
-    "l'effectif, du nombre de sites et du nombre d'entretiens. Les cabinets annoncent un point de départ "+
-    "autour de 5 900 € HT, et de 9 000 à 18 000 € HT pour une PME de taille moyenne. La valeur proposée, "+
-    eur(auditRef(eff))+", suit cet ordre de grandeur pour "+num(eff,0)+" salariés ; remplacez-la par votre devis.";
+  $("sv-hint-audit").textContent="Le prix dépend de l'effectif et du nombre d'entretiens : les cabinets "+
+    "annoncent de 9 000 à 18 000 € HT pour une PME. La valeur proposée, "+eur(auditRef(eff))+", suit cet "+
+    "ordre de grandeur pour "+num(eff,0)+" salariés.";
 
 
   // scénario 1 : tout en présentiel
-  var c1rps=pAudit, c1tms=nbCibles*pPoste, c1=c1rps+c1tms;
+  var perim=document.querySelector('input[name="svperim"]:checked').value;
+  var vRps=(perim!=="tms"), vTms=(perim!=="rps");
+  var c1rps=vRps?pAudit:0, c1tms=vTms?nbCibles*pPoste:0, c1=c1rps+c1tms;
 
   // scénario 2 : dépistage à distance puis intervention ciblée
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
@@ -783,7 +794,24 @@ function calcule(){
     lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
     lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × 250 €";
   }
+  if(!vRps){ c2rps=0; }
+  if(!vTms){ c2dep=0; c2tms=0; }
   var c2=c2rps+c2dep+c2tms;
+  var totAff=total;
+  if(perim==="rps"){ totAff=totRps; }
+  if(perim==="tms"){ totAff=totTms; }
+  function aff(id,v){ var e=$(id); if(e){ e.hidden=!v; } }
+  aff("sv-f-rps",vRps); aff("sv-f-tms",vTms);
+  aff("sv-r1-rps",vRps); aff("sv-r1-tms",vTms);
+  aff("sv-r2-rps",vRps); aff("sv-r2-dep",vTms); aff("sv-r2-tms",vTms);
+  aff("sv-split",perim==="deux");
+  $("sv-total").textContent=eur(totAff);
+  $("sv-total-sub").textContent="soit "+eur(totAff/eff)+" par salarié et par an, pour "+num(eff,0)+" salariés.";
+  var libPer="Agir sur les RPS et les TMS";
+  if(perim==="rps"){ libPer="Agir sur les risques psychosociaux"; }
+  if(perim==="tms"){ libPer="Agir sur les troubles musculo-squelettiques"; }
+  $("sv-roi-l").textContent=libPer;
+  $("sv-p-label").textContent=(perim==="deux"?"Coût annuel estimé":(perim==="rps"?"Coût annuel estimé des RPS":"Coût annuel estimé des TMS"));
   $("sv-lab-forfait").textContent=eur(fSect)+" HT dans votre secteur, 105 € en moyenne";
   if(packTms==="forfait"){
     $("sv-hint-tms").textContent="Tout est compris : les deux dépistages, le coaching, l'étude de poste "+
@@ -818,7 +846,7 @@ function calcule(){
   $("sv-cmp-l-ecart").textContent=(ecart>=0?"Économie sur le budget prévention":"Surcoût par rapport au présentiel");
   var sub="Le même travail d'analyse, dans deux dispositifs différents. Ce sont des devis, pas des promesses.";
   if(ecart>0){
-    sub=sub+" L'écart, "+eur(ecart)+" par an, est à rapprocher des "+eur(total)+" que le risque coûte déjà.";
+    sub=sub+" L'écart, "+eur(ecart)+" par an, est à rapprocher des "+eur(totAff)+" que le risque coûte déjà.";
   }
   $("sv-cmp-sub").textContent=sub;
 
@@ -831,13 +859,12 @@ function calcule(){
   $("sv-part-etude-val").textContent=num(pctEtude,0)+" % · "+num(nbEtudes,0)+" études";
 
   if(s.cout){
-    $("sv-hint-salaire").textContent="Salaire brut augmenté des charges patronales. La valeur proposée, "+
-      eur(s.cout)+", est la moyenne indicative de votre secteur, calculée à partir du salaire net moyen "+
-      "publié par l'INSEE. Remplacez-la par la vôtre : elle pilote les coûts d'absence et de désorganisation.";
+    $("sv-hint-salaire").textContent="Brut plus charges patronales. La valeur proposée, "+eur(s.cout)+
+      ", est la moyenne INSEE de votre secteur. Remplacez-la par la vôtre.";
   }
   $("sv-desorg-val").textContent=$("sv-desorg").value+" % du salaire journalier";
   $("sv-rps-val").textContent=num(joursRps,1)+" jour par salarié · "+eur(joursRps*coutJour)+"/an";
-  $("sv-scn-obs").textContent=num(s.jours,0)+" jours dans votre secteur";
+  $("sv-scn-obs").textContent=num(s.jours,0)+" jours indemnisés dans votre secteur";
 
   var sec1=naf1.filter(function(x){return x.code===selS.value;})[0];
   var tend="";
@@ -925,7 +952,7 @@ selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);
 });
-Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],input[name="svtms"]'),function(r){
+Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],input[name="svtms"],input[name="svperim"]'),function(r){
   r.addEventListener("change",calcule);
 });
 Array.prototype.forEach.call(document.querySelectorAll('input[name="svscn"]'),function(r){

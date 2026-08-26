@@ -392,32 +392,36 @@
         </div>
 
         <div class="step">
-          <div class="step-head"><span class="step-n">04</span><h2>Ce qu'un dépistage peut éviter</h2></div>
-          <p class="step-note">Le chiffre principal du panneau, le seuil de rentabilité, ne dépend d'aucune hypothèse d'efficacité. Les réglages ci-dessous servent à aller plus loin : ils traduisent ce que vous estimez pouvoir éviter en une année. Un dépistage repère et oriente ; il ne pose pas de diagnostic, qui relève du médecin du travail, et il ne remplace pas l'accompagnement qui suit.</p>
+          <div class="step-head"><span class="step-n">04</span><h2>Ce que coûte le fait de savoir</h2></div>
+          <p class="step-note">Le montant ci-contre dit ce que le risque coûte. Il ne dit pas où agir. Pour le savoir, il faut regarder les situations de travail une par une, et cela a un prix. Cette étape compare deux façons de payer ce prix.</p>
+
           <div class="field">
             <div class="sl-head">
-              <label for="sv-ev-rps">Arrêts liés aux RPS évités, pour 100 salariés</label>
-              <span class="sl-val" id="sv-ev-rps-val"></span>
+              <label for="sv-part">Part de l'effectif appelant une intervention individuelle</label>
+              <span class="sl-val" id="sv-part-val"></span>
             </div>
-            <input type="range" id="sv-ev-rps" min="0" max="2" step="0.1" value="0.3">
-            <p class="hint">Un salarié repéré et orienté avant l'arrêt. À 0,3, cela représente un arrêt évité pour trois cents salariés et par an ; à 1, un arrêt pour cent salariés. Une précision qui compte : le dépistage repère et oriente, il ne soigne pas. Ce qui est réellement évité dépend de l'accompagnement mis en place après l'orientation, médecin du travail, psychologue, aménagement, et cet accompagnement ne relève pas de ScanUp. Ce curseur mesure donc ce que vous, employeur, estimez pouvoir obtenir de la chaîne complète.</p>
+            <input type="range" id="sv-part" min="1" max="40" step="1" value="12">
+            <p class="hint">Salariés dont la situation de travail justifie une étude de poste ou un accompagnement. C'est précisément ce que personne ne sait avant d'avoir regardé ; le dépistage sert à l'établir, les méthodes traditionnelles à le supposer.</p>
           </div>
+
           <div class="field">
-            <div class="sl-head">
-              <label for="sv-ev-duree">Durée de l'arrêt ainsi évité, en jours</label>
-              <span class="sl-val" id="sv-ev-duree-val"></span>
-            </div>
-            <input type="range" id="sv-ev-duree" min="15" max="240" step="5" value="90">
-            <p class="hint">Un épuisement professionnel se compte en mois, rarement en semaines. Le coût retenu est celui du salaire maintenu pendant l'arrêt, sans y ajouter la désorganisation : c'est la même convention que la ligne « part non reconnue » de l'étape 03.</p>
+            <label for="sv-p-quest">Coût annuel d'une plateforme de questionnaires RPS</label>
+            <input type="number" id="sv-p-quest" min="0" max="50000" step="100" value="1800">
+            <p class="hint">Abonnement à un outil déclaratif en ligne. Les offres du marché vont de 29 à 300 € HT par mois. C'est la solution la moins chère, et c'est aujourd'hui la plus répandue.</p>
           </div>
+
           <div class="field">
-            <div class="sl-head">
-              <label for="sv-ev-tms">Part des TMS évités par le repérage du risque</label>
-              <span class="sl-val" id="sv-ev-tms-val"></span>
-            </div>
-            <input type="range" id="sv-ev-tms" min="0" max="50" step="1" value="20">
-            <p class="hint">Ce qui est repéré, c'est un risque, pas un trouble. L'étude de poste identifie des contraintes, des gestes et des postures qui exposent le salarié ; elle ne pose aucun diagnostic, qui relève du seul médecin du travail. Agir sur ce risque évite qu'une partie de ces situations ne devienne un trouble reconnu, et c'est cette part que règle le curseur. L'analyse est individuelle, un rapport par salarié, parce que deux personnes au même poste n'ont ni la même morphologie, ni les mêmes gestes, ni le même historique. Menée à distance, elle atteint des salariés qu'une visite sur site ne rencontrera pratiquement jamais : secteur protégé, sites dispersés, postes itinérants, télétravail, et plus largement tout salarié seul à son poste. À l'inverse, lorsqu'une dizaine de personnes occupent un poste identique, une intervention en présentiel reste plus adaptée. Le coût évité retenu est celui d'un cas reconnu dans votre secteur, barème et désorganisation compris.</p>
+            <label for="sv-p-audit">Coût d'un audit RPS collectif en présentiel</label>
+            <input type="number" id="sv-p-audit" min="0" max="50000" step="100" value="3500">
+            <p class="hint">Forfait pour l'entreprise, questionnaire, entretiens et restitution compris. Les tarifs observés sur le marché vont de 1 500 à 3 500 € HT pour un diagnostic standard, et de 2 300 à 7 000 € pour un diagnostic complet.</p>
           </div>
+
+          <div class="field">
+            <label for="sv-p-poste">Coût d'une étude de poste en présentiel</label>
+            <input type="number" id="sv-p-poste" min="0" max="10000" step="50" value="1200">
+            <p class="hint">Par étude, déplacement et rédaction compris. Deux repères publics : le FIPHFP finance une étude ergonomique externe jusqu'à 3 000 € par étude, et la grille 2026 d'un centre de gestion facture la journée d'ergonome 685 €, la demi-journée 342 €.</p>
+          </div>
+
           <div class="field">
             <label>Votre formule de dépistage RPS</label>
             <div class="scn-set">
@@ -425,28 +429,16 @@
               <label class="scn"><input type="radio" name="svrps" value="40"><span>Premium<small>40 € HT par collaborateur</small></span></label>
               <label class="scn"><input type="radio" name="svrps" value="impact"><span>Impact<small>40 € HT, plus 750 € HT par tranche de 50 dépistés</small></span></label>
             </div>
-            <p class="hint">Le dépistage des risques psychosociaux porte sur l'ensemble de l'effectif : son coût est proportionnel au nombre de collaborateurs.</p>
+            <p class="hint">Le dépistage porte sur l'ensemble de l'effectif : son coût est proportionnel au nombre de collaborateurs.</p>
           </div>
 
           <div class="field">
             <label>Votre formule TMS</label>
             <div class="scn-set scn-2">
-              <label class="scn"><input type="radio" name="svtms" value="essential" checked><span>Essential<small>55 € HT par collaborateur</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>432 € HT l'étude personnalisée par opérateur</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>55 € HT par collaborateur, tout l'effectif</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Premium<small>432 € HT l'étude personnalisée par opérateur</small></span></label>
             </div>
-            <p class="hint">Deux assiettes différentes. Le pack Essential dépiste tout l'effectif par vidéo, au collaborateur. Le pack Premium se facture à l'étude de poste, menée par un ergonome IPRP : une étude personnalisée par opérateur, déclenchée pour les seuls salariés repérés.</p>
-          </div>
-
-          <div id="sv-f-etudes" hidden>
-            <div class="field">
-              <div class="sl-head">
-                <label for="sv-nb-etudes">Études de poste réalisées, pour 100 salariés</label>
-                <span class="sl-val" id="sv-nb-etudes-val"></span>
-              </div>
-              <input type="range" id="sv-nb-etudes" min="0" max="20" step="0.5" value="3">
-              <p class="hint">Une étude par opérateur concerné. C'est ce nombre, et non l'effectif total, qui détermine le coût du volet TMS en pack Premium.</p>
-            </div>
-
+            <p class="hint">Le pack Essential dépiste tout l'effectif par vidéo. Le pack Premium se facture à l'étude de poste, menée à distance par un ergonome IPRP : une étude personnalisée par opérateur, réservée aux salariés repérés.</p>
           </div>
         </div>
       </div>
@@ -514,28 +506,36 @@
           <div class="stat"><span>Journées d'absence associées</span><b id="sv-s-jours"></b></div>
           
           <div class="roi">
-            <p class="roi-l">Seuil de rentabilité</p>
-            <p class="roi-h" id="sv-roi">&mdash;</p>
-            <p class="roi-sub" id="sv-roi-sub"></p>
-            <div class="roi-rows">
-              <div class="roi-row"><span id="sv-roi-l-rps">Dépistage RPS</span><b id="sv-roi-c-rps"></b></div>
-              <div class="roi-row"><span id="sv-roi-l-tms">Études de poste</span><b id="sv-roi-c-tms"></b></div>
-              <div class="roi-row roi-net"><span>Coût annuel de la prévention</span><b id="sv-roi-dep"></b></div>
-            </div>
-            <p class="roi-sep">Au-delà de ce seuil, selon vos propres hypothèses</p>
+            <p class="roi-l">Ce que coûte le fait de savoir</p>
+            <p class="roi-h" id="sv-cmp-h">&mdash;</p>
+            <p class="roi-sub" id="sv-cmp-sub"></p>
+
             <div class="roi-fam">
-              <div class="roi-fam-head"><span>Risques psychosociaux</span><b id="sv-roi-r-rps"></b></div>
-              <div class="roi-row"><span>Coût évité</span><b id="sv-roi-rps"></b></div>
+              <div class="roi-fam-head"><span>Questionnaire RPS en ligne</span><b id="sv-cmp-t0"></b></div>
+              <div class="roi-row"><span>Abonnement annuel à la plateforme</span><b id="sv-c0-rps"></b></div>
+              <div class="roi-row"><span>Couverture des TMS</span><b>aucune</b></div>
+              <p class="bd-desc">La solution la moins chère, et la plus répandue. Elle repose sur le déclaratif et sur l'anonymat : elle produit des indicateurs par service, jamais un nom. Un salarié en difficulté qui ne remplit pas le questionnaire, ou qui le remplit prudemment, reste invisible. Rien n'y concerne les gestes et les postures.</p>
             </div>
+
             <div class="roi-fam">
-              <div class="roi-fam-head"><span>Troubles musculo-squelettiques</span><b id="sv-roi-r-tms"></b></div>
-              <div class="roi-row"><span>Coût évité</span><b id="sv-roi-tms"></b></div>
+              <div class="roi-fam-head"><span>Présentiel</span><b id="sv-cmp-t1"></b></div>
+              <div class="roi-row"><span>Audit RPS collectif, en présentiel</span><b id="sv-c1-rps"></b></div>
+              <div class="roi-row"><span id="sv-c1-l-tms">Études de poste en présentiel</span><b id="sv-c1-tms"></b></div>
+              <p class="bd-desc">L'analyse est réelle : un intervenant vient voir le travail. Mais l'audit psychosocial reste collectif, il décrit des services et non des personnes, et les études de poste ne portent que sur les situations que vous aurez désignées, sans donnée individuelle pour les choisir. Le coût et les délais limitent mécaniquement le nombre de situations regardées.</p>
             </div>
+
+            <div class="roi-fam">
+              <div class="roi-fam-head"><span>Avec ScanUp</span><b id="sv-cmp-t2"></b></div>
+              <div class="roi-row"><span id="sv-c2-l-rps">Dépistage RPS de tout l'effectif</span><b id="sv-c2-rps"></b></div>
+              <div class="roi-row"><span id="sv-c2-l-tms">Études de poste à distance</span><b id="sv-c2-tms"></b></div>
+              <p class="bd-desc" id="sv-c2-desc"></p>
+            </div>
+
             <div class="roi-rows">
-              <div class="roi-row"><span>Rapport gain sur coût</span><b id="sv-roi-rap"></b></div>
-              <div class="roi-row roi-net"><span>Gain net sur l'année</span><b id="sv-roi-net"></b></div>
+              <div class="roi-row"><span id="sv-cmp-l-ecart">Écart</span><b id="sv-cmp-ecart"></b></div>
+              <div class="roi-row roi-net"><span>Coût estimé des TMS et des RPS</span><b id="sv-cmp-cout"></b></div>
             </div>
-            <p class="roi-note" id="sv-roi-note"></p>
+            <p class="roi-note" id="sv-cmp-note"></p>
             <a class="btn btn-1 btn-full" href="https://360skillvue.com/aide-support/">Parler de votre situation à ScanUp</a>
           </div>
         </div>
@@ -707,86 +707,92 @@ function calcule(){
   $("sv-s-at").textContent=freq(nbAt);
   $("sv-s-jours").textContent=num((nbTms+nbPsy)*joursOuv,0)+" jours ouvrés";
 
-  // grille tarifaire ScanUp
+  // ---- 04 : ce que coûte le fait de savoir ----
+  var part=parseFloat($("sv-part").value);
+  if(isNaN(part)){ part=0; }
+  var nbCibles=Math.round(eff*part/100);
+  if(nbCibles<1){ nbCibles=1; }
+
+  function lire(id,def){
+    var v=parseFloat($(id).value);
+    if(isNaN(v)){ v=def; }
+    if(v<0){ v=0; }
+    return v;
+  }
+  var pQuest=lire("sv-p-quest",1800), pAudit=lire("sv-p-audit",3500), pPoste=lire("sv-p-poste",1200);
+
+  // scénario 0 : questionnaire en ligne
+  var c0=pQuest;
+
+  // scénario 1 : tout en présentiel
+  var c1rps=pAudit, c1tms=nbCibles*pPoste, c1=c1rps+c1tms;
+
+  // scénario 2 : dépistage à distance puis intervention ciblée
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
-  var depRps, libRps;
+  var c2rps, lib2rps;
   if(packRps==="impact"){
-    depRps=eff*40+Math.ceil(eff/50)*750;
-    libRps="Pack Impact, 40 € par salarié et 750 € par tranche de 50";
+    c2rps=eff*40+Math.ceil(eff/50)*750;
+    lib2rps="Dépistage RPS, pack Impact";
   } else {
     var pu=parseFloat(packRps);
-    depRps=eff*pu;
-    libRps="Pack "+(pu===27?"Essential":"Premium")+", "+num(eff,0)+" × "+eur(pu);
+    c2rps=eff*pu;
+    lib2rps="Dépistage RPS, "+num(eff,0)+" × "+eur(pu);
   }
-
   var packTms=document.querySelector('input[name="svtms"]:checked').value;
-  var depTms, libTms, nbEtudes=0;
+  var c2tms, lib2tms, desc2;
   if(packTms==="premium"){
-    var tauxEtudes=parseFloat($("sv-nb-etudes").value);
-    if(isNaN(tauxEtudes)){ tauxEtudes=0; }
-    nbEtudes=eff*tauxEtudes/100;
-    var unitTms=432;
-    depTms=nbEtudes*unitTms;
-    libTms="Pack Premium, "+num(nbEtudes,1)+" × "+eur(unitTms);
-    $("sv-f-etudes").hidden=false;
-    $("sv-nb-etudes-val").textContent=num(tauxEtudes,1)+" pour 100 salariés · "+num(nbEtudes,1)+" études";
+    c2tms=nbCibles*432;
+    lib2tms="Études de poste à distance, "+num(nbCibles,0)+" × 432 €";
+    desc2="Le travail est capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Le retour est individuel : chaque salarié dépisté reçoit le sien, et l'entreprise obtient la liste de ceux qu'il faut orienter, plus un rapport d'étude de poste par opérateur concerné. Le présentiel reste possible, mais n'est engagé que sur les situations qui le justifient.";
   } else {
-    depTms=eff*55;
-    libTms="Pack Essential, "+num(eff,0)+" × 55 €";
-    $("sv-f-etudes").hidden=true;
+    c2tms=eff*55;
+    lib2tms="Dépistage TMS par vidéo, "+num(eff,0)+" × 55 €";
+    desc2="Le travail est capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Le dépistage couvre l'ensemble de l'effectif sur les deux volets, psychosocial et gestes et postures, et rend un retour individuel à chaque salarié. Les études de poste et le présentiel ne sont ensuite engagés que sur les situations qui les justifient.";
   }
-  var dep=depRps+depTms;
+  var c2=c2rps+c2tms;
 
-  // 04 : ce qu'un dépistage peut éviter
-  var evRps=parseFloat($("sv-ev-rps").value), pctTms=parseFloat($("sv-ev-tms").value)/100;
-  var dureeRps=parseFloat($("sv-ev-duree").value), dureeOuv=dureeRps*5/7;
-  var casRps=eff*evRps/100;
-  var coutCasRps=dureeOuv*coutJour;
-  var gainRps=casRps*coutCasRps, gainTms=totTms*pctTms;
-  var gain=gainRps+gainTms, net=gain-dep;
+  $("sv-c0-rps").textContent=eur(c0);
+  $("sv-cmp-t0").textContent=eur(c0);
+  $("sv-c1-rps").textContent=eur(c1rps);
+  $("sv-c1-tms").textContent=eur(c1tms);
+  $("sv-c1-l-tms").textContent="Études de poste en présentiel, "+num(nbCibles,0)+" × "+eur(pPoste);
+  $("sv-cmp-t1").textContent=eur(c1);
+  $("sv-c2-rps").textContent=eur(c2rps);
+  $("sv-c2-tms").textContent=eur(c2tms);
+  $("sv-c2-l-rps").textContent=lib2rps;
+  $("sv-c2-l-tms").textContent=lib2tms;
+  $("sv-c2-desc").textContent=desc2;
+  $("sv-cmp-t2").textContent=eur(c2);
+  $("sv-cmp-cout").textContent=eur(total);
 
-  $("sv-roi-rps").textContent=eur(gainRps);
-  $("sv-roi-tms").textContent=eur(gainTms);
-  $("sv-roi-c-rps").textContent="− "+eur(depRps);
-  $("sv-roi-c-tms").textContent="− "+eur(depTms);
-  $("sv-roi-l-tms").textContent=libTms;
-  $("sv-roi-l-rps").textContent=libRps;
-  $("sv-roi-net").textContent=(net>=0?"+ ":"− ")+eur(Math.abs(net));
-  function rapport(g,c){
-    if(c<=0){ return "sans coût"; }
-    return num(g/c,1)+" € pour 1 €";
+  var ecart=c1-c2;
+  $("sv-cmp-ecart").textContent=(ecart>=0?"− ":"+ ")+eur(Math.abs(ecart));
+  $("sv-cmp-l-ecart").textContent=(ecart>=0?"Économie sur le budget prévention":"Surcoût par rapport au présentiel");
+  if(c2>0){
+    if(ecart>0){
+      $("sv-cmp-h").textContent=num(c1/c2,1)+" fois moins cher";
+      $("sv-cmp-sub").textContent="C'est le rapport entre le présentiel, "+eur(c1)+" par an, et ScanUp, "+
+        eur(c2)+", pour regarder les mêmes situations de travail. Aucune hypothèse d'efficacité n'entre "+
+        "dans ce calcul : ce sont des devis, pas des promesses.";
+    } else {
+      $("sv-cmp-h").textContent=eur(c2-c1)+" de plus";
+      $("sv-cmp-sub").textContent="Avec vos réglages, la solution à distance revient plus cher que le présentiel. "+
+        "Ce qu'elle apporte en contrepartie est d'une autre nature : elle désigne les personnes, là où un audit "+
+        "collectif décrit des services.";
+    }
   }
-  $("sv-roi-r-rps").textContent=rapport(gainRps,depRps);
-  $("sv-roi-r-tms").textContent=rapport(gainTms,depTms);
-  $("sv-roi-dep").textContent="− "+eur(dep);
-  $("sv-roi-rap").textContent=rapport(gain,dep);
-  if(total>0){
-    $("sv-roi").textContent=num(dep/total*100,1)+" %";
-    $("sv-roi-sub").textContent="C'est la part du coût annuel estimé plus haut qu'il suffit d'éviter pour que "+
-      "la prévention soit remboursée. En dessous de ce seuil elle coûte de l'argent, au-dessus elle en rapporte. "+
-      "Aucune hypothèse d'efficacité n'entre dans ce chiffre : seuls votre effectif, votre secteur et les tarifs le déterminent.";
-  } else {
-    $("sv-roi").textContent="—";
-    $("sv-roi-sub").textContent="";
-  }
+  var note="Les trois approches ne coûtent pas la même chose et ne produisent pas la même chose. "+
+    "Le questionnaire est bon marché mais déclaratif et anonyme : il ne désigne personne et ignore les TMS. "+
+    "Le présentiel fait analyser le travail réel par un professionnel, mais son coût limite le nombre de "+
+    "situations regardées. ScanUp fait analyser le travail réel par un professionnel lui aussi, à partir "+
+    "d'une captation individuelle, sur l'ensemble de l'effectif, pour un budget intermédiaire.";
+  note=note+" Ici, le dépistage couvre "+num(eff,0)+" salariés, et l'intervention individuelle n'est engagée "+
+    "que sur les "+num(nbCibles,0)+" situations repérées au lieu d'être décidée à l'aveugle. "+
+    "ScanUp ne fait pas baisser l'absentéisme par lui-même : il dit où porter l'effort. Ce que devient "+
+    "le risque ensuite dépend de l'accompagnement mis en place, qui ne relève pas de ScanUp.";
+  $("sv-cmp-note").textContent=note;
+  $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
 
-  var partRps=0;
-  if(joursRps>0){ partRps=casRps*dureeOuv/eff/joursRps*100; }
-  var note="Hypothèse : "+num(casRps,1)+" arrêt lié aux RPS évité sur l'année pour "+num(eff,0)+
-    " salariés, et "+num(pctTms*100,0)+" % des troubles musculo-squelettiques évités par le repérage du risque au poste. "+
-    "Ces deux valeurs sont les vôtres : aucune donnée publique ne permet aujourd'hui de chiffrer "+
-    "la part des troubles qu'un dépistage évite. Pour les risques psychosociaux, ScanUp dépiste et oriente ; "+
-    "ce qui est effectivement évité dépend de l'accompagnement mis en place ensuite, qui ne relève pas de ScanUp.";
-  if(partRps>100){
-    note=note+" Attention : ce nombre d'arrêts évités dépasse l'absentéisme que vous avez retenu "+
-      "à l'étape 03 ("+num(joursRps,1)+" jour par salarié). Relevez cette valeur pour rester cohérent.";
-  } else {
-    note=note+" Cela revient à éviter "+num(partRps,0)+" % de l'absentéisme lié aux RPS retenu à l'étape 03.";
-  }
-  $("sv-roi-note").textContent=note;
-  $("sv-ev-rps-val").textContent=num(evRps,1)+" pour 100 salariés";
-  $("sv-ev-tms-val").textContent=num(pctTms*100,0)+" % des cas attendus";
-  $("sv-ev-duree-val").textContent=num(dureeRps,0)+" jours · "+eur(coutCasRps)+" par arrêt";
   if(s.cout){
     $("sv-hint-salaire").textContent="Salaire brut augmenté des charges patronales. La valeur proposée, "+
       eur(s.cout)+", est la moyenne indicative de votre secteur, calculée à partir du salaire net moyen "+
@@ -873,7 +879,7 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-salaire","sv-desorg","sv-rps",
- "sv-ev-rps","sv-ev-tms","sv-ev-duree","sv-nb-etudes"].forEach(function(id){
+ "sv-part","sv-p-quest","sv-p-audit","sv-p-poste"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);

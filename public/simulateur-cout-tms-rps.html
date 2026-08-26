@@ -537,7 +537,7 @@
               <div class="roi-fam-head"><span>Méthodes classiques, en présentiel</span><b id="sv-cmp-b1"></b></div>
               <div class="roi-row" id="sv-r1-rps"><span>Audit RPS collectif</span><b id="sv-c1-rps"></b></div>
               <div class="roi-row" id="sv-r1-tms"><span id="sv-c1-l-tms">Études de poste par un ergonome</span><b id="sv-c1-tms"></b></div>
-              <p class="bd-desc">Un professionnel vient voir le travail : l'analyse est réelle. Mais elle raisonne par poste, pas par personne, et l'audit psychosocial reste collectif, il décrit des services. Faute de donnée individuelle pour choisir, c'est vous qui désignez les situations à étudier.</p>
+              <p class="bd-desc" id="sv-c1-desc"></p>
             </div>
 
             <div class="roi-fam">
@@ -833,9 +833,27 @@ function calcule(){
   $("sv-c2-l-rps").textContent=lib2rps;
   $("sv-c2-l-dep").textContent=lib2dep;
   $("sv-c2-l-tms").textContent=lib2tms;
-  $("sv-c2-desc").textContent="On ne part plus du poste mais de la personne. Le travail est capté en "+
-    "situation réelle et analysé par un ergonome ou un psychologue ; l'analyse approfondie n'est engagée "+
-    "que sur les situations que le dépistage a désignées, salariés isolés compris.";
+  var d1,d2;
+  if(perim==="rps"){
+    d1="L'audit est collectif : il repose sur un échantillon d'entretiens et rend des indicateurs par "+
+      "service. Il vous dit qu'un service va mal ; il ne dit jamais qui, dans ce service, est en difficulté.";
+    d2="Chaque salarié est écouté individuellement, par questionnaire et par témoignage audio, et chaque "+
+      "réponse est analysée par un psychologue du travail. Vous obtenez la liste des personnes à orienter, "+
+      "et chacune d'elles reçoit son propre retour.";
+  } else if(perim==="tms"){
+    d1="Un ergonome vient voir le travail, l'analyse est réelle. Mais elle raisonne par poste et non par "+
+      "personne : une étude couvre une situation de travail et vaut pour tous ceux qui l'occupent.";
+    d2="On part de la personne et non du poste. Le travail est capté en situation réelle, et l'étude "+
+      "approfondie n'est engagée que sur les salariés que le dépistage a désignés, isolés compris.";
+  } else {
+    d1="L'audit psychosocial est collectif, il décrit des services et non des personnes ; l'étude de poste, "+
+      "elle, raisonne par poste et vaut pour tous ceux qui l'occupent.";
+    d2="Chaque salarié est écouté et observé individuellement, puis analysé par un psychologue ou un "+
+      "ergonome. Vous obtenez des noms, pas seulement une couleur par service, et l'analyse approfondie "+
+      "n'est engagée que sur les situations repérées.";
+  }
+  $("sv-c1-desc").textContent=d1;
+  $("sv-c2-desc").textContent=d2;
   $("sv-cmp-t2").textContent=eur(c2);
   $("sv-cmp-b2").textContent=eur(c2);
   $("sv-cmp-p1").textContent=eur(c1/eff)+" par salarié";
@@ -850,10 +868,20 @@ function calcule(){
   }
   $("sv-cmp-sub").textContent=sub;
 
-  var note="Les deux approches font analyser le travail réel par un professionnel. Ce qui les sépare est "+
-    "l'unité de raisonnement et la couverture : le présentiel étudie un poste, ScanUp dépiste les "+num(eff,0)+
-    " salariés puis concentre l'analyse sur les "+num(nbCibles,0)+" personnes repérées. ScanUp ne fait pas "+
-    "baisser l'absentéisme par lui-même : il dit où porter l'effort.";
+  var note="Les deux approches font analyser le travail par un professionnel ; ce qui les sépare est la "+
+    "granularité.";
+  if(perim==="rps"){
+    note=note+" L'audit rend une photographie par service ; ScanUp écoute les "+num(eff,0)+" salariés un "+
+      "par un et en repère "+num(nbCibles,0)+". Quand il coûte davantage, ce surcoût n'achète pas une "+
+      "économie : il achète des noms, et un retour pour chaque personne concernée.";
+  } else if(perim==="tms"){
+    note=note+" Le présentiel étudie un poste, pour tous ceux qui l'occupent ; ScanUp dépiste les "+
+      num(eff,0)+" salariés puis concentre l'analyse sur les "+num(nbCibles,0)+" personnes repérées.";
+  } else {
+    note=note+" Les méthodes classiques décrivent des services et des postes ; ScanUp part de chaque "+
+      "salarié, en dépiste "+num(eff,0)+" et en repère "+num(nbCibles,0)+".";
+  }
+  note=note+" ScanUp ne fait pas baisser l'absentéisme par lui-même : il dit où porter l'effort.";
   $("sv-cmp-note").textContent=note;
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
   $("sv-part-etude-val").textContent=num(pctEtude,0)+" % · "+num(nbEtudes,0)+" études";

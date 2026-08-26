@@ -497,25 +497,25 @@ export const de = {
       plans: [
         {
           name: 'Pack Essential',
-          price: '55 €',
+          price: '40 €',
           sub: 'zzgl. MwSt. pro Mitarbeitenden',
           badge: '',
           items: [
             'Video-Screening in realen Arbeitssituationen',
             'Qualifizierung durch eine:n Ergonom:in',
-            'Personalisiertes Video-Coaching (Bewegungen und Haltungen) für jede Person mit Risiko',
+            'Vertrauliche individuelle Rückmeldung per E-Mail mit personalisierten Empfehlungen',
           ],
           cta: 'Termin vereinbaren',
         },
         {
           name: 'Pack Premium',
           price: '55 €',
-          sub: 'zzgl. MwSt. pro Mitarbeitenden, dann 250 € zzgl. MwSt. pro Arbeitsplatzstudie',
-          badge: '',
+          sub: 'zzgl. MwSt. pro Mitarbeitenden',
+          badge: 'Am beliebtesten',
           items: [
             'Alles aus dem Pack Essential',
-            'Vollständige Arbeitsplatzstudie aus der Ferne durch eine:n IPRP-Ergonom:in für jede erkannte Person',
-            'Individueller Bericht',
+            'Personalisiertes Video-Coaching (Bewegungen und Haltungen) durch eine:n Ergonom:in für jede Person mit Risiko',
+            'Optionale vollständige Arbeitsplatzstudie mit individuellem Bericht, 250 € zzgl. MwSt. pro erkannter Person',
             'Optionaler MSE-Präventionsaktionsplan, 750 € zzgl. MwSt. je 50 Mitarbeitende',
           ],
           cta: 'Termin vereinbaren',
@@ -524,11 +524,9 @@ export const de = {
           name: 'All-inclusive-Paket',
           price: '105 €',
           sub: 'zzgl. MwSt. pro Mitarbeitenden und Jahr, je nach Branche',
-          badge: 'Am einfachsten',
+          badge: '',
           items: [
-            'Video-Screening in realen Arbeitssituationen',
-            'Qualifizierung durch eine:n Ergonom:in',
-            'Personalisiertes Video-Coaching (Bewegungen und Haltungen) für jede Person mit Risiko',
+            'Alles aus dem Pack Premium',
             'Vollständige Arbeitsplatzstudie und individueller Bericht für erkannte Mitarbeitende, bis zu 25 % der Belegschaft',
             'MSE-Präventionsaktionsplan und Management-Präsentation',
             'Preis nach MSE-Häufigkeit Ihrer Branche, von 70 bis 150 € zzgl. MwSt.',
@@ -539,6 +537,7 @@ export const de = {
       features: [
         'Video-Screening in realen Arbeitssituationen',
         'Qualifizierung durch eine:n Ergonom:in',
+        'Vertrauliche individuelle Rückmeldung & Empfehlungen',
         'Video-Coaching zu Bewegungen & Haltungen',
         'Vollständige Arbeitsplatzstudie durch IPRP-Ergonom:in',
         'Individueller Bericht pro Mitarbeitenden',

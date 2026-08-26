@@ -497,25 +497,25 @@ export const it = {
       plans: [
         {
           name: 'Pack Essential',
-          price: '55 €',
+          price: '40 €',
           sub: '+ IVA per collaboratore',
           badge: '',
           items: [
             'Screening video in situazioni reali di lavoro',
             'Qualificazione da parte di un ergonomo',
-            'Coaching video personalizzato (gesti e posture) per ogni collaboratore a rischio',
+            'Riscontro individuale riservato via e-mail, con indicazioni personalizzate',
           ],
           cta: 'Prenota',
         },
         {
           name: 'Pack Premium',
           price: '55 €',
-          sub: '+ IVA per collaboratore, poi 250 € + IVA per studio della postazione',
-          badge: '',
+          sub: '+ IVA per collaboratore',
+          badge: 'Il più scelto',
           items: [
             'Tutto il Pack Essential',
-            'Studio completo della postazione a distanza da parte di un ergonomo IPRP, per ogni collaboratore individuato',
-            'Rapporto individuale',
+            'Coaching video personalizzato (gesti e posture) da parte di un ergonomo, per ogni collaboratore a rischio',
+            'Studio completo della postazione e rapporto individuale in opzione, 250 € + IVA per collaboratore individuato',
             'Piano d\'azione di prevenzione DMS in opzione, 750 € + IVA ogni 50 collaboratori',
           ],
           cta: 'Prenota',
@@ -524,11 +524,9 @@ export const it = {
           name: 'Formula tutto compreso',
           price: '105 €',
           sub: '+ IVA per collaboratore all\'anno, secondo il vostro settore',
-          badge: 'La più semplice',
+          badge: '',
           items: [
-            'Screening video in situazioni reali di lavoro',
-            'Qualificazione da parte di un ergonomo',
-            'Coaching video personalizzato (gesti e posture) per ogni collaboratore a rischio',
+            'Tutto il Pack Premium',
             'Studio completo della postazione e rapporto individuale per i collaboratori individuati, fino al 25 % dell\'organico',
             'Piano d\'azione di prevenzione DMS e restituzione alla direzione',
             'Tariffa indicizzata sull\'incidenza DMS del vostro settore, da 70 a 150 € + IVA',
@@ -539,6 +537,7 @@ export const it = {
       features: [
         'Screening video in situazioni reali',
         'Qualificazione da parte di un ergonomo',
+        'Riscontro individuale riservato e indicazioni',
         'Coaching video gesti e posture',
         'Studio completo della postazione da un ergonomo IPRP',
         'Rapporto individuale per collaboratore',

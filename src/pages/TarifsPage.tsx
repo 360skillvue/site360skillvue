@@ -46,9 +46,10 @@ const TMS_FEATURE_VALUES: boolean[][] = [
   // colonnes : Pack Essential, Pack Premium, Forfait tout compris
   [true, true, true],    // Dépistage par vidéos
   [true, true, true],    // Qualification par un ergonome
-  [true, true, true],    // Coaching vidéo personnalisé
-  [false, true, true],   // Étude de poste complète IPRP
-  [false, true, true],   // Rapport individuel
+  [true, true, true],    // Retour individuel confidentiel + conduites à tenir
+  [false, true, true],   // Coaching vidéo gestes & postures
+  [false, false, true],  // Étude de poste complète IPRP
+  [false, false, true],  // Rapport individuel
   [false, false, true],  // Plan d'action TMS + restitution direction
 ];
 

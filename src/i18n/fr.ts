@@ -591,25 +591,25 @@ export const fr = {
       plans: [
         {
           name: 'Pack Essential',
-          price: '55 €',
+          price: '40 €',
           sub: 'HT / collaborateur',
           badge: '',
           items: [
             'Dépistage par vidéos en situation réelle de travail',
             'Qualification par un ergonome',
-            'Coaching vidéo personnalisé (gestes et postures) pour chaque collaborateur à risque',
+            'Retour individuel confidentiel par e-mail, avec conduites à tenir personnalisées',
           ],
           cta: 'Prendre RDV',
         },
         {
           name: 'Pack Premium',
           price: '55 €',
-          sub: 'HT / collaborateur, puis 250 € HT par étude de poste',
-          badge: '',
+          sub: 'HT / collaborateur',
+          badge: 'Le plus choisi',
           items: [
             'Tout le Pack Essential',
-            'Étude de poste complète à distance par un ergonome IPRP, pour chaque salarié repéré',
-            'Rapport individuel',
+            'Coaching vidéo personnalisé (gestes et postures) par un ergonome, pour chaque collaborateur à risque',
+            'Étude de poste complète et rapport individuel en option, 250 € HT par salarié repéré',
             'Plan d\'action de prévention TMS en option, 750 € HT par tranche de 50 collaborateurs',
           ],
           cta: 'Prendre RDV',
@@ -618,11 +618,9 @@ export const fr = {
           name: 'Forfait tout compris',
           price: '105 €',
           sub: 'HT / collaborateur / an, selon votre secteur d\'activité',
-          badge: 'Le plus simple',
+          badge: '',
           items: [
-            'Dépistage par vidéos en situation réelle de travail',
-            'Qualification par un ergonome',
-            'Coaching vidéo personnalisé (gestes et postures) pour chaque collaborateur à risque',
+            'Tout le Pack Premium',
             'Étude de poste complète et rapport individuel pour les salariés repérés, jusqu\'à 25 % de l\'effectif',
             'Plan d\'action de prévention TMS et restitution direction',
             'Tarif indexé sur la sinistralité TMS de votre secteur, de 70 à 150 € HT',
@@ -633,6 +631,7 @@ export const fr = {
       features: [
         'Dépistage vidéo en situation réelle',
         'Qualification par un ergonome',
+        'Retour individuel confidentiel & conduites à tenir',
         'Coaching vidéo gestes & postures',
         'Étude de poste complète par un ergonome IPRP',
         'Rapport individuel par salarié',

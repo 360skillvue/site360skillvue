@@ -432,8 +432,8 @@
           <div class="field">
             <label>Votre formule TMS</label>
             <div class="scn-set">
-              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>55 € HT par collaborateur</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>55 € HT, plus 250 € HT par étude de poste</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>40 € HT par collaborateur, sans coaching</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>55 € HT avec coaching, plus 250 € HT par étude de poste</small></span></label>
               <label class="scn"><input type="radio" name="svtms" value="forfait" checked><span>Forfait tout compris<small id="sv-lab-forfait">par collaborateur et par an</small></span></label>
             </div>
             <p class="hint" id="sv-hint-tms"></p>
@@ -782,9 +782,9 @@ function calcule(){
     lib2tms="Aucun supplément, plafond de 25 % non atteint";
     if(sup>0){ lib2tms="Études au-delà du plafond de 25 %, "+num(sup,0)+" × 250 €"; }
   } else if(packTms==="essential"){
-    c2dep=eff*55; c2tms=0; nbEtudes=0;
-    lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
-    lib2tms="Aucune étude de poste, formule Essential";
+    c2dep=eff*40; c2tms=0; nbEtudes=0;
+    lib2dep="Dépistage TMS, "+num(eff,0)+" × 40 €";
+    lib2tms="Ni coaching ni étude de poste, formule Essential";
   } else {
     c2dep=eff*55; c2tms=nbEtudes*250;
     lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
@@ -799,12 +799,14 @@ function calcule(){
       " ici, contre 105 € en moyenne nationale. Le client connaît son budget d'avance, quel que soit le "+
       "taux de salariés finalement repérés.";
   } else {
-    $("sv-hint-tms").textContent="Les formules à l'acte : vous ne payez que ce que vous consommez. Le "+
-      "dépistage est le même dans les deux cas, une captation vidéo en situation réelle de travail, "+
-      "qualifiée par un ergonome, suivie d'un coaching gestes et postures pour chaque collaborateur à "+
-      "risque. Avec Essential, cela s'arrête là. Avec Premium, les salariés repérés font en plus l'objet "+
-      "d'une étude de poste complète avec rapport individuel, facturée 250 € HT par personne. Le plan "+
-      "d'action de prévention reste une option, à 750 € HT par tranche de 50 collaborateurs.";
+    $("sv-hint-tms").textContent="Même construction que pour les risques psychosociaux. Le dépistage est "+
+      "identique dans les deux formules, une captation vidéo en situation réelle de travail qualifiée par "+
+      "un ergonome, et chaque salarié repéré reçoit un retour individuel confidentiel avec ses conduites "+
+      "à tenir. Ce qui change, c'est la suite. Avec Essential, cela s'arrête au retour écrit. Avec "+
+      "Premium, le salarié repéré bénéficie en plus d'un coaching vidéo personnalisé sur les gestes et "+
+      "les postures, mené par un ergonome, exactement comme la téléconsultation du Premium psychosocial. "+
+      "L'étude de poste complète reste une option, à 250 € HT par salarié repéré, et le plan d'action "+
+      "de prévention aussi, à 750 € HT par tranche de 50 collaborateurs.";
   }
   var desc2="Le raisonnement change d'unité : on ne part plus du poste mais de la personne. Le travail est "+
     "capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Les "+

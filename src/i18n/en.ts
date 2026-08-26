@@ -497,25 +497,25 @@ export const en = {
       plans: [
         {
           name: 'Essential Pack',
-          price: '€55',
+          price: '€40',
           sub: 'excl. VAT per employee',
           badge: '',
           items: [
             'Video screening in real work situations',
             'Qualification by an ergonomist',
-            'Personalised video coaching (movements and postures) for every at-risk employee',
+            'Confidential individual feedback by email, with personalised guidance',
           ],
           cta: 'Book a call',
         },
         {
           name: 'Premium Pack',
           price: '€55',
-          sub: 'excl. VAT per employee, then €250 excl. VAT per workstation study',
-          badge: '',
+          sub: 'excl. VAT per employee',
+          badge: 'Most popular',
           items: [
             'Everything in the Essential Pack',
-            'Full remote workstation study by an IPRP ergonomist for each flagged employee',
-            'Individual report',
+            'Personalised video coaching (movements and postures) by an ergonomist, for every at-risk employee',
+            'Optional full workstation study and individual report, €250 excl. VAT per flagged employee',
             'Optional MSD prevention action plan, €750 excl. VAT per 50 employees',
           ],
           cta: 'Book a call',
@@ -524,11 +524,9 @@ export const en = {
           name: 'All-inclusive plan',
           price: '€105',
           sub: 'excl. VAT per employee per year, based on your sector',
-          badge: 'Simplest option',
+          badge: '',
           items: [
-            'Video screening in real work situations',
-            'Qualification by an ergonomist',
-            'Personalised video coaching (movements and postures) for every at-risk employee',
+            'Everything in the Premium Pack',
             'Full workstation study and individual report for flagged employees, up to 25% of the workforce',
             'MSD prevention action plan and management debrief',
             'Rate indexed on your sector\'s MSD incidence, from €70 to €150 excl. VAT',
@@ -539,6 +537,7 @@ export const en = {
       features: [
         'Video screening in real work situations',
         'Qualification by an ergonomist',
+        'Confidential individual feedback & guidance',
         'Video coaching on movements & postures',
         'Full workstation study by an IPRP ergonomist',
         'Individual report per employee',

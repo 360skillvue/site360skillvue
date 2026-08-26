@@ -246,11 +246,13 @@
 .svue-sim .roi-fam-head b{color:var(--bleu);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .svue-sim .roi-row{display:flex;justify-content:space-between;gap:16px;font-size:14px;
   padding:6px 0;color:var(--gris-texte)}
-.svue-sim .roi-row b{font-weight:500;color:var(--nuit);font-variant-numeric:tabular-nums}
+.svue-sim .roi-row b{font-weight:500;color:var(--nuit);font-variant-numeric:tabular-nums;white-space:nowrap}
 .svue-sim .roi-net{border-top:1px solid var(--bordure);padding-top:8px;margin-top:2px}
 .svue-sim .roi-net span{color:var(--nuit);font-weight:600}
 .svue-sim .roi-net b{color:var(--bleu);font-weight:600}
 .svue-sim .roi-note{margin:12px 0 0;font-size:12px;color:var(--gris-texte);line-height:1.45}
+.svue-sim .roi-sep{margin:14px 0 0;padding-top:10px;border-top:1px solid var(--bordure);
+  font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-texte)}
 .svue-sim .btn-full{display:flex;justify-content:center;width:100%;margin-top:16px}
 .svue-sim .scn-2{grid-template-columns:repeat(2,1fr)}
 .svue-sim .fam{border:1px solid var(--bordure);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px}
@@ -391,14 +393,14 @@
 
         <div class="step">
           <div class="step-head"><span class="step-n">04</span><h2>Ce qu'un dépistage peut éviter</h2></div>
-          <p class="step-note">Un dépistage ne supprime pas le risque : il le repère, et permet d'orienter à temps. Il ne pose pas de diagnostic, qui relève du médecin du travail. Réglez ici ce que vous estimez pouvoir éviter en une année, et le calcul le confronte au coût du dépistage.</p>
+          <p class="step-note">Le chiffre principal du panneau, le seuil de rentabilité, ne dépend d'aucune hypothèse d'efficacité. Les réglages ci-dessous servent à aller plus loin : ils traduisent ce que vous estimez pouvoir éviter en une année. Un dépistage repère et oriente ; il ne pose pas de diagnostic, qui relève du médecin du travail, et il ne remplace pas l'accompagnement qui suit.</p>
           <div class="field">
             <div class="sl-head">
               <label for="sv-ev-rps">Arrêts liés aux RPS évités, pour 100 salariés</label>
               <span class="sl-val" id="sv-ev-rps-val"></span>
             </div>
             <input type="range" id="sv-ev-rps" min="0" max="2" step="0.1" value="0.3">
-            <p class="hint">Un salarié repéré et orienté avant l'arrêt. À 0,3, cela représente un arrêt évité pour trois cents salariés et par an ; à 1, un arrêt pour cent salariés.</p>
+            <p class="hint">Un salarié repéré et orienté avant l'arrêt. À 0,3, cela représente un arrêt évité pour trois cents salariés et par an ; à 1, un arrêt pour cent salariés. Une précision qui compte : le dépistage repère et oriente, il ne soigne pas. Ce qui est réellement évité dépend de l'accompagnement mis en place après l'orientation, médecin du travail, psychologue, aménagement, et cet accompagnement ne relève pas de ScanUp. Ce curseur mesure donc ce que vous, employeur, estimez pouvoir obtenir de la chaîne complète.</p>
           </div>
           <div class="field">
             <div class="sl-head">
@@ -512,20 +514,25 @@
           <div class="stat"><span>Journées d'absence associées</span><b id="sv-s-jours"></b></div>
           
           <div class="roi">
-            <p class="roi-l">Retour sur investissement</p>
+            <p class="roi-l">Seuil de rentabilité</p>
             <p class="roi-h" id="sv-roi">&mdash;</p>
             <p class="roi-sub" id="sv-roi-sub"></p>
+            <div class="roi-rows">
+              <div class="roi-row"><span id="sv-roi-l-rps">Dépistage RPS</span><b id="sv-roi-c-rps"></b></div>
+              <div class="roi-row"><span id="sv-roi-l-tms">Études de poste</span><b id="sv-roi-c-tms"></b></div>
+              <div class="roi-row roi-net"><span>Coût annuel de la prévention</span><b id="sv-roi-dep"></b></div>
+            </div>
+            <p class="roi-sep">Au-delà de ce seuil, selon vos propres hypothèses</p>
             <div class="roi-fam">
               <div class="roi-fam-head"><span>Risques psychosociaux</span><b id="sv-roi-r-rps"></b></div>
               <div class="roi-row"><span>Coût évité</span><b id="sv-roi-rps"></b></div>
-              <div class="roi-row"><span id="sv-roi-l-rps">Coût du dépistage</span><b id="sv-roi-c-rps"></b></div>
             </div>
             <div class="roi-fam">
               <div class="roi-fam-head"><span>Troubles musculo-squelettiques</span><b id="sv-roi-r-tms"></b></div>
               <div class="roi-row"><span>Coût évité</span><b id="sv-roi-tms"></b></div>
-              <div class="roi-row"><span id="sv-roi-l-tms">Études de poste</span><b id="sv-roi-c-tms"></b></div>
             </div>
             <div class="roi-rows">
+              <div class="roi-row"><span>Rapport gain sur coût</span><b id="sv-roi-rap"></b></div>
               <div class="roi-row roi-net"><span>Gain net sur l'année</span><b id="sv-roi-net"></b></div>
             </div>
             <p class="roi-note" id="sv-roi-note"></p>
@@ -705,11 +712,11 @@ function calcule(){
   var depRps, libRps;
   if(packRps==="impact"){
     depRps=eff*40+Math.ceil(eff/50)*750;
-    libRps="Pack Impact, 40 € par collaborateur et 750 € par tranche de 50";
+    libRps="Pack Impact, 40 € par salarié et 750 € par tranche de 50";
   } else {
     var pu=parseFloat(packRps);
     depRps=eff*pu;
-    libRps="Pack "+(pu===27?"Essential":"Premium")+" ("+num(eff,0)+" × "+eur(pu)+")";
+    libRps="Pack "+(pu===27?"Essential":"Premium")+", "+num(eff,0)+" × "+eur(pu);
   }
 
   var packTms=document.querySelector('input[name="svtms"]:checked').value;
@@ -720,12 +727,12 @@ function calcule(){
     nbEtudes=eff*tauxEtudes/100;
     var unitTms=432;
     depTms=nbEtudes*unitTms;
-    libTms="Pack Premium ("+num(nbEtudes,1)+" étude"+(nbEtudes>=2?"s":"")+" × "+eur(unitTms)+")";
+    libTms="Pack Premium, "+num(nbEtudes,1)+" × "+eur(unitTms);
     $("sv-f-etudes").hidden=false;
     $("sv-nb-etudes-val").textContent=num(tauxEtudes,1)+" pour 100 salariés · "+num(nbEtudes,1)+" études";
   } else {
     depTms=eff*55;
-    libTms="Pack Essential ("+num(eff,0)+" × 55 €)";
+    libTms="Pack Essential, "+num(eff,0)+" × 55 €";
     $("sv-f-etudes").hidden=true;
   }
   var dep=depRps+depTms;
@@ -751,15 +758,15 @@ function calcule(){
   }
   $("sv-roi-r-rps").textContent=rapport(gainRps,depRps);
   $("sv-roi-r-tms").textContent=rapport(gainTms,depTms);
-  if(dep>0){
-    $("sv-roi").textContent=num(gain/dep,1)+" € pour 1 € investi";
+  $("sv-roi-dep").textContent="− "+eur(dep);
+  $("sv-roi-rap").textContent=rapport(gain,dep);
+  if(total>0){
+    $("sv-roi").textContent=num(dep/total*100,1)+" %";
+    $("sv-roi-sub").textContent="C'est la part du coût annuel estimé plus haut qu'il suffit d'éviter pour que "+
+      "la prévention soit remboursée. En dessous de ce seuil elle coûte de l'argent, au-dessus elle en rapporte. "+
+      "Aucune hypothèse d'efficacité n'entre dans ce chiffre : seuls votre effectif, votre secteur et les tarifs le déterminent.";
   } else {
     $("sv-roi").textContent="—";
-  }
-  if(total>0){
-    $("sv-roi-sub").textContent="Les deux prestations représentent ensemble "+eur(dep)+
-      " par an, soit "+num(dep/total*100,0)+" % du coût estimé ci-dessus. Elles sont remboursées dès qu'elles en évitent cette part.";
-  } else {
     $("sv-roi-sub").textContent="";
   }
 
@@ -767,7 +774,9 @@ function calcule(){
   if(joursRps>0){ partRps=casRps*dureeOuv/eff/joursRps*100; }
   var note="Hypothèse : "+num(casRps,1)+" arrêt lié aux RPS évité sur l'année pour "+num(eff,0)+
     " salariés, et "+num(pctTms*100,0)+" % des troubles musculo-squelettiques évités par le repérage du risque au poste. "+
-    "Ces deux valeurs sont les vôtres, elles ne sont pas issues des données publiées.";
+    "Ces deux valeurs sont les vôtres : aucune donnée publique ne permet aujourd'hui de chiffrer "+
+    "la part des troubles qu'un dépistage évite. Pour les risques psychosociaux, ScanUp dépiste et oriente ; "+
+    "ce qui est effectivement évité dépend de l'accompagnement mis en place ensuite, qui ne relève pas de ScanUp.";
   if(partRps>100){
     note=note+" Attention : ce nombre d'arrêts évités dépasse l'absentéisme que vous avez retenu "+
       "à l'étape 03 ("+num(joursRps,1)+" jour par salarié). Relevez cette valeur pour rester cohérent.";

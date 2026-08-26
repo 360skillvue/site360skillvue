@@ -417,13 +417,21 @@
             <p class="hint">Les troubles musculo-squelettiques relèvent d'une logique différente des RPS : ils se traitent par l'étude de poste. L'analyse est individuelle, un rapport par salarié, parce que deux personnes au même poste n'ont ni la même morphologie, ni les mêmes gestes, ni le même historique. Menée à distance, elle atteint des salariés qu'une visite sur site ne rencontrera pratiquement jamais : secteur protégé, sites dispersés, postes itinérants, télétravail, et plus largement tout salarié seul à son poste. À l'inverse, lorsqu'une dizaine de personnes occupent un poste identique, une intervention en présentiel reste plus adaptée. Le coût évité retenu est celui d'un cas reconnu dans votre secteur, barème et désorganisation compris.</p>
           </div>
           <div class="field">
+            <div class="sl-head">
+              <label for="sv-nb-etudes">Études de poste réalisées, pour 100 salariés</label>
+              <span class="sl-val" id="sv-nb-etudes-val"></span>
+            </div>
+            <input type="range" id="sv-nb-etudes" min="0" max="20" step="0.5" value="3">
+            <p class="hint">L'étude de poste ne concerne pas tout l'effectif : elle est déclenchée pour les salariés repérés, un rapport par personne. C'est ce nombre, et non l'effectif total, qui détermine le coût du volet TMS.</p>
+          </div>
+          <div class="field">
             <label for="sv-prix-rps">Coût du dépistage RPS, par salarié et par an</label>
             <input type="number" id="sv-prix-rps" min="0" max="500" step="1" value="27">
           </div>
           <div class="field">
-            <label for="sv-prix-tms">Coût de l'étude de poste TMS, par salarié et par an</label>
-            <input type="number" id="sv-prix-tms" min="0" max="500" step="1" value="27">
-            <p class="hint">Les deux prestations ne coûtent pas la même chose : l'étude de poste mobilise du temps d'ergonome et donne lieu à un rapport par salarié, ce qui la rend proportionnelle à l'effectif analysé. Remplacez ces deux valeurs par les tarifs qui vous ont été proposés pour obtenir votre propre retour sur investissement, famille par famille.</p>
+            <label for="sv-prix-tms">Coût d'une étude de poste individuelle</label>
+            <input type="number" id="sv-prix-tms" min="0" max="5000" step="1" value="432">
+            <p class="hint">Les deux prestations n'ont ni le même prix ni la même assiette. Le dépistage des risques psychosociaux porte sur l'ensemble de l'effectif ; l'étude de poste mobilise du temps d'ergonome et se facture à l'unité, pour le salarié concerné, rapport individuel et préconisations d'aménagement compris. Remplacez ces deux valeurs par vos tarifs pour obtenir votre propre retour sur investissement, famille par famille.</p>
           </div>
         </div>
       </div>
@@ -502,7 +510,7 @@
             <div class="roi-fam">
               <div class="roi-fam-head"><span>Troubles musculo-squelettiques</span><b id="sv-roi-r-tms"></b></div>
               <div class="roi-row"><span>Coût évité</span><b id="sv-roi-tms"></b></div>
-              <div class="roi-row"><span>Coût de l'étude de poste</span><b id="sv-roi-c-tms"></b></div>
+              <div class="roi-row"><span id="sv-roi-l-tms">Études de poste</span><b id="sv-roi-c-tms"></b></div>
             </div>
             <div class="roi-rows">
               <div class="roi-row roi-net"><span>Gain net sur l'année</span><b id="sv-roi-net"></b></div>
@@ -685,7 +693,10 @@ function calcule(){
   var prixTms=parseFloat($("sv-prix-tms").value);
   if(isNaN(prixTms)){ prixTms=PRIX_DEP; }
   if(prixTms<0){ prixTms=0; }
-  var depRps=eff*prixRps, depTms=eff*prixTms, dep=depRps+depTms;
+  var tauxEtudes=parseFloat($("sv-nb-etudes").value);
+  if(isNaN(tauxEtudes)){ tauxEtudes=0; }
+  var nbEtudes=eff*tauxEtudes/100;
+  var depRps=eff*prixRps, depTms=nbEtudes*prixTms, dep=depRps+depTms;
 
   // 04 : ce qu'un dépistage peut éviter
   var evRps=parseFloat($("sv-ev-rps").value), pctTms=parseFloat($("sv-ev-tms").value)/100;
@@ -699,6 +710,8 @@ function calcule(){
   $("sv-roi-tms").textContent=eur(gainTms);
   $("sv-roi-c-rps").textContent="− "+eur(depRps);
   $("sv-roi-c-tms").textContent="− "+eur(depTms);
+  $("sv-roi-l-tms").textContent="Études de poste ("+num(nbEtudes,1)+" × "+eur(prixTms)+")";
+  $("sv-nb-etudes-val").textContent=num(tauxEtudes,1)+" pour 100 salariés · "+num(nbEtudes,1)+" études";
   $("sv-roi-net").textContent=(net>=0?"+ ":"− ")+eur(Math.abs(net));
   function rapport(g,c){
     if(c<=0){ return "sans coût"; }
@@ -816,7 +829,7 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-salaire","sv-desorg","sv-rps",
- "sv-ev-rps","sv-ev-tms","sv-ev-duree","sv-prix-rps","sv-prix-tms"].forEach(function(id){
+ "sv-ev-rps","sv-ev-tms","sv-ev-duree","sv-nb-etudes","sv-prix-rps","sv-prix-tms"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);

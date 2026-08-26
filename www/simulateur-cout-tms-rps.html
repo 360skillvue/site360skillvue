@@ -430,12 +430,22 @@
           </div>
 
           <div class="field">
+            <label>Votre formule TMS</label>
+            <div class="scn-set">
+              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>55 € HT par collaborateur</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Premium<small>55 € HT, plus 250 € HT par étude de poste</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="impact"><span>Impact<small>Premium, plus 750 € HT par tranche de 50 collaborateurs</small></span></label>
+            </div>
+            <p class="hint">Même logique que pour les risques psychosociaux. Le dépistage par vidéo porte sur tout l'effectif et donne à chacun son coaching gestes et postures. Au-delà, l'étude de poste complète avec rapport individuel n'est facturée que pour les salariés que le dépistage a désignés, et le plan d'action de prévention se déclenche à l'échelle de l'entreprise.</p>
+          </div>
+
+          <div class="field">
             <div class="sl-head">
               <label for="sv-part-etude">Part des salariés repérés relevant d'une étude complète</label>
               <span class="sl-val" id="sv-part-etude-val"></span>
             </div>
             <input type="range" id="sv-part-etude" min="0" max="100" step="5" value="40">
-            <p class="hint">Le dépistage TMS par vidéo, à 55 € HT par collaborateur, sert précisément à répondre à cette question : il porte sur tout l'effectif et désigne ceux dont la situation justifie une étude de poste complète, avec rapport individuel, facturée 432 € HT. Les autres relèvent d'un coaching gestes et postures, compris dans le dépistage.</p>
+            <p class="hint">C'est le dépistage qui répond à cette question, et c'est tout son intérêt : il désigne ceux dont la situation justifie une étude de poste complète. Les autres relèvent du coaching gestes et postures, déjà compris dans le dépistage. Ce réglage n'a d'effet que sur les formules Premium et Impact.</p>
           </div>
         </div>
       </div>
@@ -749,10 +759,15 @@ function calcule(){
   }
   var pctEtude=parseFloat($("sv-part-etude").value);
   if(isNaN(pctEtude)){ pctEtude=0; }
+  var packTms=document.querySelector('input[name="svtms"]:checked').value;
   var nbEtudes=Math.round(nbCibles*pctEtude/100);
-  var c2dep=eff*55, c2tms=nbEtudes*432;
+  if(packTms==="essential"){ nbEtudes=0; }
+  var c2dep=eff*55, c2tms=nbEtudes*250;
+  if(packTms==="impact"){ c2tms=c2tms+Math.ceil(eff/50)*750; }
   var lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
-  var lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × 432 €";
+  var lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × 250 €";
+  if(packTms==="essential"){ lib2tms="Aucune étude de poste, formule Essential"; }
+  if(packTms==="impact"){ lib2tms="Études de poste, "+num(nbEtudes,0)+" × 250 €, plus le plan d'action"; }
   var desc2="Le raisonnement change d'unité : on ne part plus du poste mais de la personne. Le travail est "+
     "capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Les "+
     "deux dépistages couvrent l'ensemble de l'effectif, y compris les salariés isolés qu'une visite sur site "+
@@ -901,7 +916,7 @@ selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);
 });
-Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"]'),function(r){
+Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],input[name="svtms"]'),function(r){
   r.addEventListener("change",calcule);
 });
 Array.prototype.forEach.call(document.querySelectorAll('input[name="svscn"]'),function(r){

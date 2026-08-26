@@ -38,8 +38,7 @@ const RPS_FEATURE_VALUES: boolean[][] = [
   [true, true, true],   // Conduites à tenir personnalisées
   [true, true, true],   // Indicateurs agrégés anonymisés
   [false, true, true],  // Téléconsultation 30 min
-  [false, false, true], // Plan d'action de prévention
-  [false, false, true], // Restitution direction
+  [false, false, true], // Restitution du plan d'action coconstruit à la direction
 ];
 
 const TMS_FEATURE_VALUES: boolean[][] = [

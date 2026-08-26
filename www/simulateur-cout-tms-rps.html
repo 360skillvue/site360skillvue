@@ -397,11 +397,11 @@
 
           <div class="field">
             <div class="sl-head">
-              <label for="sv-part">Part de l'effectif appelant une intervention individuelle</label>
+              <label for="sv-part">Part de l'effectif identifiée à risque</label>
               <span class="sl-val" id="sv-part-val"></span>
             </div>
-            <input type="range" id="sv-part" min="1" max="40" step="1" value="12">
-            <p class="hint">Salariés dont la situation de travail justifie une étude de poste ou un accompagnement. C'est précisément ce que personne ne sait avant d'avoir regardé ; le dépistage sert à l'établir, les méthodes traditionnelles à le supposer.</p>
+            <input type="range" id="sv-part" min="1" max="40" step="1" value="15">
+            <p class="hint">Le dépistage porte sur tout le monde ; l'analyse approfondie ne concerne ensuite que les salariés repérés, en général de l'ordre de 10 à 20 % de l'effectif. C'est précisément ce que personne ne connaît avant d'avoir regardé : le dépistage sert à l'établir, les méthodes traditionnelles à le supposer.</p>
           </div>
 
           <div class="field">
@@ -521,13 +521,13 @@
               <div class="roi-fam-head"><span>Présentiel</span><b id="sv-cmp-t1"></b></div>
               <div class="roi-row"><span>Audit RPS collectif, en présentiel</span><b id="sv-c1-rps"></b></div>
               <div class="roi-row"><span id="sv-c1-l-tms">Études de poste en présentiel</span><b id="sv-c1-tms"></b></div>
-              <p class="bd-desc">L'analyse est réelle : un intervenant vient voir le travail. Mais l'audit psychosocial reste collectif, il décrit des services et non des personnes, et les études de poste ne portent que sur les situations que vous aurez désignées, sans donnée individuelle pour les choisir. Le coût et les délais limitent mécaniquement le nombre de situations regardées.</p>
+              <p class="bd-desc">L'analyse est réelle : un intervenant vient voir le travail. Mais le raisonnement porte sur le poste, pas sur la personne. Une étude couvre une situation de travail et vaut pour tous ceux qui l'occupent, alors que deux salariés au même poste n'ont ni la même morphologie, ni les mêmes gestes, ni le même historique. L'audit psychosocial, lui, reste collectif : il décrit des services. Et faute de donnée individuelle, ce sont vous qui désignez les situations à étudier.</p>
             </div>
 
             <div class="roi-fam">
               <div class="roi-fam-head"><span>Avec ScanUp</span><b id="sv-cmp-t2"></b></div>
               <div class="roi-row"><span id="sv-c2-l-rps">Dépistage RPS de tout l'effectif</span><b id="sv-c2-rps"></b></div>
-              <div class="roi-row"><span id="sv-c2-l-tms">Études de poste à distance</span><b id="sv-c2-tms"></b></div>
+              <div class="roi-row"><span id="sv-c2-l-tms">Études personnalisées</span><b id="sv-c2-tms"></b></div>
               <p class="bd-desc" id="sv-c2-desc"></p>
             </div>
 
@@ -748,8 +748,8 @@ function calcule(){
   var c2tms, lib2tms, desc2;
   if(packTms==="premium"){
     c2tms=nbCibles*432;
-    lib2tms="Études de poste à distance, "+num(nbCibles,0)+" × 432 €";
-    desc2="Le travail est capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Le retour est individuel : chaque salarié dépisté reçoit le sien, et l'entreprise obtient la liste de ceux qu'il faut orienter, plus un rapport d'étude de poste par opérateur concerné. Le présentiel reste possible, mais n'est engagé que sur les situations qui le justifient.";
+    lib2tms="Études personnalisées, "+num(nbCibles,0)+" × 432 €";
+    desc2="Le raisonnement change d'unité : on ne part plus du poste mais de la personne. Le travail est capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Le dépistage couvre tout l'effectif, puis chacun des salariés repérés fait l'objet d'une étude personnalisée, avec son propre rapport. Le présentiel reste possible, engagé sur les seules situations qui le justifient.";
   } else {
     c2tms=eff*55;
     lib2tms="Dépistage TMS par vidéo, "+num(eff,0)+" × 55 €";
@@ -792,8 +792,8 @@ function calcule(){
     "Le présentiel fait analyser le travail réel par un professionnel, mais son coût limite le nombre de "+
     "situations regardées. ScanUp fait analyser le travail réel par un professionnel lui aussi, à partir "+
     "d'une captation individuelle, sur l'ensemble de l'effectif, pour un budget intermédiaire.";
-  note=note+" Ici, le dépistage couvre "+num(eff,0)+" salariés, et l'intervention individuelle n'est engagée "+
-    "que sur les "+num(nbCibles,0)+" situations repérées au lieu d'être décidée à l'aveugle. "+
+  note=note+" Ici, le dépistage couvre "+num(eff,0)+" salariés, et l'analyse approfondie ne porte que sur les "+
+    num(nbCibles,0)+" personnes repérées, au lieu d'être décidée à l'aveugle. "+
     "ScanUp ne fait pas baisser l'absentéisme par lui-même : il dit où porter l'effort. Ce que devient "+
     "le risque ensuite dépend de l'accompagnement mis en place, qui ne relève pas de ScanUp.";
   if(c2rps>pAudit){

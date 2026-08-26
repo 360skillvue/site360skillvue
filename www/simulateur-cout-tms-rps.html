@@ -133,7 +133,7 @@
 .svue-sim *,.svue-sim *::before,.svue-sim *::after{box-sizing:border-box}
 .svue-sim p{margin:0 0 16px}
 .svue-sim h2,.svue-sim h3{color:var(--nuit);margin:0;text-wrap:balance}
-.svue-sim h2{font-size:20px;font-weight:600;line-height:1.3}
+.svue-sim h2{font-size:22px;font-weight:600;line-height:1.25}
 .svue-sim h3{font-size:18px;font-weight:500;line-height:1.4}
 .svue-sim .num{font-variant-numeric:tabular-nums}
 .svue-sim a{color:var(--bleu);text-decoration:none}
@@ -175,8 +175,10 @@
 
 .svue-sim .step{border-top:1px solid var(--bordure);padding:24px 0 0}
 .svue-sim .step:first-child{border-top:0;padding-top:8px}
-.svue-sim .step-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
-.svue-sim .step-n{font-size:12px;font-weight:600;color:var(--bleu);letter-spacing:.06em}
+.svue-sim .step-head{display:flex;align-items:baseline;gap:14px;margin-bottom:10px}
+.svue-sim .step-n{font-size:30px;font-weight:700;color:var(--bleu);letter-spacing:-.02em;
+  line-height:1;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.svue-sim .step-n{font-size:24px}}
 .svue-sim .step-note{font-size:14px;color:var(--gris-texte);margin:0 0 24px;max-width:62ch;line-height:1.5}
 
 .svue-sim .field{margin-bottom:24px}

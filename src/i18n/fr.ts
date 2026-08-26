@@ -374,9 +374,9 @@ export const fr = {
     heroCtaSecondary: 'Voir une démo',
     stats: [
       { value: '+650', label: 'utilisateurs actifs' },
-      { value: '43%', label: 'burn-out détecté plus tôt' },
       { value: '27€', label: 'par dépistage' },
-      { value: '×3', label: 'taux de complétion' },
+      { value: '48h', label: 'pour les résultats' },
+      { value: '×5,6', label: 'affections psychiques reconnues depuis 2015' },
     ],
     problemsLabel: 'La réalité terrain',
     problemsTitle: 'Vous le voyez',

@@ -287,9 +287,9 @@ export const it = {
     heroCtaSecondary: 'Vedi una demo',
     stats: [
       { value: '+650', label: 'utenti attivi' },
-      { value: '43%', label: 'burnout rilevato prima' },
       { value: '27€', label: 'per screening' },
-      { value: '×3', label: 'tasso di completamento' },
+      { value: '48h', label: 'per i risultati' },
+      { value: '×5,6', label: 'affezioni psichiche riconosciute dal 2015' },
     ],
     problemsLabel: 'La realtà sul campo',
     problemsTitle: 'Lo vedete',

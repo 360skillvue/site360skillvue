@@ -287,9 +287,9 @@ export const de = {
     heroCtaSecondary: 'Demo ansehen',
     stats: [
       { value: '+650', label: 'aktive Nutzer' },
-      { value: '43%', label: 'Burnout früher erkannt' },
       { value: '27€', label: 'pro Screening' },
-      { value: '×3', label: 'Abschlussrate' },
+      { value: '48h', label: 'bis zum Ergebnis' },
+      { value: '×5,6', label: 'anerkannte psychische Erkrankungen seit 2015' },
     ],
     problemsLabel: 'Die Realität vor Ort',
     problemsTitle: 'Sie sehen es',

@@ -287,9 +287,9 @@ export const en = {
     heroCtaSecondary: 'See a demo',
     stats: [
       { value: '+650', label: 'active users' },
-      { value: '43%', label: 'burnout detected earlier' },
       { value: '€27', label: 'per screening' },
-      { value: '×3', label: 'completion rate' },
+      { value: '48h', label: 'to results' },
+      { value: '×5.6', label: 'recognised psychological conditions since 2015' },
     ],
     problemsLabel: 'The field reality',
     problemsTitle: 'You see it',

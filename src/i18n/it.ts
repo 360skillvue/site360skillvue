@@ -468,13 +468,14 @@ export const it = {
           cta: 'Prenota',
         },
         {
-          name: 'Pack Impact',
-          price: '40 €',
-          sub: '+ IVA / collaboratore, + 750 € + IVA ogni 50 persone sottoposte a screening',
+          name: 'Formula tutto compreso',
+          price: '55 €',
+          sub: '+ IVA per collaboratore all\'anno, senza supplementi',
           badge: '',
           items: [
             'Tutto il Pack Premium',
             'Piano d\'azione di prevenzione: mappatura anonimizzata, definizione delle priorità, restituzione alla direzione',
+            'Prezzo unico per collaboratore, qualunque sia il numero di screening positivi',
           ],
           cta: 'Prenota',
         },

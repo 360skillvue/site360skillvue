@@ -468,13 +468,14 @@ export const de = {
           cta: 'Termin vereinbaren',
         },
         {
-          name: 'Pack Impact',
-          price: '40 €',
-          sub: 'zzgl. MwSt. / Mitarbeitendem, + 750 € zzgl. MwSt. je 50 gescreente Personen',
+          name: 'All-inclusive-Paket',
+          price: '55 €',
+          sub: 'zzgl. MwSt. pro Mitarbeitenden und Jahr, ohne Zuschläge',
           badge: '',
           items: [
             'Alles aus dem Pack Premium',
             'Präventionsaktionsplan: anonymisierte Risikokartierung, Priorisierung, Präsentation für die Geschäftsleitung',
+            'Ein Preis pro Mitarbeitenden, unabhängig von der Zahl positiver Screenings',
           ],
           cta: 'Termin vereinbaren',
         },

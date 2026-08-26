@@ -424,9 +424,9 @@
             <div class="scn-set">
               <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Essential<small>27 € HT par collaborateur</small></span></label>
               <label class="scn"><input type="radio" name="svrps" value="40"><span>Premium<small>40 € HT par collaborateur</small></span></label>
-              <label class="scn"><input type="radio" name="svrps" value="impact"><span>Impact<small>40 € HT, plus 750 € HT par tranche de 50 dépistés</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="forfait"><span>Forfait tout compris<small>55 € HT par collaborateur et par an</small></span></label>
             </div>
-            <p class="hint">Le dépistage porte sur l'ensemble de l'effectif, son coût est donc proportionnel au nombre de collaborateurs. Dans les trois formules, il associe un questionnaire et un témoignage audio, et c'est un psychologue du travail qui décide, à partir de ces deux éléments, si la personne présente un risque. Ce qui change ensuite, c'est ce que reçoit le salarié repéré. Avec Essential, un retour individuel confidentiel par courriel, avec les conduites à tenir personnalisées. Avec Premium, ce même retour prend la forme d'une téléconsultation de trente minutes avec un psychologue du travail. Impact y ajoute, à l'échelle de l'entreprise, la cartographie anonymisée et le plan d'action de prévention.</p>
+            <p class="hint">Le dépistage porte sur l'ensemble de l'effectif, son coût est donc proportionnel au nombre de collaborateurs. Dans les trois formules, il associe un questionnaire et un témoignage audio, et c'est un psychologue du travail qui décide, à partir de ces deux éléments, si la personne présente un risque. Ce qui change ensuite, c'est ce que reçoit le salarié repéré. Avec Essential, un retour individuel confidentiel par courriel, avec les conduites à tenir personnalisées. Avec Premium, ce même retour prend la forme d'une téléconsultation de trente minutes avec un psychologue du travail. Le Forfait tout compris reprend Premium et y ajoute, à l'échelle de l'entreprise, la cartographie anonymisée et le plan d'action de prévention, à prix unique par collaborateur et sans supplément par tranche.</p>
           </div>
 
           <div class="field">
@@ -758,9 +758,9 @@ function calcule(){
   // scénario 2 : dépistage à distance puis intervention ciblée
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
   var c2rps, lib2rps;
-  if(packRps==="impact"){
-    c2rps=eff*40+Math.ceil(eff/50)*750;
-    lib2rps="Dépistage RPS, pack Impact";
+  if(packRps==="forfait"){
+    c2rps=eff*55;
+    lib2rps="Forfait RPS tout compris, "+num(eff,0)+" × 55 €";
   } else {
     var pu=parseFloat(packRps);
     c2rps=eff*pu;

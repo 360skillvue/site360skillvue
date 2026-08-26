@@ -562,13 +562,14 @@ export const fr = {
           cta: 'Prendre RDV',
         },
         {
-          name: 'Pack Impact',
-          price: '40 €',
-          sub: 'HT / collaborateur, + 750 € HT par tranche de 50 dépistés',
+          name: 'Forfait tout compris',
+          price: '55 €',
+          sub: 'HT / collaborateur / an, sans supplément',
           badge: '',
           items: [
             'Tout le Pack Premium',
             'Plan d\'action de prévention : cartographie anonymisée, priorisation, restitution direction',
+            'Prix unique par collaborateur, quel que soit le nombre de salariés détectés positifs',
           ],
           cta: 'Prendre RDV',
         },

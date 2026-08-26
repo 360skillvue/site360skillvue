@@ -468,13 +468,14 @@ export const en = {
           cta: 'Book a call',
         },
         {
-          name: 'Impact Pack',
-          price: '€40',
-          sub: 'excl. VAT / employee, + €750 excl. VAT per batch of 50 screened',
+          name: 'All-inclusive plan',
+          price: '€55',
+          sub: 'excl. VAT per employee per year, no add-ons',
           badge: '',
           items: [
             'Everything in the Premium Pack',
             'Prevention action plan: anonymised risk mapping, prioritisation, management debrief',
+            'One price per employee, whatever the number of positive screenings',
           ],
           cta: 'Book a call',
         },

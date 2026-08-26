@@ -229,6 +229,16 @@
 .svue-sim .bd-desc{font-size:12px;color:var(--gris-texte);line-height:1.4;margin:0}
 
 .svue-sim .p-foot{padding:24px;border-top:1px solid var(--bordure);background:var(--page)}
+.svue-sim details{border-top:1px solid var(--bordure)}
+.svue-sim summary{cursor:pointer;list-style:none;padding:16px 24px;font-size:14px;font-weight:500;
+  color:var(--bleu);display:flex;align-items:center;gap:8px}
+.svue-sim summary::-webkit-details-marker{display:none}
+.svue-sim summary::before{content:"+";font-size:16px;font-weight:600;line-height:1}
+.svue-sim details[open] summary::before{content:"\2212"}
+.svue-sim .avance{border:1px solid var(--bordure);border-radius:10px;margin-top:8px;background:var(--carte)}
+.svue-sim .avance summary{padding:14px 16px}
+.svue-sim .avance-bd{padding:0 16px 4px}
+.svue-sim .stats-b{border-top:1px solid var(--bordure);padding-top:16px}
 .svue-sim .stat-t{margin:0 0 8px;font-size:12px;color:var(--gris-texte);line-height:1.45}
 .svue-sim .stat-n{margin:10px 0 0;font-size:12px;color:var(--gris-texte);line-height:1.45}
 .svue-sim .stat{display:flex;justify-content:space-between;gap:16px;font-size:14px;padding:4px 0;color:var(--gris-texte)}
@@ -335,7 +345,7 @@
       <div>
         <div class="step">
           <div class="step-head"><span class="step-n">01</span><h2>Votre entreprise</h2></div>
-          <p class="step-note">Le secteur détermine les taux de sinistralité appliqués. Vous pouvez rester au grand secteur ou préciser votre activité pour un calcul plus proche de votre réalité.</p>
+          <p class="step-note">Deux réponses suffisent. Le secteur détermine les taux de sinistralité appliqués ; vous pouvez préciser votre activité pour un calcul plus proche de votre réalité.</p>
           <div class="field">
             <label for="sv-secteur">Grand secteur d'activité</label>
             <select id="sv-secteur"></select>
@@ -343,59 +353,17 @@
           <div class="field">
             <label for="sv-activite">Activité précise (facultatif)</label>
             <select id="sv-activite"></select>
-            <p class="hint">Correspond au niveau fin de la nomenclature NAF, celui de votre code APE.</p>
           </div>
-          <div class="row2">
-            <div class="field">
-              <label for="sv-effectif">Effectif salarié</label>
-              <input type="number" id="sv-effectif" min="1" max="200000" step="1" value="250">
-            </div>
-            <div class="field">
-              <label for="sv-salaire">Coût employeur annuel moyen par salarié</label>
-              <input type="number" id="sv-salaire" min="15000" max="300000" step="1000" value="51000">
-              <p class="hint" id="sv-hint-salaire"></p>
-            </div>
+          <div class="field">
+            <label for="sv-effectif">Effectif salarié</label>
+            <input type="number" id="sv-effectif" min="1" max="200000" step="1" value="250">
           </div>
-        </div>
-
-        <div class="step">
-          <div class="step-head"><span class="step-n">02</span><h2>Sinistralité attendue</h2></div>
-          <p class="step-note" id="sv-note"></p>
           <p class="callout" id="sv-tendance"></p>
-          <div class="field">
-            <label>Hypothèse de coût direct</label>
-            <div class="scn-set scn-2">
-              <label class="scn"><input type="radio" name="svscn" value="observe" checked><span>Durée observée<small id="sv-scn-obs">selon votre secteur</small></span></label>
-              <label class="scn"><input type="radio" name="svscn" value="prudent"><span>Hypothèse prudente<small>tranche inférieure du barème</small></span></label>
-            </div>
-            <p class="hint">La durée d'arrêt n'est plus une supposition : l'Assurance Maladie publie les journées indemnisées par secteur. Rapportées au nombre de maladies reconnues, elles donnent 317 jours en moyenne au niveau national, ce qui place la quasi-totalité des secteurs dans la tranche la plus élevée du barème. L'hypothèse prudente retient volontairement la tranche du dessous.</p>
-          </div>
         </div>
 
         <div class="step">
-          <div class="step-head"><span class="step-n">03</span><h2>Vos hypothèses de coût</h2></div>
-          <p class="step-note">Ces deux paramètres sont les seuls qui ne reposent sur aucune donnée publiée. Ils sont à vous, et le calcul les affiche sur des lignes distinctes pour que la part d'hypothèse reste visible.</p>
-          <div class="field">
-            <div class="sl-head">
-              <label for="sv-desorg">Coût de désorganisation, par jour d'absence</label>
-              <span class="sl-val" id="sv-desorg-val"></span>
-            </div>
-            <input type="range" id="sv-desorg" min="0" max="200" step="5" value="100">
-            <p class="hint">Exprimé en pourcentage du coût journalier du salarié absent : remplacement, intérim, heures supplémentaires, perte de production. À 100 %, une journée d'absence coûte une journée de salaire chargé.</p>
-          </div>
-          <div class="field">
-            <div class="sl-head">
-              <label for="sv-rps">Part non reconnue des RPS, en jours par salarié</label>
-              <span class="sl-val" id="sv-rps-val"></span>
-            </div>
-            <input type="range" id="sv-rps" min="0" max="5" step="0.1" value="0.6">
-            <p class="hint">Les risques psychosociaux n'apparaissent presque pas dans les statistiques de maladies professionnelles, faute de reconnaissance : ils se manifestent en arrêts maladie ordinaires et en départs. La valeur par défaut, 0,6 jour, correspond à l'ordre de grandeur du coût social du stress professionnel estimé par l'INRS, que l'institut présente lui-même comme un plancher.</p>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-head"><span class="step-n">04</span><h2>Ce que coûte le fait de savoir</h2></div>
-          <p class="step-note">Le montant ci-contre dit ce que le risque coûte. Il ne dit pas où agir. Pour le savoir, il faut regarder les situations de travail une par une, et cela a un prix. Cette étape compare deux façons de payer ce prix.</p>
+          <div class="step-head"><span class="step-n">02</span><h2>Agir, et à quel prix</h2></div>
+          <p class="step-note">Le montant ci-contre dit ce que le risque coûte. Il ne dit pas où agir. Pour le savoir il faut regarder les situations de travail, et cela a un prix : voici les deux façons de le payer.</p>
 
           <div class="field">
             <div class="sl-head">
@@ -403,50 +371,88 @@
               <span class="sl-val" id="sv-part-val"></span>
             </div>
             <input type="range" id="sv-part" min="1" max="40" step="1" value="20">
-            <p class="hint">Le dépistage porte sur tout le monde ; l'analyse approfondie ne concerne ensuite que les salariés repérés, de l'ordre de 20 % de l'effectif dans ce que nous observons. C'est précisément ce que personne ne connaît avant d'avoir regardé : le dépistage sert à l'établir, les méthodes traditionnelles à le supposer.</p>
-          </div>
-
-
-          <div class="field">
-            <label for="sv-p-audit">Coût d'un audit RPS collectif en présentiel</label>
-            <input type="number" id="sv-p-audit" min="0" max="500000" step="100" value="11900">
-            <p class="hint" id="sv-hint-audit"></p>
-          </div>
-
-          <div class="field">
-            <label for="sv-p-poste">Coût d'une étude de poste en présentiel</label>
-            <input type="number" id="sv-p-poste" min="0" max="10000" step="50" value="1200">
-            <p class="hint">Par étude, déplacement et rédaction compris. Deux repères publics : le FIPHFP finance une étude ergonomique externe jusqu'à 3 000 € par étude, et la grille 2026 d'un centre de gestion facture la journée d'ergonome 685 €, la demi-journée 342 €.</p>
+            <p class="hint">Le dépistage porte sur tout le monde ; l'analyse approfondie ne concerne ensuite que les salariés repérés, de l'ordre de 20 % de l'effectif.</p>
           </div>
 
           <div class="field">
             <label>Votre formule de dépistage RPS</label>
             <div class="scn-set">
-              <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Essential<small>27 € HT par collaborateur</small></span></label>
-              <label class="scn"><input type="radio" name="svrps" value="40"><span>Premium<small>40 € HT par collaborateur</small></span></label>
-              <label class="scn"><input type="radio" name="svrps" value="forfait"><span>Forfait tout compris<small>55 € HT par collaborateur et par an</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Essential<small>27 € HT, retour par courriel</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="40"><span>Premium<small>40 € HT, avec téléconsultation</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="forfait"><span>Forfait<small>55 € HT, plan d'action compris</small></span></label>
             </div>
-            <p class="hint">Le dépistage porte sur l'ensemble de l'effectif, son coût est donc proportionnel au nombre de collaborateurs. Dans les trois formules, il associe un questionnaire et un témoignage audio, et c'est un psychologue du travail qui décide, à partir de ces deux éléments, si la personne présente un risque. Ce qui change ensuite, c'est ce que reçoit le salarié repéré. Avec Essential, un retour individuel confidentiel par courriel, avec les conduites à tenir personnalisées. Avec Premium, ce même retour prend la forme d'une téléconsultation de trente minutes avec un psychologue du travail. Le Forfait tout compris reprend Premium et y ajoute, à l'échelle de l'entreprise, la cartographie anonymisée et le plan d'action de prévention, à prix unique par collaborateur et sans supplément par tranche.</p>
           </div>
 
           <div class="field">
             <label>Votre formule TMS</label>
             <div class="scn-set">
-              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>40 € HT par collaborateur, sans coaching</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>55 € HT avec coaching, plus 250 € HT par étude de poste</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="forfait" checked><span>Forfait tout compris<small id="sv-lab-forfait">par collaborateur et par an</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>40 € HT, sans coaching</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>55 € HT, avec coaching</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="forfait" checked><span>Forfait<small id="sv-lab-forfait">tout compris</small></span></label>
             </div>
             <p class="hint" id="sv-hint-tms"></p>
           </div>
 
-          <div class="field">
-            <div class="sl-head">
-              <label for="sv-part-etude">Part des salariés repérés relevant d'une étude complète</label>
-              <span class="sl-val" id="sv-part-etude-val"></span>
+          <details class="avance">
+            <summary>Ajuster les hypothèses et les tarifs de référence</summary>
+            <div class="avance-bd">
+              <p class="hint">Les valeurs par défaut sont celles que nous jugeons les plus défendables. Vous pouvez les remplacer par les vôtres, tout se recalcule.</p>
+
+              <div class="field">
+                <label for="sv-salaire">Coût employeur annuel moyen par salarié</label>
+                <input type="number" id="sv-salaire" min="15000" max="300000" step="1000" value="51000">
+                <p class="hint" id="sv-hint-salaire"></p>
+              </div>
+
+              <div class="field">
+                <label>Hypothèse de coût direct</label>
+                <div class="scn-set scn-2">
+                  <label class="scn"><input type="radio" name="svscn" value="observe" checked><span>Durée observée<small id="sv-scn-obs">selon votre secteur</small></span></label>
+                  <label class="scn"><input type="radio" name="svscn" value="prudent"><span>Hypothèse prudente<small>tranche inférieure du barème</small></span></label>
+                </div>
+                <p class="hint">L'Assurance Maladie publie les journées indemnisées par secteur : 317 jours en moyenne par maladie professionnelle, ce qui place presque tous les secteurs dans la tranche la plus élevée du barème. L'hypothèse prudente retient volontairement celle du dessous.</p>
+              </div>
+
+              <div class="field">
+                <div class="sl-head">
+                  <label for="sv-desorg">Coût de désorganisation, par jour d'absence</label>
+                  <span class="sl-val" id="sv-desorg-val"></span>
+                </div>
+                <input type="range" id="sv-desorg" min="0" max="200" step="5" value="100">
+                <p class="hint">En pourcentage du coût journalier du salarié absent : remplacement, intérim, heures supplémentaires, perte de production.</p>
+              </div>
+
+              <div class="field">
+                <div class="sl-head">
+                  <label for="sv-rps">Part non reconnue des RPS, en jours par salarié</label>
+                  <span class="sl-val" id="sv-rps-val"></span>
+                </div>
+                <input type="range" id="sv-rps" min="0" max="5" step="0.1" value="0.6">
+                <p class="hint">Les risques psychosociaux passent rarement par la reconnaissance : ils se manifestent en arrêts maladie ordinaires. La valeur par défaut correspond au coût social du stress professionnel estimé par l'INRS, que l'institut présente comme un plancher.</p>
+              </div>
+
+              <div class="field">
+                <label for="sv-p-audit">Coût d'un audit RPS collectif en présentiel</label>
+                <input type="number" id="sv-p-audit" min="0" max="500000" step="100" value="11900">
+                <p class="hint" id="sv-hint-audit"></p>
+              </div>
+
+              <div class="field">
+                <label for="sv-p-poste">Coût d'une étude de poste en présentiel</label>
+                <input type="number" id="sv-p-poste" min="0" max="10000" step="50" value="1200">
+                <p class="hint">Par étude, déplacement et rédaction compris. Le FIPHFP finance une étude ergonomique externe jusqu'à 3 000 €, et la journée d'ergonome se facture 685 € dans la grille publique 2026 d'un centre de gestion.</p>
+              </div>
+
+              <div class="field">
+                <div class="sl-head">
+                  <label for="sv-part-etude">Part des salariés repérés relevant d'une étude complète</label>
+                  <span class="sl-val" id="sv-part-etude-val"></span>
+                </div>
+                <input type="range" id="sv-part-etude" min="0" max="100" step="5" value="40">
+                <p class="hint">Sans effet sur la formule Essential ni sur le Forfait, qui l'inclut jusqu'à 25 % de l'effectif.</p>
+              </div>
             </div>
-            <input type="range" id="sv-part-etude" min="0" max="100" step="5" value="40">
-            <p class="hint">C'est le dépistage qui répond à cette question, et c'est tout son intérêt : il désigne ceux dont la situation justifie une étude de poste complète. Les autres relèvent du coaching gestes et postures, déjà compris dans le dépistage. Ce réglage n'a d'effet que sur les formules Premium et Impact.</p>
-          </div>
+          </details>
         </div>
       </div>
 
@@ -468,52 +474,39 @@
             </div>
           </div>
         </div>
-        <div class="bd">
-          <div class="fam">
-            <div class="fam-head">
-              <span class="fam-name">Risques psychosociaux</span>
-              <span class="fam-tot" id="sv-tot-rps"></span>
+        <details class="detail">
+          <summary>Voir le détail du calcul</summary>
+          <div class="bd">
+            <div class="fam">
+              <div class="fam-head">
+                <span class="fam-name">Risques psychosociaux</span>
+                <span class="fam-tot" id="sv-tot-rps"></span>
+              </div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Cas reconnus, coût direct</span><span class="bd-val" id="sv-v-rps-direct"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-rps-direct" style="background:#3B82F6"></div></div></div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Cas reconnus, désorganisation</span><span class="bd-val" id="sv-v-rps-des"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-rps-des" style="background:#60A5FA"></div></div></div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Part non reconnue, votre hypothèse</span><span class="bd-val" id="sv-v-rps-nr"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-rps-nr" style="background:#93C5FD"></div></div></div>
+              <p class="bd-desc" id="sv-d-rps"></p>
             </div>
-            <div class="bd-row">
-              <div class="bd-top"><span class="bd-name">Cas reconnus, coût direct</span><span class="bd-val" id="sv-v-rps-direct"></span></div>
-              <div class="bd-bar"><div class="bd-fill" id="sv-b-rps-direct" style="background:#3B82F6"></div></div>
+            <div class="fam">
+              <div class="fam-head">
+                <span class="fam-name">Troubles musculo-squelettiques</span>
+                <span class="fam-tot" id="sv-tot-tms"></span>
+              </div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Coût direct imputé</span><span class="bd-val" id="sv-v-tms-direct"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-tms-direct" style="background:#1E40AF"></div></div></div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Désorganisation</span><span class="bd-val" id="sv-v-tms-des"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-tms-des" style="background:#2563EB"></div></div></div>
+              <p class="bd-desc" id="sv-d-tms"></p>
             </div>
-            <div class="bd-row">
-              <div class="bd-top"><span class="bd-name">Cas reconnus, désorganisation</span><span class="bd-val" id="sv-v-rps-des"></span></div>
-              <div class="bd-bar"><div class="bd-fill" id="sv-b-rps-des" style="background:#60A5FA"></div></div>
+            <div class="stats-b">
+              <p class="stat-t" id="sv-stat-t"></p>
+              <div class="stat"><span>Affections psychiques reconnues</span><b id="sv-s-psy"></b></div>
+              <div class="stat"><span>Troubles musculo-squelettiques reconnus</span><b id="sv-s-tms"></b></div>
+              <div class="stat"><span>Accidents du travail</span><b id="sv-s-at"></b></div>
+              <div class="stat"><span>Journées d'absence liées à ces maladies</span><b id="sv-s-jours"></b></div>
+              <p class="stat-n">Moyenne du secteur ramenée à votre effectif, et non une prévision pour votre entreprise. Les affections psychiques ne comptent que les cas reconnus : cette reconnaissance étant rare, elles ne mesurent pas les RPS, elles en donnent la part visible.</p>
             </div>
-            <div class="bd-row">
-              <div class="bd-top"><span class="bd-name">Part non reconnue, votre hypothèse</span><span class="bd-val" id="sv-v-rps-nr"></span></div>
-              <div class="bd-bar"><div class="bd-fill" id="sv-b-rps-nr" style="background:#93C5FD"></div></div>
-            </div>
-            <p class="bd-desc" id="sv-d-rps"></p>
           </div>
-
-          <div class="fam">
-            <div class="fam-head">
-              <span class="fam-name">Troubles musculo-squelettiques</span>
-              <span class="fam-tot" id="sv-tot-tms"></span>
-            </div>
-            <div class="bd-row">
-              <div class="bd-top"><span class="bd-name">Coût direct imputé</span><span class="bd-val" id="sv-v-tms-direct"></span></div>
-              <div class="bd-bar"><div class="bd-fill" id="sv-b-tms-direct" style="background:#1E40AF"></div></div>
-            </div>
-            <div class="bd-row">
-              <div class="bd-top"><span class="bd-name">Désorganisation</span><span class="bd-val" id="sv-v-tms-des"></span></div>
-              <div class="bd-bar"><div class="bd-fill" id="sv-b-tms-des" style="background:#2563EB"></div></div>
-            </div>
-            <p class="bd-desc" id="sv-d-tms"></p>
-          </div>
-        
-        </div>
+        </details>
         <div class="p-foot">
-          <p class="stat-t" id="sv-stat-t"></p>
-          <div class="stat"><span>Affections psychiques reconnues</span><b id="sv-s-psy"></b></div>
-          <div class="stat"><span>Troubles musculo-squelettiques reconnus</span><b id="sv-s-tms"></b></div>
-          <div class="stat"><span>Accidents du travail</span><b id="sv-s-at"></b></div>
-          <div class="stat"><span>Journées d'absence liées à ces maladies</span><b id="sv-s-jours"></b></div>
-          <p class="stat-n">Ce ne sont pas des prévisions pour votre entreprise, mais la moyenne de votre secteur ramenée à votre effectif. La ligne des affections psychiques ne compte que les cas reconnus en maladie professionnelle : cette reconnaissance étant rare, elle ne mesure pas les risques psychosociaux, elle en donne seulement la part visible dans les statistiques.</p>
-          
           <div class="roi">
             <p class="roi-l">Agir : les dispositifs et leur coût</p>
             <div class="split">
@@ -554,7 +547,7 @@
         </div>
       </aside>
     </div>
-    <p class="note">Périmètre : ce montant ne mesure pas la totalité de l'absentéisme. Il ne retient que le coût des troubles musculo-squelettiques et des risques psychosociaux ; les autres causes d'arrêt, maladies ordinaires, accidents de trajet, maternité, en sont exclues. Un chiffre d'absentéisme global, toutes causes confondues, est plusieurs fois supérieur et ne se compare pas à celui-ci. Champ des données : régime général de l'Assurance Maladie. Sont exclus les exploitants et salariés agricoles, qui relèvent du régime agricole, les personnels des fonctions publiques, couverts par leur administration, et les travailleurs indépendants n'ayant pas souscrit à l'assurance volontaire AT/MP. Les maladies professionnelles sont comptées en premier règlement, l'année de leur première indemnisation, et non l'année de leur déclaration. Estimation statistique appliquée à un effectif, et non un diagnostic de votre entreprise. Votre sinistralité réelle dépend de vos postes, de votre pyramide des âges et de votre organisation ; elle peut être très inférieure ou très supérieure à la moyenne de votre secteur. Les résultats ne constituent ni un conseil juridique, ni un engagement contractuel.</p>
+    <p class="note">Estimation statistique appliquée à un effectif, et non un diagnostic de votre entreprise. Ce montant ne couvre que les troubles musculo-squelettiques et les risques psychosociaux, à l'exclusion des autres causes d'arrêt : il ne se compare pas à un chiffre d'absentéisme global. Champ, sources et limites détaillés dans l'onglet « Méthode et limites ».</p>
   </section>
 
   <section id="svp-data" role="tabpanel" aria-labelledby="svt-data" hidden>
@@ -790,32 +783,17 @@ function calcule(){
     lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
     lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × 250 €";
   }
+  var c2=c2rps+c2dep+c2tms;
   $("sv-lab-forfait").textContent=eur(fSect)+" HT dans votre secteur, 105 € en moyenne";
   if(packTms==="forfait"){
-    $("sv-hint-tms").textContent="Le forfait couvre tout : le dépistage de l'ensemble de l'effectif, le "+
-      "coaching gestes et postures pour les salariés repérés, l'étude de poste complète avec rapport "+
-      "individuel pour ceux qui en relèvent "+
-      "repérés dans la limite de 25 % de l'effectif, et le plan d'action de prévention. Son montant est "+
-      "indexé sur la sinistralité TMS de votre secteur, publiée par l'Assurance Maladie : "+eur(fSect)+
-      " ici, contre 105 € en moyenne nationale. Le client connaît son budget d'avance, quel que soit le "+
-      "taux de salariés finalement repérés.";
+    $("sv-hint-tms").textContent="Tout est compris : les deux dépistages, le coaching, l'étude de poste "+
+      "avec rapport individuel pour les salariés repérés jusqu'à 25 % de l'effectif, et le plan d'action. "+
+      "Le montant suit la sinistralité TMS de votre secteur, "+eur(fSect)+" ici contre 105 € en moyenne.";
   } else {
-    $("sv-hint-tms").textContent="Même construction que pour les risques psychosociaux. Le dépistage est "+
-      "identique dans les deux formules, un questionnaire et une captation vidéo en situation réelle de "+
-      "travail, qualifiés par un ergonome, et chaque salarié repéré reçoit un retour individuel "+
-      "confidentiel avec ses conduites à tenir. Ce qui change, c'est la suite. Avec Essential, cela s'arrête au retour écrit. Avec "+
-      "Premium, le salarié repéré bénéficie en plus d'un coaching vidéo personnalisé sur les gestes et "+
-      "les postures, mené par un ergonome, exactement comme la téléconsultation du Premium psychosocial. "+
-      "L'étude de poste complète reste une option, à 250 € HT par salarié repéré, et le plan d'action "+
-      "de prévention aussi, à 750 € HT par tranche de 50 collaborateurs.";
+    $("sv-hint-tms").textContent="À l'acte, vous ne payez que ce que vous consommez. Essential s'arrête au "+
+      "dépistage et au retour écrit ; Premium y ajoute le coaching gestes et postures, et l'étude de poste "+
+      "complète en option à 250 € par salarié repéré.";
   }
-  var desc2="Le raisonnement change d'unité : on ne part plus du poste mais de la personne. Le travail est "+
-    "capté en situation réelle, pas déclaré, et analysé par un ergonome ou un psychologue du travail. Les "+
-    "deux dépistages couvrent l'ensemble de l'effectif, y compris les salariés isolés qu'une visite sur site "+
-    "ne rencontrerait jamais ; l'étude de poste complète, avec rapport individuel, n'est ensuite engagée que "+
-    "sur les situations que le dépistage a désignées. Le présentiel reste possible au-delà.";
-  var c2=c2rps+c2dep+c2tms;
-
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-tms").textContent=eur(c1tms);
   $("sv-c1-l-tms").textContent="Études de poste par un ergonome, "+num(nbCibles,0)+" × "+eur(pPoste);
@@ -827,7 +805,9 @@ function calcule(){
   $("sv-c2-l-rps").textContent=lib2rps;
   $("sv-c2-l-dep").textContent=lib2dep;
   $("sv-c2-l-tms").textContent=lib2tms;
-  $("sv-c2-desc").textContent=desc2;
+  $("sv-c2-desc").textContent="On ne part plus du poste mais de la personne. Le travail est capté en "+
+    "situation réelle et analysé par un ergonome ou un psychologue ; l'analyse approfondie n'est engagée "+
+    "que sur les situations que le dépistage a désignées, salariés isolés compris.";
   $("sv-cmp-t2").textContent=eur(c2);
   $("sv-cmp-b2").textContent=eur(c2);
   $("sv-cmp-p1").textContent=eur(c1/eff)+" par salarié";
@@ -836,24 +816,17 @@ function calcule(){
   var ecart=c1-c2;
   $("sv-cmp-ecart").textContent=(ecart>=0?"− ":"+ ")+eur(Math.abs(ecart));
   $("sv-cmp-l-ecart").textContent=(ecart>=0?"Économie sur le budget prévention":"Surcoût par rapport au présentiel");
-  var sub="Voilà ce que coûte le fait d'aller regarder les situations de travail, dans les deux cas. "+
-    "À gauche l'audit psychosocial et les études de poste menés sur site par un intervenant. "+
-    "À droite le même travail d'analyse, mené par un ergonome ou un psychologue du travail à partir "+
-    "de captations en situation réelle. Ce sont des devis, pas des promesses.";
+  var sub="Le même travail d'analyse, dans deux dispositifs différents. Ce sont des devis, pas des promesses.";
   if(ecart>0){
-    sub=sub+" L'écart, "+eur(ecart)+" par an, est à rapprocher des "+eur(total)+
-      " que les troubles musculo-squelettiques et les risques psychosociaux coûtent déjà à cet effectif.";
+    sub=sub+" L'écart, "+eur(ecart)+" par an, est à rapprocher des "+eur(total)+" que le risque coûte déjà.";
   }
   $("sv-cmp-sub").textContent=sub;
 
-  var note="Les deux approches font analyser le travail réel par un professionnel : c'est ce qui les "+
-    "rapproche. Ce qui les sépare est l'unité de raisonnement et la couverture. Le présentiel étudie un "+
-    "poste, pour tous ceux qui l'occupent, sur les situations que vous aurez désignées. ScanUp dépiste "+
-    "les "+num(eff,0)+" salariés sur les deux volets, repère "+num(nbCibles,0)+" personnes, puis réserve "+
-    "l'étude de poste complète aux "+num(nbEtudes,0)+" dont la situation la justifie. Le dépistage sert "+
-    "précisément à ne pas payer une analyse lourde pour tout le monde.";
-  note=note+" ScanUp ne fait pas baisser l'absentéisme par lui-même : il dit où porter l'effort, et à quel "+
-    "prix. Ce que devient le risque ensuite dépend de l'accompagnement mis en place, qui ne relève pas de ScanUp.";
+  var note="Les deux approches font analyser le travail réel par un professionnel. Ce qui les sépare est "+
+    "l'unité de raisonnement et la couverture : le présentiel étudie un poste, ScanUp dépiste les "+num(eff,0)+
+    " salariés puis concentre l'analyse sur les "+num(nbCibles,0)+" personnes repérées. ScanUp ne fait pas "+
+    "baisser l'absentéisme par lui-même : il dit où porter l'effort.";
+  $("sv-cmp-note").textContent=note;
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
   $("sv-part-etude-val").textContent=num(pctEtude,0)+" % · "+num(nbEtudes,0)+" études";
 
@@ -876,16 +849,11 @@ function calcule(){
     tend="Au niveau national, les affections psychiques reconnues comme maladies professionnelles sont passées de "+
       "320 cas en 2015 à 1 805 en 2024, soit une multiplication par 5,6. ";
   }
-  tend=tend+"Le décompte suit la définition de l'Assurance Maladie : maladies professionnelles psychiques "+
-    "en premier règlement, c'est-à-dire indemnisées pour la première fois dans l'année. Ces affections ne "+
-    "figurent dans aucun tableau de maladies professionnelles ; elles ne peuvent donc être reconnues que "+
-    "hors tableau, lorsqu'il est établi qu'elles sont directement causées par le travail habituel de la "+
-    "victime. La demande passe par un comité régional et suppose un taux d'incapacité permanente prévisible "+
-    "d'au moins 25 %, que la très grande majorité des situations de souffrance au travail n'atteint jamais. "+
-    "Ces cas ne sont donc que la pointe visible du sujet.";
+  tend=tend+"Ces cas reconnus ne sont que la partie visible : une affection psychique ne peut être reconnue "+
+    "que hors tableau, devant un comité régional, et suppose au moins 25 % d'incapacité permanente prévisible.";
   $("sv-tendance").textContent=tend;
 
-  $("sv-note").innerHTML="Dans le secteur <strong>"+s.lib.toLowerCase()+"</strong>, l'Assurance Maladie a recensé en 2024 <strong>"+
+  var svNote="Dans le secteur <strong>"+s.lib.toLowerCase()+"</strong>, l'Assurance Maladie a recensé en 2024 <strong>"+
     num(s.tms10k,1)+" troubles musculo-squelettiques</strong> et <strong>"+num(s.psy10k,2)+
     " affections psychiques</strong> reconnus pour 10 000 salariés, ainsi que <strong>"+num(s.if_at||0,1)+
     " accidents du travail pour 1 000 salariés</strong>. La durée moyenne d'arrêt y est de <strong>"+num(s.jours,0)+

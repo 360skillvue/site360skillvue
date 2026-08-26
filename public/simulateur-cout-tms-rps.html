@@ -391,7 +391,7 @@
 
         <div class="step">
           <div class="step-head"><span class="step-n">04</span><h2>Ce qu'un dépistage peut éviter</h2></div>
-          <p class="step-note">Un dépistage ne supprime pas le risque : il permet de repérer et d'orienter à temps. Réglez ici ce que vous estimez pouvoir éviter en une année, et le calcul le confronte au coût du dépistage.</p>
+          <p class="step-note">Un dépistage ne supprime pas le risque : il le repère, et permet d'orienter à temps. Il ne pose pas de diagnostic, qui relève du médecin du travail. Réglez ici ce que vous estimez pouvoir éviter en une année, et le calcul le confronte au coût du dépistage.</p>
           <div class="field">
             <div class="sl-head">
               <label for="sv-ev-rps">Arrêts liés aux RPS évités, pour 100 salariés</label>
@@ -410,11 +410,11 @@
           </div>
           <div class="field">
             <div class="sl-head">
-              <label for="sv-ev-tms">Part des TMS repérés par l'étude de poste</label>
+              <label for="sv-ev-tms">Part des TMS évités par le repérage du risque</label>
               <span class="sl-val" id="sv-ev-tms-val"></span>
             </div>
             <input type="range" id="sv-ev-tms" min="0" max="50" step="1" value="20">
-            <p class="hint">Les troubles musculo-squelettiques relèvent d'une logique différente des RPS : ils se traitent par l'étude de poste. L'analyse est individuelle, un rapport par salarié, parce que deux personnes au même poste n'ont ni la même morphologie, ni les mêmes gestes, ni le même historique. Menée à distance, elle atteint des salariés qu'une visite sur site ne rencontrera pratiquement jamais : secteur protégé, sites dispersés, postes itinérants, télétravail, et plus largement tout salarié seul à son poste. À l'inverse, lorsqu'une dizaine de personnes occupent un poste identique, une intervention en présentiel reste plus adaptée. Le coût évité retenu est celui d'un cas reconnu dans votre secteur, barème et désorganisation compris.</p>
+            <p class="hint">Ce qui est repéré, c'est un risque, pas un trouble. L'étude de poste identifie des contraintes, des gestes et des postures qui exposent le salarié ; elle ne pose aucun diagnostic, qui relève du seul médecin du travail. Agir sur ce risque évite qu'une partie de ces situations ne devienne un trouble reconnu, et c'est cette part que règle le curseur. L'analyse est individuelle, un rapport par salarié, parce que deux personnes au même poste n'ont ni la même morphologie, ni les mêmes gestes, ni le même historique. Menée à distance, elle atteint des salariés qu'une visite sur site ne rencontrera pratiquement jamais : secteur protégé, sites dispersés, postes itinérants, télétravail, et plus largement tout salarié seul à son poste. À l'inverse, lorsqu'une dizaine de personnes occupent un poste identique, une intervention en présentiel reste plus adaptée. Le coût évité retenu est celui d'un cas reconnu dans votre secteur, barème et désorganisation compris.</p>
           </div>
           <div class="field">
             <label>Votre formule de dépistage RPS</label>
@@ -595,7 +595,7 @@
   <div class="cta">
     <div>
       <h2>Un accident se voit. Une usure se dépiste.</h2>
-      <p>ScanUp repère les indicateurs de vigilance au niveau du collaborateur, avant qu'ils ne deviennent un arrêt long ou une maladie reconnue. Deux logiques distinctes : un dépistage des risques psychosociaux, là où les données publiques ne voient que la pointe reconnue de la difficulté ; une étude de poste à distance pour les troubles musculo-squelettiques, qui abaisse le coût de l'analyse ergonomique et atteint les salariés invisibles en présentiel, du secteur protégé aux postes itinérants. Analyse exclusivement humaine, par un ergonome ou un psychologue.</p>
+      <p>ScanUp repère des indicateurs de risque au niveau du collaborateur, avant qu'ils ne deviennent un arrêt long ou une maladie reconnue ; le diagnostic, lui, reste l'affaire du médecin du travail. Deux logiques distinctes : un dépistage des risques psychosociaux, là où les données publiques ne voient que la pointe reconnue de la difficulté ; une étude de poste à distance pour les troubles musculo-squelettiques, qui abaisse le coût de l'analyse ergonomique et atteint les salariés invisibles en présentiel, du secteur protégé aux postes itinérants. Analyse exclusivement humaine, par un ergonome ou un psychologue.</p>
     </div>
     <div class="cta-btns">
       <a class="btn btn-1" href="https://360skillvue.com/aide-support/">Nous contacter</a>
@@ -775,7 +775,7 @@ function calcule(){
   var partRps=0;
   if(joursRps>0){ partRps=casRps*dureeOuv/eff/joursRps*100; }
   var note="Hypothèse : "+num(casRps,1)+" arrêt lié aux RPS évité sur l'année pour "+num(eff,0)+
-    " salariés, et "+num(pctTms*100,0)+" % des troubles musculo-squelettiques repérés par l'étude de poste. "+
+    " salariés, et "+num(pctTms*100,0)+" % des troubles musculo-squelettiques évités par le repérage du risque au poste. "+
     "Ces deux valeurs sont les vôtres, elles ne sont pas issues des données publiées.";
   if(partRps>100){
     note=note+" Attention : ce nombre d'arrêts évités dépasse l'absentéisme que vous avez retenu "+

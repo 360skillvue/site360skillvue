@@ -404,11 +404,6 @@
             <p class="hint">Le dépistage porte sur tout le monde ; l'analyse approfondie ne concerne ensuite que les salariés repérés, en général de l'ordre de 10 à 20 % de l'effectif. C'est précisément ce que personne ne connaît avant d'avoir regardé : le dépistage sert à l'établir, les méthodes traditionnelles à le supposer.</p>
           </div>
 
-          <div class="field">
-            <label for="sv-p-quest">Coût annuel d'une plateforme de questionnaires RPS</label>
-            <input type="number" id="sv-p-quest" min="0" max="50000" step="100" value="1800">
-            <p class="hint">Abonnement à un outil déclaratif en ligne. Les offres du marché vont de 29 à 300 € HT par mois. C'est la solution la moins chère, et c'est aujourd'hui la plus répandue.</p>
-          </div>
 
           <div class="field">
             <label for="sv-p-audit">Coût d'un audit RPS collectif en présentiel</label>
@@ -506,34 +501,37 @@
           <div class="stat"><span>Journées d'absence associées</span><b id="sv-s-jours"></b></div>
           
           <div class="roi">
-            <p class="roi-l">Ce que coûte le fait de savoir</p>
-            <p class="roi-h" id="sv-cmp-h">&mdash;</p>
+            <p class="roi-l">Agir : les dispositifs et leur coût</p>
+            <div class="split">
+              <div class="split-c">
+                <span class="split-l">Méthodes classiques</span>
+                <span class="split-v" id="sv-cmp-t1">&mdash;</span>
+                <span class="split-p" id="sv-cmp-p1"></span>
+              </div>
+              <div class="split-c">
+                <span class="split-l">Avec ScanUp</span>
+                <span class="split-v" id="sv-cmp-t2">&mdash;</span>
+                <span class="split-p" id="sv-cmp-p2"></span>
+              </div>
+            </div>
             <p class="roi-sub" id="sv-cmp-sub"></p>
 
             <div class="roi-fam">
-              <div class="roi-fam-head"><span>Questionnaire RPS en ligne</span><b id="sv-cmp-t0"></b></div>
-              <div class="roi-row"><span>Abonnement annuel à la plateforme</span><b id="sv-c0-rps"></b></div>
-              <div class="roi-row"><span>Couverture des TMS</span><b>aucune</b></div>
-              <p class="bd-desc">La solution la moins chère, et la plus répandue. Elle repose sur le déclaratif et sur l'anonymat : elle produit des indicateurs par service, jamais un nom. Un salarié en difficulté qui ne remplit pas le questionnaire, ou qui le remplit prudemment, reste invisible. Rien n'y concerne les gestes et les postures.</p>
+              <div class="roi-fam-head"><span>Méthodes classiques, en présentiel</span><b id="sv-cmp-b1"></b></div>
+              <div class="roi-row"><span>Audit RPS collectif</span><b id="sv-c1-rps"></b></div>
+              <div class="roi-row"><span id="sv-c1-l-tms">Études de poste par un ergonome</span><b id="sv-c1-tms"></b></div>
+              <p class="bd-desc">Un professionnel vient voir le travail : l'analyse est réelle. Mais elle raisonne par poste, pas par personne, et l'audit psychosocial reste collectif, il décrit des services. Faute de donnée individuelle pour choisir, c'est vous qui désignez les situations à étudier.</p>
             </div>
 
             <div class="roi-fam">
-              <div class="roi-fam-head"><span>Présentiel</span><b id="sv-cmp-t1"></b></div>
-              <div class="roi-row"><span>Audit RPS collectif, en présentiel</span><b id="sv-c1-rps"></b></div>
-              <div class="roi-row"><span id="sv-c1-l-tms">Études de poste en présentiel</span><b id="sv-c1-tms"></b></div>
-              <p class="bd-desc">L'analyse est réelle : un intervenant vient voir le travail. Mais le raisonnement porte sur le poste, pas sur la personne. Une étude couvre une situation de travail et vaut pour tous ceux qui l'occupent, alors que deux salariés au même poste n'ont ni la même morphologie, ni les mêmes gestes, ni le même historique. L'audit psychosocial, lui, reste collectif : il décrit des services. Et faute de donnée individuelle, ce sont vous qui désignez les situations à étudier.</p>
-            </div>
-
-            <div class="roi-fam">
-              <div class="roi-fam-head"><span>Avec ScanUp</span><b id="sv-cmp-t2"></b></div>
+              <div class="roi-fam-head"><span>Avec ScanUp</span><b id="sv-cmp-b2"></b></div>
               <div class="roi-row"><span id="sv-c2-l-rps">Dépistage RPS de tout l'effectif</span><b id="sv-c2-rps"></b></div>
               <div class="roi-row"><span id="sv-c2-l-tms">Études personnalisées</span><b id="sv-c2-tms"></b></div>
               <p class="bd-desc" id="sv-c2-desc"></p>
             </div>
 
             <div class="roi-rows">
-              <div class="roi-row"><span id="sv-cmp-l-ecart">Écart</span><b id="sv-cmp-ecart"></b></div>
-              <div class="roi-row roi-net"><span>Coût estimé des TMS et des RPS</span><b id="sv-cmp-cout"></b></div>
+              <div class="roi-row roi-net"><span id="sv-cmp-l-ecart">Économie sur le budget prévention</span><b id="sv-cmp-ecart"></b></div>
             </div>
             <p class="roi-note" id="sv-cmp-note"></p>
             <a class="btn btn-1 btn-full" href="https://360skillvue.com/aide-support/">Parler de votre situation à ScanUp</a>
@@ -721,14 +719,12 @@ function calcule(){
     if(v<0){ v=0; }
     return v;
   }
-  var pQuest=lire("sv-p-quest",1800), pAudit=lire("sv-p-audit",auditRef(eff)), pPoste=lire("sv-p-poste",1200);
+  var pAudit=lire("sv-p-audit",auditRef(eff)), pPoste=lire("sv-p-poste",1200);
   $("sv-hint-audit").textContent="Un diagnostic RPS sérieux ne se facture pas au forfait : il dépend de "+
     "l'effectif, du nombre de sites et du nombre d'entretiens. Les cabinets annoncent un point de départ "+
     "autour de 5 900 € HT, et de 9 000 à 18 000 € HT pour une PME de taille moyenne. La valeur proposée, "+
     eur(auditRef(eff))+", suit cet ordre de grandeur pour "+num(eff,0)+" salariés ; remplacez-la par votre devis.";
 
-  // scénario 0 : questionnaire en ligne
-  var c0=pQuest;
 
   // scénario 1 : tout en présentiel
   var c1rps=pAudit, c1tms=nbCibles*pPoste, c1=c1rps+c1tms;
@@ -757,51 +753,41 @@ function calcule(){
   }
   var c2=c2rps+c2tms;
 
-  $("sv-c0-rps").textContent=eur(c0);
-  $("sv-cmp-t0").textContent=eur(c0);
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-tms").textContent=eur(c1tms);
-  $("sv-c1-l-tms").textContent="Études de poste en présentiel, "+num(nbCibles,0)+" × "+eur(pPoste);
+  $("sv-c1-l-tms").textContent="Études de poste par un ergonome, "+num(nbCibles,0)+" × "+eur(pPoste);
   $("sv-cmp-t1").textContent=eur(c1);
+  $("sv-cmp-b1").textContent=eur(c1);
   $("sv-c2-rps").textContent=eur(c2rps);
   $("sv-c2-tms").textContent=eur(c2tms);
   $("sv-c2-l-rps").textContent=lib2rps;
   $("sv-c2-l-tms").textContent=lib2tms;
   $("sv-c2-desc").textContent=desc2;
   $("sv-cmp-t2").textContent=eur(c2);
-  $("sv-cmp-cout").textContent=eur(total);
+  $("sv-cmp-b2").textContent=eur(c2);
+  $("sv-cmp-p1").textContent=eur(c1/eff)+" par salarié";
+  $("sv-cmp-p2").textContent=eur(c2/eff)+" par salarié";
 
   var ecart=c1-c2;
   $("sv-cmp-ecart").textContent=(ecart>=0?"− ":"+ ")+eur(Math.abs(ecart));
   $("sv-cmp-l-ecart").textContent=(ecart>=0?"Économie sur le budget prévention":"Surcoût par rapport au présentiel");
-  if(c2>0){
-    if(ecart>0){
-      $("sv-cmp-h").textContent=num(c1/c2,1)+" fois moins cher";
-      $("sv-cmp-sub").textContent="C'est le rapport entre le présentiel, "+eur(c1)+" par an, et ScanUp, "+
-        eur(c2)+", pour regarder les mêmes situations de travail. Aucune hypothèse d'efficacité n'entre "+
-        "dans ce calcul : ce sont des devis, pas des promesses.";
-    } else {
-      $("sv-cmp-h").textContent=eur(c2-c1)+" de plus";
-      $("sv-cmp-sub").textContent="Avec vos réglages, la solution à distance revient plus cher que le présentiel. "+
-        "Ce qu'elle apporte en contrepartie est d'une autre nature : elle désigne les personnes, là où un audit "+
-        "collectif décrit des services.";
-    }
+  var sub="Voilà ce que coûte le fait d'aller regarder les situations de travail, dans les deux cas. "+
+    "À gauche l'audit psychosocial et les études de poste menés sur site par un intervenant. "+
+    "À droite le même travail d'analyse, mené par un ergonome ou un psychologue du travail à partir "+
+    "de captations en situation réelle. Ce sont des devis, pas des promesses.";
+  if(ecart>0){
+    sub=sub+" L'écart, "+eur(ecart)+" par an, est à rapprocher des "+eur(total)+
+      " que les troubles musculo-squelettiques et les risques psychosociaux coûtent déjà à cet effectif.";
   }
-  var note="Les trois approches ne coûtent pas la même chose et ne produisent pas la même chose. "+
-    "Le questionnaire est bon marché mais déclaratif et anonyme : il ne désigne personne et ignore les TMS. "+
-    "Le présentiel fait analyser le travail réel par un professionnel, mais son coût limite le nombre de "+
-    "situations regardées. ScanUp fait analyser le travail réel par un professionnel lui aussi, à partir "+
-    "d'une captation individuelle, sur l'ensemble de l'effectif, pour un budget intermédiaire.";
-  note=note+" Ici, le dépistage couvre "+num(eff,0)+" salariés, et l'analyse approfondie ne porte que sur les "+
-    num(nbCibles,0)+" personnes repérées, au lieu d'être décidée à l'aveugle. "+
-    "ScanUp ne fait pas baisser l'absentéisme par lui-même : il dit où porter l'effort. Ce que devient "+
-    "le risque ensuite dépend de l'accompagnement mis en place, qui ne relève pas de ScanUp.";
-  if(c2rps>pAudit){
-    note=note+" Cas particulier ici : avec cet effectif, le dépistage individuel revient plus cher que "+
-      "l'audit collectif, de "+eur(c2rps-pAudit)+". C'est le prix du passage d'une photographie par service "+
-      "à une liste de personnes à voir.";
-  }
-  $("sv-cmp-note").textContent=note;
+  $("sv-cmp-sub").textContent=sub;
+
+  var note="Les deux approches font analyser le travail réel par un professionnel : c'est ce qui les "+
+    "rapproche. Ce qui les sépare est l'unité de raisonnement et la couverture. Le présentiel étudie un "+
+    "poste, pour tous ceux qui l'occupent, sur les situations que vous aurez désignées. ScanUp dépiste "+
+    "les "+num(eff,0)+" salariés, puis produit une étude personnalisée pour chacune des "+num(nbCibles,0)+
+    " personnes repérées, y compris celles qu'une visite sur site ne rencontrerait jamais.";
+  note=note+" ScanUp ne fait pas baisser l'absentéisme par lui-même : il dit où porter l'effort, et à quel "+
+    "prix. Ce que devient le risque ensuite dépend de l'accompagnement mis en place, qui ne relève pas de ScanUp.";
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
 
   if(s.cout){
@@ -899,7 +885,7 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-salaire","sv-desorg","sv-rps",
- "sv-part","sv-p-quest","sv-p-audit","sv-p-poste"].forEach(function(id){
+ "sv-part","sv-p-audit","sv-p-poste"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);

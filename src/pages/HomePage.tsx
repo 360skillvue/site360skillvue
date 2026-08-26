@@ -10,6 +10,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';
 import PageMeta from '../components/PageMeta';
+import VideoEmbed from '../components/VideoEmbed';
 
 const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: string }> = ({
   children, delay = 0, className = ""
@@ -222,30 +223,57 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── PARCOURS SALARIE ──────────────────────────────────── */}
+      <section className="py-24 px-6 bg-[#f8f9fb]">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn className="text-center mb-12">
+            <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">
+              {t.home.videosLabel}
+            </p>
+            <h2 className="text-[28px] sm:text-[38px] font-bold tracking-tight mb-4">
+              {t.home.videosTitle}
+            </h2>
+            <p className="text-[15px] text-scanup-graytext max-w-2xl mx-auto leading-relaxed">
+              {t.home.videosSubtitle}
+            </p>
+          </FadeIn>
+
+          <div className="flex flex-col md:flex-row md:items-start justify-center gap-8 md:gap-10">
+            <FadeIn delay={0.1} className="flex-1 max-w-[640px] w-full">
+              <p className="text-[14px] font-semibold text-scanup-navy mb-3 text-center md:text-left">
+                🇫🇷 {t.home.videosFrLabel}
+              </p>
+              <VideoEmbed id="PgL46oFdz2M" title={t.home.videosFrLabel} ratio="16/9" />
+            </FadeIn>
+
+            <FadeIn delay={0.2} className="w-full max-w-[280px] mx-auto md:mx-0 shrink-0">
+              <p className="text-[14px] font-semibold text-scanup-navy mb-3 text-center md:text-left">
+                🇨🇭 {t.home.videosChLabel}
+              </p>
+              <VideoEmbed id="5dQb9b1o82s" title={t.home.videosChLabel} ratio="9/16" />
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
       {/* ─── VISION FONDATRICE ─────────────────────────────────── */}
-      <section className="py-20 px-6 bg-[#f8f9fb]">
+      <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <FadeIn className="text-center mb-10">
             <h2 className="text-[26px] sm:text-[34px] font-bold tracking-tight mb-3">
-              La vision de la fondatrice
+              {t.home.founderTitle}
             </h2>
             <p className="text-[15px] text-scanup-graytext max-w-xl mx-auto">
-              Laure Dellamonica, fondatrice de 360SkillVue, vous explique pourquoi ScanUp existe.
+              {t.home.founderSubtitle}
             </p>
           </FadeIn>
           <FadeIn delay={0.1} className="flex justify-center">
-            <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-black/10 border border-black/[0.06]"
-              style={{ width: '100%', maxWidth: 360 }}>
-              <div style={{ paddingTop: '177.78%', position: 'relative' }}>
-                <iframe
-                  src="https://www.youtube.com/embed/PlirT4EdL6g"
-                  title="La vision de Laure Dellamonica, fondatrice de 360SkillVue"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
-                />
-              </div>
-            </div>
+            <VideoEmbed
+              id="PlirT4EdL6g"
+              title={t.home.founderTitle}
+              ratio="9/16"
+              maxWidth={360}
+            />
           </FadeIn>
         </div>
       </section>

@@ -508,7 +508,7 @@ export const fr = {
     heroTitle: 'Passez d\'une logique',
     heroTitleHighlight: 'curative',
     heroTitleEnd: 'à une logique préventive',
-    heroSubtitle: 'ScanUp transforme les données de dépistage TMS et RPS de vos assurés en cartographie des risques actionnable — pour réduire l\'absentéisme et piloter votre prévention avec précision.',
+    heroSubtitle: 'ScanUp transforme les données de dépistage TMS et RPS de vos assurés en cartographie des risques actionnable, pour réduire l\'absentéisme et piloter votre prévention avec précision.',
     heroCtaDemo: 'Demander une démo',
     // ── Le constat ──────────────────────────────────────────────
     constatLabel: 'Le constat',
@@ -524,7 +524,7 @@ export const fr = {
     solutionLabel: 'Notre solution',
     solutionTitle: 'ScanUp : le dépistage qui transforme vos données santé en leviers de prévention',
     solutionBody: 'ScanUp est une plateforme de dépistage digital des TMS et RPS qui combine la simplicité de la captation terrain avec la puissance de l\'analyse experte. Résultat : une cartographie fiable des risques, anonymisée et exploitable, qui permet aux mutuelles de passer d\'une logique curative à une logique préventive.',
-    solutionBody2: 'En intégrant ScanUp à votre offre, vous proposez à vos entreprises clientes un outil concret de réduction de l\'absentéisme — et vous disposez de données riches pour piloter votre stratégie de couverture et de prévention.',
+    solutionBody2: 'En intégrant ScanUp à votre offre, vous proposez à vos entreprises clientes un outil concret de réduction de l\'absentéisme, et vous disposez de données riches pour piloter votre stratégie de couverture et de prévention.',
     // ── Comment ça marche ────────────────────────────────────────
     processLabel: 'Comment ça marche',
     processTitle: 'Un processus simple, des résultats puissants',
@@ -541,7 +541,7 @@ export const fr = {
     benefits: [
       { emoji: '📊', title: 'Données riches et fiables', body: 'Des données de dépistage qualifiées par des experts, anonymisées et structurées pour alimenter vos modèles de risque et vos reportings.' },
       { emoji: '🎯', title: 'Cartographie des risques', body: 'Visualisez les zones à risque par entreprise, secteur ou métier. Identifiez où concentrer vos efforts de prévention pour un impact maximal.' },
-      { emoji: '📉', title: 'Réduction de l\'absentéisme', body: 'En agissant tôt sur les signaux faibles, vos entreprises clientes réduisent les arrêts de travail — et vous maîtrisez vos coûts de couverture.' },
+      { emoji: '📉', title: 'Réduction de l\'absentéisme', body: 'En agissant tôt sur les signaux faibles, vos entreprises clientes réduisent les arrêts de travail, et vous maîtrisez vos coûts de couverture.' },
       { emoji: '✅', title: 'Mesure d\'impact concrète', body: 'Le taux de dépistage positif devient votre indicateur clé pour suivre l\'évolution des risques et démontrer le ROI de vos programmes de prévention.' },
       { emoji: '🔒', title: 'Conformité et confidentialité', body: 'Toutes les données sont anonymisées. ScanUp garantit le respect de la vie privée des salariés tout en offrant une granularité d\'analyse fine.' },
       { emoji: '🚀', title: 'Différenciation de votre offre', body: 'Proposez à vos entreprises clientes un service innovant de prévention santé qui vous distingue sur un marché concurrentiel.' },
@@ -558,7 +558,7 @@ export const fr = {
     // ── Tarification ─────────────────────────────────────────────
     pricingLabel: 'Tarification adaptée au risque',
     pricingTitle: 'Ajustez vos tarifs grâce à une connaissance fine du risque',
-    pricingBody: 'Dans certains pays, la réglementation permet aux assureurs d\'adapter leurs tarifs en fonction du niveau de risque réel de leurs assurés. Grâce aux données de dépistage ScanUp, vous disposez d\'une base objective et quantifiée pour évaluer le profil de risque de chaque entreprise cliente. Cette connaissance granulaire vous permet, là où la réglementation le permet, d\'ajuster vos grilles tarifaires en valorisant les entreprises engagées dans une démarche active de prévention — et de mieux provisionner les risques sur les portefeuilles les plus exposés.',
+    pricingBody: 'Dans certains pays, la réglementation permet aux assureurs d\'adapter leurs tarifs en fonction du niveau de risque réel de leurs assurés. Grâce aux données de dépistage ScanUp, vous disposez d\'une base objective et quantifiée pour évaluer le profil de risque de chaque entreprise cliente. Cette connaissance granulaire vous permet, là où la réglementation le permet, d\'ajuster vos grilles tarifaires en valorisant les entreprises engagées dans une démarche active de prévention, et de mieux provisionner les risques sur les portefeuilles les plus exposés.',
     // ── CTA ──────────────────────────────────────────────────────
     ctaLabel: 'Passez à l\'action',
     ctaTitle: 'Prêts à transformer votre approche de la prévention ?',

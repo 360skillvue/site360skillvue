@@ -64,7 +64,7 @@ export default function AssureursPage() {
           <FadeIn delay={0.2} className="relative">
             <motion.div animate={{ y: [-8, 8, -8] }} transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }} className="relative z-10">
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue/20 to-scanup-turquoise/20 rounded-2xl transform translate-x-4 translate-y-4 blur-sm" />
-              <img src="/salarie-capture.webp" alt="Captation audio sur smartphone par un salarié"
+              <img src="/scanup-tms-operateur.webp" alt="Écran ScanUp : le salarié est invité à filmer sa situation de travail pour le dépistage TMS"
                 className="relative rounded-2xl shadow-2xl border border-white/50 w-full object-cover" loading="lazy" decoding="async" />
             </motion.div>
           </FadeIn>
@@ -114,7 +114,7 @@ export default function AssureursPage() {
           <FadeIn delay={0.2}>
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue to-scanup-turquoise rounded-2xl transform translate-x-3 translate-y-3 opacity-15" />
-              <img src="/psychologue-analyse.webp" alt="Analyse d'une captation audio par un psychologue"
+              <img src="/scanup-tms-evaluateur.webp" alt="Écran ScanUp : l'évaluateur cote l'exposition aux facteurs de risque et rend sa correction"
                 className="relative rounded-2xl shadow-xl border border-white w-full object-cover" loading="lazy" decoding="async" />
             </div>
           </FadeIn>

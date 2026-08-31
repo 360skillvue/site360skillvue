@@ -126,8 +126,8 @@ export default function CertificationPage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-blue/20">
       <PageMeta
-        title="Certification Périodique Santé"
-        description="Pilotez la certification périodique de vos professionnels de santé avec 360SkillVue. Conforme à l'arrêté du 26 février 2026."
+        title={t.meta.certification.title}
+        description={t.meta.certification.description}
         path="/certification-periodique-sante"
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrgData) }} />

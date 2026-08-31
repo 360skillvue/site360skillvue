@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../i18n';
 import { Link } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -104,11 +105,12 @@ const SECTIONS = [
 ];
 
 export default function CGVPage() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-white font-sans text-scanup-navy flex flex-col">
       <PageMeta
-        title="Conditions Générales de Vente"
-        description="Conditions générales de vente de ScanUp by 360SkillVue Sàrl — plateforme de prévention TMS & RPS et certification périodique."
+        title={t.meta.cgv.title}
+        description={t.meta.cgv.description}
         path="/cgv"
       />
       <Navbar />

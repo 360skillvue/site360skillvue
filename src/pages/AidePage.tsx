@@ -136,8 +136,8 @@ export default function AidePage() {
   return (
     <div className="min-h-screen bg-white font-sans text-scanup-navy">
       <PageMeta
-        title="Aide & Support"
-        description="Toutes vos questions sur ScanUp. FAQ, contact et prise de rendez-vous avec l'équipe 360SkillVue."
+        title={t.meta.aide.title}
+        description={t.meta.aide.description}
         path="/aide-support"
         schema={{
           '@context': 'https://schema.org',

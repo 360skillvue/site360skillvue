@@ -42,8 +42,8 @@ export default function EntreprisesPage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white">
       <PageMeta
-        title="Entreprises & DRH — Dépistage TMS & RPS"
-        description="Dépistez les risques TMS et RPS de vos équipes sans audit. Résultats en 48h, dès 27 € par collaborateur."
+        title={t.meta.entreprises.title}
+        description={t.meta.entreprises.description}
         path="/entreprises-drh"
         schema={{
           '@context': 'https://schema.org',

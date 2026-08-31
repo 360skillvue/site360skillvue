@@ -215,8 +215,8 @@ export default function TarifsPage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white flex flex-col">
       <PageMeta
-        title="Tarifs ScanUp — Prévention TMS & RPS"
-        description="Dépistage RPS dès 27 € et dépistage TMS dès 55 € HT par collaborateur, analyse par nos experts incluse. Essai gratuit 14 jours, sans carte bancaire. Hébergement certifié HDS."
+        title={t.meta.tarifs.title}
+        description={t.meta.tarifs.description}
         path="/tarifs"
       />
       <Navbar />

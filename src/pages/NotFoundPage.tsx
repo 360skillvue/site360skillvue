@@ -11,8 +11,8 @@ export default function NotFoundPage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white">
       <PageMeta
-        title="Page introuvable"
-        description="La page que vous recherchez n'existe pas."
+        title={t.meta.introuvable.title}
+        description={t.meta.introuvable.description}
         path="/404"
       />
       <Navbar />

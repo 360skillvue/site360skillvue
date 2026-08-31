@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../i18n';
 import { Link } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -95,11 +96,12 @@ const SECTIONS = [
 ];
 
 export default function CGUPage() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-white font-sans text-scanup-navy flex flex-col">
       <PageMeta
-        title="Conditions Générales d'Utilisation"
-        description="Conditions générales d'utilisation de ScanUp by 360SkillVue Sàrl — plateforme de prévention TMS & RPS."
+        title={t.meta.cgu.title}
+        description={t.meta.cgu.description}
         path="/cgu"
       />
       <Navbar />

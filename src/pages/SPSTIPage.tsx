@@ -2,20 +2,13 @@ import React from 'react';
 import { motion } from 'motion/react';
 import {
   Stethoscope,
-  Activity,
-  Users,
   ArrowRight,
   Mail,
-  ClipboardCheck,
-  HeartPulse,
-  Lock,
+  Check,
+  ScanLine,
+  Video,
+  Users,
   Scale,
-  Flag,
-  Hospital,
-  Compass,
-  BookOpen,
-  Award,
-  Globe,
 } from 'lucide-react';
 import { useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
@@ -39,265 +32,218 @@ export default function SPSTIPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
 
-  const trackEvent = (eventName: string) => {
-    console.log(`[GA4 Event] ${eventName}`);
-    if (eventName.includes('demo')) navigate('/aide-support');
-  };
+  const allerContact = () => navigate('/aide-support');
 
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-warning/20">
       <PageMeta
-        title="Acteurs de la Santé au travail — Détection précoce & Maintien dans l'emploi"
-        description="Outil de dépistage TMS et RPS pour équipes pluridisciplinaires : orientation, formation Qualiopi, plateforme multilingue. Traçabilité complète de vos actions de prévention."
+        title={t.spsti.metaTitle}
+        description={t.spsti.metaDescription}
         path="/spsti"
       />
       <Navbar />
 
-      {/* Hero Section */}
+      {/* ─── HERO ──────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-scanup-warning/5 rounded-full blur-3xl -z-10"></div>
-        <div className="max-w-7xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-6 md:gap-12 items-center">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-scanup-warning/5 rounded-full blur-3xl -z-10" />
+        <div className="max-w-7xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 gap-10 md:gap-14 items-center">
           <div className="z-10">
             <FadeIn>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-scanup-warning/10 text-scanup-warning text-sm font-medium mb-6 border border-scanup-warning/20">
                 <Stethoscope size={16} />
                 {t.spsti.heroBadge}
               </div>
-              <h1 className="text-[24px] sm:text-[32px] md:text-[48px] lg:text-[56px] font-bold leading-[1.15] mb-6 tracking-tight">
-                {t.spsti.heroTitle} <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-warning to-scanup-blue">{t.spsti.heroTitleHighlight}</span>
+              <h1 className="text-[26px] sm:text-[34px] md:text-[46px] lg:text-[52px] font-bold leading-[1.15] mb-6 tracking-tight">
+                {t.spsti.heroTitle}{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-scanup-warning to-scanup-blue">
+                  {t.spsti.heroTitleHighlight}
+                </span>
               </h1>
-              <p className="text-[18px] text-scanup-graytext mb-10 leading-[1.6] max-w-lg">
+              <p className="text-[17px] text-scanup-graytext mb-8 leading-[1.65] max-w-xl">
                 {t.spsti.heroSubtitle}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 items-start">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => trackEvent('click_demande_demo_hero_spsti')}
+                  onClick={allerContact}
                   className="bg-scanup-warning text-scanup-navy px-8 py-4 rounded-[10px] font-medium hover:bg-amber-500 transition-colors flex items-center justify-center gap-2 shadow-xl shadow-scanup-warning/20 group"
                 >
                   {t.spsti.heroCtaDemo}
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </motion.button>
               </div>
+              <p className="text-[13px] text-scanup-graytext mt-5">{t.spsti.heroNote}</p>
             </FadeIn>
           </div>
-          <FadeIn delay={0.2} className="relative">
-            <motion.div 
-              animate={{ y: [-10, 10, -10] }}
-              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="relative z-10"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-scanup-warning/20 to-scanup-blue/20 rounded-2xl transform translate-x-4 translate-y-4 blur-sm"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80"
-                alt="Médecin du travail SPSTI"
-                className="relative rounded-2xl shadow-2xl border border-scanup-white/50 w-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </motion.div>
+
+          <FadeIn delay={0.15}>
+            <div className="rounded-[22px] border border-scanup-graylight bg-scanup-white shadow-xl shadow-scanup-navy/5 p-8">
+              <div className="flex items-center gap-2 mb-6 text-scanup-blue">
+                <Scale size={18} />
+                <span className="text-[12px] uppercase tracking-widest font-semibold">{t.spsti.cadreLabel}</span>
+              </div>
+              <ul className="space-y-5">
+                {t.spsti.cadre.map((c, i) => (
+                  <li key={i} className="border-l-2 border-scanup-warning/40 pl-4">
+                    <p className="text-[12px] font-semibold text-scanup-graytext tracking-wide mb-1">{c.tag}</p>
+                    <p className="text-[16px] font-bold leading-snug">{c.title}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* Section Objectifs */}
-      <section className="bg-scanup-graylight py-24 relative">
-        <div className="max-w-7xl mx-auto px-6">
-          <FadeIn className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">{t.spsti.objectivesTitle}</h2>
-            <p className="text-[18px] text-scanup-graytext leading-relaxed">
-              {t.spsti.objectivesSubtitle}
-            </p>
+      {/* ─── CADRE REGLEMENTAIRE ───────────────────────────────── */}
+      <section className="bg-scanup-graylight py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <FadeIn className="max-w-3xl mx-auto text-center mb-14">
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-5 tracking-tight">{t.spsti.cadreTitle}</h2>
+            <p className="text-[17px] text-scanup-graytext leading-relaxed">{t.spsti.cadreSubtitle}</p>
           </FadeIn>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {[
-              { icon: Activity, title: t.spsti.objective1Title, desc: t.spsti.objective1Desc, color: "text-scanup-warning", bg: "bg-scanup-warning/10" },
-              { icon: HeartPulse, title: t.spsti.objective2Title, desc: t.spsti.objective2Desc, color: "text-scanup-blue", bg: "bg-scanup-blue/10" },
-            ].map((item, i) => (
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {t.spsti.cadre.map((c, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <motion.div 
-                  whileHover={{ y: -5 }}
-                  className="bg-scanup-white border border-scanup-graylight/80 rounded-[20px] p-8 flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-300 h-full"
-                >
-                  <div className={`w-16 h-16 rounded-2xl ${item.bg} flex items-center justify-center mb-6`}>
-                    <item.icon className={item.color} size={32} strokeWidth={2} />
-                  </div>
-                  <h3 className="text-[20px] font-semibold mb-3">{item.title}</h3>
-                  <p className="text-[15px] text-scanup-graytext leading-relaxed">{item.desc}</p>
-                </motion.div>
+                <div className="bg-scanup-white rounded-[20px] border border-scanup-graylight/80 p-8 h-full flex flex-col shadow-sm">
+                  <p className="text-[12px] font-semibold text-scanup-warning tracking-wide mb-3">{c.tag}</p>
+                  <h3 className="text-[19px] font-bold mb-4 leading-snug text-scanup-navy">{c.title}</h3>
+                  <p className="text-[15px] text-scanup-graytext leading-relaxed flex-grow">{c.desc}</p>
+                  <p className="text-[15px] text-scanup-navy leading-relaxed mt-5 pt-5 border-t border-scanup-graylight font-medium">
+                    {c.scanup}
+                  </p>
+                </div>
               </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Section Messages Clés */}
-      <section className="py-24 bg-scanup-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-          <FadeIn>
-            <h2 className="text-[28px] md:text-[40px] font-bold mb-6 tracking-tight">{t.spsti.teamTitle}</h2>
-            <p className="text-[18px] text-scanup-graytext mb-8 leading-relaxed">
-              {t.spsti.teamSubtitle}
-            </p>
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-scanup-warning/10 flex items-center justify-center flex-shrink-0">
-                  <Users className="text-scanup-warning" size={20} />
-                </div>
-                <div>
-                  <h4 className="text-[18px] font-bold mb-1">{t.spsti.team1Title}</h4>
-                  <p className="text-scanup-graytext">{t.spsti.team1Desc}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-scanup-blue/10 flex items-center justify-center flex-shrink-0">
-                  <ClipboardCheck className="text-scanup-blue" size={20} />
-                </div>
-                <div>
-                  <h4 className="text-[18px] font-bold mb-1">{t.spsti.team2Title}</h4>
-                  <p className="text-scanup-graytext">{t.spsti.team2Desc}</p>
-                </div>
-              </div>
+      {/* ─── ETUDE DE POSTE A DISTANCE ─────────────────────────── */}
+      <section className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <FadeIn className="max-w-3xl mb-14">
+            <div className="flex items-center gap-2 mb-4 text-scanup-blue">
+              <Video size={18} />
+              <span className="text-[12px] uppercase tracking-widest font-semibold">{t.spsti.etudeLabel}</span>
             </div>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-tr from-scanup-warning to-scanup-blue rounded-2xl transform translate-x-3 translate-y-3 opacity-20 transition-transform duration-500"></div>
-              <img
-                src="/psychologue-analyse.webp"
-                alt="Psychologue analysant une captation audio sur 360SkillVue"
-                className="relative rounded-2xl shadow-xl border border-scanup-white w-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Au-delà du dépistage */}
-      <section className="py-24 px-6 bg-scanup-graylight">
-        <div className="max-w-6xl mx-auto">
-          <FadeIn className="text-center mb-14">
-            <span className="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-scanup-blue mb-4">
-              {(t.spsti as any).featuresLabel}
-            </span>
-            <h2 className="text-[28px] md:text-[40px] font-bold tracking-tight mb-4">
-              {(t.spsti as any).featuresTitle}
-            </h2>
-            <p className="text-[16px] text-scanup-graytext max-w-2xl mx-auto leading-relaxed">
-              {(t.spsti as any).featuresSubtitle}
-            </p>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-5 tracking-tight">{t.spsti.etudeTitle}</h2>
+            <p className="text-[17px] text-scanup-graytext leading-relaxed">{t.spsti.etudeSubtitle}</p>
           </FadeIn>
 
-          <div className="grid sm:grid-cols-2 gap-5">
-            {[Compass, BookOpen, Award, Globe].map((Icon, i) => {
-              const feat = (t.spsti as any).features[i];
-              return (
-                <FadeIn key={i} delay={i * 0.08}>
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.07)' }}
-                    transition={{ duration: 0.25 }}
-                    className="bg-white rounded-2xl border border-black/[0.07] p-7 h-full flex gap-5"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-scanup-blue/8 flex items-center justify-center flex-shrink-0">
-                      <Icon className="text-scanup-blue" size={22} strokeWidth={1.75} />
-                    </div>
-                    <div>
-                      <h3 className="text-[17px] font-bold text-scanup-navy mb-2">{feat.title}</h3>
-                      <p className="text-[14px] text-scanup-graytext leading-relaxed">{feat.desc}</p>
-                    </div>
-                  </motion.div>
-                </FadeIn>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Sécurité & Conformité */}
-      <section className="py-24 px-6 bg-[#f8f9fb]">
-        <div className="max-w-5xl mx-auto">
-          <FadeIn className="text-center mb-14">
-            <span className="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-scanup-blue mb-4">
-              Sécurité &amp; Conformité
-            </span>
-            <h2 className="text-[28px] md:text-[40px] font-bold tracking-tight mb-4">
-              Vos données de santé entre de bonnes mains
-            </h2>
-            <p className="text-[16px] text-scanup-graytext max-w-xl mx-auto leading-relaxed">
-              La confiance est au cœur de notre plateforme. Nous appliquons les standards les plus exigeants.
-            </p>
-          </FadeIn>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              {
-                icon: Hospital,
-                color: 'text-scanup-blue',
-                bg: 'bg-scanup-blue/8',
-                title: 'Hébergement HDS',
-                desc: 'Infrastructure certifiée Hébergeur de Données de Santé, conformément aux exigences du Code de la santé publique.',
-              },
-              {
-                icon: Lock,
-                color: 'text-scanup-turquoise',
-                bg: 'bg-scanup-turquoise/10',
-                title: 'Anonymisation native',
-                desc: 'Les données collectées sont anonymisées dès leur réception. Aucun témoignage ne peut être relié à un salarié identifié.',
-              },
-              {
-                icon: Scale,
-                color: 'text-scanup-warning',
-                bg: 'bg-scanup-warning/10',
-                title: 'Conformité RGPD',
-                desc: 'Traitement des données en totale conformité avec le Règlement Général sur la Protection des Données.',
-              },
-              {
-                icon: Flag,
-                color: 'text-scanup-success',
-                bg: 'bg-scanup-success/10',
-                title: 'Souveraineté française',
-                desc: 'Toutes les données sont hébergées en France, sur des serveurs situés sur le territoire national.',
-              },
-            ].map((item, i) => (
+          <div className="grid md:grid-cols-2 gap-6">
+            {t.spsti.etudePoints.map((p, i) => (
               <FadeIn key={i} delay={i * 0.08}>
-                <motion.div
-                  whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0,0,0,0.07)' }}
-                  transition={{ duration: 0.25 }}
-                  className="bg-white rounded-2xl border border-black/[0.07] p-6 h-full flex flex-col"
-                >
-                  <div className={`w-11 h-11 rounded-xl ${item.bg} flex items-center justify-center mb-4 flex-shrink-0`}>
-                    <item.icon className={item.color} size={20} strokeWidth={1.75} />
-                  </div>
-                  <h3 className="text-[15px] font-bold text-scanup-navy mb-2">{item.title}</h3>
-                  <p className="text-[13px] text-scanup-graytext leading-relaxed flex-grow">{item.desc}</p>
-                </motion.div>
+                <div className="rounded-[20px] border border-scanup-graylight p-8 h-full hover:shadow-xl hover:shadow-scanup-navy/5 transition-shadow duration-300">
+                  <h3 className="text-[18px] font-bold mb-3 leading-snug text-scanup-navy">{p.title}</h3>
+                  <p className="text-[15px] text-scanup-graytext leading-relaxed">{p.desc}</p>
+                </div>
               </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-scanup-navy py-24 text-center relative overflow-hidden">
-        <div className="max-w-3xl mx-auto px-6 relative z-10">
+      {/* ─── DEPISTAGE RPS ET ORIENTATION ──────────────────────── */}
+      <section className="bg-scanup-navy text-white py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <FadeIn className="max-w-3xl mb-14">
+            <div className="flex items-center gap-2 mb-4 text-scanup-turquoise">
+              <ScanLine size={18} />
+              <span className="text-[12px] uppercase tracking-widest font-semibold">{t.spsti.rpsLabel}</span>
+            </div>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-5 tracking-tight text-white">{t.spsti.rpsTitle}</h2>
+            <p className="text-[17px] text-white/70 leading-relaxed">{t.spsti.rpsSubtitle}</p>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {t.spsti.rpsPoints.map((p, i) => (
+              <FadeIn key={i} delay={i * 0.08}>
+                <div className="rounded-[20px] border border-white/15 bg-white/5 p-8 h-full">
+                  <h3 className="text-[18px] font-bold mb-3 leading-snug text-white">{p.title}</h3>
+                  <p className="text-[15px] text-white/70 leading-relaxed">{p.desc}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── MODES DE COLLABORATION ────────────────────────────── */}
+      <section className="py-24">
+        <div className="max-w-5xl mx-auto px-6">
+          <FadeIn className="text-center mb-14">
+            <div className="flex items-center justify-center gap-2 mb-4 text-scanup-blue">
+              <Users size={18} />
+              <span className="text-[12px] uppercase tracking-widest font-semibold">{t.spsti.modesLabel}</span>
+            </div>
+            <h2 className="text-[28px] md:text-[40px] font-bold tracking-tight">{t.spsti.modesTitle}</h2>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {t.spsti.modes.map((m, i) => (
+              <FadeIn key={i} delay={i * 0.1}>
+                <div className="rounded-[20px] border border-scanup-graylight p-8 h-full flex flex-col">
+                  <h3 className="text-[20px] font-bold mb-4 text-scanup-navy">{m.title}</h3>
+                  <p className="text-[15px] text-scanup-graytext leading-relaxed flex-grow">{m.desc}</p>
+                  <button
+                    onClick={allerContact}
+                    className="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-scanup-blue hover:gap-3 transition-all duration-300 self-start"
+                  >
+                    {m.cta}
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── TRACABILITE ───────────────────────────────────────── */}
+      <section className="bg-scanup-graylight py-24">
+        <div className="max-w-3xl mx-auto px-6">
+          <FadeIn className="mb-10">
+            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-4">{t.spsti.tracaLabel}</p>
+            <h2 className="text-[28px] md:text-[38px] font-bold tracking-tight">{t.spsti.tracaTitle}</h2>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <ul className="space-y-4">
+              {t.spsti.tracaItems.map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="mt-1 shrink-0 w-5 h-5 rounded-full bg-scanup-success/10 flex items-center justify-center">
+                    <Check size={13} className="text-scanup-success" />
+                  </span>
+                  <span className="text-[16px] text-scanup-navy leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ─── CTA ───────────────────────────────────────────────── */}
+      <section className="py-24">
+        <div className="max-w-3xl mx-auto px-6 text-center">
           <FadeIn>
-            <h2 className="text-[32px] md:text-[48px] font-bold mb-10 text-scanup-white tracking-tight">
-              {t.spsti.ctaTitle}
-            </h2>
+            <h2 className="text-[28px] md:text-[40px] font-bold mb-8 tracking-tight">{t.spsti.ctaTitle}</h2>
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => trackEvent('click_demande_demo_footer_spsti')}
-              className="bg-scanup-warning text-scanup-navy px-10 py-4 rounded-[10px] font-medium hover:bg-amber-500 transition-colors shadow-xl shadow-scanup-warning/20 text-lg"
+              onClick={allerContact}
+              className="bg-scanup-warning text-scanup-navy px-8 py-4 rounded-[10px] font-medium hover:bg-amber-500 transition-colors inline-flex items-center gap-2 shadow-xl shadow-scanup-warning/20 group"
             >
               {t.spsti.ctaButton}
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </motion.button>
-            <div className="mt-12 text-scanup-lightblue/60 flex items-center justify-center gap-2">
+            <p className="mt-8 text-[15px] text-scanup-graytext flex items-center justify-center gap-2">
               <Mail size={16} />
-              <a href={`mailto:${t.spsti.ctaEmail}`} className="hover:text-scanup-white transition-colors">{t.spsti.ctaEmail}</a>
-            </div>
+              <a href={`mailto:${t.spsti.ctaEmail}`} className="hover:text-scanup-navy transition-colors">
+                {t.spsti.ctaEmail}
+              </a>
+            </p>
           </FadeIn>
         </div>
       </section>

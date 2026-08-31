@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../i18n';
 import { Link } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -104,11 +105,12 @@ const SECTIONS = [
 ];
 
 export default function PolitiqueConfidentialitePage() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-white font-sans text-scanup-navy flex flex-col">
       <PageMeta
-        title="Politique de confidentialité"
-        description="Politique de confidentialité et protection des données personnelles de 360SkillVue Sàrl — éditeur de ScanUp."
+        title={t.meta.confidentialite.title}
+        description={t.meta.confidentialite.description}
         path="/politique-confidentialite"
       />
       <Navbar />

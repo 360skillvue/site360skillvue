@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../i18n';
 import { Link } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -95,11 +96,12 @@ const SECTIONS = [
 ];
 
 export default function MentionsLegalesPage() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-white font-sans text-scanup-navy flex flex-col">
       <PageMeta
-        title="Mentions légales"
-        description="Mentions légales de 360SkillVue Sàrl — éditeur de ScanUp, plateforme de prévention TMS & RPS."
+        title={t.meta.mentions.title}
+        description={t.meta.mentions.description}
         path="/mentions-legales"
       />
       <Navbar />

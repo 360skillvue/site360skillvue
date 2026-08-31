@@ -74,8 +74,8 @@ export default function HomePage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-scanup-white selection:bg-scanup-blue/20">
       <PageMeta
-        title="Prévention TMS & RPS · Certification Santé"
-        description="ScanUp dépiste les risques TMS et RPS et pilote la certification périodique de vos professionnels de santé."
+        title={t.meta.home.title}
+        description={t.meta.home.description}
         path="/"
       />
 

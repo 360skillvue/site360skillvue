@@ -31,8 +31,8 @@ export default function AProposPage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white flex flex-col">
       <PageMeta
-        title="À propos — 360SkillVue & ScanUp"
-        description="Depuis plus de dix ans, 360SkillVue accompagne les professionnels de santé. Découvrez l'origine de ScanUp, notre plateforme de prévention TMS & RPS."
+        title={t.meta.apropos.title}
+        description={t.meta.apropos.description}
         path="/a-propos"
       />
       <Navbar />

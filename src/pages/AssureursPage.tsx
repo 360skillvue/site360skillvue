@@ -29,8 +29,8 @@ export default function AssureursPage() {
   return (
     <div className="min-h-screen font-sans text-scanup-navy bg-white selection:bg-scanup-blue/20">
       <PageMeta
-        title="Assureurs & Mutuelles — Pilotage du risque santé"
-        description="Segmentez vos populations et optimisez votre tarification avec des données de dépistage TMS et RPS en temps réel."
+        title={t.meta.assureurs.title}
+        description={t.meta.assureurs.description}
         path="/assureurs-mutuelles"
       />
       <Navbar />

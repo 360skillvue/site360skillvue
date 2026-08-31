@@ -25,7 +25,9 @@ export default function PageMeta({ title, description, path, ogImage, schema }: 
   return (
     <Helmet>
       <html lang={HREFLANG[lang]} />
-      <title>{title} | ScanUp 360SkillVue</title>
+      {/* react-helmet-async exige une chaine unique : une expression composee
+          de plusieurs morceaux produit une balise vide. */}
+      <title>{`${title} | ScanUp 360SkillVue`}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
 

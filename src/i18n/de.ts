@@ -669,8 +669,8 @@ export const de = {
     contact: 'Eine Frage? Kontaktieren Sie uns',
   },
   spsti: {
-    metaTitle: 'Arbeitsmedizinische Dienste — Primärprävention, PDP-Einheit, Zertifizierung',
-    metaDescription: 'Individuelles Screening psychosozialer Risiken mit Weiterleitung und Arbeitsplatzanalysen aus der Ferne durch zertifizierte Ergonomen, für die interdisziplinären Teams französischer Dienste. Nachweise für die Zertifizierung AFNOR SPEC 2217.',
+    metaTitle: 'Arbeitsmedizinische Dienste: Arbeitsplatzanalyse und PSR-Screening',
+    metaDescription: 'Screening psychosozialer Risiken mit Weiterleitung und Arbeitsplatzanalysen aus der Ferne durch zertifizierte Ergonomen, für interdisziplinäre Teams.',
     heroBadge: 'Primärprävention · PDP-Einheit · Zertifizierung',
     heroTitle: 'Risikosituationen erkennen,',
     heroTitleHighlight: 'vor der Krankmeldung',
@@ -776,7 +776,7 @@ export const de = {
     ctaEmail: 'contact@360skillvue.com',
   },
   revueDePresse: {
-    metaTitle: 'Pressespiegel — 360SkillVue',
+    metaTitle: 'Pressespiegel',
     metaDescription: 'Artikel, Interviews und Medienberichte über 360SkillVue.',
     badge: 'Medien & Presse',
     title: 'Pressespiegel',

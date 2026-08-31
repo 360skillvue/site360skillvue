@@ -669,8 +669,8 @@ export const en = {
     contact: 'Got a question? Contact us',
   },
   spsti: {
-    metaTitle: 'Occupational health services — Primary prevention, PDP unit, certification',
-    metaDescription: 'Individual psychosocial risk screening with referral and remote workstation assessments by a certified ergonomist, for the multidisciplinary teams of French occupational health services. An audit trail for AFNOR SPEC 2217 certification.',
+    metaTitle: 'Occupational health services: remote job studies and RPS screening',
+    metaDescription: 'Psychosocial risk screening with referral and remote workstation studies by a certified ergonomist, for multidisciplinary occupational health teams.',
     heroBadge: 'Primary prevention · PDP unit · Certification',
     heroTitle: 'Spot the situations at risk,',
     heroTitleHighlight: 'before the sick leave',
@@ -776,7 +776,7 @@ export const en = {
     ctaEmail: 'contact@360skillvue.com',
   },
   revueDePresse: {
-    metaTitle: 'Press coverage — 360SkillVue',
+    metaTitle: 'Press coverage',
     metaDescription: 'Read articles, interviews and media mentions about 360SkillVue.',
     badge: 'Media & press',
     title: 'Press coverage',

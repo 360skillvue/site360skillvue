@@ -669,8 +669,8 @@ export const es = {
     contact: '¿Tiene alguna duda? Contáctenos',
   },
   spsti: {
-    metaTitle: 'Servicios de prevención y salud laboral — Prevención primaria, unidad PDP, certificación',
-    metaDescription: 'Cribado individual de riesgos psicosociales con derivación y evaluaciones del puesto a distancia por un ergónomo acreditado, para los equipos pluridisciplinares de los servicios franceses. Una traza útil para la certificación AFNOR SPEC 2217.',
+    metaTitle: 'Servicios de salud laboral: puesto a distancia y cribado RPS',
+    metaDescription: 'Cribado de riesgos psicosociales con derivación y evaluación del puesto a distancia por un ergónomo acreditado, para los equipos pluridisciplinares.',
     heroBadge: 'Prevención primaria · Unidad PDP · Certificación',
     heroTitle: 'Detectar las situaciones de riesgo,',
     heroTitleHighlight: 'antes de la baja',
@@ -776,7 +776,7 @@ export const es = {
     ctaEmail: 'contact@360skillvue.com',
   },
   revueDePresse: {
-    metaTitle: 'Sala de prensa — 360SkillVue',
+    metaTitle: 'Sala de prensa',
     metaDescription: 'Consulte los artículos, entrevistas y menciones en medios sobre 360SkillVue.',
     badge: 'Medios y prensa',
     title: 'Sala de prensa',

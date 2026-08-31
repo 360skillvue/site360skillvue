@@ -763,8 +763,8 @@ export const fr = {
     contact: 'Une question ? Contactez-nous',
   },
   spsti: {
-    metaTitle: 'Services de prévention et de santé au travail — Prévention primaire, cellule PDP, certification',
-    metaDescription: 'Dépistage individuel des RPS avec orientation et études de poste à distance par un ergonome IPRP, pour les équipes pluridisciplinaires des SPST. Une trace exploitable pour la certification AFNOR SPEC 2217.',
+    metaTitle: 'SPST : étude de poste à distance et dépistage RPS avec orientation',
+    metaDescription: 'Dépistage RPS avec orientation et étude de poste à distance par un ergonome IPRP, pour les équipes pluridisciplinaires des SPST. Traçable pour la certification.',
     heroBadge: 'Prévention primaire · Cellule PDP · Certification',
     heroTitle: 'Repérer les situations à risque,',
     heroTitleHighlight: 'avant l\'arrêt',
@@ -870,7 +870,7 @@ export const fr = {
     ctaEmail: 'contact@360skillvue.com',
   },
   revueDePresse: {
-    metaTitle: 'Revue de presse — 360SkillVue',
+    metaTitle: 'Revue de presse',
     metaDescription: 'Retrouvez les articles, interviews et mentions de 360SkillVue dans les médias.',
     badge: 'Médias & presse',
     title: 'Revue de presse',

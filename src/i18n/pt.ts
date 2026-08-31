@@ -669,8 +669,8 @@ export const pt = {
     contact: 'Tem alguma questão? Contacte-nos',
   },
   spsti: {
-    metaTitle: 'Serviços de prevenção e saúde no trabalho — Prevenção primária, unidade PDP, certificação',
-    metaDescription: 'Rastreio individual dos riscos psicossociais com encaminhamento e avaliações do posto à distância por um ergonomista certificado, para as equipas pluridisciplinares dos serviços franceses. Um registo útil para a certificação AFNOR SPEC 2217.',
+    metaTitle: 'Serviços de saúde no trabalho: posto à distância e rastreio RPS',
+    metaDescription: 'Rastreio dos riscos psicossociais com encaminhamento e avaliação do posto à distância por um ergonomista certificado, para as equipas pluridisciplinares.',
     heroBadge: 'Prevenção primária · Unidade PDP · Certificação',
     heroTitle: 'Detetar as situações de risco,',
     heroTitleHighlight: 'antes da baixa',
@@ -776,7 +776,7 @@ export const pt = {
     ctaEmail: 'contact@360skillvue.com',
   },
   revueDePresse: {
-    metaTitle: 'Na imprensa — 360SkillVue',
+    metaTitle: 'Na imprensa',
     metaDescription: 'Consulte os artigos, entrevistas e menções da 360SkillVue nos meios de comunicação.',
     badge: 'Media & imprensa',
     title: 'Na imprensa',

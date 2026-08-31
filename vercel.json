@@ -6,6 +6,338 @@
       "destination": "/simulateur-cout-tms-rps.html"
     },
     {
+      "source": "/certification-periodique-sante",
+      "destination": "/certification-periodique-sante/index.html"
+    },
+    {
+      "source": "/entreprises-drh",
+      "destination": "/entreprises-drh/index.html"
+    },
+    {
+      "source": "/assureurs-mutuelles",
+      "destination": "/assureurs-mutuelles/index.html"
+    },
+    {
+      "source": "/spsti",
+      "destination": "/spsti/index.html"
+    },
+    {
+      "source": "/partenaires",
+      "destination": "/partenaires/index.html"
+    },
+    {
+      "source": "/aide-support",
+      "destination": "/aide-support/index.html"
+    },
+    {
+      "source": "/tarifs",
+      "destination": "/tarifs/index.html"
+    },
+    {
+      "source": "/mentions-legales",
+      "destination": "/mentions-legales/index.html"
+    },
+    {
+      "source": "/cgu",
+      "destination": "/cgu/index.html"
+    },
+    {
+      "source": "/cgv",
+      "destination": "/cgv/index.html"
+    },
+    {
+      "source": "/politique-confidentialite",
+      "destination": "/politique-confidentialite/index.html"
+    },
+    {
+      "source": "/a-propos",
+      "destination": "/a-propos/index.html"
+    },
+    {
+      "source": "/revue-de-presse",
+      "destination": "/revue-de-presse/index.html"
+    },
+    {
+      "source": "/en",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/certification-periodique-sante",
+      "destination": "/en/certification-periodique-sante/index.html"
+    },
+    {
+      "source": "/en/entreprises-drh",
+      "destination": "/en/entreprises-drh/index.html"
+    },
+    {
+      "source": "/en/assureurs-mutuelles",
+      "destination": "/en/assureurs-mutuelles/index.html"
+    },
+    {
+      "source": "/en/spsti",
+      "destination": "/en/spsti/index.html"
+    },
+    {
+      "source": "/en/partenaires",
+      "destination": "/en/partenaires/index.html"
+    },
+    {
+      "source": "/en/aide-support",
+      "destination": "/en/aide-support/index.html"
+    },
+    {
+      "source": "/en/tarifs",
+      "destination": "/en/tarifs/index.html"
+    },
+    {
+      "source": "/en/mentions-legales",
+      "destination": "/en/mentions-legales/index.html"
+    },
+    {
+      "source": "/en/cgu",
+      "destination": "/en/cgu/index.html"
+    },
+    {
+      "source": "/en/cgv",
+      "destination": "/en/cgv/index.html"
+    },
+    {
+      "source": "/en/politique-confidentialite",
+      "destination": "/en/politique-confidentialite/index.html"
+    },
+    {
+      "source": "/en/a-propos",
+      "destination": "/en/a-propos/index.html"
+    },
+    {
+      "source": "/en/revue-de-presse",
+      "destination": "/en/revue-de-presse/index.html"
+    },
+    {
+      "source": "/de",
+      "destination": "/de/index.html"
+    },
+    {
+      "source": "/de/certification-periodique-sante",
+      "destination": "/de/certification-periodique-sante/index.html"
+    },
+    {
+      "source": "/de/entreprises-drh",
+      "destination": "/de/entreprises-drh/index.html"
+    },
+    {
+      "source": "/de/assureurs-mutuelles",
+      "destination": "/de/assureurs-mutuelles/index.html"
+    },
+    {
+      "source": "/de/spsti",
+      "destination": "/de/spsti/index.html"
+    },
+    {
+      "source": "/de/partenaires",
+      "destination": "/de/partenaires/index.html"
+    },
+    {
+      "source": "/de/aide-support",
+      "destination": "/de/aide-support/index.html"
+    },
+    {
+      "source": "/de/tarifs",
+      "destination": "/de/tarifs/index.html"
+    },
+    {
+      "source": "/de/mentions-legales",
+      "destination": "/de/mentions-legales/index.html"
+    },
+    {
+      "source": "/de/cgu",
+      "destination": "/de/cgu/index.html"
+    },
+    {
+      "source": "/de/cgv",
+      "destination": "/de/cgv/index.html"
+    },
+    {
+      "source": "/de/politique-confidentialite",
+      "destination": "/de/politique-confidentialite/index.html"
+    },
+    {
+      "source": "/de/a-propos",
+      "destination": "/de/a-propos/index.html"
+    },
+    {
+      "source": "/de/revue-de-presse",
+      "destination": "/de/revue-de-presse/index.html"
+    },
+    {
+      "source": "/it",
+      "destination": "/it/index.html"
+    },
+    {
+      "source": "/it/certification-periodique-sante",
+      "destination": "/it/certification-periodique-sante/index.html"
+    },
+    {
+      "source": "/it/entreprises-drh",
+      "destination": "/it/entreprises-drh/index.html"
+    },
+    {
+      "source": "/it/assureurs-mutuelles",
+      "destination": "/it/assureurs-mutuelles/index.html"
+    },
+    {
+      "source": "/it/spsti",
+      "destination": "/it/spsti/index.html"
+    },
+    {
+      "source": "/it/partenaires",
+      "destination": "/it/partenaires/index.html"
+    },
+    {
+      "source": "/it/aide-support",
+      "destination": "/it/aide-support/index.html"
+    },
+    {
+      "source": "/it/tarifs",
+      "destination": "/it/tarifs/index.html"
+    },
+    {
+      "source": "/it/mentions-legales",
+      "destination": "/it/mentions-legales/index.html"
+    },
+    {
+      "source": "/it/cgu",
+      "destination": "/it/cgu/index.html"
+    },
+    {
+      "source": "/it/cgv",
+      "destination": "/it/cgv/index.html"
+    },
+    {
+      "source": "/it/politique-confidentialite",
+      "destination": "/it/politique-confidentialite/index.html"
+    },
+    {
+      "source": "/it/a-propos",
+      "destination": "/it/a-propos/index.html"
+    },
+    {
+      "source": "/it/revue-de-presse",
+      "destination": "/it/revue-de-presse/index.html"
+    },
+    {
+      "source": "/es",
+      "destination": "/es/index.html"
+    },
+    {
+      "source": "/es/certification-periodique-sante",
+      "destination": "/es/certification-periodique-sante/index.html"
+    },
+    {
+      "source": "/es/entreprises-drh",
+      "destination": "/es/entreprises-drh/index.html"
+    },
+    {
+      "source": "/es/assureurs-mutuelles",
+      "destination": "/es/assureurs-mutuelles/index.html"
+    },
+    {
+      "source": "/es/spsti",
+      "destination": "/es/spsti/index.html"
+    },
+    {
+      "source": "/es/partenaires",
+      "destination": "/es/partenaires/index.html"
+    },
+    {
+      "source": "/es/aide-support",
+      "destination": "/es/aide-support/index.html"
+    },
+    {
+      "source": "/es/tarifs",
+      "destination": "/es/tarifs/index.html"
+    },
+    {
+      "source": "/es/mentions-legales",
+      "destination": "/es/mentions-legales/index.html"
+    },
+    {
+      "source": "/es/cgu",
+      "destination": "/es/cgu/index.html"
+    },
+    {
+      "source": "/es/cgv",
+      "destination": "/es/cgv/index.html"
+    },
+    {
+      "source": "/es/politique-confidentialite",
+      "destination": "/es/politique-confidentialite/index.html"
+    },
+    {
+      "source": "/es/a-propos",
+      "destination": "/es/a-propos/index.html"
+    },
+    {
+      "source": "/es/revue-de-presse",
+      "destination": "/es/revue-de-presse/index.html"
+    },
+    {
+      "source": "/pt",
+      "destination": "/pt/index.html"
+    },
+    {
+      "source": "/pt/certification-periodique-sante",
+      "destination": "/pt/certification-periodique-sante/index.html"
+    },
+    {
+      "source": "/pt/entreprises-drh",
+      "destination": "/pt/entreprises-drh/index.html"
+    },
+    {
+      "source": "/pt/assureurs-mutuelles",
+      "destination": "/pt/assureurs-mutuelles/index.html"
+    },
+    {
+      "source": "/pt/spsti",
+      "destination": "/pt/spsti/index.html"
+    },
+    {
+      "source": "/pt/partenaires",
+      "destination": "/pt/partenaires/index.html"
+    },
+    {
+      "source": "/pt/aide-support",
+      "destination": "/pt/aide-support/index.html"
+    },
+    {
+      "source": "/pt/tarifs",
+      "destination": "/pt/tarifs/index.html"
+    },
+    {
+      "source": "/pt/mentions-legales",
+      "destination": "/pt/mentions-legales/index.html"
+    },
+    {
+      "source": "/pt/cgu",
+      "destination": "/pt/cgu/index.html"
+    },
+    {
+      "source": "/pt/cgv",
+      "destination": "/pt/cgv/index.html"
+    },
+    {
+      "source": "/pt/politique-confidentialite",
+      "destination": "/pt/politique-confidentialite/index.html"
+    },
+    {
+      "source": "/pt/a-propos",
+      "destination": "/pt/a-propos/index.html"
+    },
+    {
+      "source": "/pt/revue-de-presse",
+      "destination": "/pt/revue-de-presse/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

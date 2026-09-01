@@ -25,6 +25,20 @@ export default defineConfig(({mode}) => {
     },
     build: {
       outDir: 'www',
+      rollupOptions: {
+        output: {
+          // Nom fixe pour le point d'entree et la feuille de style : les 84
+          // pages pre-rendues les citent, un nom hache obligerait a toutes
+          // les redeposer a chaque build. Les morceaux charges a la demande
+          // gardent leur empreinte, ils ne sont cites que par le bundle.
+          entryFileNames: 'assets/app.js',
+          chunkFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: (info) =>
+            info.name && info.name.endsWith('.css')
+              ? 'assets/app[extname]'
+              : 'assets/[name]-[hash][extname]',
+        },
+      },
     },
     resolve: {
       alias: {

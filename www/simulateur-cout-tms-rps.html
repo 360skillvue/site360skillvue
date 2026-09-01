@@ -361,7 +361,7 @@
 
   <div class="intro ch-only">
     <div>
-      <p class="kicker">Job Stress Index 2022 · Promotion Santé Suisse</p>
+      <p class="kicker">Santé au travail en Suisse · Données 2022</p>
       <p class="intro-lead">En Suisse, les troubles musculo-squelettiques et l'épuisement ne sont pas reconnus comme maladies professionnelles : la Suva exige une causalité professionnelle de 75 %, hors d'atteinte pour des troubles à causes multiples. Ces arrêts relèvent donc du régime maladie, et la charge reste chez l'employeur, au titre du maintien de salaire, sans être mutualisée par l'assurance accidents. Faute de statistique suisse sur leur fréquence, ce simulateur applique les taux observés en France et calcule le coût selon les règles suisses.</p>
     </div>
     <div class="keyfigs">
@@ -405,7 +405,7 @@
 
         <div class="step">
           <div class="step-head"><span class="step-n">03</span><h2>Agir, et à quel prix</h2></div>
-          <p class="callout ch-only">Les tarifs ScanUp sont établis en euros et convertis en francs à un taux fixe de 0,95 : la prestation étant réalisée à distance, son prix ne change pas d'un pays à l'autre. Les méthodes traditionnelles, elles, consomment du travail sur place : leur coût est majoré de moitié, l'écart de coût horaire de la main d'œuvre entre les deux pays étant de cet ordre, 63,62 CHF de l'heure en Suisse selon l'Office fédéral de la statistique contre 43,70 € en France selon l'Insee. Ordres de grandeur, non des devis.</p>
+          <p class="callout ch-only">Les tarifs ScanUp sont identiques en euros et en francs : la prestation est réalisée à distance, son prix ne change pas d'un pays à l'autre. Les méthodes traditionnelles, elles, consomment du travail sur place ; leur coût est majoré de moitié, l'écart de coût horaire de la main d'œuvre entre les deux pays étant de cet ordre, 63,62 CHF de l'heure en Suisse selon l'Office fédéral de la statistique contre 43,70 € en France selon l'Insee. Ordres de grandeur, non des devis.</p>
           <p class="step-note">Le montant ci-contre dit ce que le risque coûte. Il ne dit pas où agir. Pour le savoir il faut regarder les situations de travail, et cela a un prix : voici les deux façons de le payer.</p>
 
           <div class="field">
@@ -430,17 +430,17 @@
           <div class="field" id="sv-f-rps">
             <label>Votre formule de dépistage RPS</label>
             <div class="scn-set">
-              <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Essential<small>27 € HT, retour par courriel</small></span></label>
-              <label class="scn"><input type="radio" name="svrps" value="40"><span>Premium<small>40 € HT, avec téléconsultation</small></span></label>
-              <label class="scn"><input type="radio" name="svrps" value="forfait"><span>Forfait<small>55 € HT, plan d'action compris</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Essential<small id="sv-lab-rps-e">27 € HT, retour par courriel</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="40"><span>Premium<small id="sv-lab-rps-p">40 € HT, avec téléconsultation</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="forfait"><span>Forfait<small id="sv-lab-rps-f">55 € HT, plan d'action compris</small></span></label>
             </div>
           </div>
 
           <div class="field" id="sv-f-tms">
             <label>Votre formule TMS</label>
             <div class="scn-set">
-              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small>40 € HT, sans coaching</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small>55 € HT, avec coaching</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small id="sv-lab-tms-e">40 € HT, sans coaching</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small id="sv-lab-tms-p">55 € HT, avec coaching</small></span></label>
               <label class="scn"><input type="radio" name="svtms" value="forfait" checked><span>Forfait<small id="sv-lab-forfait">tout compris</small></span></label>
             </div>
             <p class="hint" id="sv-hint-tms"></p>
@@ -511,7 +511,7 @@
 
       <aside class="panel panel-fr" aria-live="polite">
         <div class="p-head">
-          <p class="p-label" id="sv-p-label"><span class="p-num">02</span> Ce que le risque vous coûte</p>
+          <p class="p-label"><span class="p-num">02</span> <span id="sv-p-label">Ce que le risque vous coûte</span></p>
           <p class="headline" id="sv-total">&mdash;</p>
           <p class="headline-sub" id="sv-total-sub"></p>
           <p class="headline-sub fr-only" id="sv-decret"></p>
@@ -556,14 +556,6 @@
               <div class="bd-row"><div class="bd-top"><span class="bd-name">Désorganisation</span><span class="bd-val" id="sv-v-tms-des"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-tms-des" style="background:#2563EB"></div></div></div>
               <p class="bd-desc" id="sv-d-tms"></p>
             </div>
-            <div class="stats-b">
-              <p class="stat-t" id="sv-stat-t"></p>
-              <div class="stat"><span>Affections psychiques reconnues</span><b id="sv-s-psy"></b></div>
-              <div class="stat"><span>Troubles musculo-squelettiques reconnus</span><b id="sv-s-tms"></b></div>
-              <div class="stat"><span>Accidents du travail</span><b id="sv-s-at"></b></div>
-              <div class="stat"><span>Journées d'absence liées à ces maladies</span><b id="sv-s-jours"></b></div>
-              <p class="stat-n">Moyenne du secteur ramenée à votre effectif, et non une prévision pour votre entreprise. Les affections psychiques ne comptent que les cas reconnus : cette reconnaissance étant rare, elles ne mesurent pas les RPS, elles en donnent la part visible.</p>
-            </div>
           </div>
         </details>
         <div class="p-foot">
@@ -605,12 +597,12 @@
 
             <div class="psy fr-only">
               <p class="psy-t">Et le suivi psychologique, après l'orientation ?</p>
-              <p class="psy-b">Il ne pèse pas sur votre budget. Le dispositif <strong>Mon soutien psy</strong> couvre douze séances par an à 50 €, remboursées à 60 % par l'Assurance Maladie et à 40 % par la complémentaire, sans prescription médicale préalable. Votre part s'arrête au dépistage et à la téléconsultation d'orientation : le suivi qui s'ensuit est pris en charge.</p>
+              <p class="psy-b">Il ne pèse pas sur votre budget. Le dispositif <strong>Mon soutien psy</strong> couvre douze séances par an à 50 €, remboursées à 60 % par l'Assurance Maladie et à 40 % par la complémentaire, sans prescription médicale préalable ; le salarié avance les frais, sauf cas de dispense. Votre part s'arrête au dépistage et à la téléconsultation d'orientation : le suivi qui s'ensuit est remboursé.</p>
             </div>
 
             <div class="psy ch-only">
               <p class="psy-t">Et le suivi psychologique, après l'orientation ?</p>
-              <p class="psy-b">Depuis juillet 2022, la psychothérapie chez un psychologue est remboursée par l'assurance de base, à 154,80 CHF de l'heure, mais <strong>sur prescription médicale</strong> et après la franchise, avec 10 % de quote-part. Selon sa franchise, le collaborateur avance entre 760 et 2 700 francs sur un suivi de trente séances : c'est ce reste à charge, autant que le délai d'obtention d'une prescription, qui retarde la démarche. La téléconsultation d'orientation ScanUp lève ce premier obstacle et pose l'indication.</p>
+              <p class="psy-b">Repérée tôt, une personne évite l'arrêt en <strong>six séances</strong> le plus souvent. Nos séances sont assurées en Suisse par le cabinet Equilibrium, Alessandra Rosciano. Le coût est porté par l'employeur, par le collaborateur ou par son assurance ; pour ouvrir le remboursement de l'assurance de base, une <strong>téléconsultation chez le médecin de famille</strong> suffit à obtenir la prescription requise. Six séances représentent de l'ordre de 930 francs, à comparer aux <strong id="sv-psy-ch-cout">8 219 CHF</strong> de maintien de salaire que coûte un seul arrêt.</p>
             </div>
             <p class="roi-note" id="sv-cmp-note"></p>
             <a class="btn btn-1 btn-full" href="https://360skillvue.com/aide-support/">Parler de votre situation à ScanUp</a>
@@ -710,11 +702,11 @@ var tous = DATA.naf1.filter(function(s){return s.code==="TOUS";})[0];
 function $(id){return document.getElementById(id);}
 var fEur = new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0});
 var fChf = new Intl.NumberFormat("fr-CH",{maximumFractionDigits:0});
-// Les tarifs sont etablis en euros. En Suisse ils sont convertis a un taux
-// fixe, indique dans la page : ce sont des ordres de grandeur, pas un devis.
-var SV_TAUX_CHF = 0.95, SV_PAYS = "fr";
+// La grille ScanUp est identique en euros et en francs : la prestation est
+// realisee a distance, son prix ne change pas d'un pays a l'autre.
+var SV_PAYS = "fr";
 function eur(n){
-  if(SV_PAYS==="ch"){ return fChf.format(Math.round(n*SV_TAUX_CHF))+" CHF"; }
+  if(SV_PAYS==="ch"){ return fChf.format(Math.round(n))+" CHF"; }
   return fEur.format(n);
 }
 // Les couts du risque sont calcules directement dans la monnaie du pays : ils
@@ -916,13 +908,6 @@ function calcule(){
   $("sv-d-rps").textContent = "Les affections psychiques reconnues sont rares, "+
     num(s.psy10k,2)+" pour 10 000 salariés dans votre secteur. La troisième ligne estime la part qui ne passe jamais par la reconnaissance et se manifeste en arrêts maladie ordinaires.";
 
-  function freq(v){return v>=0.5?num(v,1)+" par an":"1 tous les "+num(1/Math.max(v,0.0001),0)+" ans";}
-  $("sv-s-tms").textContent=freq(nbTms);
-  $("sv-s-psy").textContent=freq(nbPsy);
-  $("sv-s-at").textContent=freq(nbAt);
-  $("sv-s-jours").textContent=num((nbTms+nbPsy)*joursOuv,0)+" jours ouvrés";
-  $("sv-stat-t").textContent="Ce que la sinistralité 2024 du secteur donne, appliquée à "+num(eff,0)+
-    " salariés, en moyenne annuelle :";
 
   // ---- 04 : ce que coûte le fait de savoir ----
   var part=parseFloat($("sv-part").value);
@@ -938,7 +923,7 @@ function calcule(){
   }
   var pAudit=lire("sv-p-audit",auditRef(eff)), pPoste=lire("sv-p-poste",1200);
   $("sv-hint-audit").textContent="Le prix dépend de l'effectif et du nombre d'entretiens : les cabinets "+
-    "annoncent de 9 000 à 18 000 € HT pour une PME. La valeur proposée, "+eur(auditRef(eff))+", suit cet "+
+    "annoncent de "+eur(9000)+" à "+eur(18000)+" HT pour une PME. La valeur proposée, "+eur(auditRef(eff))+", suit cet "+
     "ordre de grandeur pour "+num(eff,0)+" salariés.";
 
 
@@ -956,7 +941,7 @@ function calcule(){
   var c2rps, lib2rps;
   if(packRps==="forfait"){
     c2rps=eff*55;
-    lib2rps="Forfait RPS tout compris, "+num(eff,0)+" × 55 €";
+    lib2rps="Forfait RPS tout compris, "+num(eff,0)+" × "+eur(55);
   } else {
     var pu=parseFloat(packRps);
     c2rps=eff*pu;
@@ -977,15 +962,15 @@ function calcule(){
     c2tms=sup*250;
     lib2dep="Forfait, tarif de votre secteur, "+num(eff,0)+" × "+eur(fSect);
     lib2tms="Études incluses jusqu'à "+pctPlaf+" % de l'effectif, soit "+num(plaf,0)+" salariés, plafond non atteint";
-    if(sup>0){ lib2tms="Études au-delà du plafond de "+pctPlaf+" %, "+num(sup,0)+" × 250 €"; }
+    if(sup>0){ lib2tms="Études au-delà du plafond de "+pctPlaf+" %, "+num(sup,0)+" × "+eur(250); }
   } else if(packTms==="essential"){
     c2dep=eff*40; c2tms=0; nbEtudes=0;
-    lib2dep="Dépistage TMS, "+num(eff,0)+" × 40 €";
+    lib2dep="Dépistage TMS, "+num(eff,0)+" × "+eur(40);
     lib2tms="Ni coaching ni étude de poste, formule Essential";
   } else {
     c2dep=eff*55; c2tms=nbEtudes*250;
-    lib2dep="Dépistage TMS, "+num(eff,0)+" × 55 €";
-    lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × 250 €";
+    lib2dep="Dépistage TMS, "+num(eff,0)+" × "+eur(55);
+    lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × "+eur(250);
   }
   if(!vRps){ c2rps=0; }
   if(!vTms){ c2dep=0; c2tms=0; }
@@ -1006,11 +991,12 @@ function calcule(){
   $("sv-roi-l").textContent="Ce qu'il faut investir pour agir";
   $("sv-p-label").textContent=(perim==="deux"?"Ce que le risque vous coûte":(perim==="rps"?"Ce que les RPS vous coûtent":"Ce que les TMS vous coûtent"));
   $("sv-roi-sur").textContent=libPer;
-  $("sv-lab-forfait").textContent=eur(fSect)+" HT dans votre secteur, 105 € en moyenne";
+  $("sv-lab-forfait").textContent=eur(fSect)+" HT dans votre secteur, "+eur(105)+" en moyenne";
   if(packTms==="forfait"){
-    $("sv-hint-tms").textContent="Tout est compris : les deux dépistages, le coaching, l'étude de poste "+
+    $("sv-hint-tms").textContent="Tout est compris côté TMS : le dépistage, le coaching, l'étude de poste "+
       "avec rapport individuel pour les salariés repérés, dans la limite du plafond indexé sur votre secteur, et le plan d'action. "+
-      "Le montant suit la sinistralité TMS de votre secteur, "+eur(fSect)+" ici contre 105 € en moyenne.";
+      "Le dépistage RPS reste facturé à part, selon la formule choisie ci-dessus. "+
+      "Le montant suit la sinistralité TMS de votre secteur, "+eur(fSect)+" ici contre "+eur(105)+" en moyenne.";
   } else {
     $("sv-hint-tms").textContent="À l'acte, vous ne payez que ce que vous consommez. Essential s'arrête au "+
       "dépistage et au retour écrit ; Premium y ajoute le coaching gestes et postures, et l'étude de poste "+
@@ -1018,7 +1004,7 @@ function calcule(){
   }
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-tms").textContent=eur(c1tms);
-  $("sv-c1-l-tms").textContent="Études de poste par un ergonome, "+num(nbCibles,0)+" × "+eur(pPoste);
+  $("sv-c1-l-tms").textContent="Études de poste par un ergonome, "+num(nbCibles,0)+" × "+eur(pPoste*fPres);
   $("sv-cmp-t1").textContent=eur(c1);
   $("sv-cmp-b1").textContent=eur(c1);
   $("sv-c2-rps").textContent=eur(c2rps);
@@ -1077,6 +1063,18 @@ function calcule(){
   }
   note=note+" ScanUp ne fait pas baisser l'absentéisme par lui-même : il dit où porter l'effort.";
   $("sv-cmp-note").textContent=note;
+
+  // Cout employeur d'un seul arret, rappele en face du cout de six seances.
+  var psyCh=$("sv-psy-ch-cout");
+  if(psyCh){ psyCh.textContent=mon(cu); }
+
+  // La grille est identique en euros et en francs : seuls la monnaie et le
+  // format d'affichage changent d'un pays a l'autre.
+  [["sv-lab-rps-e",27,"retour par courriel"],["sv-lab-rps-p",40,"avec téléconsultation"],
+   ["sv-lab-rps-f",55,"plan d'action compris"],["sv-lab-tms-e",40,"sans coaching"],
+   ["sv-lab-tms-p",55,"avec coaching"]].forEach(function(t){
+    var e=$(t[0]); if(e){ e.textContent=eur(t[1])+" HT, "+t[2]; }
+  });
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
   $("sv-part-etude-val").textContent=num(pctEtude,0)+" % · "+num(nbEtudes,0)+" études";
 
@@ -1090,7 +1088,12 @@ function calcule(){
 
   var sec1=naf1.filter(function(x){return x.code===selS.value;})[0];
   var tend="";
-  if(sec1.psy19>=10){
+  if(SV_PAYS==="ch"){
+    tend="En Suisse, ni les troubles musculo-squelettiques ni l'épuisement professionnel ne sont reconnus "+
+      "comme maladies professionnelles : la Suva exige une causalité professionnelle de 75 %, hors d'atteinte "+
+      "pour des troubles à causes multiples. Ces arrêts relèvent du régime maladie, et la charge du maintien "+
+      "de salaire reste chez l'employeur.";
+  } else if(sec1.psy19>=10){
     tend="Dans ce secteur, les affections psychiques reconnues comme maladies professionnelles sont passées de "+
       num(sec1.psy19,0)+" cas en 2019 à "+num(sec1.psy24,0)+" en 2024, soit une multiplication par "+
       num(sec1.psy24/sec1.psy19,1)+". ";
@@ -1098,8 +1101,10 @@ function calcule(){
     tend="Au niveau national, les affections psychiques reconnues comme maladies professionnelles sont passées de "+
       "320 cas en 2015 à 1 805 en 2024, soit une multiplication par 5,6. ";
   }
-  tend=tend+"Ces cas reconnus ne sont que la partie visible : une affection psychique ne peut être reconnue "+
-    "que hors tableau, devant un comité régional, et suppose au moins 25 % d'incapacité permanente prévisible.";
+  if(SV_PAYS!=="ch"){
+    tend=tend+"Ces cas reconnus ne sont que la partie visible : une affection psychique ne peut être reconnue "+
+      "que hors tableau, devant un comité régional, et suppose au moins 25 % d'incapacité permanente prévisible.";
+  }
   $("sv-tendance").textContent=tend;
 
   var svNote="Dans le secteur <strong>"+s.lib.toLowerCase()+"</strong>, l'Assurance Maladie a recensé en 2024 <strong>"+

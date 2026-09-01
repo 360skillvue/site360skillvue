@@ -170,7 +170,7 @@
 .svue-sim .tab[aria-selected="true"]{color:var(--bleu);border-bottom-color:var(--bleu);font-weight:600}
 
 /* grille */
-.svue-sim .grid{display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:start;padding-top:32px}
+.svue-sim .grid{display:grid;grid-template-columns:1fr;gap:0;align-items:start;padding-top:32px}
 @media (max-width:980px){.svue-sim .grid{grid-template-columns:1fr;gap:32px}}
 
 .svue-sim .step{border-top:1px solid var(--bordure);padding:24px 0 0}
@@ -278,6 +278,12 @@
 .svue-sim .roi-net span{color:var(--nuit);font-weight:600}
 .svue-sim .roi-net b{color:var(--bleu);font-weight:600}
 .svue-sim .roi-note{margin:12px 0 0;font-size:12px;color:var(--gris-texte);line-height:1.45}
+/* Lecture en une seule colonne : 01 les donnees, 02 le cout, 03 le prix pour agir. */
+.svue-sim .panel{position:static;margin-top:8px}
+.svue-sim .step .p-foot{border-top:0;background:transparent;padding:24px 0 0}
+.svue-sim .p-head .split{grid-template-columns:1fr 1fr}
+.svue-sim .headline{font-size:44px}
+.svue-sim .step h2{font-size:22px}
 /* Comparaison presentiel / ScanUp : le gris pose le point de reference,
    le bleu ScanUp porte l'offre, le vert la seule valeur a retenir. */
 .svue-sim .split-cmp{gap:16px}
@@ -394,7 +400,6 @@
 
   <section id="svp-sim" role="tabpanel" aria-labelledby="svt-sim">
     <div class="grid">
-      <div>
         <div class="step">
           <div class="step-head"><span class="step-n">01</span><h2>Votre entreprise</h2></div>
           <p class="step-note">Votre secteur détermine les taux de sinistralité appliqués, votre effectif le volume d'arrêts attendu, et le salaire moyen ce que chaque arrêt coûte.</p>
@@ -416,6 +421,59 @@
             <p class="hint" id="sv-hint-sal"></p>
           </div>
           <p class="callout" id="sv-tendance"></p>
+        </div>
+
+        <div class="step">
+          <div class="step-head"><span class="step-n">02</span><h2 id="sv-p-label">Ce que le risque vous coûte</h2></div>
+          <aside class="panel panel-fr" aria-live="polite">
+        <div class="p-head">
+          <p class="headline" id="sv-total">&mdash;</p>
+          <p class="headline-sub" id="sv-total-sub"></p>
+          <p class="headline-sub fr-only" id="sv-decret"></p>
+          <div class="qui-paie">
+            <p class="qui-t" id="sv-qui-t">Sur un arrêt type, qui paie quoi</p>
+            <div class="qui-bar" id="sv-qui-bar"></div>
+            <div class="qui-leg" id="sv-qui-leg"></div>
+            <p class="qui-n" id="sv-qui-n"></p>
+          </div>
+          <div class="split" id="sv-split">
+            <div class="split-c">
+              <span class="split-l">Dont RPS</span>
+              <span class="split-v" id="sv-h-rps">&mdash;</span>
+              <span class="split-p" id="sv-h-rps-p"></span>
+            </div>
+            <div class="split-c">
+              <span class="split-l">Dont TMS</span>
+              <span class="split-v" id="sv-h-tms">&mdash;</span>
+              <span class="split-p" id="sv-h-tms-p"></span>
+            </div>
+          </div>
+        </div>
+        <details class="detail">
+          <summary>Voir le détail du calcul</summary>
+          <div class="bd">
+            <div class="fam">
+              <div class="fam-head">
+                <span class="fam-name">Risques psychosociaux</span>
+                <span class="fam-tot" id="sv-tot-rps"></span>
+              </div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Cas reconnus, coût direct</span><span class="bd-val" id="sv-v-rps-direct"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-rps-direct" style="background:#3B82F6"></div></div></div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Cas reconnus, désorganisation</span><span class="bd-val" id="sv-v-rps-des"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-rps-des" style="background:#60A5FA"></div></div></div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Part non reconnue, votre hypothèse</span><span class="bd-val" id="sv-v-rps-nr"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-rps-nr" style="background:#93C5FD"></div></div></div>
+              <p class="bd-desc" id="sv-d-rps"></p>
+            </div>
+            <div class="fam">
+              <div class="fam-head">
+                <span class="fam-name">Troubles musculo-squelettiques</span>
+                <span class="fam-tot" id="sv-tot-tms"></span>
+              </div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Coût direct imputé</span><span class="bd-val" id="sv-v-tms-direct"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-tms-direct" style="background:#1E40AF"></div></div></div>
+              <div class="bd-row"><div class="bd-top"><span class="bd-name">Désorganisation</span><span class="bd-val" id="sv-v-tms-des"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-tms-des" style="background:#2563EB"></div></div></div>
+              <p class="bd-desc" id="sv-d-tms"></p>
+            </div>
+          </div>
+        </details>
+          </aside>
         </div>
 
         <div class="step">
@@ -521,58 +579,7 @@
               </div>
             </div>
           </details>
-        </div>
-      </div>
 
-      <aside class="panel panel-fr" aria-live="polite">
-        <div class="p-head">
-          <p class="p-label"><span class="p-num">02</span> <span id="sv-p-label">Ce que le risque vous coûte</span></p>
-          <p class="headline" id="sv-total">&mdash;</p>
-          <p class="headline-sub" id="sv-total-sub"></p>
-          <p class="headline-sub fr-only" id="sv-decret"></p>
-          <div class="qui-paie">
-            <p class="qui-t" id="sv-qui-t">Sur un arrêt type, qui paie quoi</p>
-            <div class="qui-bar" id="sv-qui-bar"></div>
-            <div class="qui-leg" id="sv-qui-leg"></div>
-            <p class="qui-n" id="sv-qui-n"></p>
-          </div>
-          <div class="split" id="sv-split">
-            <div class="split-c">
-              <span class="split-l">Dont RPS</span>
-              <span class="split-v" id="sv-h-rps">&mdash;</span>
-              <span class="split-p" id="sv-h-rps-p"></span>
-            </div>
-            <div class="split-c">
-              <span class="split-l">Dont TMS</span>
-              <span class="split-v" id="sv-h-tms">&mdash;</span>
-              <span class="split-p" id="sv-h-tms-p"></span>
-            </div>
-          </div>
-        </div>
-        <details class="detail">
-          <summary>Voir le détail du calcul</summary>
-          <div class="bd">
-            <div class="fam">
-              <div class="fam-head">
-                <span class="fam-name">Risques psychosociaux</span>
-                <span class="fam-tot" id="sv-tot-rps"></span>
-              </div>
-              <div class="bd-row"><div class="bd-top"><span class="bd-name">Cas reconnus, coût direct</span><span class="bd-val" id="sv-v-rps-direct"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-rps-direct" style="background:#3B82F6"></div></div></div>
-              <div class="bd-row"><div class="bd-top"><span class="bd-name">Cas reconnus, désorganisation</span><span class="bd-val" id="sv-v-rps-des"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-rps-des" style="background:#60A5FA"></div></div></div>
-              <div class="bd-row"><div class="bd-top"><span class="bd-name">Part non reconnue, votre hypothèse</span><span class="bd-val" id="sv-v-rps-nr"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-rps-nr" style="background:#93C5FD"></div></div></div>
-              <p class="bd-desc" id="sv-d-rps"></p>
-            </div>
-            <div class="fam">
-              <div class="fam-head">
-                <span class="fam-name">Troubles musculo-squelettiques</span>
-                <span class="fam-tot" id="sv-tot-tms"></span>
-              </div>
-              <div class="bd-row"><div class="bd-top"><span class="bd-name">Coût direct imputé</span><span class="bd-val" id="sv-v-tms-direct"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-tms-direct" style="background:#1E40AF"></div></div></div>
-              <div class="bd-row"><div class="bd-top"><span class="bd-name">Désorganisation</span><span class="bd-val" id="sv-v-tms-des"></span></div><div class="bd-bar"><div class="bd-fill" id="sv-b-tms-des" style="background:#2563EB"></div></div></div>
-              <p class="bd-desc" id="sv-d-tms"></p>
-            </div>
-          </div>
-        </details>
         <div class="p-foot">
           <div class="roi">
             <p class="roi-sur" id="sv-roi-sur">Agir sur les RPS et les TMS</p>
@@ -623,7 +630,8 @@
             <a class="btn btn-1 btn-full" href="https://360skillvue.com/aide-support/">Parler de votre situation à ScanUp</a>
           </div>
         </div>
-      </aside>
+        </div>
+
 
       
     </div>
@@ -1031,10 +1039,11 @@ function calcule(){
   var d1,d2;
   if(perim==="rps"){
     d1="L'audit est collectif : il repose sur un échantillon d'entretiens et rend des indicateurs par "+
-      "service. Il vous dit qu'un service va mal ; il ne dit jamais qui, dans ce service, est en difficulté.";
+      "service. Il décrit un climat, à un instant donné ; aucune personne n'en ressort repérée, ni orientée.";
     d2="Chaque salarié est écouté individuellement, par questionnaire et par témoignage audio, et chaque "+
-      "réponse est analysée par un psychologue du travail. Vous obtenez la liste des personnes à orienter, "+
-      "et chacune d'elles reçoit son propre retour.";
+      "réponse est analysée par un psychologue du travail. Le dépistage est anonyme : chacun reçoit son "+
+      "propre retour et se voit orienter si son état le justifie, sans que l'entreprise en soit informée. "+
+      "Vous, vous recevez des indicateurs agrégés, jamais des noms.";
   } else if(perim==="tms"){
     d1="Un ergonome vient voir le travail, l'analyse est réelle. Mais elle raisonne par poste et non par "+
       "personne : une étude couvre une situation de travail et vaut pour tous ceux qui l'occupent.";
@@ -1044,8 +1053,9 @@ function calcule(){
     d1="L'audit psychosocial est collectif, il décrit des services et non des personnes ; l'étude de poste, "+
       "elle, raisonne par poste et vaut pour tous ceux qui l'occupent.";
     d2="Chaque salarié est écouté et observé individuellement, puis analysé par un psychologue ou un "+
-      "ergonome. Vous obtenez des noms, pas seulement une couleur par service, et l'analyse approfondie "+
-      "n'est engagée que sur les situations repérées.";
+      "ergonome. Le dépistage est anonyme : la personne repérée est orientée directement, et vous ne "+
+      "recevez que des données agrégées, jamais des noms. L'analyse approfondie n'est engagée que sur "+
+      "les situations qui le justifient.";
   }
   $("sv-c1-desc").textContent=d1;
   $("sv-c2-desc").textContent=d2;
@@ -1068,7 +1078,7 @@ function calcule(){
   if(perim==="rps"){
     note=note+" L'audit rend une photographie par service ; ScanUp écoute les "+num(eff,0)+" salariés un "+
       "par un et en repère "+num(nbCibles,0)+". Quand il coûte davantage, ce surcoût n'achète pas une "+
-      "économie : il achète des noms, et un retour pour chaque personne concernée.";
+      "économie : il achète un retour individuel et une orientation pour chaque personne concernée.";
   } else if(perim==="tms"){
     note=note+" Le présentiel étudie un poste, pour tous ceux qui l'occupent ; ScanUp dépiste les "+
       num(eff,0)+" salariés puis concentre l'analyse sur les "+num(nbCibles,0)+" personnes repérées.";

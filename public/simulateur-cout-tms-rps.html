@@ -123,7 +123,7 @@
   /* Charte ScanUp v1.0 */
   --bleu:#0068FF; --turquoise:#33FFCC; --nuit:#1C244B;
   --bleu-clair:#DBEAFE; --gris-texte:#64748B; --gris-clair:#F1F5F9;
-  --page:#F8FAFC; --carte:#FFFFFF; --bordure:#E2E8F0;
+  --page:#F8FAFC; --carte:#FFFFFF; --bordure:#E2E8F0; --vert:#16A34A;
   --viz-1:#1E40AF; --viz-2:#2563EB; --viz-3:#60A5FA; --viz-4:#93C5FD; --viz-5:#3B82F6;
   --f:"Poppins",Arial,sans-serif;
   max-width:1280px; margin:0 auto; padding:0 24px 8px;
@@ -278,6 +278,21 @@
 .svue-sim .roi-net span{color:var(--nuit);font-weight:600}
 .svue-sim .roi-net b{color:var(--bleu);font-weight:600}
 .svue-sim .roi-note{margin:12px 0 0;font-size:12px;color:var(--gris-texte);line-height:1.45}
+/* Comparaison presentiel / ScanUp : le gris pose le point de reference,
+   le bleu ScanUp porte l'offre, le vert la seule valeur a retenir. */
+.svue-sim .split-cmp{gap:16px}
+.svue-sim .roi .split-c.cmp-classique{background:var(--gris-clair);border:1px solid var(--bordure)}
+.svue-sim .cmp-classique .split-l{color:var(--gris-texte)}
+.svue-sim .cmp-classique .split-v{color:var(--gris-texte)}
+.svue-sim .roi .split-c.cmp-scanup{background:var(--bleu-clair);border:2px solid var(--bleu)}
+.svue-sim .cmp-scanup .split-l{color:var(--bleu)}
+.svue-sim .cmp-scanup .split-v{color:var(--viz-1);font-size:26px}
+.svue-sim .cmp-scanup .split-p{color:var(--nuit)}
+.svue-sim .roi-fam-head.fam-classique{color:var(--gris-texte)}
+.svue-sim .roi-fam-head.fam-classique b{color:var(--gris-texte)}
+.svue-sim .roi-fam-head.fam-scanup b{color:var(--bleu)}
+.svue-sim .roi-net span{color:var(--nuit)}
+.svue-sim .roi-net b{color:var(--vert);font-size:18px;font-weight:600}
 .svue-sim .roi-sep{margin:14px 0 0;padding-top:10px;border-top:1px solid var(--bordure);
   font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-texte)}
 .svue-sim .btn-full{display:flex;justify-content:center;width:100%;margin-top:16px}
@@ -562,13 +577,13 @@
           <div class="roi">
             <p class="roi-sur" id="sv-roi-sur">Agir sur les RPS et les TMS</p>
             <p class="roi-l" id="sv-roi-l">Ce qu'il faut investir pour agir</p>
-            <div class="split">
-              <div class="split-c">
+            <div class="split split-cmp">
+              <div class="split-c cmp-classique">
                 <span class="split-l">Méthodes classiques</span>
                 <span class="split-v" id="sv-cmp-t1">&mdash;</span>
                 <span class="split-p" id="sv-cmp-p1"></span>
               </div>
-              <div class="split-c">
+              <div class="split-c cmp-scanup">
                 <span class="split-l">Avec ScanUp</span>
                 <span class="split-v" id="sv-cmp-t2">&mdash;</span>
                 <span class="split-p" id="sv-cmp-p2"></span>
@@ -577,14 +592,14 @@
             <p class="roi-sub" id="sv-cmp-sub"></p>
 
             <div class="roi-fam">
-              <div class="roi-fam-head"><span>Méthodes classiques, en présentiel</span><b id="sv-cmp-b1"></b></div>
+              <div class="roi-fam-head fam-classique"><span>Méthodes classiques, en présentiel</span><b id="sv-cmp-b1"></b></div>
               <div class="roi-row" id="sv-r1-rps"><span>Audit RPS collectif</span><b id="sv-c1-rps"></b></div>
               <div class="roi-row" id="sv-r1-tms"><span id="sv-c1-l-tms">Études de poste par un ergonome</span><b id="sv-c1-tms"></b></div>
               <p class="bd-desc" id="sv-c1-desc"></p>
             </div>
 
             <div class="roi-fam">
-              <div class="roi-fam-head"><span>Avec ScanUp</span><b id="sv-cmp-b2"></b></div>
+              <div class="roi-fam-head fam-scanup"><span>Avec ScanUp</span><b id="sv-cmp-b2"></b></div>
               <div class="roi-row" id="sv-r2-rps"><span id="sv-c2-l-rps">Dépistage RPS de tout l'effectif</span><b id="sv-c2-rps"></b></div>
               <div class="roi-row" id="sv-r2-dep"><span id="sv-c2-l-dep">Dépistage TMS de tout l'effectif</span><b id="sv-c2-dep"></b></div>
               <div class="roi-row" id="sv-r2-tms"><span id="sv-c2-l-tms">Études de poste complètes</span><b id="sv-c2-tms"></b></div>

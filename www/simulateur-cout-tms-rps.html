@@ -1016,5 +1016,588 @@ fillAct(); majSalaire(); majAudit(); calcule(); renderTable();
 })();
 </script>
 
+
+<div class="svue-atmp" id="simulateur-decret">
+<style>
+.svue-atmp{font-family:'Poppins','Segoe UI',Arial,sans-serif;color:#1C244B;background:#F8FAFC;max-width:1280px;margin:0 auto;padding:64px 24px 48px;scroll-margin-top:96px;border-top:1px solid #E2E8F0;box-sizing:border-box;line-height:1.5}
+.svue-atmp *{box-sizing:border-box}
+.svue-atmp .at-h{font-size:24px;font-weight:600;margin:0 0 8px;color:#1C244B;line-height:1.3}
+.svue-atmp .at-tag{display:inline-block;background:#DBEAFE;color:#0068FF;font-size:12px;font-weight:600;border-radius:8px;padding:4px 10px;margin:0 0 12px}
+.svue-atmp h2{font-size:20px;font-weight:600;margin:0 0 16px;color:#1C244B}
+.svue-atmp h3{font-size:16px;font-weight:500;margin:0 0 8px;color:#1C244B}
+.svue-atmp p{font-size:16px;margin:0 0 16px}
+.svue-atmp .at-lead{color:#64748B;max-width:720px}
+.svue-atmp .at-card{background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:24px;margin:0 0 24px}
+.svue-atmp .at-cols{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+@media (max-width:880px){.svue-atmp .at-cols{grid-template-columns:1fr}}
+.svue-atmp .at-pays{display:inline-flex;gap:2px;background:#E2E8F0;border-radius:10px;padding:2px;margin:0 0 24px}
+.svue-atmp .at-pays button{border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:600;color:#64748B;padding:8px 20px;border-radius:8px;cursor:pointer}
+.svue-atmp .at-pays button.on{background:#fff;color:#0068FF}
+.svue-atmp label{display:block;font-size:14px;font-weight:500;margin:0 0 8px}
+.svue-atmp .at-f{margin:0 0 24px}
+.svue-atmp .at-f:last-child{margin-bottom:0}
+.svue-atmp input[type=number],.svue-atmp select{width:100%;height:36px;border:1px solid #E2E8F0;border-radius:10px;padding:0 12px;font-size:16px;font-family:inherit;color:#1C244B;background:#fff}
+.svue-atmp input[type=number]:focus,.svue-atmp select:focus{outline:none;border-color:#0068FF;box-shadow:0 0 0 3px rgba(0,104,255,.5)}
+.svue-atmp input[type=range]{width:100%;accent-color:#0068FF;margin:8px 0 0}
+.svue-atmp .at-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.svue-atmp .at-v{font-size:14px;font-weight:600;color:#0068FF;white-space:nowrap}
+.svue-atmp .at-hint{font-size:12px;color:#64748B;margin:8px 0 0}
+.svue-atmp .at-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:0 0 24px}
+.svue-atmp .at-kpi{background:#1C244B;color:#fff;border-radius:16px;padding:24px}
+.svue-atmp .at-kpi.alt{background:#fff;border:1px solid #E2E8F0;color:#1C244B}
+.svue-atmp .at-kpi .k-l{font-size:14px;font-weight:500;margin:0 0 8px;color:#DBEAFE}
+.svue-atmp .at-kpi.alt .k-l{color:#64748B}
+.svue-atmp .at-kpi .k-v{font-size:24px;font-weight:600;line-height:1.2}
+.svue-atmp .at-kpi .k-s{font-size:12px;margin:8px 0 0;color:#DBEAFE}
+.svue-atmp .at-kpi.alt .k-s{color:#64748B}
+.svue-atmp .at-scn{font-size:14px;color:#64748B;margin:0 0 16px}
+.svue-atmp .at-bar-lab{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;font-weight:500;margin:0 0 8px}
+.svue-atmp .at-bar-lab span{color:#64748B;font-weight:400}
+.svue-atmp .at-bar{display:flex;width:100%;height:48px;gap:2px;margin:0 0 8px}
+.svue-atmp .at-seg{height:100%;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;overflow:hidden;transition:opacity .12s}
+.svue-atmp .at-seg:hover{opacity:.85}
+.svue-atmp .at-seg:first-child{border-radius:4px 0 0 4px}
+.svue-atmp .at-seg:last-child{border-radius:0 4px 4px 0}
+.svue-atmp .at-seg.dk{color:#1C244B}
+.svue-atmp .at-bar-w{margin:0 0 24px}
+.svue-atmp .at-leg{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:#64748B;margin:0 0 8px}
+.svue-atmp .at-leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.svue-atmp .at-cols>*{min-width:0}
+.svue-atmp .at-card{min-width:0;overflow-wrap:break-word}
+.svue-atmp .at-tw{width:100%;overflow-x:auto}
+.svue-atmp table{width:100%;min-width:420px;border-collapse:collapse;font-size:14px}
+.svue-atmp th{text-align:left;font-weight:500;color:#64748B;padding:8px;border-bottom:1px solid #E2E8F0}
+.svue-atmp td{padding:8px;border-bottom:1px solid #F1F5F9}
+.svue-atmp td.n,.svue-atmp th.n{text-align:right;white-space:nowrap}
+.svue-atmp tr.tot td{font-weight:600;border-top:1px solid #E2E8F0;border-bottom:none}
+.svue-atmp .at-note{background:#F1F5F9;border-left:4px solid #0068FF;border-radius:0 16px 16px 0;padding:24px;font-size:14px;color:#1C244B}
+.svue-atmp .at-note p{font-size:14px}
+.svue-atmp .at-note p:last-child{margin-bottom:0}
+.svue-atmp .at-cta{background:#1C244B;color:#fff;border-radius:16px;padding:32px 24px;text-align:center;margin:24px 0 0}
+.svue-atmp .at-cta h3{color:#fff;font-size:20px;margin:0 0 8px}
+.svue-atmp .at-cta p{color:#DBEAFE;font-size:15px;margin:0 0 16px}
+.svue-atmp .at-cta a{display:inline-block;margin:4px 6px;padding:10px 22px;border-radius:10px;font-weight:600;text-decoration:none;font-size:15px}
+.svue-atmp .at-cta .b1{background:#0068FF;color:#fff}
+.svue-atmp .at-cta .b2{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
+.svue-atmp .at-tip{position:fixed;z-index:99;background:#1C244B;color:#fff;font-size:13px;line-height:1.4;padding:8px 12px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .12s;max-width:260px}
+.svue-atmp .at-tip.on{opacity:1}
+</style>
+
+<p class="at-tag">Nouveau</p>
+<h2 class="at-h">Combien coûte un arrêt pour TMS ? France et Suisse</h2>
+<p class="at-lead">Choisissez votre pays. Côté France, un projet de décret plafonne à 1,8 Smic le salaire pris en compte pour calculer les indemnités journalières d'accident du travail et de maladie professionnelle. Les troubles musculo-squelettiques représentent 88 % des maladies professionnelles reconnues, et ce sont des arrêts longs. Ce simulateur montre, pour un même arrêt, qui paie quoi avant et après la réforme : l'Assurance Maladie, l'employeur au titre du maintien de salaire, votre contrat de prévoyance, et ce qui reste à la charge du salarié. Côté Suisse, la question est différente : un TMS ou un burn-out n'y est pas reconnu comme maladie professionnelle, il ne relève donc pas de la LAA mais du régime maladie, et la charge reste chez l'employeur.</p>
+
+<div class="at-pays">
+  <button type="button" id="at-b-fr" class="on">France</button>
+  <button type="button" id="at-b-ch">Suisse</button>
+</div>
+
+<div id="at-fr">
+<div class="at-cols">
+
+<div class="at-card">
+  <h3>Votre situation</h3>
+  <div class="at-f">
+    <label for="at-sal">Salaire brut annuel du salarié</label>
+    <input type="number" id="at-sal" min="18000" max="300000" step="1000" value="50000">
+    <p class="at-hint" id="at-h-sal"></p>
+  </div>
+  <div class="at-f">
+    <div class="at-head"><label for="at-dur">Durée de l'arrêt</label><span class="at-v" id="at-v-dur"></span></div>
+    <input type="range" id="at-dur" min="7" max="365" step="1" value="150">
+    <p class="at-hint">En 2024, un cas de maladie professionnelle a représenté 317 jours d'arrêt en moyenne. Le barème des coûts moyens AT/MP bascule dans sa tranche la plus élevée au-delà de 150 jours.</p>
+  </div>
+  <div class="at-f">
+    <label for="at-reg">Maintien de salaire applicable</label>
+    <select id="at-reg">
+      <option value="legal">Minimum légal, 90 % puis 66,66 %</option>
+      <option value="cent">Maintien à 100 % prévu par la convention</option>
+    </select>
+  </div>
+  <div class="at-f">
+    <div class="at-head"><label for="at-mai">Durée du maintien employeur</label><span class="at-v" id="at-v-mai"></span></div>
+    <input type="range" id="at-mai" min="0" max="180" step="10" value="60">
+    <p class="at-hint">60 jours de 1 à 5 ans d'ancienneté, puis 10 jours de plus par tranche de 5 ans, jusqu'à 180 jours.</p>
+  </div>
+  <div class="at-f">
+    <div class="at-head"><label for="at-prev">Relais de prévoyance, en % du brut</label><span class="at-v" id="at-v-prev"></span></div>
+    <input type="range" id="at-prev" min="0" max="100" step="5" value="0">
+    <p class="at-hint">Niveau garanti par votre contrat collectif une fois le maintien employeur épuisé. À 0 %, l'écart reste intégralement à la charge du salarié.</p>
+  </div>
+</div>
+
+<div>
+  <div class="at-card">
+    <h2>Ce que le décret déplace</h2>
+    <p class="at-scn" id="at-scn"></p>
+    <div class="at-kpis">
+      <div class="at-kpi"><p class="k-l">Surcoût pour l'employeur</p><p class="k-v" id="at-k-emp">&mdash;</p><p class="k-s" id="at-k-emp-s"></p></div>
+      <div class="at-kpi alt"><p class="k-l">Reste à charge du salarié, en plus</p><p class="k-v" id="at-k-sal">&mdash;</p><p class="k-s" id="at-k-sal-s"></p></div>
+      <div class="at-kpi alt"><p class="k-l">Économie pour l'Assurance Maladie</p><p class="k-v" id="at-k-am">&mdash;</p><p class="k-s" id="at-k-am-s"></p></div>
+    </div>
+
+    <div class="at-leg">
+      <span><i style="background:#1E3A8A"></i>Assurance Maladie</span>
+      <span><i style="background:#2563EB"></i>Employeur, maintien de salaire</span>
+      <span><i style="background:#60A5FA"></i>Prévoyance</span>
+      <span><i style="background:#BFDBFE"></i>Non couvert, perte du salarié</span>
+    </div>
+
+    <div class="at-bar-w">
+      <div class="at-bar-lab">Règles actuelles <span id="at-lab-av"></span></div>
+      <div class="at-bar" id="at-bar-av"></div>
+    </div>
+    <div class="at-bar-w">
+      <div class="at-bar-lab">Après le décret, plafond à 1,8 Smic <span id="at-lab-ap"></span></div>
+      <div class="at-bar" id="at-bar-ap"></div>
+    </div>
+    <p class="at-hint">Les deux barres représentent la même somme : le salaire brut que le salarié aurait perçu sur la durée de l'arrêt.</p>
+  </div>
+
+  <div class="at-card">
+    <h2>Le détail, en euros sur la durée de l'arrêt</h2>
+    <div class="at-tw">
+    <table>
+      <thead><tr><th>Qui verse</th><th class="n">Règles actuelles</th><th class="n">Après le décret</th><th class="n">Écart</th></tr></thead>
+      <tbody id="at-tb"></tbody>
+    </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="at-note">
+<p><strong>Méthode et sources.</strong> Les indemnités journalières AT/MP sont égales à 60 % du salaire journalier de base pendant 28 jours, puis 80 %. Le salaire journalier de base est le salaire brut mensuel divisé par 30,42. Il est aujourd'hui plafonné à 400,82 € par jour, soit 0,834 % du plafond annuel de la Sécurité sociale 2026. Le projet de décret le plafonnerait à 1,8 Smic mensuel, soit 3 360,64 € par mois avec le Smic en vigueur depuis le 1er juin 2026, ce qui donne 110,47 € par jour. Le complément de salaire de l'employeur se calcule par différence avec les indemnités journalières versées, ce qui explique le report de charge. Sources : ameli.fr pour les montants de référence, Code du travail pour le maintien de salaire, projet de décret transmis aux partenaires sociaux fin août 2026.</p>
+<p><strong>À retenir.</strong> Le texte n'est pas encore publié au Journal officiel. Cette page sera mise à jour dès sa parution, et les montants recalculés si le multiplicateur retenu diffère de 1,8 Smic. Ce simulateur donne un ordre de grandeur, il ne remplace pas un calcul de paie.</p>
+</div>
+
+</div>
+
+<div id="at-ch" style="display:none">
+<div class="at-cols">
+
+<div class="at-card">
+  <h3>Votre situation</h3>
+  <div class="at-f">
+    <label for="ch-sec">Secteur d'activité</label>
+    <select id="ch-sec"></select>
+    <p class="at-hint">Sert uniquement à estimer un volume de cas. Voir la note de méthode sur l'origine de ces taux.</p>
+  </div>
+  <div class="at-f">
+    <label for="ch-eff">Effectif de l'entreprise</label>
+    <input type="number" id="ch-eff" min="1" max="100000" step="10" value="250">
+  </div>
+  <div class="at-f">
+    <label for="ch-sal">Salaire brut annuel du collaborateur, en francs</label>
+    <input type="number" id="ch-sal" min="30000" max="500000" step="5000" value="100000">
+    <p class="at-hint" id="ch-h-sal"></p>
+  </div>
+  <div class="at-f">
+    <div class="at-head"><label for="ch-dur">Durée de l'arrêt</label><span class="at-v" id="ch-v-dur"></span></div>
+    <input type="range" id="ch-dur" min="7" max="365" step="1" value="150">
+  </div>
+  <div class="at-f">
+    <label for="ch-anc">Ancienneté du collaborateur</label>
+    <select id="ch-anc">
+      <option value="21">1re année de service, 3 semaines</option>
+      <option value="30">2e année, 1 mois</option>
+      <option value="60" selected>3e et 4e année, 2 mois</option>
+      <option value="90">5e à 9e année, 3 mois</option>
+      <option value="120">10e à 14e année, 4 mois</option>
+      <option value="150">15e à 19e année, 5 mois</option>
+      <option value="180">20 ans et plus, 6 mois</option>
+    </select>
+    <p class="at-hint">Échelle bernoise, durée du maintien du salaire à 100 % au titre de l'article 324a CO.</p>
+  </div>
+  <div class="at-f">
+    <label for="ch-apg">Assurance perte de gain maladie</label>
+    <select id="ch-apg">
+      <option value="0">Aucune, article 324a CO seul</option>
+      <option value="30" selected>Oui, délai d'attente de 30 jours</option>
+      <option value="60">Oui, délai d'attente de 60 jours</option>
+      <option value="90">Oui, délai d'attente de 90 jours</option>
+    </select>
+  </div>
+  <div class="at-f">
+    <div class="at-head"><label for="ch-taux">Taux garanti par l'assurance perte de gain</label><span class="at-v" id="ch-v-taux"></span></div>
+    <input type="range" id="ch-taux" min="60" max="100" step="5" value="80">
+  </div>
+</div>
+
+<div>
+  <div class="at-card">
+    <h2>Qui paie, selon la qualification de l'arrêt</h2>
+    <p class="at-scn" id="ch-scn"></p>
+    <div class="at-kpis">
+      <div class="at-kpi"><p class="k-l">Coût employeur, arrêt pour TMS ou burn-out</p><p class="k-v" id="ch-k-mal">&mdash;</p><p class="k-s" id="ch-k-mal-s"></p></div>
+      <div class="at-kpi alt"><p class="k-l">Coût employeur si c'était un accident professionnel</p><p class="k-v" id="ch-k-laa">&mdash;</p><p class="k-s" id="ch-k-laa-s"></p></div>
+      <div class="at-kpi alt"><p class="k-l">Écart annuel estimé pour l'entreprise</p><p class="k-v" id="ch-k-an">&mdash;</p><p class="k-s" id="ch-k-an-s"></p></div>
+    </div>
+
+    <div class="at-leg">
+      <span><i style="background:#1E3A8A"></i>Assureur, LAA ou perte de gain maladie</span>
+      <span><i style="background:#2563EB"></i>Employeur</span>
+      <span><i style="background:#BFDBFE"></i>Non couvert, perte du collaborateur</span>
+    </div>
+
+    <div class="at-bar-w">
+      <div class="at-bar-lab">Accident professionnel, couvert par la LAA <span id="ch-lab-laa"></span></div>
+      <div class="at-bar" id="ch-bar-laa"></div>
+    </div>
+    <div class="at-bar-w">
+      <div class="at-bar-lab">TMS ou burn-out, traité comme une maladie <span id="ch-lab-mal"></span></div>
+      <div class="at-bar" id="ch-bar-mal"></div>
+    </div>
+    <p class="at-hint">Les deux barres représentent la même somme : le salaire brut que le collaborateur aurait perçu sur la durée de l'arrêt.</p>
+    <p class="at-hint" id="ch-alerte" style="color:#1C244B;font-weight:600"></p>
+  </div>
+
+  <div class="at-card">
+    <h2>Le détail, en francs sur la durée de l'arrêt</h2>
+    <div class="at-tw">
+    <table>
+      <thead><tr><th>Qui verse</th><th class="n">Accident professionnel</th><th class="n">TMS ou burn-out</th><th class="n">Écart</th></tr></thead>
+      <tbody id="ch-tb"></tbody>
+    </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="at-note">
+<p><strong>Pourquoi ce simulateur est différent du simulateur français.</strong> En Suisse, les troubles musculo-squelettiques et le burn-out ne sont pas reconnus comme maladies professionnelles. La Suva exige une causalité professionnelle de 75 % et considère cette reconnaissance comme pratiquement exclue pour des troubles à causes multiples. Un arrêt pour TMS ou pour épuisement ne relève donc pas de la LAA, mais du régime maladie : article 324a CO, échelle bernoise, et le cas échéant assurance perte de gain. Autrement dit, ce risque n'est pas mutualisé par l'assurance accidents, il reste chez l'employeur et chez son assureur perte de gain.</p>
+<p><strong>Méthode et sources.</strong> Accident professionnel : indemnité journalière LAA de 80 % du gain assuré dès le 3e jour qui suit l'accident, gain assuré plafonné à 148 200 francs par an, soit 324,80 francs d'indemnité journalière au maximum ; les deux jours d'attente sont à la charge de l'employeur à 80 % du salaire, article 324b CO. Maladie : maintien du salaire à 100 % pendant la durée de l'échelle bernoise, puis relais de l'assurance perte de gain si elle existe, au taux et après le délai d'attente que vous avez indiqués. Sources : Suva, ordonnance sur l'assurance-accidents, Code des obligations, montants maxima LAA.</p>
+<p><strong>Volume de cas : donnée française assumée.</strong> Il n'existe pas en Suisse d'équivalent public des données de sinistralité par branche de l'Assurance Maladie française. Le nombre de cas annuels affiché ici applique donc les taux de TMS reconnus par secteur publiés par ameli pour 2024, à votre effectif suisse. C'est une transposition, pas une statistique suisse : elle donne un ordre de grandeur du volume, à ajuster avec vos propres chiffres d'absence. Repère national suisse : 8,5 jours d'absence pour raison de santé par équivalent plein temps en 2024, contre 6,3 en 2010, pour un coût économique d'environ 12 milliards de francs.</p>
+</div>
+</div>
+
+<div class="at-tip" id="at-tip"></div>
+
+<script>
+(function(){
+  var GAIN_MAX = 148200;
+  var COL = ["#1E3A8A","#2563EB","#BFDBFE"];
+  var NOM = ["Assureur","Employeur","Non couvert, perte du collaborateur"];
+  var SEC = [{"code": "TOUS", "lib": "Tous secteurs confondus", "tms10k": 21.5}, {"code": "N", "lib": "Activités de services administratifs et de soutien", "tms10k": 18.42}, {"code": "K", "lib": "Activités financières et d'assurance", "tms10k": 2.42}, {"code": "L", "lib": "Activités immobilières", "tms10k": 12.46}, {"code": "M", "lib": "Activités spécialisées, scientifiques et techniques", "tms10k": 3.67}, {"code": "O", "lib": "Administration publique", "tms10k": 6.7}, {"code": "R", "lib": "Arts, spectacles et activités récréatives", "tms10k": 5.56}, {"code": "S", "lib": "Autres activités de services", "tms10k": 25.39}, {"code": "G", "lib": "Commerce ; réparation d'automobiles et de motocycles", "tms10k": 23.88}, {"code": "F", "lib": "Construction", "tms10k": 37.45}, {"code": "P", "lib": "Enseignement", "tms10k": 4.57}, {"code": "I", "lib": "Hébergement et restauration", "tms10k": 18.04}, {"code": "C", "lib": "Industrie manufacturière", "tms10k": 39.07}, {"code": "J", "lib": "Information et communication", "tms10k": 1.44}, {"code": "E", "lib": "Production et distribution d'eau ; assainissement, gestion des déchets et dépollution", "tms10k": 21.36}, {"code": "D", "lib": "Production et distribution d'électricité, de gaz, de vapeur et d'air conditionné", "tms10k": 5.06}, {"code": "Q", "lib": "Santé humaine et action sociale", "tms10k": 25.66}, {"code": "H", "lib": "Transports et entreposage", "tms10k": 20.2}];
+
+  function R(id){ return document.getElementById(id); }
+  function chf(v){ return Math.round(v).toLocaleString('fr-CH') + " CHF"; }
+  function pct(v){ return (Math.round(v*10)/10).toLocaleString('fr-CH') + " %"; }
+  function num(id, def){
+    var v = parseFloat(R(id).value);
+    if (isNaN(v)) { return def; }
+    return v;
+  }
+
+  var sel = R('ch-sec');
+  for (var i = 0; i < SEC.length; i++){
+    var o = document.createElement('option');
+    o.value = String(i);
+    o.textContent = SEC[i].lib;
+    if (SEC[i].code === "TOUS") { o.selected = true; }
+    sel.appendChild(o);
+  }
+
+  function laa(sj, sjAss, duree){
+    var ass = 0, emp = 0, non = 0;
+    for (var j = 1; j <= duree; j++){
+      var a = 0, e = 0;
+      if (j < 3) { e = sj * 0.8; }
+      else { a = sjAss * 0.8; }
+      var n = sj - a - e;
+      if (n < 0) { n = 0; }
+      ass = ass + a; emp = emp + e; non = non + n;
+    }
+    return {ass:ass, emp:emp, non:non};
+  }
+
+  function maladie(sj, duree, echelle, delai, taux){
+    var ass = 0, emp = 0, non = 0, trou = 0;
+    for (var j = 1; j <= duree; j++){
+      var a = 0, e = 0;
+      var apg = false;
+      if (delai > 0) {
+        if (j > delai) { apg = true; }
+      }
+      if (apg) { a = sj * taux; }
+      else {
+        if (j <= echelle) { e = sj; }
+      }
+      var n = sj - a - e;
+      if (n < 0) { n = 0; }
+      if (a === 0) {
+        if (e === 0) { trou = trou + 1; }
+      }
+      ass = ass + a; emp = emp + e; non = non + n;
+    }
+    return {ass:ass, emp:emp, non:non, trou:trou};
+  }
+
+  function barre(el, s, ref){
+    el.innerHTML = "";
+    var vals = [s.ass, s.emp, s.non];
+    for (var k = 0; k < 3; k++){
+      if (vals[k] > 0) {
+        var d = document.createElement('div');
+        d.className = 'at-seg';
+        if (k === 2) { d.className = 'at-seg dk'; }
+        d.style.background = COL[k];
+        var part = vals[k] / ref * 100;
+        d.style.width = part + "%";
+        if (part > 13) { d.textContent = chf(vals[k]); }
+        d.setAttribute('data-tip', NOM[k] + " : " + chf(vals[k]) + ", soit " + pct(part) + " du salaire brut de la période");
+        el.appendChild(d);
+      }
+    }
+  }
+
+  function ligne(nom, a, b){
+    var d = b - a;
+    var sig = "";
+    if (d > 0.5) { sig = "+"; }
+    return "<tr><td>" + nom + "</td><td class='n'>" + chf(a) + "</td><td class='n'>" + chf(b) + "</td><td class='n'>" + sig + chf(d) + "</td></tr>";
+  }
+
+  function calc(){
+    var salAn = num('ch-sal', 100000);
+    var duree = num('ch-dur', 150);
+    var eff = num('ch-eff', 250);
+    var echelle = parseFloat(R('ch-anc').value);
+    var delai = parseFloat(R('ch-apg').value);
+    var taux = num('ch-taux', 80) / 100;
+    var s = SEC[parseInt(sel.value, 10)];
+
+    var sj = salAn / 365;
+    var sjAss = salAn;
+    if (sjAss > GAIN_MAX) { sjAss = GAIN_MAX; }
+    sjAss = sjAss / 365;
+    var ref = sj * duree;
+
+    var A = laa(sj, sjAss, duree);
+    var B = maladie(sj, duree, echelle, delai, taux);
+
+    R('ch-v-dur').textContent = Math.round(duree) + " jours";
+    R('ch-v-taux').textContent = Math.round(taux * 100) + " %";
+    var hs = "Soit " + chf(salAn / 12) + " brut par mois, et " + chf(sj) + " par jour calendaire.";
+    if (salAn > GAIN_MAX) { hs = hs + " Au-delà de 148 200 CHF, le surplus n'est pas couvert par la LAA."; }
+    R('ch-h-sal').textContent = hs;
+
+    var cas = eff / 10000 * s.tms10k;
+    var annuel = (B.emp - A.emp) * cas;
+
+    R('ch-k-mal').textContent = chf(B.emp);
+    var sm = "Sur la durée de l'arrêt, au titre de l'article 324a CO.";
+    if (delai > 0) { sm = "Maintien à 100 % pendant le délai d'attente de " + Math.round(delai) + " jours, dans la limite de l'échelle bernoise."; }
+    R('ch-k-mal-s').textContent = sm;
+    R('ch-k-laa').textContent = chf(A.emp);
+    R('ch-k-laa-s').textContent = "Deux jours d'attente à 80 % du salaire, puis la LAA prend le relais.";
+    R('ch-k-an').textContent = "+ " + chf(annuel);
+    R('ch-k-an-s').textContent = "Pour " + (Math.round(cas * 10) / 10).toLocaleString('fr-CH') + " cas par an estimés sur " + Math.round(eff) + " collaborateurs, secteur " + s.lib.toLowerCase() + ", taux de sinistralité français appliqué faute d'équivalent suisse.";
+
+    R('ch-lab-laa').textContent = "revenu maintenu : " + pct((A.ass + A.emp) / ref * 100) + " du brut";
+    R('ch-lab-mal').textContent = "revenu maintenu : " + pct((B.ass + B.emp) / ref * 100) + " du brut";
+
+    var scn = "Collaborateur à " + chf(salAn) + " brut par an, arrêté " + Math.round(duree) + " jours. En Suisse, un TMS ou un burn-out n'est pas une maladie professionnelle : le même arrêt ne coûte pas la même chose selon sa qualification.";
+    R('ch-scn').textContent = scn;
+
+    var al = "";
+    if (B.trou > 0) { al = "Attention : pendant " + B.trou + " jours, ni l'échelle bernoise ni l'assurance perte de gain ne couvrent le salaire. Votre délai d'attente est plus long que votre obligation de maintien, le collaborateur se retrouve sans revenu sur cette période."; }
+    R('ch-alerte').textContent = al;
+
+    barre(R('ch-bar-laa'), A, ref);
+    barre(R('ch-bar-mal'), B, ref);
+
+    var h = ligne("Assureur, LAA ou perte de gain maladie", A.ass, B.ass);
+    h = h + ligne("Employeur", A.emp, B.emp);
+    h = h + ligne("Non couvert, perte du collaborateur", A.non, B.non);
+    h = h + "<tr class='tot'><td>Salaire brut de la période</td><td class='n'>" + chf(ref) + "</td><td class='n'>" + chf(ref) + "</td><td class='n'>0 CHF</td></tr>";
+    R('ch-tb').innerHTML = h;
+  }
+
+  var ids = ['ch-sec','ch-eff','ch-sal','ch-dur','ch-anc','ch-apg','ch-taux'];
+  for (var k = 0; k < ids.length; k++){
+    var el = R(ids[k]);
+    if (el) {
+      el.addEventListener('input', calc);
+      el.addEventListener('change', calc);
+    }
+  }
+  calc();
+})();
+
+(function(){
+  var SMIC = 1867.02;
+  var MULT = 1.8;
+  var PLAF_ANCIEN = 400.82;
+  var PLAF_NOUVEAU = (SMIC * MULT) / 30.42;
+  var COL = ["#1E3A8A","#2563EB","#60A5FA","#BFDBFE"];
+  var NOM = ["Assurance Maladie","Employeur, maintien de salaire","Prévoyance","Non couvert, perte du salarié"];
+
+  function R(id){ return document.getElementById(id); }
+  function eur(v){ return Math.round(v).toLocaleString('fr-FR') + " €"; }
+  function eur2(v){ return (Math.round(v*100)/100).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+  function pct(v){ return (Math.round(v*10)/10).toLocaleString('fr-FR') + " %"; }
+  function num(id, def){
+    var v = parseFloat(R(id).value);
+    if (isNaN(v)) { return def; }
+    return v;
+  }
+
+  function ij(sj, j, plaf){
+    var b = sj;
+    if (b > plaf) { b = plaf; }
+    if (j < 29) { return b * 0.6; }
+    return b * 0.8;
+  }
+
+  function scenario(sj, duree, plaf, regime, maintien, tauxPrev){
+    var am = 0, emp = 0, prev = 0, perte = 0;
+    for (var j = 1; j <= duree; j++){
+      var i = ij(sj, j, plaf);
+      var g = 0;
+      if (j <= maintien) {
+        if (regime === "cent") { g = sj; }
+        else {
+          if (j < 31) { g = sj * 0.9; }
+          else { g = sj * 0.6666; }
+        }
+      }
+      var e = g - i;
+      if (e < 0) { e = 0; }
+      var p = 0;
+      if (j > maintien) {
+        p = (sj * tauxPrev) - i;
+        if (p < 0) { p = 0; }
+      }
+      var reste = sj - i - e - p;
+      if (reste < 0) { reste = 0; }
+      am = am + i; emp = emp + e; prev = prev + p; perte = perte + reste;
+    }
+    return {am:am, emp:emp, prev:prev, perte:perte, tot:am+emp+prev+perte};
+  }
+
+  function barre(el, s, ref){
+    el.innerHTML = "";
+    var vals = [s.am, s.emp, s.prev, s.perte];
+    for (var k = 0; k < 4; k++){
+      if (vals[k] > 0) {
+        var d = document.createElement('div');
+        d.className = 'at-seg';
+        if (k === 3) { d.className = 'at-seg dk'; }
+        d.style.background = COL[k];
+        d.style.width = (vals[k] / ref * 100) + "%";
+        var part = vals[k] / ref * 100;
+        if (part > 11) { d.textContent = eur(vals[k]); }
+        d.setAttribute('data-tip', NOM[k] + " : " + eur(vals[k]) + ", soit " + pct(part) + " du salaire brut de la période");
+        el.appendChild(d);
+      }
+    }
+  }
+
+  function ligne(nom, a, b){
+    var d = b - a;
+    var sig = "";
+    if (d > 0.5) { sig = "+"; }
+    return "<tr><td>" + nom + "</td><td class='n'>" + eur(a) + "</td><td class='n'>" + eur(b) + "</td><td class='n'>" + sig + eur(d) + "</td></tr>";
+  }
+
+  function calc(){
+    var salAn = num('at-sal', 50000);
+    var duree = num('at-dur', 150);
+    var maintien = num('at-mai', 60);
+    var tauxPrev = num('at-prev', 0) / 100;
+    var regime = R('at-reg').value;
+    var sj = salAn / 12 / 30.42;
+    var ref = sj * duree;
+
+    var av = scenario(sj, duree, PLAF_ANCIEN, regime, maintien, tauxPrev);
+    var ap = scenario(sj, duree, PLAF_NOUVEAU, regime, maintien, tauxPrev);
+
+    R('at-v-dur').textContent = Math.round(duree) + " jours";
+    R('at-v-mai').textContent = Math.round(maintien) + " jours";
+    R('at-v-prev').textContent = Math.round(tauxPrev * 100) + " %";
+    R('at-h-sal').textContent = "Soit " + eur(salAn/12) + " brut par mois, et un salaire journalier de base de " + eur2(sj) + ". Le plafond du décret arrête le calcul à " + eur(SMIC * MULT) + " par mois.";
+
+    var dEmp = ap.emp - av.emp;
+    var dSal = ap.perte - av.perte;
+    var dPrev = ap.prev - av.prev;
+    var dAm = av.am - ap.am;
+
+    R('at-k-emp').textContent = "+ " + eur(dEmp);
+    R('at-k-emp-s').textContent = "Complément de salaire, de " + eur(av.emp) + " à " + eur(ap.emp) + " sur l'arrêt.";
+    R('at-k-sal').textContent = "+ " + eur(dSal);
+    var sSal = "Perte de revenu non compensée, de " + eur(av.perte) + " à " + eur(ap.perte) + ".";
+    if (dPrev > 0.5) { sSal = sSal + " Votre contrat de prévoyance absorbe " + eur(dPrev) + " de plus."; }
+    R('at-k-sal-s').textContent = sSal;
+    R('at-k-am').textContent = "- " + eur(dAm);
+    R('at-k-am-s').textContent = "Indemnités journalières en moins, de " + eur(av.am) + " à " + eur(ap.am) + ".";
+
+    var couvAv = (av.am + av.emp + av.prev) / ref * 100;
+    var couvAp = (ap.am + ap.emp + ap.prev) / ref * 100;
+    R('at-lab-av').textContent = "revenu maintenu : " + pct(couvAv) + " du brut";
+    R('at-lab-ap').textContent = "revenu maintenu : " + pct(couvAp) + " du brut";
+
+    var lib = "cadre";
+    if (salAn < 32000) { lib = "employé"; }
+    else {
+      if (salAn < 42000) { lib = "technicien ou agent de maîtrise"; }
+    }
+    var conc = "Ce salarié est concerné par le plafond.";
+    if (salAn / 12 <= SMIC * MULT) { conc = "Ce salarié n'est pas concerné par le plafond, sa rémunération reste sous le seuil de " + eur(SMIC * MULT) + " brut par mois."; }
+    R('at-scn').textContent = "Profil " + lib + " à " + eur(salAn) + " brut par an, arrêté " + Math.round(duree) + " jours pour un trouble musculo-squelettique reconnu en maladie professionnelle. " + conc;
+
+    barre(R('at-bar-av'), av, ref);
+    barre(R('at-bar-ap'), ap, ref);
+
+    var h = ligne("Assurance Maladie, indemnités journalières", av.am, ap.am);
+    h = h + ligne("Employeur, complément de salaire", av.emp, ap.emp);
+    if (tauxPrev > 0) { h = h + ligne("Prévoyance, relais après le maintien", av.prev, ap.prev); }
+    h = h + ligne("Non couvert, perte du salarié", av.perte, ap.perte);
+    h = h + "<tr class='tot'><td>Salaire brut de la période</td><td class='n'>" + eur(ref) + "</td><td class='n'>" + eur(ref) + "</td><td class='n'>0 €</td></tr>";
+    R('at-tb').innerHTML = h;
+  }
+
+  var tip = R('at-tip');
+  function move(e){
+    var t = e.target;
+    if (t.className.indexOf('at-seg') === -1) { return; }
+    var txt = t.getAttribute('data-tip');
+    if (txt === null) { return; }
+    tip.textContent = txt;
+    tip.className = 'at-tip on';
+    var x = e.clientX + 14;
+    if (x > window.innerWidth - 280) { x = window.innerWidth - 280; }
+    tip.style.left = x + "px";
+    tip.style.top = (e.clientY + 16) + "px";
+  }
+  function hide(){ tip.className = 'at-tip'; }
+  document.addEventListener('mousemove', move);
+  document.addEventListener('mouseout', hide);
+  document.addEventListener('scroll', hide);
+
+  var ids = ['at-sal','at-dur','at-reg','at-mai','at-prev'];
+  for (var i = 0; i < ids.length; i++){
+    var el = R(ids[i]);
+    if (el) {
+      el.addEventListener('input', calc);
+      el.addEventListener('change', calc);
+    }
+  }
+  calc();
+})();
+
+(function(){
+  var fr=document.getElementById('at-fr'), ch=document.getElementById('at-ch');
+  var bf=document.getElementById('at-b-fr'), bc=document.getElementById('at-b-ch');
+  function show(p){
+    if (p === 'ch') { fr.style.display='none'; ch.style.display='block'; bf.className=''; bc.className='on'; }
+    else { fr.style.display='block'; ch.style.display='none'; bf.className='on'; bc.className=''; }
+  }
+  bf.addEventListener('click', function(){ show('fr'); });
+  bc.addEventListener('click', function(){ show('ch'); });
+})();
+</script>
+</div>
+
 </body>
 </html>

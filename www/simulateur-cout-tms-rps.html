@@ -360,12 +360,19 @@
       <div>
         <div class="step">
           <div class="step-head"><span class="step-n">01</span><h2>Votre entreprise</h2></div>
-          <p class="step-note">Deux réponses suffisent. Le secteur détermine les taux de sinistralité appliqués ; vous pouvez préciser votre activité pour un calcul plus proche de votre réalité.</p>
+          <p class="step-note">Trois réponses suffisent : votre pays, votre secteur et votre effectif. Le pays détermine le régime applicable, le secteur détermine les taux de sinistralité appliqués.</p>
+          <div class="field">
+            <label for="sv-pays">Pays</label>
+            <select id="sv-pays">
+              <option value="fr" selected>France</option>
+              <option value="ch">Suisse</option>
+            </select>
+          </div>
           <div class="field">
             <label for="sv-secteur">Grand secteur d'activité</label>
             <select id="sv-secteur"></select>
           </div>
-          <div class="field">
+          <div class="field fr-only">
             <label for="sv-activite">Activité précise (facultatif)</label>
             <select id="sv-activite"></select>
           </div>
@@ -373,11 +380,17 @@
             <label for="sv-effectif">Effectif salarié</label>
             <input type="number" id="sv-effectif" min="1" max="200000" step="1" value="250">
           </div>
+          <div class="field">
+            <label for="sv-sal-brut" id="sv-lab-sal">Salaire brut annuel moyen</label>
+            <input type="number" id="sv-sal-brut" min="20000" max="500000" step="1000" value="50000">
+            <p class="hint" id="sv-hint-sal"></p>
+          </div>
           <p class="callout" id="sv-tendance"></p>
         </div>
 
         <div class="step">
           <div class="step-head"><span class="step-n">02</span><h2>Agir, et à quel prix</h2></div>
+          <p class="callout ch-only">Les tarifs ScanUp sont établis en euros et convertis en francs à un taux fixe de 0,95 : la prestation étant réalisée à distance, son prix ne change pas d'un pays à l'autre. Les méthodes traditionnelles, elles, consomment du travail sur place : leur coût est majoré de moitié, l'écart de coût horaire de la main d'œuvre entre les deux pays étant de cet ordre, 63,62 CHF de l'heure en Suisse selon l'Office fédéral de la statistique contre 43,70 € en France selon l'Insee. Ordres de grandeur, non des devis.</p>
           <p class="step-note">Le montant ci-contre dit ce que le risque coûte. Il ne dit pas où agir. Pour le savoir il faut regarder les situations de travail, et cela a un prix : voici les deux façons de le payer.</p>
 
           <div class="field">
@@ -481,11 +494,12 @@
         </div>
       </div>
 
-      <aside class="panel" aria-live="polite">
+      <aside class="panel panel-fr" aria-live="polite">
         <div class="p-head">
           <p class="p-label" id="sv-p-label">Ce que le risque vous coûte</p>
           <p class="headline" id="sv-total">&mdash;</p>
           <p class="headline-sub" id="sv-total-sub"></p>
+          <p class="headline-sub fr-only" id="sv-decret"></p>
           <div class="split" id="sv-split">
             <div class="split-c">
               <span class="split-l">Dont RPS</span>
@@ -572,7 +586,10 @@
           </div>
         </div>
       </aside>
+
+      
     </div>
+    <p class="note ch-only">Le nombre d'arrêts et leur cause viennent des données françaises de l'Assurance Maladie, faute d'équivalent suisse : en Suisse, les troubles musculo-squelettiques et l'épuisement ne sont pas reconnus comme maladies professionnelles, ils ne sont donc pas comptés. Le coût, lui, suit les règles suisses : maintien de salaire à 100 % au titre de l'article 324a du Code des obligations, échelle bernoise, puis relais de l'assurance perte de gain. Cette charge reste chez l'employeur, elle n'est pas mutualisée par l'assurance accidents.</p>
     <p class="note">Estimation statistique appliquée à un effectif, et non un diagnostic de votre entreprise. Ce montant ne couvre que les troubles musculo-squelettiques et les risques psychosociaux, à l'exclusion des autres causes d'arrêt : il ne se compare pas à un chiffre d'absentéisme global. Champ, sources et limites détaillés dans l'onglet « Méthode et limites ».</p>
   </section>
 
@@ -661,7 +678,20 @@ var naf1 = DATA.naf1.filter(function(s){return s.code!=="TOUS";});
 var tous = DATA.naf1.filter(function(s){return s.code==="TOUS";})[0];
 function $(id){return document.getElementById(id);}
 var fEur = new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0});
-function eur(n){return fEur.format(n);}
+var fChf = new Intl.NumberFormat("fr-CH",{maximumFractionDigits:0});
+// Les tarifs sont etablis en euros. En Suisse ils sont convertis a un taux
+// fixe, indique dans la page : ce sont des ordres de grandeur, pas un devis.
+var SV_TAUX_CHF = 0.95, SV_PAYS = "fr";
+function eur(n){
+  if(SV_PAYS==="ch"){ return fChf.format(Math.round(n*SV_TAUX_CHF))+" CHF"; }
+  return fEur.format(n);
+}
+// Les couts du risque sont calcules directement dans la monnaie du pays : ils
+// ne passent pas par la conversion, contrairement aux tarifs ScanUp.
+function mon(n){
+  if(SV_PAYS==="ch"){ return fChf.format(Math.round(n))+" CHF"; }
+  return fEur.format(n);
+}
 function num(n,d){d=d||0;return new Intl.NumberFormat("fr-FR",{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
 // ordre de grandeur d'un diagnostic RPS en presentiel : forfait de base plus part variable
 function auditRef(eff){ return Math.round((5900+eff*24)/100)*100; }
@@ -682,6 +712,45 @@ function plafondSecteur(p){
   if(c>40){ c=40; }
   return Math.round(c);
 }
+// ---------------------------------------------------------------------------
+// Cout employeur d'un arret, selon le pays. La frequence des arrets et leur
+// cause viennent des donnees francaises de l'Assurance Maladie dans les deux
+// cas ; seule la regle de prise en charge change.
+// France : indemnites journalieres AT/MP, 60 % puis 80 % du salaire journalier
+// de base, plafonnees ; l'employeur complete jusqu'a 90 % puis 66,66 % pendant
+// la duree legale de maintien. Le projet de decret abaisse le plafond a
+// 1,8 Smic, ce qui deplace la charge vers l'employeur et vers le salarie.
+var SMIC_M = 1867.02, MULT_D = 1.8;
+var PLAF_AV = 400.82, PLAF_AP = (SMIC_M*MULT_D)/30.42;
+var MAINTIEN_J = 60;
+function ijFR(sj, j, plaf){
+  var b = sj; if(b>plaf){ b=plaf; }
+  return (j<29) ? b*0.6 : b*0.8;
+}
+function empFR(sj, duree, plaf){
+  var emp=0;
+  for(var j=1;j<=duree;j++){
+    var i=ijFR(sj,j,plaf), g=0;
+    if(j<=MAINTIEN_J){ g = (j<31) ? sj*0.9 : sj*0.6666; }
+    var e=g-i; if(e<0){ e=0; }
+    emp+=e;
+  }
+  return emp;
+}
+// Suisse : les TMS et l'epuisement ne sont pas des maladies professionnelles,
+// ils relevent du regime maladie. L'employeur maintient le salaire a 100 %
+// pendant l'echelle bernoise, jusqu'au delai d'attente de l'assurance perte
+// de gain quand elle existe.
+var ECHELLE_CH = 60, DELAI_APG = 30;
+function empCH(sj, duree){
+  var emp=0;
+  for(var j=1;j<=duree;j++){
+    if(j>DELAI_APG){ break; }
+    if(j<=ECHELLE_CH){ emp+=sj; }
+  }
+  return emp;
+}
+
 function tranche(jours){ for(var i=0;i<BORNES.length;i++){ if(jours<=BORNES[i]) return i; } return 5; }
 
 var selS=$("sv-secteur"), selA=$("sv-activite");
@@ -721,7 +790,22 @@ function calcule(){
   if(prudent){ if(idx>0){ idx--; } }
   var cu = CTN[s.ctn].it[idx];
 
+  // Cout d'un arret pour l'entreprise, selon le pays.
+  var salBrut = Math.max(1, +$("sv-sal-brut").value||1);
+  var surcoutDecret = 0;
+  if(SV_PAYS==="ch"){
+    cu = empCH(salBrut/365, s.jours);
+  } else {
+    var sjFr = salBrut/12/30.42;
+    surcoutDecret = empFR(sjFr, s.jours, PLAF_AP) - empFR(sjFr, s.jours, PLAF_AV);
+    if(surcoutDecret<0){ surcoutDecret = 0; }
+  }
+
   var joursOuv = s.jours*5/7;
+  // En Suisse la valorisation d'une journee d'absence part du salaire brut
+  // saisi, majore des charges patronales ; en France elle part du cout
+  // employeur moyen renseigne dans les hypotheses.
+  if(SV_PAYS==="ch"){ sal = salBrut*1.15; }
   var coutJour = sal/JOURS_AN;
 
   var tmsDirect = nbTms*cu,  tmsDes = nbTms*joursOuv*coutJour*pctDes;
@@ -731,24 +815,33 @@ function calcule(){
   var totTms = tmsDirect+tmsDes, totRps = rpsDirect+rpsDes+rpsNr, total = totTms+totRps;
   var max = Math.max(tmsDirect,tmsDes,rpsDirect,rpsDes,rpsNr,1);
 
-  $("sv-total").textContent = eur(total);
-  $("sv-total-sub").textContent = "soit "+eur(total/eff)+" par salarié et par an, pour "+num(eff)+" salariés.";
-  $("sv-tot-tms").textContent = eur(totTms);
-  $("sv-tot-rps").textContent = eur(totRps);
-  $("sv-h-tms").textContent = eur(totTms);
-  $("sv-h-rps").textContent = eur(totRps);
+  $("sv-total").textContent = mon(total);
+  $("sv-total-sub").textContent = "soit "+mon(total/eff)+" par salarié et par an, pour "+num(eff)+" salariés.";
+  if(SV_PAYS==="ch"){
+    $("sv-decret").textContent = "";
+  } else {
+    var supp = surcoutDecret*(nbTms+nbPsy);
+    $("sv-decret").textContent = "Après le décret plafonnant les indemnités à 1,8 Smic : "+
+      mon(total+supp)+", soit "+mon(supp)+" de maintien de salaire en plus à votre charge.";
+  }
+  $("sv-tot-tms").textContent = mon(totTms);
+  $("sv-tot-rps").textContent = mon(totRps);
+  $("sv-h-tms").textContent = mon(totTms);
+  $("sv-h-rps").textContent = mon(totRps);
   var base = total;
   if(base <= 0){ base = 1; }
-  $("sv-h-tms-p").textContent = Math.round(totTms/base*100)+" % du total, soit "+eur(totTms/eff)+" par salarié";
-  $("sv-h-rps-p").textContent = Math.round(totRps/base*100)+" % du total, soit "+eur(totRps/eff)+" par salarié";
+  $("sv-h-tms-p").textContent = Math.round(totTms/base*100)+" % du total, soit "+mon(totTms/eff)+" par salarié";
+  $("sv-h-rps-p").textContent = Math.round(totRps/base*100)+" % du total, soit "+mon(totRps/eff)+" par salarié";
 
   var paires = [["sv-v-tms-direct","sv-b-tms-direct",tmsDirect],["sv-v-tms-des","sv-b-tms-des",tmsDes],
                 ["sv-v-rps-direct","sv-b-rps-direct",rpsDirect],["sv-v-rps-des","sv-b-rps-des",rpsDes],
                 ["sv-v-rps-nr","sv-b-rps-nr",rpsNr]];
-  paires.forEach(function(p){ $(p[0]).textContent=eur(p[2]); $(p[1]).style.width=(p[2]/max*100)+"%"; });
+  paires.forEach(function(p){ $(p[0]).textContent=mon(p[2]); $(p[1]).style.width=(p[2]/max*100)+"%"; });
 
-  $("sv-d-tms").textContent = "Barème des coûts moyens AT/MP 2026, tranche « "+
-    (idx===5?"plus de 150 jours":"91 à 150 jours")+" », soit "+eur(cu)+" par cas, plus les journées d'absence valorisées selon votre hypothèse.";
+  $("sv-d-tms").textContent = (SV_PAYS==="ch")
+    ? "En Suisse, ces troubles ne sont pas des maladies professionnelles : le coût d'un arrêt est celui du maintien de salaire à la charge de l'employeur, "+mon(cu)+" par cas, plus les journées d'absence valorisées selon votre hypothèse."
+    : "Barème des coûts moyens AT/MP 2026, tranche « "+
+    (idx===5?"plus de 150 jours":"91 à 150 jours")+" », soit "+mon(cu)+" par cas, plus les journées d'absence valorisées selon votre hypothèse.";
   $("sv-d-rps").textContent = "Les affections psychiques reconnues sont rares, "+
     num(s.psy10k,2)+" pour 10 000 salariés dans votre secteur. La troisième ligne estime la part qui ne passe jamais par la reconnaissance et se manifeste en arrêts maladie ordinaires.";
 
@@ -781,7 +874,11 @@ function calcule(){
   // scénario 1 : tout en présentiel
   var perim=document.querySelector('input[name="svperim"]:checked').value;
   var vRps=(perim!=="tms"), vTms=(perim!=="rps");
-  var c1rps=vRps?pAudit:0, c1tms=vTms?nbCibles*pPoste:0, c1=c1rps+c1tms;
+  // Le presentiel consomme du travail local : en Suisse, le cout horaire de la
+  // main d'oeuvre est environ une fois et demie celui de la France. Les tarifs
+  // ScanUp, eux, ne changent pas : la prestation est realisee a distance.
+  var fPres = (SV_PAYS==="ch") ? 1.5 : 1;
+  var c1rps=vRps?pAudit*fPres:0, c1tms=vTms?nbCibles*pPoste*fPres:0, c1=c1rps+c1tms;
 
   // scénario 2 : dépistage à distance puis intervention ciblée
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
@@ -1000,7 +1097,7 @@ function majSalaire(){
   if(s.cout){ $("sv-salaire").value=s.cout; }
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
-["sv-activite","sv-effectif","sv-salaire","sv-desorg","sv-rps",
+["sv-activite","sv-effectif","sv-sal-brut","sv-salaire","sv-desorg","sv-rps",
  "sv-part","sv-part-etude","sv-p-audit","sv-p-poste"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
@@ -1012,6 +1109,7 @@ Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],inpu
 Array.prototype.forEach.call(document.querySelectorAll('input[name="svscn"]'),function(r){
   r.addEventListener("change",calcule);
 });
+window.__svPays = function(pays){ SV_PAYS = pays; calcule(); };
 fillAct(); majSalaire(); majAudit(); calcule(); renderTable();
 })();
 </script>
@@ -1178,12 +1276,11 @@ fillAct(); majSalaire(); majAudit(); calcule(); renderTable();
 
 <div class="at-card">
   <h3>Votre situation</h3>
-  <div class="at-f">
+  <div class="at-f at-dupe">
     <label for="ch-sec">Secteur d'activité</label>
     <select id="ch-sec"></select>
-    <p class="at-hint">Sert uniquement à estimer un volume de cas. Voir la note de méthode sur l'origine de ces taux.</p>
   </div>
-  <div class="at-f">
+  <div class="at-f at-dupe">
     <label for="ch-eff">Effectif de l'entreprise</label>
     <input type="number" id="ch-eff" min="1" max="100000" step="10" value="250">
   </div>
@@ -1598,6 +1695,57 @@ fillAct(); majSalaire(); majAudit(); calcule(); renderTable();
 })();
 </script>
 </div>
+
+
+<style>
+/* Bascule France Suisse pilotee par l'etape 01 du simulateur. */
+.ch-only{display:none}
+body[data-pays="ch"] .fr-only{display:none}
+body[data-pays="ch"] .ch-only{display:block}
+body[data-pays="ch"] .avance{display:none}
+.at-pays{display:none}
+.at-dupe{display:none}
+</style>
+
+<script>
+(function(){
+  // Le pays choisi a l'etape 01 pilote la page : la monnaie et les regles de
+  // calcul sont gerees par le moteur principal, ce bloc s'occupe des libelles,
+  // des valeurs par defaut et du bloc de detail en bas de page.
+  function R(id){ return document.getElementById(id); }
+  var DEF = { fr:{ sal:50000, lab:"Salaire brut annuel moyen",
+                   hint:"Sert au calcul du maintien de salaire et de l'effet du décret plafonnant les indemnités journalières." },
+              ch:{ sal:100000, lab:"Salaire brut annuel moyen, en francs",
+                   hint:"Sert au calcul du maintien de salaire selon l'échelle bernoise, puis du relais de l'assurance perte de gain." } };
+  var dernier = null;
+
+  function sync(){
+    var p = R('sv-pays') ? R('sv-pays').value : 'fr';
+    document.body.setAttribute('data-pays', p);
+    var sal = R('sv-sal-brut');
+    if(sal && dernier !== null && dernier !== p){
+      if(+sal.value === DEF[dernier].sal){ sal.value = String(DEF[p].sal); }
+    }
+    if(R('sv-lab-sal')){ R('sv-lab-sal').textContent = DEF[p].lab; }
+    if(R('sv-hint-sal')){ R('sv-hint-sal').textContent = DEF[p].hint; }
+    dernier = p;
+    if(window.__svPays){ window.__svPays(p); }
+    var bouton = R(p==='ch' ? 'at-b-ch' : 'at-b-fr');
+    if(bouton){ bouton.click(); }
+    var chEff=R('ch-eff'), chSal=R('ch-sal'), atSal=R('at-sal'), eff=R('sv-effectif'), salv=R('sv-sal-brut');
+    if(chEff && eff){ chEff.value = eff.value; chEff.dispatchEvent(new Event('input',{bubbles:true})); }
+    if(p==='ch' && chSal && salv){ chSal.value = salv.value; chSal.dispatchEvent(new Event('input',{bubbles:true})); }
+    if(p==='fr' && atSal && salv){ atSal.value = salv.value; atSal.dispatchEvent(new Event('input',{bubbles:true})); }
+  }
+
+  ['sv-pays','sv-effectif','sv-sal-brut'].forEach(function(id){
+    var el=R(id); if(!el) return;
+    el.addEventListener('change', sync);
+    el.addEventListener('input', sync);
+  });
+  sync();
+})();
+</script>
 
 </body>
 </html>

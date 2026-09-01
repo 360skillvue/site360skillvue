@@ -223,7 +223,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── PARCOURS SALARIE ──────────────────────────────────── */}
+      {/* ─── PARCOURS SALARIE, QUATRE VIDEOS ───────────────────── */}
       <section className="py-24 px-6 bg-[#f8f9fb]">
         <div className="max-w-6xl mx-auto">
           <FadeIn className="text-center mb-12">
@@ -238,20 +238,25 @@ export default function HomePage() {
             </p>
           </FadeIn>
 
-          <div className="grid md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
-            <FadeIn delay={0.1}>
-              <p className="text-[14px] font-semibold text-scanup-navy mb-3">
-                🇫🇷 {t.home.videosFrLabel}
-              </p>
-              <VideoEmbed id="Jivo0CdLXFg" title={t.home.videosFrLabel} ratio="16/9" />
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <p className="text-[14px] font-semibold text-scanup-navy mb-3">
-                🇨🇭 {t.home.videosChLabel}
-              </p>
-              <VideoEmbed id="m3yYau_tWvM" title={t.home.videosChLabel} ratio="16/9" />
-            </FadeIn>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
+            {[
+              { flag: '🇫🇷', label: t.home.videosRpsFr, file: 'rps-fr' },
+              { flag: '🇨🇭', label: t.home.videosRpsCh, file: 'rps-ch' },
+              { flag: '🇫🇷', label: t.home.videosTmsFr, file: 'tms-fr' },
+              { flag: '🇨🇭', label: t.home.videosTmsCh, file: 'tms-ch' },
+            ].map((v, i) => (
+              <FadeIn key={v.file} delay={0.1 + i * 0.08}>
+                <p className="text-[13px] font-semibold text-scanup-navy mb-3">
+                  {v.flag} {v.label}
+                </p>
+                <VideoEmbed
+                  src={`/videos/scanup-parcours-${v.file}.mp4`}
+                  poster={`/scanup-parcours-${v.file}.webp`}
+                  title={v.label}
+                  ratio="9/16"
+                />
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>

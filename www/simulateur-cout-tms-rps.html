@@ -337,7 +337,17 @@
 <div class="svue-sim">
   <div class="bande" aria-hidden="true"></div>
 
-  <div class="intro">
+  <div class="svue-pays">
+    <label for="sv-pays">Dans quel pays votre entreprise emploie-t-elle ?</label>
+    <select id="sv-pays">
+      <option value="">Choisissez votre pays</option>
+      <option value="fr">France</option>
+      <option value="ch">Suisse</option>
+    </select>
+    <p class="svue-pays-note">Le pays détermine le régime de prise en charge des arrêts, donc ce que le risque coûte réellement à votre entreprise.</p>
+  </div>
+
+  <div class="intro fr-only">
     <div>
       <p class="kicker">Données Assurance Maladie · 2005 &ndash; 2024 · régime général</p>
       <p class="intro-lead">Les accidents du travail reculent de 31 % en vingt ans ; les maladies professionnelles, elles, repartent à la hausse, et les affections psychiques y sont le poste qui progresse le plus vite : multipliées par 5,6 depuis 2015 dans les données de l'Assurance Maladie. Ce simulateur distingue les deux familles, risques psychosociaux et troubles musculo-squelettiques, en appliquant à votre effectif les taux réellement observés dans votre secteur et le barème officiel des coûts moyens AT/MP.</p>
@@ -349,7 +359,19 @@
     </div>
   </div>
 
-  <div class="tabs" role="tablist">
+  <div class="intro ch-only">
+    <div>
+      <p class="kicker">Job Stress Index 2022 · Promotion Santé Suisse</p>
+      <p class="intro-lead">En Suisse, les troubles musculo-squelettiques et l'épuisement ne sont pas reconnus comme maladies professionnelles : la Suva exige une causalité professionnelle de 75 %, hors d'atteinte pour des troubles à causes multiples. Ces arrêts relèvent donc du régime maladie, et la charge reste chez l'employeur, au titre du maintien de salaire, sans être mutualisée par l'assurance accidents. Faute de statistique suisse sur leur fréquence, ce simulateur applique les taux observés en France et calcule le coût selon les règles suisses.</p>
+    </div>
+    <div class="keyfigs">
+      <div class="kf accent"><b>30,3 %</b><span>des personnes actives se sentent émotionnellement épuisées, un niveau jamais atteint depuis 2014</span></div>
+      <div class="kf accent"><b>28,2 %</b><span>sont dans une zone critique, leurs contraintes au travail dépassant leurs ressources</span></div>
+      <div class="kf"><b>6,5 milliards</b><span>de francs de perte de productivité par an pour l'économie suisse, du seul fait du stress professionnel</span></div>
+    </div>
+  </div>
+
+  <div class="tabs svue-gate" role="tablist">
     <button class="tab" role="tab" id="svt-sim" aria-controls="svp-sim" aria-selected="true">Simulateur</button>
     <button class="tab" role="tab" id="svt-data" aria-controls="svp-data" aria-selected="false">Sinistralité par secteur</button>
     <button class="tab" role="tab" id="svt-meth" aria-controls="svp-meth" aria-selected="false">Méthode et limites</button>
@@ -360,14 +382,7 @@
       <div>
         <div class="step">
           <div class="step-head"><span class="step-n">01</span><h2>Votre entreprise</h2></div>
-          <p class="step-note">Trois réponses suffisent : votre pays, votre secteur et votre effectif. Le pays détermine le régime applicable, le secteur détermine les taux de sinistralité appliqués.</p>
-          <div class="field">
-            <label for="sv-pays">Pays</label>
-            <select id="sv-pays">
-              <option value="fr" selected>France</option>
-              <option value="ch">Suisse</option>
-            </select>
-          </div>
+          <p class="step-note">Votre secteur détermine les taux de sinistralité appliqués, votre effectif le volume d'arrêts attendu, et le salaire moyen ce que chaque arrêt coûte.</p>
           <div class="field">
             <label for="sv-secteur">Grand secteur d'activité</label>
             <select id="sv-secteur"></select>
@@ -1115,7 +1130,7 @@ fillAct(); majSalaire(); majAudit(); calcule(); renderTable();
 </script>
 
 
-<div class="svue-atmp" id="simulateur-decret">
+<div class="svue-atmp svue-gate" id="simulateur-decret">
 <style>
 .svue-atmp{font-family:'Poppins','Segoe UI',Arial,sans-serif;color:#1C244B;background:#F8FAFC;max-width:1280px;margin:0 auto;padding:64px 24px 48px;scroll-margin-top:96px;border-top:1px solid #E2E8F0;box-sizing:border-box;line-height:1.5}
 .svue-atmp *{box-sizing:border-box}
@@ -1699,12 +1714,32 @@ fillAct(); majSalaire(); majAudit(); calcule(); renderTable();
 
 <style>
 /* Bascule France Suisse pilotee par l'etape 01 du simulateur. */
-.ch-only{display:none}
-body[data-pays="ch"] .fr-only{display:none}
-body[data-pays="ch"] .ch-only{display:block}
-body[data-pays="ch"] .avance{display:none}
-.at-pays{display:none}
-.at-dupe{display:none}
+/* Rien ne s'affiche tant que le pays n'est pas choisi : les chiffres, le
+   regime de prise en charge et la monnaie en dependent entierement.
+   Les selecteurs sont portes par body pour passer devant les regles de la
+   feuille de style du simulateur, et !important pour les panneaux d'onglets
+   dont l'affichage est ecrit en style en ligne par le script des onglets. */
+.svue-sim .fr-only,
+.svue-sim .ch-only{display:none}
+body[data-pays="fr"] .svue-sim .fr-only,
+body[data-pays="ch"] .svue-sim .ch-only{display:block}
+body[data-pays="fr"] .svue-sim .intro.fr-only,
+body[data-pays="ch"] .svue-sim .intro.ch-only{display:grid}
+.svue-gate,
+.svue-sim .tabs.svue-gate{display:none}
+body[data-pays="fr"] .svue-gate,
+body[data-pays="ch"] .svue-gate{display:block}
+body[data-pays="fr"] .svue-sim .tabs.svue-gate,
+body[data-pays="ch"] .svue-sim .tabs.svue-gate{display:flex}
+body:not([data-pays="fr"]):not([data-pays="ch"]) .svue-sim [role="tabpanel"]{display:none !important}
+.svue-pays{max-width:1280px;margin:0 auto 24px;padding:24px;background:#F1F5F9;
+  border:1px solid #E2E8F0;border-radius:16px;font-family:"Poppins",Arial,sans-serif;
+  box-sizing:border-box}
+.svue-pays label{display:block;font-size:18px;font-weight:600;color:#1C244B;margin-bottom:12px}
+.svue-pays select{width:100%;max-width:360px;padding:12px 14px;font-size:16px;font-family:inherit;
+  line-height:1.4;height:auto;min-height:48px;color:#1C244B;background:#FFFFFF;
+  border:1px solid #CBD5E1;border-radius:10px;appearance:auto}
+.svue-pays-note{margin:12px 0 0;font-size:14px;color:#64748B;max-width:70ch}
 </style>
 
 <script>
@@ -1720,11 +1755,16 @@ body[data-pays="ch"] .avance{display:none}
   var dernier = null;
 
   function sync(){
-    var p = R('sv-pays') ? R('sv-pays').value : 'fr';
+    var p = R('sv-pays') ? R('sv-pays').value : '';
+    if(p !== 'fr' && p !== 'ch'){
+      document.body.removeAttribute('data-pays');
+      return;
+    }
     document.body.setAttribute('data-pays', p);
     var sal = R('sv-sal-brut');
-    if(sal && dernier !== null && dernier !== p){
-      if(+sal.value === DEF[dernier].sal){ sal.value = String(DEF[p].sal); }
+    if(sal && dernier !== p){
+      var autre = (p==='fr') ? 'ch' : 'fr';
+      if(+sal.value === DEF[autre].sal){ sal.value = String(DEF[p].sal); }
     }
     if(R('sv-lab-sal')){ R('sv-lab-sal').textContent = DEF[p].lab; }
     if(R('sv-hint-sal')){ R('sv-hint-sal').textContent = DEF[p].hint; }

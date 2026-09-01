@@ -908,11 +908,12 @@ function calcule(){
       d.className = "qui-seg";
       d.style.width = pc+"%";
       d.style.background = coul[k];
-      if(pc>14){ d.textContent = Math.round(pc)+" %"; }
+      if(pc>=8){ d.textContent = Math.round(pc)+" %"; }
       d.title = leg[k]+" : "+mon(seg[k])+", soit "+Math.round(pc)+" % du salaire de la période";
       barre.appendChild(d);
       var l = document.createElement("span");
-      l.innerHTML = '<i style="background:'+coul[k]+'"></i>'+leg[k]+" <b>"+mon(seg[k])+"</b>";
+      l.innerHTML = '<i style="background:'+coul[k]+'"></i>'+leg[k]+" <b>"+mon(seg[k])+"</b>"+
+        '<em class="qui-pc">'+Math.round(pc)+' %</em>';
       legende.appendChild(l);
     }
     $("sv-qui-t").textContent = "Sur un arrêt de "+duree+" jours, qui paie le salaire";
@@ -1254,6 +1255,8 @@ body:not([data-pays="fr"]):not([data-pays="ch"]) .svue-sim [role="tabpanel"]{dis
 .svue-sim .qui-leg span{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.82)}
 .svue-sim .qui-leg i{width:10px;height:10px;border-radius:3px;display:inline-block}
 .svue-sim .qui-leg b{color:#FFFFFF;font-weight:600}
+.svue-sim .qui-leg .qui-pc{font-style:normal;font-weight:600;color:#FFFFFF;
+  background:rgba(255,255,255,.16);border-radius:6px;padding:1px 6px;font-size:11px}
 .svue-sim .qui-n{margin:12px 0 0;font-size:12px;line-height:1.5;color:rgba(255,255,255,.62)}
 .svue-sim .p-num{display:inline-block;margin-right:6px;opacity:.7}
 /* Prise en charge du suivi psychologique, propre a chaque pays */

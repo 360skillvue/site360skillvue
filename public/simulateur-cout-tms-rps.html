@@ -564,6 +564,12 @@
               </div>
 
               <div class="field">
+                <label for="sv-p-entretien">Coût d'un entretien individuel de 30 minutes, en présentiel</label>
+                <input type="number" id="sv-p-entretien" min="0" max="5000" step="10" value="90">
+                <p class="hint">Un audit collectif rend un état des lieux, il ne repère personne. Pour identifier les salariés en difficulté et orienter ceux qui en ont besoin, il faut écouter chacun d'eux : un entretien de trente minutes par salarié, sur place, avec un psychologue du travail, notes comprises. Le dépistage ScanUp, lui, demande deux minutes par salarié et ne mobilise l'entretien de trente minutes que pour les personnes repérées.</p>
+              </div>
+
+              <div class="field">
                 <label for="sv-p-poste">Coût d'une étude de poste en présentiel</label>
                 <input type="number" id="sv-p-poste" min="0" max="10000" step="50" value="1200">
                 <p class="hint">Par étude, déplacement et rédaction compris. Le FIPHFP finance une étude ergonomique externe jusqu'à 3 000 €, et la journée d'ergonome se facture 685 € dans la grille publique 2026 d'un centre de gestion.</p>
@@ -601,6 +607,7 @@
             <div class="roi-fam">
               <div class="roi-fam-head fam-classique"><span>Méthodes classiques, en présentiel</span><b id="sv-cmp-b1"></b></div>
               <div class="roi-row" id="sv-r1-rps"><span>Audit RPS collectif</span><b id="sv-c1-rps"></b></div>
+              <div class="roi-row" id="sv-r1-ent"><span id="sv-c1-l-ent">Entretiens de 30 minutes, tout l'effectif</span><b id="sv-c1-ent"></b></div>
               <div class="roi-row" id="sv-r1-tms"><span id="sv-c1-l-tms">Études de poste par un ergonome</span><b id="sv-c1-tms"></b></div>
               <p class="bd-desc" id="sv-c1-desc"></p>
             </div>
@@ -945,7 +952,7 @@ function calcule(){
     if(v<0){ v=0; }
     return v;
   }
-  var pAudit=lire("sv-p-audit",auditRef(eff)), pPoste=lire("sv-p-poste",1200);
+  var pAudit=lire("sv-p-audit",auditRef(eff)), pPoste=lire("sv-p-poste",1200), pEnt=lire("sv-p-entretien",90);
   $("sv-hint-audit").textContent="Le prix dépend de l'effectif et du nombre d'entretiens : les cabinets "+
     "annoncent de "+eur(9000)+" à "+eur(18000)+" HT pour une PME. La valeur proposée, "+eur(auditRef(eff))+", suit cet "+
     "ordre de grandeur pour "+num(eff,0)+" salariés.";
@@ -958,7 +965,11 @@ function calcule(){
   // main d'oeuvre est environ une fois et demie celui de la France. Les tarifs
   // ScanUp, eux, ne changent pas : la prestation est realisee a distance.
   var fPres = (SV_PAYS==="ch") ? 1.5 : 1;
-  var c1rps=vRps?pAudit*fPres:0, c1tms=vTms?nbCibles*pPoste*fPres:0, c1=c1rps+c1tms;
+  // Comparer ce qui est comparable : l'audit collectif ne repere personne, il faut
+  // donc lui ajouter un entretien individuel par salarie pour atteindre le meme
+  // resultat qu'un depistage.
+  var c1rps=vRps?pAudit*fPres:0, c1ent=vRps?eff*pEnt*fPres:0,
+      c1tms=vTms?nbCibles*pPoste*fPres:0, c1=c1rps+c1ent+c1tms;
 
   // scénario 2 : dépistage à distance puis intervention ciblée
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
@@ -1004,7 +1015,7 @@ function calcule(){
   if(perim==="tms"){ totAff=totTms; }
   function aff(id,v){ var e=$(id); if(e){ e.hidden=!v; } }
   aff("sv-f-rps",vRps); aff("sv-f-tms",vTms);
-  aff("sv-r1-rps",vRps); aff("sv-r1-tms",vTms);
+  aff("sv-r1-rps",vRps); aff("sv-r1-ent",vRps); aff("sv-r1-tms",vTms);
   aff("sv-r2-rps",vRps); aff("sv-r2-dep",vTms); aff("sv-r2-tms",vTms);
   aff("sv-split",perim==="deux");
   $("sv-total").textContent=eur(totAff);
@@ -1027,6 +1038,8 @@ function calcule(){
       "complète en option à 250 € par salarié repéré.";
   }
   $("sv-c1-rps").textContent=eur(c1rps);
+  $("sv-c1-ent").textContent=eur(c1ent);
+  $("sv-c1-l-ent").textContent="Entretiens de 30 minutes, tout l'effectif, "+num(eff,0)+" × "+eur(pEnt*fPres);
   $("sv-c1-tms").textContent=eur(c1tms);
   $("sv-c1-l-tms").textContent="Études de poste par un ergonome, "+num(nbCibles,0)+" × "+eur(pPoste*fPres);
   $("sv-cmp-t1").textContent=eur(c1);
@@ -1040,7 +1053,9 @@ function calcule(){
   var d1,d2;
   if(perim==="rps"){
     d1="L'audit est collectif : il repose sur un échantillon d'entretiens et rend des indicateurs par "+
-      "service. Il décrit un climat, à un instant donné ; aucune personne n'en ressort repérée, ni orientée.";
+      "service. Il décrit un climat, à un instant donné ; aucune personne n'en ressort repérée, ni orientée. "+
+      "Pour obtenir ce que le dépistage produit, il faut donc lui ajouter un entretien individuel par "+
+      "salarié : sans cette ligne, les deux dispositifs ne seraient pas comparables.";
     d2="Chaque salarié est écouté individuellement, par questionnaire et par témoignage audio, et chaque "+
       "réponse est analysée par un psychologue du travail. Le dépistage est anonyme : chacun reçoit son "+
       "propre retour et se voit orienter si son état le justifie, sans que l'entreprise en soit informée. "+
@@ -1051,12 +1066,21 @@ function calcule(){
     d2="On part de la personne et non du poste. Le travail est capté en situation réelle, et l'étude "+
       "approfondie n'est engagée que sur les salariés que le dépistage a désignés, isolés compris.";
   } else {
-    d1="L'audit psychosocial est collectif, il décrit des services et non des personnes ; l'étude de poste, "+
-      "elle, raisonne par poste et vaut pour tous ceux qui l'occupent.";
+    d1="L'audit psychosocial est collectif, il décrit des services et non des personnes : le repérage "+
+      "individuel suppose d'y ajouter un entretien par salarié, mené sur place. L'étude de poste, elle, "+
+      "raisonne par poste et vaut pour tous ceux qui l'occupent.";
     d2="Chaque salarié est écouté et observé individuellement, puis analysé par un psychologue ou un "+
       "ergonome. Le dépistage est anonyme : la personne repérée est orientée directement, et vous ne "+
       "recevez que des données agrégées, jamais des noms. L'analyse approfondie n'est engagée que sur "+
       "les situations qui le justifient.";
+  }
+  // Temps d'ecoute des deux dispositifs : 30 minutes pour chacun en presentiel,
+  // 2 minutes de depistage pour chacun puis 30 minutes pour les seuls reperes.
+  if(vRps){
+    var hPres=eff*30/60, hScan=eff*2/60+nbCibles*30/60;
+    d1=d1+" Écouter chacun suppose "+num(Math.round(hPres),0)+" heures d'entretiens sur place.";
+    d2=d2+" Le dépistage prend deux minutes par salarié ; l'entretien de trente minutes n'est mobilisé "+
+      "que pour les personnes repérées, soit "+num(Math.round(hScan),0)+" heures en tout.";
   }
   $("sv-c1-desc").textContent=d1;
   $("sv-c2-desc").textContent=d2;
@@ -1200,7 +1224,7 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-sal-brut","sv-salaire","sv-desorg","sv-rps",
- "sv-part","sv-part-etude","sv-p-audit","sv-p-poste"].forEach(function(id){
+ "sv-part","sv-part-etude","sv-p-audit","sv-p-entretien","sv-p-poste"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);

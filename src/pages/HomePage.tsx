@@ -238,7 +238,7 @@ export default function HomePage() {
             </p>
           </FadeIn>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
             {[
               { flag: '🇫🇷', label: t.home.videosRpsFr, file: 'rps-fr' },
               { flag: '🇨🇭', label: t.home.videosRpsCh, file: 'rps-ch' },
@@ -253,7 +253,7 @@ export default function HomePage() {
                   src={`/videos/scanup-parcours-${v.file}.mp4`}
                   poster={`/scanup-parcours-${v.file}.webp`}
                   title={v.label}
-                  ratio="9/16"
+                  ratio="16/9"
                 />
               </FadeIn>
             ))}
@@ -388,7 +388,7 @@ export default function HomePage() {
             <VideoEmbed
               id="PlirT4EdL6g"
               title={t.home.founderTitle}
-              ratio="9/16"
+              ratio="16/9"
               maxWidth={360}
             />
           </FadeIn>

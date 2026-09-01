@@ -95,11 +95,12 @@ export default function VideoEmbed({
               className="absolute inset-0 w-full h-full object-cover"
             />
             <span className="absolute inset-0 bg-scanup-navy/15 group-hover:bg-scanup-navy/5 transition-colors duration-300" />
-            {/* sur un format vertical le titre de la vignette occupe le centre :
-                le bouton descend dans le tiers bas pour ne pas le masquer */}
+            {/* nos vignettes maison portent un titre au centre : le bouton
+                descend dans le tiers bas pour ne pas le masquer. Les
+                miniatures YouTube, elles, gardent le bouton centre. */}
             <span
               className={`absolute inset-0 flex justify-center ${
-                vertical ? 'items-end pb-8' : 'items-center'
+                posterProp ? 'items-end pb-6 md:pb-8' : 'items-center'
               }`}
             >
               <span className="flex items-center justify-center w-[68px] h-[68px] rounded-full bg-white/95 shadow-lg group-hover:scale-110 transition-transform duration-300">

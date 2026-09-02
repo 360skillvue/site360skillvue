@@ -371,19 +371,19 @@
   <div class="intro fr-only">
     <div>
       <p class="kicker">Données Assurance Maladie · 2005 &ndash; 2024 · régime général</p>
-      <p class="intro-lead">Les accidents du travail reculent de 31 % en vingt ans ; les maladies professionnelles, elles, repartent à la hausse, et les affections psychiques y sont le poste qui progresse le plus vite : multipliées par 5,6 depuis 2015 dans les données de l'Assurance Maladie. Ce simulateur distingue les deux familles, risques psychosociaux et troubles musculo-squelettiques, en appliquant à votre effectif les taux réellement observés dans votre secteur et le barème officiel des coûts moyens AT/MP.</p>
+      <p class="intro-lead">La fréquence des accidents du travail recule de 31 % en vingt ans, de 38,3 à 26,4 accidents pour 1 000 salariés ; les maladies professionnelles, elles, repartent à la hausse, et les affections psychiques y sont le poste qui progresse le plus vite : multipliées par 5,6 depuis 2015 dans les données de l'Assurance Maladie. Ce simulateur distingue les deux familles, risques psychosociaux et troubles musculo-squelettiques, en appliquant à votre effectif les taux réellement observés dans votre secteur et le barème officiel des coûts moyens AT/MP.</p>
     </div>
     <div class="keyfigs">
       <div class="kf accent"><b>44 723</b><span>troubles musculo-squelettiques reconnus comme maladies professionnelles en France en 2024</span></div>
       <div class="kf accent"><b>&times;&nbsp;5,6</b><span>d'affections psychiques reconnues entre 2015 et 2024, de 320 à 1 805 cas</span></div>
-      <div class="kf"><b>317 jours</b><span>indemnisés en moyenne pour une maladie professionnelle reconnue, cumul de tous les arrêts qu'elle entraîne</span></div>
+      <div class="kf"><b>317 jours</b><span>indemnisés par maladie professionnelle reconnue, journées indemnisées de l'année rapportées aux cas reconnus</span></div>
     </div>
   </div>
 
   <div class="intro ch-only">
     <div>
       <p class="kicker">Santé au travail en Suisse · Données 2022</p>
-      <p class="intro-lead">En Suisse, les troubles musculo-squelettiques et l'épuisement ne sont pas reconnus comme maladies professionnelles : la Suva exige une causalité professionnelle de 75 %, hors d'atteinte pour des troubles à causes multiples. Ces arrêts relèvent donc du régime maladie, et la charge reste chez l'employeur, au titre du maintien de salaire, sans être mutualisée par l'assurance accidents. Faute de statistique suisse sur leur fréquence, ce simulateur applique les taux observés en France et calcule le coût selon les règles suisses.</p>
+      <p class="intro-lead">En Suisse, les troubles musculo-squelettiques diffus et l'épuisement professionnel ne sont pratiquement jamais reconnus comme maladies professionnelles : hors de la liste de l'annexe 1 de l'OLAA, la LAA exige une causalité professionnelle nettement prépondérante, au-delà de 75 %, hors d'atteinte pour des troubles à causes multiples. Seules quelques atteintes de l'appareil locomoteur y figurent, canal carpien ou tendinites par exemple. Ces arrêts relèvent donc très majoritairement du régime maladie, et la charge reste chez l'employeur au titre du maintien de salaire. Il n'existe pas d'équivalent suisse aux séries d'incidence françaises, précisément parce que le régime de reconnaissance exclut ces pathologies du décompte : ce simulateur applique donc les taux observés en France et calcule le coût selon les règles suisses.</p>
     </div>
     <div class="keyfigs">
       <div class="kf accent"><b>30,3 %</b><span>des personnes actives se sentent émotionnellement épuisées, un niveau jamais atteint depuis 2014</span></div>
@@ -478,7 +478,7 @@
 
         <div class="step">
           <div class="step-head"><span class="step-n">03</span><h2>Agir, et à quel prix</h2></div>
-          <p class="callout ch-only">Les tarifs ScanUp sont identiques en euros et en francs : la prestation est réalisée à distance, son prix ne change pas d'un pays à l'autre. Les méthodes traditionnelles, elles, consomment du travail sur place ; leur coût est majoré de moitié, l'écart de coût horaire de la main d'œuvre entre les deux pays étant de cet ordre, 63,62 CHF de l'heure en Suisse selon l'Office fédéral de la statistique contre 43,70 € en France selon l'Insee. Ordres de grandeur, non des devis.</p>
+          <p class="callout ch-only">Les tarifs ScanUp sont identiques en euros et en francs : la prestation est réalisée à distance, son prix ne change pas d'un pays à l'autre. Les méthodes traditionnelles, elles, consomment du travail sur place ; leur coût est majoré de moitié, l'écart de coût horaire de la main d'œuvre entre les deux pays étant de cet ordre, 63,62 CHF de l'heure en Suisse selon l'Office fédéral de la statistique, millésime 2020, contre 44,70 € en France selon l'Insee, millésime 2025. Ordres de grandeur, non des devis.</p>
           <p class="step-note">Le montant ci-dessus dit ce que le risque coûte. Il ne dit pas où agir. Pour le savoir il faut regarder les situations de travail, et cela a un prix : voici les deux façons de le payer.</p>
 
           <div class="field">
@@ -554,12 +554,12 @@
                   <span class="sl-val" id="sv-rps-val"></span>
                 </div>
                 <input type="range" id="sv-rps" min="0" max="5" step="0.1" value="0.6">
-                <p class="hint">Les risques psychosociaux passent rarement par la reconnaissance : ils se manifestent en arrêts maladie ordinaires. La valeur par défaut correspond au coût social du stress professionnel estimé par l'INRS, que l'institut présente comme un plancher.</p>
+                <p class="hint">Les risques psychosociaux passent rarement par la reconnaissance : ils se manifestent en arrêts maladie ordinaires. La valeur par défaut correspond au coût social du stress professionnel estimé par l'INRS pour 2007, entre 2 et 3 milliards d'euros, que l'institut présente lui-même comme un plancher et qui n'a pas été réactualisé depuis.</p>
               </div>
 
               <div class="field">
                 <label for="sv-p-audit">Coût d'un audit RPS collectif en présentiel</label>
-                <input type="number" id="sv-p-audit" min="0" max="500000" step="100" value="11900">
+                <input type="number" id="sv-p-audit" min="0" max="500000" step="100" value="3500">
                 <p class="hint" id="sv-hint-audit"></p>
               </div>
 
@@ -631,7 +631,7 @@
 
             <div class="psy ch-only">
               <p class="psy-t">Et le suivi psychologique, après l'orientation ?</p>
-              <p class="psy-b">Repérée tôt, une personne évite l'arrêt en <strong>six séances</strong> le plus souvent. Nos séances sont assurées en Suisse par le cabinet Equilibrium, Alessandra Rosciano. Le coût est porté par l'employeur, par le collaborateur ou par son assurance ; pour ouvrir le remboursement de l'assurance de base, une <strong>téléconsultation chez le médecin de famille</strong> suffit à obtenir la prescription requise. Six séances représentent de l'ordre de 930 francs, à comparer aux <strong id="sv-psy-ch-cout">8 219 CHF</strong> de maintien de salaire que coûte un seul arrêt.</p>
+              <p class="psy-b">Repérée tôt, une personne évite l'arrêt en <strong>six séances</strong> le plus souvent. Nos séances sont assurées en Suisse par le cabinet Equilibrium, Alessandra Rosciano. Le coût est porté par l'employeur, par le collaborateur ou par son assurance ; pour ouvrir le remboursement de l'assurance de base, il faut une <strong>prescription médicale</strong>, que le médecin de famille peut établir, y compris à distance, s'il détient l'un des titres requis, médecine interne générale, psychiatrie ou pédiatrie. Six séances représentent de l'ordre de 930 francs, à comparer aux <strong id="sv-psy-ch-cout">8 219 CHF</strong> de maintien de salaire que coûte un seul arrêt.</p>
             </div>
             <p class="roi-note" id="sv-cmp-note"></p>
             <a class="btn btn-1 btn-full" href="https://360skillvue.com/aide-support/">Parler de votre situation à ScanUp</a>
@@ -642,7 +642,7 @@
 
       
     </div>
-    <p class="note ch-only">Le nombre d'arrêts et leur cause viennent des données françaises de l'Assurance Maladie, faute d'équivalent suisse : en Suisse, les troubles musculo-squelettiques et l'épuisement ne sont pas reconnus comme maladies professionnelles, ils ne sont donc pas comptés. Le coût, lui, suit les règles suisses : maintien de salaire à 100 % au titre de l'article 324a du Code des obligations, échelle bernoise, puis relais de l'assurance perte de gain. Cette charge reste chez l'employeur, elle n'est pas mutualisée par l'assurance accidents.</p>
+    <p class="note ch-only">Le nombre d'arrêts et leur cause viennent des données françaises de l'Assurance Maladie, faute d'équivalent suisse : en Suisse, les troubles musculo-squelettiques diffus et l'épuisement professionnel ne sont pratiquement jamais reconnus comme maladies professionnelles, ils ne sont donc pas comptés. Le coût, lui, suit les règles suisses : maintien de salaire à 100 % au titre de l'article 324a du Code des obligations, échelle bernoise, puis relais de l'assurance perte de gain. Cette charge reste chez l'employeur, elle n'est pas mutualisée par l'assurance accidents.</p>
     <p class="note">Estimation statistique appliquée à un effectif, et non un diagnostic de votre entreprise. Ce montant ne couvre que les troubles musculo-squelettiques et les risques psychosociaux, à l'exclusion des autres causes d'arrêt : il ne se compare pas à un chiffre d'absentéisme global. Champ, sources et limites détaillés dans l'onglet « Méthode et limites ».</p>
   </section>
 
@@ -692,7 +692,11 @@
         <li>Assurance Maladie, <a href="https://data.ameli.fr/pages/data-risques-professionnels/" target="_blank" rel="noopener nofollow">Data risques professionnels</a> : jeux de données sinistralité par secteur, troubles musculosquelettiques par tableau et secteur, maladies professionnelles psychiques par secteur, et arrêts de travail par secteur.</li>
         <li>Assurance Maladie, <a href="https://www.assurance-maladie.ameli.fr/etudes-et-donnees/2024-rapport-annuel-assurance-maladie-risques-professionnels" target="_blank" rel="noopener nofollow">Rapport annuel 2024, Risques professionnels</a>, novembre 2025.</li>
         <li>Caisse nationale de l'Assurance Maladie, barème des coûts moyens 2026 par comité technique national.</li>
+        <li>Projet de décret abaissant à 1,8 Smic le plafond des indemnités journalières d'accident du travail et de maladie professionnelle, transmis aux partenaires sociaux en août 2026, entrée en vigueur annoncée au 1<sup>er</sup> novembre 2026. Non publié à ce jour : le montant affiché est une projection, non une règle en vigueur.</li>
         <li>INRS et Arts et Métiers ParisTech, estimation du coût social du stress professionnel en France, 2007.</li>
+        <li>Insee, coût horaire du travail selon l'activité, millésime 2025 ; Office fédéral de la statistique, coûts de la main d'œuvre, millésime 2020.</li>
+        <li>Confédération suisse, articles 324a du Code des obligations et 9 de la LAA ; article 11b de l'OPAS pour la psychothérapie déléguée à un psychologue.</li>
+        <li>Promotion Santé Suisse, Job Stress Index 2022 ; Office fédéral de la statistique, Enquête suisse sur la santé 2022.</li>
       </ul>
     </div>
   </section>
@@ -746,8 +750,10 @@ function mon(n){
   return fEur.format(n);
 }
 function num(n,d){d=d||0;return new Intl.NumberFormat("fr-FR",{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
-// ordre de grandeur d'un diagnostic RPS en presentiel : forfait de base plus part variable
-function auditRef(eff){ return Math.round((5900+eff*24)/100)*100; }
+// Ordre de grandeur d'un diagnostic RPS en presentiel : forfait de base plus part
+// variable. Hypothese basse du marche, les grilles publiques allant de 1 500 a
+// 7 000 EUR HT selon la profondeur du diagnostic.
+function auditRef(eff){ return Math.round((1500+eff*8)/100)*100; }
 // forfait TMS indexe sur l'incidence TMS du secteur, la moitie de l'ecart repercutee
 function forfaitSecteur(t){
   var ref=21.5, base=105;
@@ -771,8 +777,13 @@ function plafondSecteur(p){
 // cas ; seule la regle de prise en charge change.
 // France : indemnites journalieres AT/MP, 60 % puis 80 % du salaire journalier
 // de base, plafonnees ; l'employeur complete jusqu'a 90 % puis 66,66 % pendant
-// la duree legale de maintien. Le projet de decret abaisse le plafond a
-// 1,8 Smic, ce qui deplace la charge vers l'employeur et vers le salarie.
+// la duree legale de maintien. Le plafond actuel du salaire journalier de base
+// AT/MP vaut 0,834 % du plafond annuel de la securite sociale, soit 400,82 EUR
+// en 2026 : 240,49 EUR d'indemnite les 28 premiers jours, 320,66 EUR ensuite.
+// Un projet de decret transmis aux partenaires sociaux en aout 2026, annonce
+// pour le 1er novembre 2026, abaisserait ce plafond a 1,8 Smic, ce qui deplace
+// la charge vers l'employeur et vers le salarie. A distinguer du decret
+// 2025-160, deja en vigueur, qui plafonne a 1,4 Smic les seules IJ maladie.
 var SMIC_M = 1867.02, MULT_D = 1.8;
 var PLAF_AV = 400.82, PLAF_AP = (SMIC_M*MULT_D)/30.42;
 var MAINTIEN_J = 60;
@@ -880,8 +891,8 @@ function calcule(){
     $("sv-decret").textContent = "";
   } else {
     var supp = surcoutDecret*(nbTms+nbPsy);
-    $("sv-decret").textContent = "Après le décret plafonnant les indemnités à 1,8 Smic : "+
-      mon(total+supp)+", soit "+mon(supp)+" de maintien de salaire en plus à votre charge.";
+    $("sv-decret").textContent = "Si le décret annoncé pour le 1er novembre 2026 plafonne les indemnités "+
+      "AT/MP à 1,8 Smic : "+mon(total+supp)+", soit "+mon(supp)+" de maintien de salaire en plus à votre charge.";
   }
   $("sv-tot-tms").textContent = mon(totTms);
   $("sv-tot-rps").textContent = mon(totRps);
@@ -898,11 +909,11 @@ function calcule(){
     if(SV_PAYS==="ch"){
       part = partCH(salBrut/365, duree);
       leg = ["Assurance perte de gain","Employeur, maintien de salaire","Non couvert, perte du collaborateur"];
-      note = "Maintien du salaire à 100 % pendant le délai d'attente de "+DELAI_APG+" jours, dans la limite de l'échelle bernoise, puis relais de l'assurance perte de gain à 80 %.";
+      note = "Maintien du salaire à 100 % pendant le délai d'attente de "+DELAI_APG+" jours, hypothèse courante du marché, dans la limite de l'échelle bernoise, puis relais de l'assurance perte de gain à 80 %.";
     } else {
       part = partFR(salBrut/12/30.42, duree, PLAF_AV);
       leg = ["Assurance Maladie","Employeur, maintien de salaire","Non couvert, perte du salarié"];
-      note = "Indemnités journalières AT/MP, 60 % puis 80 % du salaire journalier de base, complétées par l'employeur pendant "+MAINTIEN_J+" jours. Le décret abaisse le plafond des indemnités : la part employeur augmente d'autant.";
+      note = "Indemnités journalières AT/MP, 60 % puis 80 % du salaire journalier de base, complétées par l'employeur pendant "+MAINTIEN_J+" jours, durée légale pour une ancienneté de 1 à 5 ans ; au-delà, le maintien s'allonge jusqu'à 180 jours et la part employeur augmente.";
     }
     var seg = [part.ass, part.emp, part.perte], coul = ["#1E40AF","#2563EB","#BFDBFE"];
     var barre = $("sv-qui-bar"), legende = $("sv-qui-leg");
@@ -953,9 +964,11 @@ function calcule(){
     return v;
   }
   var pAudit=lire("sv-p-audit",auditRef(eff)), pPoste=lire("sv-p-poste",1200), pEnt=lire("sv-p-entretien",90);
-  $("sv-hint-audit").textContent="Le prix dépend de l'effectif et du nombre d'entretiens : les cabinets "+
-    "annoncent de "+eur(9000)+" à "+eur(18000)+" HT pour une PME. La valeur proposée, "+eur(auditRef(eff))+", suit cet "+
-    "ordre de grandeur pour "+num(eff,0)+" salariés.";
+  $("sv-hint-audit").textContent="Le prix dépend de l'effectif et du nombre d'entretiens. Les grilles publiques "+
+    "vont de "+eur(1500)+" à "+eur(3500)+" HT pour un diagnostic standard et de "+eur(2300)+" à "+eur(7000)+
+    " HT pour un diagnostic approfondi, entretiens et plan d'action compris ; les interventions lourdes "+
+    "multi-sites atteignent "+eur(18000)+" HT. La valeur proposée, "+eur(auditRef(eff))+", retient l'hypothèse "+
+    "basse pour "+num(eff,0)+" salariés.";
 
 
   // scénario 1 : tout en présentiel

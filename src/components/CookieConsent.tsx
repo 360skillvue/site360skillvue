@@ -8,7 +8,7 @@ type ConsentState = {
 };
 
 const STORAGE_KEY = 'scanup_cookie_consent';
-const GTM_ID = 'GTM-K2K7CQQF';
+const GTM_ID = 'GTM-TPJV3N9Q';
 
 function getStored(): ConsentState | null {
   try {

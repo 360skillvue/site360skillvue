@@ -6,6 +6,10 @@
       "destination": "/simulateur-cout-tms-rps.html"
     },
     {
+      "source": "/formation-risques-psychosociaux",
+      "destination": "/formation-risques-psychosociaux.html"
+    },
+    {
       "source": "/certification-periodique-sante",
       "destination": "/certification-periodique-sante/index.html"
     },

@@ -1,6 +1,6 @@
 export const pt = {
   nav: {
-    certification: 'Soluções',
+    certification: 'Para você',
     network: 'A Nossa Rede',
     pricing: 'Preços',
     about: 'Sobre nós',
@@ -337,6 +337,14 @@ export const pt = {
       { value: '€27', label: 'por rastreio' },
       { value: '48h', label: 'para os resultados' },
       { value: '×5.6', label: 'doenças psíquicas reconhecidas desde 2015' },
+    ],
+    offresLabel: 'A nossa oferta',
+    offresTitle: 'Três formas de agir,',
+    offresTitleEnd: 'uma única plataforma.',
+    offres: [
+      { title: 'Rastreio dos riscos psicossociais e musculoesqueléticos', body: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista. Resultados em 48 horas, a partir de 27 € por colaborador.', cta: 'Simular o meu custo' },
+      { title: 'Estudo ergonómico do posto à distância', body: 'Para as pessoas identificadas, um estudo completo do posto realizado à distância por um ergonomista, com relatório individual e recomendações concretas.', cta: 'Pedir um estudo' },
+      { title: 'Formação em riscos psicossociais', body: 'Sete horas para os seus responsáveis, cursos online seguidos de uma aula virtual conduzida por uma psicóloga do trabalho. Ministrada pela IEF Biologie, organismo certificado Qualiopi.', cta: 'Ver a formação' },
     ],
     problemsLabel: 'A realidade no terreno',
     problemsTitle: 'Só se apercebe',

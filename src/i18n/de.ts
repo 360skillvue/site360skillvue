@@ -1,6 +1,6 @@
 export const de = {
   nav: {
-    certification: 'Solutions',
+    certification: 'Für Sie',
     network: 'Unser Netzwerk',
     pricing: 'Preise',
     about: 'Über uns',
@@ -337,6 +337,14 @@ export const de = {
       { value: '27€', label: 'pro Screening' },
       { value: '48h', label: 'bis zum Ergebnis' },
       { value: '×5,6', label: 'anerkannte psychische Erkrankungen seit 2015' },
+    ],
+    offresLabel: 'Unser Angebot',
+    offresTitle: 'Drei Wege zum Handeln,',
+    offresTitleEnd: 'eine einzige Plattform.',
+    offres: [
+      { title: 'Screening psychosozialer und muskuloskelettaler Risiken', body: 'Jeder Mitarbeitende wird einzeln von einer Arbeitspsychologin oder einem Ergonomen ausgewertet. Ergebnisse in 48 Stunden, ab 27 € pro Person.', cta: 'Kosten berechnen' },
+      { title: 'Arbeitsplatzanalyse aus der Ferne', body: 'Für die erkannten Personen eine vollständige Arbeitsplatzanalyse, aus der Ferne von einem Ergonomen durchgeführt, mit individuellem Bericht und konkreten Empfehlungen.', cta: 'Analyse anfragen' },
+      { title: 'Schulung zu psychosozialen Risiken', body: 'Sieben Stunden für Ihre Führungskräfte, Online-Kurse und anschließend ein virtuelles Klassenzimmer mit einer Arbeitspsychologin. Durchgeführt von IEF Biologie, Qualiopi-zertifiziert.', cta: 'Schulung ansehen' },
     ],
     problemsLabel: 'Die Realität vor Ort',
     problemsTitle: 'Sie sehen es',

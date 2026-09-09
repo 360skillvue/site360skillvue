@@ -1,6 +1,6 @@
 export const fr = {
   nav: {
-    certification: 'Solutions',
+    certification: 'Vous êtes',
     network: 'Notre Réseau',
     pricing: 'Tarifs',
     about: 'À propos',
@@ -424,6 +424,14 @@ export const fr = {
       { value: '27€', label: 'par dépistage' },
       { value: '48h', label: 'pour les résultats' },
       { value: '×5,6', label: 'affections psychiques reconnues depuis 2015' },
+    ],
+    offresLabel: 'Notre offre',
+    offresTitle: 'Trois façons d\'agir,',
+    offresTitleEnd: 'une seule plateforme.',
+    offres: [
+      { title: 'Dépistage RPS et TMS', body: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome IPRP. Résultats en 48 heures, dès 27 € par collaborateur.', cta: 'Simuler mon coût' },
+      { title: 'Étude de poste ergonomique', body: 'Pour les personnes repérées, une étude de poste complète menée à distance par un ergonome, avec rapport individuel et préconisations concrètes.', cta: 'Demander une étude' },
+      { title: 'Formation aux risques psychosociaux', body: 'Sept heures pour vos managers, cours en ligne puis classe virtuelle animée par une psychologue du travail. Dispensée par IEF Biologie, organisme certifié Qualiopi.', cta: 'Voir la formation' },
     ],
     problemsLabel: 'La réalité terrain',
     problemsTitle: 'Vous le voyez',

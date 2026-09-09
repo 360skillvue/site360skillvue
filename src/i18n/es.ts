@@ -1,6 +1,6 @@
 export const es = {
   nav: {
-    certification: 'Soluciones',
+    certification: 'Para usted',
     network: 'Nuestra red',
     pricing: 'Tarifas',
     about: 'Quiénes somos',
@@ -337,6 +337,14 @@ export const es = {
       { value: '27 €', label: 'por cribado' },
       { value: '48 h', label: 'para obtener resultados' },
       { value: '×5,6', label: 'afecciones psíquicas reconocidas desde 2015' },
+    ],
+    offresLabel: 'Nuestra oferta',
+    offresTitle: 'Tres formas de actuar,',
+    offresTitleEnd: 'una sola plataforma.',
+    offres: [
+      { title: 'Detección de riesgos psicosociales y musculoesqueléticos', body: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo. Resultados en 48 horas, desde 27 € por colaborador.', cta: 'Calcular mi coste' },
+      { title: 'Estudio ergonómico del puesto a distancia', body: 'Para las personas detectadas, un estudio completo del puesto realizado a distancia por un ergónomo, con informe individual y recomendaciones concretas.', cta: 'Solicitar un estudio' },
+      { title: 'Formación en riesgos psicosociales', body: 'Siete horas para sus mandos, cursos en línea y después un aula virtual dirigida por una psicóloga del trabajo. Impartida por IEF Biologie, organismo certificado Qualiopi.', cta: 'Ver la formación' },
     ],
     problemsLabel: 'La realidad del terreno',
     problemsTitle: 'Se da cuenta',

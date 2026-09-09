@@ -1,6 +1,6 @@
 export const en = {
   nav: {
-    certification: 'Solutions',
+    certification: 'For you',
     network: 'Our Network',
     pricing: 'Pricing',
     about: 'About',
@@ -337,6 +337,14 @@ export const en = {
       { value: '€27', label: 'per screening' },
       { value: '48h', label: 'to results' },
       { value: '×5.6', label: 'recognised psychological conditions since 2015' },
+    ],
+    offresLabel: 'Our offer',
+    offresTitle: 'Three ways to act,',
+    offresTitleEnd: 'one single platform.',
+    offres: [
+      { title: 'Psychosocial and musculoskeletal risk screening', body: 'Every employee is reviewed individually by an occupational psychologist or an ergonomist. Results within 48 hours, from €27 per employee.', cta: 'Estimate my cost' },
+      { title: 'Remote workstation assessment', body: 'For the employees flagged by the screening, a full workstation assessment carried out remotely by an ergonomist, with an individual report and concrete recommendations.', cta: 'Request an assessment' },
+      { title: 'Training on psychosocial risks', body: 'Seven hours for your managers, online courses followed by a virtual classroom led by an occupational psychologist. Delivered by IEF Biologie, a Qualiopi-certified training provider.', cta: 'See the training' },
     ],
     problemsLabel: 'The field reality',
     problemsTitle: 'You see it',

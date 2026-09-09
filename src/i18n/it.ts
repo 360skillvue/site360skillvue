@@ -1,6 +1,6 @@
 export const it = {
   nav: {
-    certification: 'Solutions',
+    certification: 'Per voi',
     network: 'La nostra rete',
     pricing: 'Prezzi',
     about: 'Chi siamo',
@@ -337,6 +337,14 @@ export const it = {
       { value: '27€', label: 'per screening' },
       { value: '48h', label: 'per i risultati' },
       { value: '×5,6', label: 'affezioni psichiche riconosciute dal 2015' },
+    ],
+    offresLabel: 'La nostra offerta',
+    offresTitle: 'Tre modi di agire,',
+    offresTitleEnd: 'una sola piattaforma.',
+    offres: [
+      { title: 'Screening dei rischi psicosociali e muscoloscheletrici', body: 'Ogni dipendente è analizzato individualmente da uno psicologo del lavoro o da un ergonomo. Risultati in 48 ore, a partire da 27 € per collaboratore.', cta: 'Simulare il mio costo' },
+      { title: 'Studio ergonomico della postazione a distanza', body: 'Per le persone individuate, uno studio completo della postazione condotto a distanza da un ergonomo, con relazione individuale e raccomandazioni concrete.', cta: 'Richiedere uno studio' },
+      { title: 'Formazione sui rischi psicosociali', body: 'Sette ore per i vostri responsabili, corsi online e poi un\'aula virtuale condotta da una psicologa del lavoro. Erogata da IEF Biologie, organismo certificato Qualiopi.', cta: 'Vedere la formazione' },
     ],
     problemsLabel: 'La realtà sul campo',
     problemsTitle: 'Lo vedete',

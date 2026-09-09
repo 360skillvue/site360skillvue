@@ -25,6 +25,15 @@ const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 
 /* ── Data ────────────────────────────────────────────────── */
 
+/* Destinations des trois offres. Le simulateur et la page formation sont des
+   pages statiques hors SPA, d'où la navigation par lien plein. */
+const OFFRE_LINKS = [
+  { href: '/simulateur-cout-tms-rps',         spa: false },
+  { href: '/aide-support',                    spa: true  },
+  { href: '/formation-risques-psychosociaux', spa: false },
+];
+
+
 
 /* ── Component ───────────────────────────────────────────── */
 
@@ -34,6 +43,7 @@ export default function EntreprisesPage() {
   const stats    = t.entreprises.stats;
   const problems = t.entreprises.problems;
   const features = t.entreprises.features;
+  const offres   = t.entreprises.offres;
   const personas = t.entreprises.personas;
   const faqs     = t.entreprises.faqs;
   const [activePersona, setActivePersona] = useState(0);
@@ -121,6 +131,45 @@ export default function EntreprisesPage() {
               </motion.div>
             ))}
           </Reveal>
+        </div>
+      </section>
+
+      {/* ── Nos trois offres ─────────────────────────────────── */}
+      <section className="py-24 px-6 border-t border-black/[0.06]">
+        <div className="max-w-5xl mx-auto">
+          <Reveal className="mb-14">
+            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.entreprises.offresLabel}</p>
+            <h2 className="text-[32px] md:text-[44px] font-bold tracking-[-0.02em] leading-[1.1]">
+              {t.entreprises.offresTitle}<br />{t.entreprises.offresTitleEnd}
+            </h2>
+          </Reveal>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {offres.map((o: { title: string; body: string; cta: string }, i: number) => (
+              <motion.a
+                key={i}
+                href={OFFRE_LINKS[i].href}
+                onClick={(e) => {
+                  if (OFFRE_LINKS[i].spa) { e.preventDefault(); navigate(OFFRE_LINKS[i].href); }
+                }}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-30px' }}
+                transition={{ delay: i * 0.08, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                className="group flex flex-col rounded-2xl border border-black/[0.08] bg-white p-7 hover:border-scanup-blue transition-colors no-underline"
+              >
+                <div className="text-[11px] text-scanup-blue font-semibold uppercase tracking-widest mb-3">
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <h3 className="text-[18px] font-semibold mb-3 text-scanup-navy group-hover:text-scanup-blue transition-colors">{o.title}</h3>
+                <p className="text-[14px] text-scanup-graytext leading-relaxed mb-6 flex-1">{o.body}</p>
+                <span className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-scanup-blue">
+                  {o.cta}
+                  <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </motion.a>
+            ))}
+          </div>
         </div>
       </section>
 

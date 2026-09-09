@@ -67,7 +67,7 @@ export const fr = {
     level2Desc: 'Téléconsultation de 30 minutes avec un psychologue du travail pour les RPS. Coaching vidéo gestes et postures par un ergonome pour les TMS. Pour chaque personne repérée, pas pour un échantillon.',
     level2Price: 'Packs Premium, 40 € et 55 €',
     level3Title: 'Étudier le poste, à distance',
-    level3Desc: 'Pour les salariés repérés, une étude de poste complète réalisée à distance par un ergonome IPRP à partir des vidéos, avec rapport individuel et préconisations d\'adaptation. Puis le plan d\'action coconstruit, restitué à la direction.',
+    level3Desc: 'Pour les salariés repérés, une étude de situation de travail complète réalisée à distance par un ergonome IPRP à partir des vidéos, avec rapport individuel et préconisations d\'adaptation. Puis le plan d\'action coconstruit, restitué à la direction.',
     level3Price: 'Sur devis, ou compris dans le forfait tout compris',
     levelsPackTitle: 'Groupes et déploiements multisites',
     levelsPackDesc: 'Nous proposons des packs d\'études de poste prépayées et des formules d\'abonnement, avec la possibilité de prescrire une étude au fil de l\'eau, quand le besoin apparaît. Les études sont réalisées par notre réseau d\'ergonomes. Conditions sur demande.',
@@ -416,7 +416,7 @@ export const fr = {
     heroTitle: 'Dépistez vos risques',
     heroTitleHighlight: 'TMS & RPS',
     heroTitleEnd: 'sans audit en 48h.',
-    heroSubtitle: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome IPRP. Pour les personnes repérées, étude de poste complète à distance et rapport individuel. Dès 27 € par collaborateur.',
+    heroSubtitle: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome IPRP. Pour les personnes repérées, étude de situation de travail complète à distance et rapport individuel. Dès 27 € par collaborateur.',
     heroCtaPrimary: 'Simuler mon coût gratuitement',
     heroCtaSecondary: 'Voir une démo',
     stats: [
@@ -430,7 +430,7 @@ export const fr = {
     offresTitleEnd: 'une seule plateforme.',
     offres: [
       { title: 'Dépistage RPS et TMS', body: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome IPRP. Résultats en 48 heures, dès 27 € par collaborateur.', cta: 'Simuler mon coût' },
-      { title: 'Étude de poste ergonomique', body: 'Pour les personnes repérées, une étude de poste complète menée à distance par un ergonome, avec rapport individuel et préconisations concrètes.', cta: 'Demander une étude' },
+      { title: 'Étude de situation de travail', body: 'Pour les personnes repérées, une étude de situation de travail complète menée à distance par un ergonome, avec rapport individuel et préconisations concrètes.', cta: 'Demander une étude' },
       { title: 'Formation aux risques psychosociaux', body: 'Sept heures pour vos managers, cours en ligne puis classe virtuelle animée par une psychologue du travail. Dispensée par IEF Biologie, organisme certifié Qualiopi.', cta: 'Voir la formation' },
     ],
     problemsLabel: 'La réalité terrain',
@@ -780,7 +780,7 @@ export const fr = {
     heroBadge: 'Prévention primaire · Cellule PDP · Certification',
     heroTitle: 'Repérer les situations à risque,',
     heroTitleHighlight: 'avant l\'arrêt',
-    heroSubtitle: 'ScanUp donne à votre équipe pluridisciplinaire un dépistage individuel à distance et des études de poste réalisées sans déplacement. Vous obtenez des situations à orienter, des préconisations d\'aménagement, et la traçabilité qu\'attend votre certification.',
+    heroSubtitle: 'ScanUp donne à votre équipe pluridisciplinaire un dépistage individuel à distance et des études de situation de travail réalisées sans déplacement. Vous obtenez des situations à orienter, des préconisations d\'aménagement, et la traçabilité qu\'attend votre certification.',
     heroCtaDemo: 'Demander une démo',
     heroNote: 'Offre construite pour le cadre français issu de la loi du 2 août 2021.',
 
@@ -808,7 +808,7 @@ export const fr = {
       },
     ],
 
-    etudeLabel: 'Étude de poste à distance',
+    etudeLabel: 'Étude de situation de travail à distance',
     etudeTitle: 'L\'analyse ergonomique, sans déplacement',
     etudeSubtitle: 'Le salarié filme sa situation réelle de travail depuis son téléphone, selon des consignes construites avec vous, un module par métier. Un ergonome IPRP analyse la séquence et rédige un rapport individuel assorti de préconisations d\'aménagement.',
     etudePoints: [

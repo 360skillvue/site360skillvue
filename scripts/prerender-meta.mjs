@@ -153,12 +153,18 @@ for (const lang of LANGS) {
   }
 }
 
-// vercel.json : le simulateur d'abord, puis les pages pre-rendues, puis le
-// repli general vers l'application React.
+// vercel.json : les pages statiques d'abord, puis les pages pre-rendues, puis
+// le repli general vers l'application React.
+// Toute nouvelle page statique deposee dans public/ doit etre ajoutee ici,
+// sinon sa regle de reecriture est perdue au prochain build.
+const STATIC_PAGES = [
+  '/simulateur-cout-tms-rps',
+  '/formation-risques-psychosociaux',
+];
 const vercelPath = join(ROOT, 'vercel.json');
 const vercel = JSON.parse(readFileSync(vercelPath, 'utf8'));
 vercel.rewrites = [
-  { source: '/simulateur-cout-tms-rps', destination: '/simulateur-cout-tms-rps.html' },
+  ...STATIC_PAGES.map((p) => ({ source: p, destination: `${p}.html` })),
   ...rewrites,
   { source: '/(.*)', destination: '/index.html' },
 ];

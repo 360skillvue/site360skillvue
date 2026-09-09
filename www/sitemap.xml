@@ -1092,4 +1092,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://360skillvue.com/formation-risques-psychosociaux</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/formation-risques-psychosociaux"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/formation-risques-psychosociaux"/>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

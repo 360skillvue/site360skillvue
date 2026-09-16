@@ -342,8 +342,164 @@
       "destination": "/pt/revue-de-presse/index.html"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/demande-calendly-bien-recue",
+      "destination": "/confirmation.html"
+    },
+    {
+      "source": "/en/appointment-confirmation",
+      "destination": "/confirmation.html"
+    },
+    {
+      "source": "/de/terminbestaetigung",
+      "destination": "/confirmation.html"
+    }
+  ],
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/sitemap_index.xml",
+      "destination": "/sitemap.xml",
+      "permanent": true
+    },
+    {
+      "source": "/wp-sitemap.xml",
+      "destination": "/sitemap.xml",
+      "permanent": true
+    },
+    {
+      "source": "/page-sitemap.xml",
+      "destination": "/sitemap.xml",
+      "permanent": true
+    },
+    {
+      "source": "/post-sitemap.xml",
+      "destination": "/sitemap.xml",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/aide-support",
+      "permanent": true
+    },
+    {
+      "source": "/nous-contacter",
+      "destination": "/aide-support",
+      "permanent": true
+    },
+    {
+      "source": "/questions-frequentes",
+      "destination": "/aide-support",
+      "permanent": true
+    },
+    {
+      "source": "/faq",
+      "destination": "/aide-support",
+      "permanent": true
+    },
+    {
+      "source": "/tarifs-2",
+      "destination": "/tarifs",
+      "permanent": true
+    },
+    {
+      "source": "/ch/tarifs",
+      "destination": "/tarifs",
+      "permanent": true
+    },
+    {
+      "source": "/ch/tarifs-2",
+      "destination": "/tarifs",
+      "permanent": true
+    },
+    {
+      "source": "/ch",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/ch/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/author/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/home",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/home-english",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact-us",
+      "destination": "/en/aide-support",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact",
+      "destination": "/en/aide-support",
+      "permanent": true
+    },
+    {
+      "source": "/en/about",
+      "destination": "/en/a-propos",
+      "permanent": true
+    },
+    {
+      "source": "/en/about-2",
+      "destination": "/en/a-propos",
+      "permanent": true
+    },
+    {
+      "source": "/en/about-us",
+      "destination": "/en/a-propos",
+      "permanent": true
+    },
+    {
+      "source": "/en/pricing",
+      "destination": "/en/tarifs",
+      "permanent": true
+    },
+    {
+      "source": "/de/unser-ansatz",
+      "destination": "/de/a-propos",
+      "permanent": true
+    },
+    {
+      "source": "/de/ueber-uns",
+      "destination": "/de/a-propos",
+      "permanent": true
+    },
+    {
+      "source": "/de/preise",
+      "destination": "/de/tarifs",
+      "permanent": true
+    },
+    {
+      "source": "/de/kontakt",
+      "destination": "/de/aide-support",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|de|it|es|pt)/simulateur-cout-tms-rps",
+      "destination": "/simulateur-cout-tms-rps",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "https://blog.360skillvue.com/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "https://blog.360skillvue.com/:path*",
+      "permanent": true
     }
   ]
 }

@@ -153,20 +153,91 @@ for (const lang of LANGS) {
   }
 }
 
+// Page 404 statique. Vercel la sert automatiquement, avec le vrai statut HTTP
+// 404, pour toute adresse qui ne correspond a aucun fichier ni a aucune regle.
+// Avant, un repli general renvoyait index.html en 200 pour n'importe quelle
+// adresse, d'ou les "Soft 404" et les "Autre page avec balise canonique" dans
+// la Search Console. React affiche ensuite la page introuvable habituelle.
+{
+  const nf = t.fr.meta.introuvable;
+  let html = template;
+  html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(nf.title)} | ScanUp 360SkillVue</title>`);
+  html = html.replace(
+    /<meta name="description" content="[^"]*"\s*\/>/,
+    `<meta name="description" content="${esc(nf.description)}" />`
+  );
+  html = html.replace('</head>', `    <meta name="robots" content="noindex, follow" />\n  </head>`);
+  writeFileSync(join(OUT, '404.html'), html, 'utf8');
+}
+
+// Gabarit des pages de confirmation Calendly : application React, sans
+// canonical ni alternate, et hors index (page de remerciement).
+{
+  let html = template.replace('</head>', `    <meta name="robots" content="noindex, follow" />\n  </head>`);
+  writeFileSync(join(OUT, 'confirmation.html'), html, 'utf8');
+}
+
 // vercel.json : les pages statiques d'abord, puis les pages pre-rendues, puis
-// le repli general vers l'application React.
+// les pages de confirmation Calendly (servies par l'application React).
+// PAS de repli general : une adresse inconnue doit repondre 404.
 // Toute nouvelle page statique deposee dans public/ doit etre ajoutee ici,
 // sinon sa regle de reecriture est perdue au prochain build.
 const STATIC_PAGES = [
   '/simulateur-cout-tms-rps',
   '/formation-risques-psychosociaux',
 ];
+const APP_ONLY_PAGES = [
+  '/demande-calendly-bien-recue',
+  '/en/appointment-confirmation',
+  '/de/terminbestaetigung',
+];
+
+// Anciennes adresses de l'epoque WordPress, relevees dans la Search Console,
+// renvoyees en 301 vers la page equivalente du site actuel.
+const LEGACY_REDIRECTS = [
+  ['/sitemap_index.xml', '/sitemap.xml'],
+  ['/wp-sitemap.xml', '/sitemap.xml'],
+  ['/page-sitemap.xml', '/sitemap.xml'],
+  ['/post-sitemap.xml', '/sitemap.xml'],
+  ['/contact', '/aide-support'],
+  ['/nous-contacter', '/aide-support'],
+  ['/questions-frequentes', '/aide-support'],
+  ['/faq', '/aide-support'],
+  ['/tarifs-2', '/tarifs'],
+  ['/ch/tarifs', '/tarifs'],
+  ['/ch/tarifs-2', '/tarifs'],
+  ['/ch', '/'],
+  ['/ch/:path*', '/'],
+  ['/author/:path*', '/'],
+  ['/en/home', '/en'],
+  ['/en/home-english', '/en'],
+  ['/en/contact-us', '/en/aide-support'],
+  ['/en/contact', '/en/aide-support'],
+  ['/en/about', '/en/a-propos'],
+  ['/en/about-2', '/en/a-propos'],
+  ['/en/about-us', '/en/a-propos'],
+  ['/en/pricing', '/en/tarifs'],
+  ['/de/unser-ansatz', '/de/a-propos'],
+  ['/de/ueber-uns', '/de/a-propos'],
+  ['/de/preise', '/de/tarifs'],
+  ['/de/kontakt', '/de/aide-support'],
+  ['/:lang(en|de|it|es|pt)/simulateur-cout-tms-rps', '/simulateur-cout-tms-rps'],
+  ['/blog', 'https://blog.360skillvue.com/'],
+  ['/blog/:path*', 'https://blog.360skillvue.com/:path*'],
+];
+
 const vercelPath = join(ROOT, 'vercel.json');
 const vercel = JSON.parse(readFileSync(vercelPath, 'utf8'));
+vercel.trailingSlash = false;
+vercel.redirects = LEGACY_REDIRECTS.map(([source, destination]) => ({
+  source,
+  destination,
+  permanent: true,
+}));
 vercel.rewrites = [
   ...STATIC_PAGES.map((p) => ({ source: p, destination: `${p}.html` })),
   ...rewrites,
-  { source: '/(.*)', destination: '/index.html' },
+  ...APP_ONLY_PAGES.map((p) => ({ source: p, destination: '/confirmation.html' })),
 ];
 writeFileSync(vercelPath, `${JSON.stringify(vercel, null, 2)}\n`, 'utf8');
 

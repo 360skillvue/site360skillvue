@@ -1015,82 +1015,90 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://360skillvue.com/revue-de-presse</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/revue-de-presse"/>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/en/revue-de-presse</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/revue-de-presse"/>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/de/revue-de-presse</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/revue-de-presse"/>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/it/revue-de-presse</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/revue-de-presse"/>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/es/revue-de-presse</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/revue-de-presse"/>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://360skillvue.com/pt/revue-de-presse</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/revue-de-presse"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/revue-de-presse"/>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://360skillvue.com/simulateur-cout-tms-rps</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
     <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/en/simulateur-cout-tms-rps</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <lastmod>2026-08-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/de/simulateur-cout-tms-rps</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <lastmod>2026-08-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/it/simulateur-cout-tms-rps</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <lastmod>2026-08-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/es/simulateur-cout-tms-rps</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <lastmod>2026-08-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://360skillvue.com/pt/simulateur-cout-tms-rps</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://360skillvue.com/en/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://360skillvue.com/de/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://360skillvue.com/it/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://360skillvue.com/es/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://360skillvue.com/pt/simulateur-cout-tms-rps"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://360skillvue.com/simulateur-cout-tms-rps"/>
-    <lastmod>2026-08-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://360skillvue.com/formation-risques-psychosociaux</loc>

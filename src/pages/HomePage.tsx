@@ -11,6 +11,7 @@ import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';
 import PageMeta from '../components/PageMeta';
 import VideoEmbed from '../components/VideoEmbed';
+import AvantagesPresentiel from '../components/AvantagesPresentiel';
 
 const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: string }> = ({
   children, delay = 0, className = ""
@@ -222,6 +223,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ─── AVANTAGES FACE AU PRÉSENTIEL ──────────────────────── */}
+      <AvantagesPresentiel />
 
       {/* ─── PARCOURS SALARIE, QUATRE VIDEOS ───────────────────── */}
       <section className="py-24 px-6 bg-[#f8f9fb]">

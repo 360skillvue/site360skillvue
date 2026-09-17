@@ -160,21 +160,28 @@ const Card: React.FC<CardProps> = ({ tone, tag, children }) => {
   );
 };
 
-export default function AvantagesPresentiel() {
+export default function AvantagesPresentiel({ hero = false }: { hero?: boolean }) {
   const { lang } = useLanguage();
   const t = TEXTS[lang] ?? TEXTS.fr;
 
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className={`px-6 bg-white ${hero ? 'pt-12 pb-20 md:pt-16' : 'py-24'}`}>
       <div className="max-w-5xl mx-auto">
         <FadeIn className="text-center mb-14">
           <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">
             {t.label}
           </p>
-          <h2 className="text-[30px] md:text-[42px] font-bold tracking-tight mb-5 leading-tight">
-            {t.title}
-            <span className="text-scanup-blue">{t.titleHighlight}</span>
-          </h2>
+          {hero ? (
+            <h1 className="text-[30px] sm:text-[40px] md:text-[52px] font-bold tracking-tight mb-5 leading-[1.15]">
+              {t.title}
+              <span className="md:block text-scanup-blue">{t.titleHighlight}</span>
+            </h1>
+          ) : (
+            <h2 className="text-[30px] md:text-[42px] font-bold tracking-tight mb-5 leading-tight">
+              {t.title}
+              <span className="text-scanup-blue">{t.titleHighlight}</span>
+            </h2>
+          )}
           <p className="text-[16px] text-scanup-graytext max-w-2xl mx-auto leading-relaxed">
             {t.subtitle}
           </p>

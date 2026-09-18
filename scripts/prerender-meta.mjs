@@ -28,12 +28,23 @@ const OG_LOCALE = {
  * Chemins publics et emplacement du titre et de la description dans les
  * fichiers de traduction. Doit rester aligne sur PAGES dans src/App.tsx.
  */
+/** Titre et description de la page « cabinets de sante au travail », par langue. */
+const CABINETS_META = {
+  fr: { title: 'Cabinets de sante au travail', description: "ScanUp, outil metier des cabinets de conseil en ergonomie et en RPS : vos ergonomes et psychologues creent leurs modules, menent les evaluations a distance et recueillent les donnees terrain sur un hebergement certifie HDS." },
+  en: { title: 'Occupational health consultancies', description: 'ScanUp as a professional tool for ergonomics and psychosocial risk consultancies: your experts build their own modules, run remote assessments and collect field data on health-data certified hosting.' },
+  de: { title: 'Beratungsburos fur Arbeitsgesundheit', description: 'ScanUp als Fachwerkzeug fur Ergonomie- und Psychosozialberatungen: Ihre Fachleute erstellen eigene Module, fuhren Beurteilungen aus der Ferne durch und erheben Felddaten auf zertifiziertem Gesundheitsdaten-Hosting.' },
+  it: { title: 'Studi di salute sul lavoro', description: 'ScanUp come strumento professionale per studi di ergonomia e rischi psicosociali: i vostri esperti creano i propri moduli, conducono le valutazioni a distanza e raccolgono i dati sul campo in sicurezza.' },
+  es: { title: 'Gabinetes de salud laboral', description: 'ScanUp como herramienta profesional para gabinetes de ergonomia y riesgos psicosociales: vuestros expertos crean sus modulos, evaluan a distancia y recogen los datos de campo con seguridad.' },
+  pt: { title: 'Gabinetes de saude no trabalho', description: 'A ScanUp como ferramenta profissional para gabinetes de ergonomia e riscos psicossociais: os vossos especialistas criam os seus modulos, avaliam a distancia e recolhem os dados de terreno em seguranca.' },
+};
+
 const ROUTES = [
   { path: '/',                               pick: t => t.meta.home },
   { path: '/certification-periodique-sante', pick: t => t.meta.certification },
   { path: '/entreprises-drh',                pick: t => t.meta.entreprises },
   { path: '/assureurs-mutuelles',            pick: t => t.meta.assureurs },
   { path: '/spsti',                          pick: t => ({ title: t.spsti.metaTitle, description: t.spsti.metaDescription }) },
+  { path: '/cabinets-sante-travail',         pick: (t, lang) => CABINETS_META[lang] },
   { path: '/partenaires',                    pick: t => t.meta.partenaires },
   { path: '/aide-support',                   pick: t => t.meta.aide },
   { path: '/tarifs',                         pick: t => t.meta.tarifs },
@@ -85,7 +96,7 @@ const template = readFileSync(join(OUT, 'index.html'), 'utf8')
   .replace(/^[ \t]*<link rel="(?:alternate|canonical)"[^>]*>\n/gm, '');
 
 function renderPage(route, lang, t) {
-  const { title, description } = route.pick(t);
+  const { title, description } = route.pick(t, lang);
   const fullTitle = `${title} | ScanUp 360SkillVue`;
   const url = `${BASE}${localizePath(route.path, lang)}`;
 

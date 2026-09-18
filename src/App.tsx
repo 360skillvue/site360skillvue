@@ -8,6 +8,7 @@ const CertificationPage = lazy(() => import('./pages/CertificationPage'));
 const EntreprisesPage   = lazy(() => import('./pages/EntreprisesPage'));
 const AssureursPage     = lazy(() => import('./pages/AssureursPage'));
 const SPSTIPage         = lazy(() => import('./pages/SPSTIPage'));
+const CabinetsPage      = lazy(() => import('./pages/CabinetsPage'));
 const PartenairesPage   = lazy(() => import('./pages/PartenairesPage'));
 const AidePage          = lazy(() => import('./pages/AidePage'));
 const NotFoundPage        = lazy(() => import('./pages/NotFoundPage'));
@@ -31,6 +32,7 @@ const PAGES: { path: string; element: React.ReactNode }[] = [
   { path: '/entreprises-drh',               element: <EntreprisesPage /> },
   { path: '/assureurs-mutuelles',           element: <AssureursPage /> },
   { path: '/spsti',                         element: <SPSTIPage /> },
+  { path: '/cabinets-sante-travail',        element: <CabinetsPage /> },
   { path: '/partenaires',                   element: <PartenairesPage /> },
   { path: '/aide-support',                  element: <AidePage /> },
   { path: '/tarifs',                        element: <TarifsPage /> },

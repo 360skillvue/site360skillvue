@@ -2,14 +2,25 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from '../i18n/Link';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronDown, Building2, Shield, Stethoscope, Award, Menu, X, Globe, Wrench } from 'lucide-react';
+import { ChevronDown, Building2, Shield, Stethoscope, Award, Briefcase, Menu, X, Globe, Wrench } from 'lucide-react';
 import { useLanguage, LANGUAGES } from '../i18n';
+
+/** Libelles du public « cabinets de sante au travail », par langue. */
+const CABINETS_ITEM: Record<string, { label: string; desc: string }> = {
+  fr: { label: 'Cabinets santé au travail', desc: 'Ergonomes et psychologues, en autonomie' },
+  en: { label: 'Occupational health consultancies', desc: 'Ergonomists and psychologists, in autonomy' },
+  de: { label: 'Beratungsbüros Arbeitsgesundheit', desc: 'Ergonominnen und Psychologen, eigenständig' },
+  it: { label: 'Studi di salute sul lavoro', desc: 'Ergonomi e psicologi, in autonomia' },
+  es: { label: 'Gabinetes de salud laboral', desc: 'Ergónomos y psicólogos, con autonomía' },
+  pt: { label: 'Gabinetes de saúde no trabalho', desc: 'Ergonomistas e psicólogos, com autonomia' },
+};
 
 const CERTIFICATION_HREFS = [
   { href: '/entreprises-drh',              icon: Building2   },
   { href: '/assureurs-mutuelles',          icon: Shield      },
   { href: '/spsti',                        icon: Stethoscope },
   { href: '/certification-periodique-sante', icon: Award     },
+  { href: '/cabinets-sante-travail',       icon: Briefcase   },
 ];
 
 export default function Navbar() {
@@ -26,6 +37,7 @@ export default function Navbar() {
     { ...CERTIFICATION_HREFS[1], label: t.nav.certItems.assureurs.label,     desc: t.nav.certItems.assureurs.desc     },
     { ...CERTIFICATION_HREFS[2], label: t.nav.certItems.spsti.label,         desc: t.nav.certItems.spsti.desc         },
     { ...CERTIFICATION_HREFS[3], label: t.nav.certItems.certification.label, desc: t.nav.certItems.certification.desc },
+    { ...CERTIFICATION_HREFS[4], ...(CABINETS_ITEM[lang] ?? CABINETS_ITEM.fr) },
   ];
 
   useEffect(() => {

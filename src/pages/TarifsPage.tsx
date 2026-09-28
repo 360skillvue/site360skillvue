@@ -239,25 +239,45 @@ export default function TarifsPage() {
                   </li>
                 ))}
               </ul>
-              <div className="rounded-xl bg-white/[0.06] border border-white/10 mb-8 overflow-hidden">
-                <div className="px-5 py-3 text-[12px] font-semibold uppercase tracking-widest text-white/50">{tr.studyTiersTitle}</div>
-                <ul>
-                  {tr.studyTiers.map((tier, i) => (
-                    <li key={i} className="flex items-baseline justify-between gap-4 px-5 py-2.5 text-[14px] border-t border-white/10">
-                      <span className="text-white/70">{tier.label}</span>
-                      <span className="font-semibold text-white whitespace-nowrap">{tier.price}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <div className="text-[20px] font-bold tracking-tight">{tr.studyPrice}</div>
+                <div className="text-[24px] font-bold tracking-tight">{tr.studyPrice}</div>
                 <motion.button
                   whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
                   onClick={goContact}
                   className="sm:ml-auto py-3 px-6 rounded-xl font-bold text-[13px] bg-white text-scanup-navy hover:bg-scanup-turquoise transition-all inline-flex items-center gap-2 self-start"
                 >
                   {tr.studyCta} <ArrowRight size={13} />
+                </motion.button>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Modules de formation sur mesure ─────────────────── */}
+      <section className="pb-16 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto">
+          <Reveal>
+            <div className="rounded-2xl bg-white border border-black/[0.07] shadow-md p-7 sm:p-10">
+              <div className="text-[12px] font-semibold uppercase tracking-widest text-scanup-blue mb-2">{tr.trainingLabel}</div>
+              <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight mb-3">{tr.trainingTitle}</h2>
+              <p className="text-[15px] text-scanup-graytext leading-relaxed mb-6">{tr.trainingDesc}</p>
+              <ul className="space-y-2.5 mb-8">
+                {tr.trainingItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-[14px] leading-snug text-scanup-graytext">
+                    <Check size={13} className="flex-shrink-0 mt-1 text-scanup-blue" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                <div className="text-[24px] font-bold tracking-tight text-scanup-navy">{tr.trainingPrice}</div>
+                <motion.button
+                  whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                  onClick={goContact}
+                  className="sm:ml-auto py-3 px-6 rounded-xl font-bold text-[13px] bg-scanup-blue text-white hover:brightness-110 transition-all inline-flex items-center gap-2 self-start"
+                >
+                  {tr.trainingCta} <ArrowRight size={13} />
                 </motion.button>
               </div>
             </div>

@@ -603,11 +603,13 @@ export const fr = {
       ],
     },
     step2Label: "Étape 2",
-    step2Title: "Les options pour la direction",
-    step2Subtitle: "À ajouter selon vos besoins, cumulables entre elles et avec le retour au salarié.",
+    step2Title: "Les livrables pour l'employeur et la santé au travail",
+    step2Subtitle: "Cumulables entre eux et avec le retour au salarié : un plan d'action collectif pour les RH et la direction, un rapport individuel pour le médecin ou l'infirmier du travail, en TMS comme en RPS.",
     options: [
-      { name: "Plan d'action de prévention TMS", price: "750 €", sub: "HT par tranche de 50 collaborateurs", desc: "Cartographie anonymisée des risques, actions priorisées et restitution à la direction.", tag: "" },
-      { name: "Plan d'action de prévention RPS", price: "750 €", sub: "HT par tranche de 50 collaborateurs", desc: "Cartographie anonymisée des risques, actions priorisées et restitution à la direction.", tag: "" },
+      { name: "Plan d'action de prévention TMS", price: "750 €", sub: "HT par tranche de 50 collaborateurs", desc: "Cartographie anonymisée des risques, actions priorisées et restitution à la direction.", tag: "Pour les RH et la direction" },
+      { name: "Plan d'action de prévention RPS", price: "750 €", sub: "HT par tranche de 50 collaborateurs", desc: "Cartographie anonymisée des risques, actions priorisées et restitution à la direction.", tag: "Pour les RH et la direction" },
+      { name: "Rapport individuel TMS", price: "Sur devis", sub: "par rapport, à l'unité ou en volume", desc: "Étude de situation de travail à distance par un ergonome, à partir des vidéos du salarié : facteurs de risque, marges de manœuvre, préconisations hiérarchisées.", tag: "Pour le médecin ou l'infirmier du travail" },
+      { name: "Rapport individuel RPS", price: "Sur devis", sub: "par rapport, à l'unité ou en volume", desc: "Analyse à distance de l'organisation du travail et des facteurs psychosociaux, en entretien avec un psychologue : points d'appui, signaux d'alerte, préconisations hiérarchisées.", tag: "Pour le médecin ou l'infirmier du travail" },
     ],
     exampleTitle: "Exemple pour 100 salariés, TMS et RPS",
     exampleLines: [

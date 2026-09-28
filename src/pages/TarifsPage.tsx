@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, ArrowRight, UserCog, Sparkles, Plus } from 'lucide-react';
+import { Check, ArrowRight, UserCog, Sparkles } from 'lucide-react';
 import { useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -147,63 +147,70 @@ export default function TarifsPage() {
         </div>
       </section>
 
-      {/* ── Étape 1 : retour au salarié ─────────────────────── */}
+      {/* ── TMS et RPS : trois usages des données ───────────── */}
       <section className="px-4 sm:px-6 pb-16">
         <div className="max-w-6xl mx-auto">
-          <Reveal className="text-center mb-10">
-            <div className="text-[12px] font-semibold uppercase tracking-widest text-scanup-blue mb-2">{tr.step1Label}</div>
+          <Reveal className="text-center mb-12">
             <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-2">{tr.step1Title}</h2>
-            <p className="text-[15px] text-scanup-graytext">{tr.step1Subtitle}</p>
+            <p className="text-[15px] text-scanup-graytext max-w-2xl mx-auto">{tr.step2Title}</p>
           </Reveal>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {([tr.tms, tr.rps] as const).map((risk, r) => (
-              <div key={r}>
-                <Reveal className="mb-4">
-                  <div className="text-[18px] font-bold text-scanup-navy">{risk.title}</div>
-                  <div className="text-[13px] text-scanup-graytext">{risk.subtitle}</div>
+          {([tr.tms, tr.rps] as const).map((risk, r) => {
+            const uses = [
+              { label: tr.step1Label, sub: tr.step1Subtitle },
+              { label: tr.step2Label, sub: tr.step2Subtitle },
+              { label: tr.step3Label, sub: tr.step3Subtitle },
+            ];
+            const UseHead = ({ u }: { u: { label: string; sub: string } }) => (
+              <div className="mb-3 lg:min-h-[60px]">
+                <div className="text-[11px] font-semibold uppercase tracking-widest text-scanup-blue">{u.label}</div>
+                <div className="text-[12px] text-scanup-graytext leading-snug mt-0.5">{u.sub}</div>
+              </div>
+            );
+            return (
+              <div key={r} className="mb-16 last:mb-10">
+                <Reveal className="mb-6 pb-4 border-b border-black/[0.08]">
+                  <div className="flex items-baseline gap-3 flex-wrap">
+                    <div className="text-[24px] font-bold text-scanup-navy tracking-tight">{risk.title}</div>
+                    <div className="text-[14px] text-scanup-graytext">{risk.subtitle}</div>
+                  </div>
+                  <div className="text-[13px] text-scanup-navy/80 mt-1">{risk.collect}</div>
                 </Reveal>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {risk.plans.map((plan, i) => (
-                    <Reveal key={i} delay={i * 0.07}>
-                      <PlanCard plan={plan} featured={i === 1} onCta={goContact} />
-                    </Reveal>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8">
+                  <div className="md:col-span-2 flex flex-col">
+                    <UseHead u={uses[0]} />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
+                      {risk.plans.map((plan, i) => (
+                        <Reveal key={i} delay={i * 0.07}>
+                          <PlanCard plan={plan} featured={i === 1} onCta={goContact} />
+                        </Reveal>
+                      ))}
+                    </div>
+                  </div>
+                  {[tr.options[r], tr.options[2 + r]].map((opt, k) => (
+                    <div key={k} className="flex flex-col">
+                      <UseHead u={uses[k + 1]} />
+                      <Reveal delay={0.14 + k * 0.07} className="flex-grow">
+                        <div className="rounded-2xl p-7 h-full flex flex-col bg-white border border-black/[0.07] shadow-sm">
+                          <div className="text-[11px] font-semibold uppercase tracking-widest mb-3 text-scanup-blue">{opt.name}</div>
+                          <div className="text-[28px] font-bold tracking-tight leading-none mb-1 text-scanup-navy">{opt.price}</div>
+                          <div className="text-[12px] leading-snug mb-6 text-scanup-graytext">{opt.sub}</div>
+                          <p className="text-[13px] text-scanup-graytext leading-snug flex-grow">{opt.desc}</p>
+                        </div>
+                      </Reveal>
+                    </div>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
-          <Reveal delay={0.15} className="mt-8">{TrialBanner}</Reveal>
+            );
+          })}
+          <Reveal delay={0.15}>{TrialBanner}</Reveal>
         </div>
       </section>
 
-      {/* ── Étape 2 : options pour la direction ─────────────── */}
+      {/* ── Exemple chiffré ───────────────────────────────── */}
       <section className="py-16 px-4 sm:px-6 bg-[#f8f9fb]">
         <div className="max-w-5xl mx-auto">
-          <Reveal className="text-center mb-10">
-            <div className="text-[12px] font-semibold uppercase tracking-widest text-scanup-blue mb-2">{tr.step2Label}</div>
-            <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-2">{tr.step2Title}</h2>
-            <p className="text-[15px] text-scanup-graytext">{tr.step2Subtitle}</p>
-          </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
-            {tr.options.map((opt, i) => (
-              <Reveal key={i} delay={i * 0.07}>
-                <div className="rounded-2xl p-6 h-full flex flex-col bg-white border border-black/[0.07] shadow-sm relative">
-                  <div className="w-8 h-8 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center mb-4">
-                    <Plus size={16} />
-                  </div>
-                  <div className="text-[15px] font-bold text-scanup-navy mb-2 leading-snug">{opt.name}</div>
-                  {opt.tag && (
-                    <div className="self-start text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-scanup-turquoise/20 text-scanup-navy tracking-wide mb-3">{opt.tag}</div>
-                  )}
-                  <p className="text-[13px] text-scanup-graytext leading-relaxed flex-grow mb-5">{opt.desc}</p>
-                  <div className="text-[24px] font-bold tracking-tight leading-none text-scanup-navy">{opt.price}</div>
-                  <div className="text-[12px] text-scanup-graytext mt-1">{opt.sub}</div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={0.1} className="mt-10">
+          <Reveal delay={0.1}>
             <div className="max-w-3xl mx-auto rounded-2xl bg-white border border-black/[0.07] shadow-md overflow-hidden">
               <div className="px-6 py-4 bg-scanup-navy text-white text-[14px] font-semibold">{tr.exampleTitle}</div>
               <ul>
@@ -217,37 +224,6 @@ export default function TarifsPage() {
               <div className="flex items-baseline justify-between gap-4 px-6 py-4 border-t-2 border-black/10 bg-scanup-blue/[0.04]">
                 <span className="font-bold text-scanup-navy text-[14px]">{tr.exampleTotalLabel}</span>
                 <span className="font-bold text-scanup-blue text-[18px] whitespace-nowrap">{tr.exampleTotal}</span>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── Autre cas d'usage : études de situation de travail ── */}
-      <section className="py-16 px-4 sm:px-6">
-        <div className="max-w-3xl mx-auto">
-          <Reveal>
-            <div className="rounded-2xl bg-scanup-navy text-white p-7 sm:p-10">
-              <div className="text-[12px] font-semibold uppercase tracking-widest text-scanup-turquoise mb-2">{tr.studyLabel}</div>
-              <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight mb-3 text-white">{tr.studyTitle}</h2>
-              <p className="text-[15px] text-white/60 leading-relaxed mb-6">{tr.studyDesc}</p>
-              <ul className="space-y-2.5 mb-8">
-                {tr.studyItems.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-[14px] leading-snug text-white/80">
-                    <Check size={13} className="flex-shrink-0 mt-1 text-scanup-turquoise" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <div className="text-[24px] font-bold tracking-tight">{tr.studyPrice}</div>
-                <motion.button
-                  whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                  onClick={goContact}
-                  className="sm:ml-auto py-3 px-6 rounded-xl font-bold text-[13px] bg-white text-scanup-navy hover:bg-scanup-turquoise transition-all inline-flex items-center gap-2 self-start"
-                >
-                  {tr.studyCta} <ArrowRight size={13} />
-                </motion.button>
               </div>
             </div>
           </Reveal>

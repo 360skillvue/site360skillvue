@@ -537,18 +537,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="field" id="sv-f-rps">
             <label>Votre formule de dépistage RPS</label>
             <div class="scn-set">
-              <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Essential<small id="sv-lab-rps-e">27 € HT, retour par courriel</small></span></label>
-              <label class="scn"><input type="radio" name="svrps" value="40"><span>Premium<small id="sv-lab-rps-p">40 € HT, avec téléconsultation</small></span></label>
-              <label class="scn"><input type="radio" name="svrps" value="forfait"><span>Forfait<small id="sv-lab-rps-f">55 € HT, plan d'action compris</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Retour par e-mail<small id="sv-lab-rps-e">27 € HT par salarié</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="40"><span>Avec téléconsultation<small id="sv-lab-rps-p">40 € HT par salarié</small></span></label>
+            </div>
+            <div class="scn-set scn-2" style="margin-top:8px">
+              <label class="scn"><input type="radio" name="svprps" value="non"><span>Sans plan d'action<small>retour au salarié seul</small></span></label>
+              <label class="scn"><input type="radio" name="svprps" value="oui" checked><span>Plan d'action RPS<small id="sv-lab-prps">750 € HT par tranche de 50 salariés</small></span></label>
             </div>
           </div>
 
           <div class="field" id="sv-f-tms">
             <label>Votre formule TMS</label>
             <div class="scn-set">
-              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Essential<small id="sv-lab-tms-e">40 € HT, sans coaching</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="premium"><span>Premium<small id="sv-lab-tms-p">55 € HT, avec coaching</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="forfait" checked><span>Forfait<small id="sv-lab-forfait">tout compris</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Retour par e-mail<small id="sv-lab-tms-e">40 € HT par salarié</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Avec coaching vidéo<small id="sv-lab-tms-p">55 € HT par salarié</small></span></label>
+            </div>
+            <div class="scn-set scn-2" style="margin-top:8px">
+              <label class="scn"><input type="radio" name="svptms" value="non" checked><span>Sans plan d'action<small>retour au salarié seul</small></span></label>
+              <label class="scn"><input type="radio" name="svptms" value="oui"><span>Plan d'action TMS<small id="sv-lab-ptms">750 € HT par tranche de 50 salariés</small></span></label>
+            </div>
+            <div class="scn-set scn-2" style="margin-top:8px">
+              <label class="scn"><input type="radio" name="svetu" value="non"><span>Sans étude<small>dépistage seul</small></span></label>
+              <label class="scn"><input type="radio" name="svetu" value="oui" checked><span>Études de situation de travail<small id="sv-lab-etu">de 240 à 400 € HT par rapport</small></span></label>
             </div>
             <p class="hint" id="sv-hint-tms"></p>
           </div>
@@ -611,11 +621,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
               <div class="field">
                 <div class="sl-head">
-                  <label for="sv-part-etude">Part des salariés repérés relevant d'une étude complète</label>
+                  <label for="sv-part-etude">Part des salariés repérés pour lesquels vous commandez une étude</label>
                   <span class="sl-val" id="sv-part-etude-val"></span>
                 </div>
                 <input type="range" id="sv-part-etude" min="0" max="100" step="5" value="40">
-                <p class="hint">Sans effet sur la formule Essential ni sur le Forfait, dont le plafond d'études incluses est indexé sur votre secteur, de 5 à 40 % de l'effectif.</p>
+                <p class="hint">C'est vous qui décidez des études à commander. Chaque étude donne lieu à un rapport, facturé selon la grille dégressive : 400 € HT par rapport de 1 à 20 études commandées dans le mois, 360 € de 21 à 50, 320 € de 51 à 100, 280 € de 101 à 200, 240 € au delà. La simulation suppose que les études sont commandées sur un même mois.</p>
               </div>
             </div>
           </details>
@@ -650,7 +660,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="roi-fam-head fam-scanup"><span>Avec ScanUp</span><b id="sv-cmp-b2"></b></div>
               <div class="roi-row" id="sv-r2-rps"><span id="sv-c2-l-rps">Dépistage RPS de tout l'effectif</span><b id="sv-c2-rps"></b></div>
               <div class="roi-row" id="sv-r2-dep"><span id="sv-c2-l-dep">Dépistage TMS de tout l'effectif</span><b id="sv-c2-dep"></b></div>
-              <div class="roi-row" id="sv-r2-tms"><span id="sv-c2-l-tms">Études de poste complètes</span><b id="sv-c2-tms"></b></div>
+              <div class="roi-row" id="sv-r2-prps"><span id="sv-c2-l-prps">Plan d'action RPS</span><b id="sv-c2-prps"></b></div>
+              <div class="roi-row" id="sv-r2-ptms"><span id="sv-c2-l-ptms">Plan d'action TMS</span><b id="sv-c2-ptms"></b></div>
+              <div class="roi-row" id="sv-r2-tms"><span id="sv-c2-l-tms">Études de situation de travail</span><b id="sv-c2-tms"></b></div>
               <p class="bd-desc" id="sv-c2-desc"></p>
             </div>
 
@@ -788,6 +800,16 @@ function num(n,d){d=d||0;return new Intl.NumberFormat("fr-FR",{minimumFractionDi
 // variable. Hypothese basse du marche, les grilles publiques allant de 1 500 a
 // 7 000 EUR HT selon la profondeur du diagnostic.
 function auditRef(eff){ return Math.round((1500+eff*8)/100)*100; }
+// Prix d'une etude de situation de travail (un rapport), grille degressive
+// selon le nombre d'etudes commandees dans le mois, tarif annonce au SPSTN.
+function prixEtude(n){
+  if(n<=20){ return 400; }
+  if(n<=50){ return 360; }
+  if(n<=100){ return 320; }
+  if(n<=200){ return 280; }
+  return 240;
+}
+function tranches50(eff){ return Math.ceil(eff/50); }
 // forfait TMS indexe sur l'incidence TMS du secteur, la moitie de l'ecart repercutee
 function forfaitSecteur(t){
   var ref=21.5, base=105;
@@ -1020,43 +1042,27 @@ function calcule(){
 
   // scénario 2 : dépistage à distance puis intervention ciblée
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
-  var c2rps, lib2rps;
-  if(packRps==="forfait"){
-    c2rps=eff*55;
-    lib2rps="Forfait RPS tout compris, "+num(eff,0)+" × "+eur(55);
-  } else {
-    var pu=parseFloat(packRps);
-    c2rps=eff*pu;
-    lib2rps="Dépistage RPS, "+num(eff,0)+" × "+eur(pu);
-  }
+  var pu=parseFloat(packRps);
+  var c2rps=eff*pu, lib2rps="Dépistage RPS, "+num(eff,0)+" × "+eur(pu);
+  var nbTr=tranches50(eff);
+  var planRps=(document.querySelector('input[name="svprps"]:checked').value==="oui");
+  var planTms=(document.querySelector('input[name="svptms"]:checked').value==="oui");
+  var avecEtu=(document.querySelector('input[name="svetu"]:checked').value==="oui");
+  var c2prps=planRps?nbTr*750:0, c2ptms=planTms?nbTr*750:0;
+  var libTr=num(nbTr,0)+(nbTr>1?" tranches":" tranche")+" de 50 salariés × "+eur(750);
   var pctEtude=parseFloat($("sv-part-etude").value);
   if(isNaN(pctEtude)){ pctEtude=0; }
   var packTms=document.querySelector('input[name="svtms"]:checked').value;
-  var nbEtudes=Math.round(nbCibles*pctEtude/100);
-  var fSect=forfaitSecteur(s.tms10k);
-  var c2dep, c2tms, lib2dep, lib2tms;
-  if(packTms==="forfait"){
-    var pctPlaf=plafondSecteur(fSect);
-    var plaf=Math.round(eff*pctPlaf/100);
-    var sup=nbEtudes-plaf;
-    if(sup<0){ sup=0; }
-    c2dep=eff*fSect;
-    c2tms=sup*250;
-    lib2dep="Forfait, tarif de votre secteur, "+num(eff,0)+" × "+eur(fSect);
-    lib2tms="Études incluses jusqu'à "+pctPlaf+" % de l'effectif, soit "+num(plaf,0)+" salariés, plafond non atteint";
-    if(sup>0){ lib2tms="Études au-delà du plafond de "+pctPlaf+" %, "+num(sup,0)+" × "+eur(250); }
-  } else if(packTms==="essential"){
-    c2dep=eff*40; c2tms=0; nbEtudes=0;
-    lib2dep="Dépistage TMS, "+num(eff,0)+" × "+eur(40);
-    lib2tms="Ni coaching ni étude de poste, formule Essential";
-  } else {
-    c2dep=eff*55; c2tms=nbEtudes*250;
-    lib2dep="Dépistage TMS, "+num(eff,0)+" × "+eur(55);
-    lib2tms="Études de poste complètes, "+num(nbEtudes,0)+" × "+eur(250);
-  }
+  var nbEtudes=avecEtu?Math.round(nbCibles*pctEtude/100):0;
+  var puTms=(packTms==="essential")?40:55;
+  var pEtu=prixEtude(nbEtudes);
+  var c2dep=eff*puTms, c2tms=nbEtudes*pEtu;
+  var lib2dep="Dépistage TMS"+(packTms==="essential"?"":" avec coaching vidéo")+", "+num(eff,0)+" × "+eur(puTms);
+  var lib2tms=avecEtu?"Études de situation de travail, "+num(nbEtudes,0)+" rapports × "+eur(pEtu):"Aucune étude commandée";
   if(!vRps){ c2rps=0; }
-  if(!vTms){ c2dep=0; c2tms=0; }
-  var c2=c2rps+c2dep+c2tms;
+  if(!vRps){ c2prps=0; }
+  if(!vTms){ c2dep=0; c2tms=0; c2ptms=0; }
+  var c2=c2rps+c2dep+c2tms+c2prps+c2ptms;
   var totAff=total;
   if(perim==="rps"){ totAff=totRps; }
   if(perim==="tms"){ totAff=totTms; }
@@ -1064,6 +1070,7 @@ function calcule(){
   aff("sv-f-rps",vRps); aff("sv-f-tms",vTms);
   aff("sv-r1-rps",vRps); aff("sv-r1-ent",vRps); aff("sv-r1-tms",vTms);
   aff("sv-r2-rps",vRps); aff("sv-r2-dep",vTms); aff("sv-r2-tms",vTms);
+  aff("sv-r2-prps",vRps&&planRps); aff("sv-r2-ptms",vTms&&planTms);
   aff("sv-split",perim==="deux");
   $("sv-total").textContent=eur(totAff);
   $("sv-total-sub").textContent="soit "+eur(totAff/eff)+" par salarié et par an, pour "+num(eff,0)+" salariés.";
@@ -1073,17 +1080,10 @@ function calcule(){
   $("sv-roi-l").textContent="Ce qu'il faut investir pour agir";
   $("sv-p-label").textContent=(perim==="deux"?"Ce que le risque vous coûte":(perim==="rps"?"Ce que les RPS vous coûtent":"Ce que les TMS vous coûtent"));
   $("sv-roi-sur").textContent=libPer;
-  $("sv-lab-forfait").textContent=eur(fSect)+" HT dans votre secteur, "+eur(105)+" en moyenne";
-  if(packTms==="forfait"){
-    $("sv-hint-tms").textContent="Tout est compris côté TMS : le dépistage, le coaching, l'étude de poste "+
-      "avec rapport individuel pour les salariés repérés, dans la limite du plafond indexé sur votre secteur, et le plan d'action. "+
-      "Le dépistage RPS reste facturé à part, selon la formule choisie ci-dessus. "+
-      "Le montant suit la sinistralité TMS de votre secteur, "+eur(fSect)+" ici contre "+eur(105)+" en moyenne.";
-  } else {
-    $("sv-hint-tms").textContent="À l'acte, vous ne payez que ce que vous consommez. Essential s'arrête au "+
-      "dépistage et au retour écrit ; Premium y ajoute le coaching gestes et postures, et l'étude de poste "+
-      "complète en option à 250 € par salarié repéré.";
-  }
+  $("sv-hint-tms").textContent="Le retour au salarié se choisit par risque ; les plans d'action se commandent en plus, "+
+    eur(750)+" HT par tranche de 50 salariés. Les études de situation de travail restent à votre main : vous "+
+    "décidez lesquelles commander, et chacune est facturée par rapport, de "+eur(400)+" à "+eur(240)+
+    " HT selon le volume du mois. Ajustez la part concernée dans les hypothèses.";
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-ent").textContent=eur(c1ent);
   $("sv-c1-l-ent").textContent="Entretiens de 30 minutes, tout l'effectif, "+num(eff,0)+" × "+eur(pEnt*fPres);
@@ -1097,6 +1097,10 @@ function calcule(){
   $("sv-c2-l-rps").textContent=lib2rps;
   $("sv-c2-l-dep").textContent=lib2dep;
   $("sv-c2-l-tms").textContent=lib2tms;
+  $("sv-c2-prps").textContent=eur(c2prps);
+  $("sv-c2-ptms").textContent=eur(c2ptms);
+  $("sv-c2-l-prps").textContent="Plan d'action RPS, "+libTr;
+  $("sv-c2-l-ptms").textContent="Plan d'action TMS, "+libTr;
   var d1,d2;
   if(perim==="rps"){
     d1="L'audit est collectif : il repose sur un échantillon d'entretiens et rend des indicateurs par "+
@@ -1111,7 +1115,7 @@ function calcule(){
     d1="Un ergonome vient voir le travail, l'analyse est réelle. Mais elle raisonne par poste et non par "+
       "personne : une étude couvre une situation de travail et vaut pour tous ceux qui l'occupent.";
     d2="On part de la personne et non du poste. Le travail est capté en situation réelle, et l'étude "+
-      "approfondie n'est engagée que sur les salariés que le dépistage a désignés, isolés compris.";
+      "approfondie, elle, reste à votre main : vous commandez les études de situation de travail qui vous semblent justifiées, isolés compris.";
   } else {
     d1="L'audit psychosocial est collectif, il décrit des services et non des personnes : le repérage "+
       "individuel suppose d'y ajouter un entretien par salarié, mené sur place. L'étude de poste, elle, "+
@@ -1167,11 +1171,12 @@ function calcule(){
 
   // La grille est identique en euros et en francs : seuls la monnaie et le
   // format d'affichage changent d'un pays a l'autre.
-  [["sv-lab-rps-e",27,"retour par courriel"],["sv-lab-rps-p",40,"avec téléconsultation"],
-   ["sv-lab-rps-f",55,"plan d'action compris"],["sv-lab-tms-e",40,"sans coaching"],
-   ["sv-lab-tms-p",55,"avec coaching"]].forEach(function(t){
-    var e=$(t[0]); if(e){ e.textContent=eur(t[1])+" HT, "+t[2]; }
+  [["sv-lab-rps-e",27,"par salarié"],["sv-lab-rps-p",40,"par salarié"],
+   ["sv-lab-tms-e",40,"par salarié"],["sv-lab-tms-p",55,"par salarié"],
+   ["sv-lab-prps",750,"par tranche de 50 salariés"],["sv-lab-ptms",750,"par tranche de 50 salariés"]].forEach(function(t){
+    var e=$(t[0]); if(e){ e.textContent=eur(t[1])+" HT "+t[2]; }
   });
+  var eEtu=$("sv-lab-etu"); if(eEtu){ eEtu.textContent="de "+eur(240)+" à "+eur(400)+" HT par rapport"; }
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
   $("sv-part-etude-val").textContent=num(pctEtude,0)+" % · "+num(nbEtudes,0)+" études";
 
@@ -1276,7 +1281,7 @@ selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);
 });
-Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],input[name="svtms"],input[name="svperim"]'),function(r){
+Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],input[name="svtms"],input[name="svperim"],input[name="svprps"],input[name="svptms"],input[name="svetu"]'),function(r){
   r.addEventListener("change",calcule);
 });
 Array.prototype.forEach.call(document.querySelectorAll('input[name="svscn"]'),function(r){

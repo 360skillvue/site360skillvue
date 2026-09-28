@@ -239,8 +239,19 @@ export default function TarifsPage() {
                   </li>
                 ))}
               </ul>
+              <div className="rounded-xl bg-white/[0.06] border border-white/10 mb-8 overflow-hidden">
+                <div className="px-5 py-3 text-[12px] font-semibold uppercase tracking-widest text-white/50">{tr.studyTiersTitle}</div>
+                <ul>
+                  {tr.studyTiers.map((tier, i) => (
+                    <li key={i} className="flex items-baseline justify-between gap-4 px-5 py-2.5 text-[14px] border-t border-white/10">
+                      <span className="text-white/70">{tier.label}</span>
+                      <span className="font-semibold text-white whitespace-nowrap">{tier.price}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <div className="text-[24px] font-bold tracking-tight">{tr.studyPrice}</div>
+                <div className="text-[20px] font-bold tracking-tight">{tr.studyPrice}</div>
                 <motion.button
                   whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
                   onClick={goContact}

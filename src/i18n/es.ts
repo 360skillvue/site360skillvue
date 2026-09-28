@@ -70,7 +70,7 @@ export const es = {
     level3Desc: 'Para los empleados detectados, una evaluación completa del puesto de trabajo realizada a distancia por un ergónomo acreditado a partir de los vídeos, con informe individual y recomendaciones de adaptación. Después, el plan de acción construido conjuntamente y presentado a la dirección.',
     level3Price: 'Bajo presupuesto, o incluido en la fórmula todo incluido',
     levelsPackTitle: 'Grupos y despliegues multicentro',
-    levelsPackDesc: 'Ofrecemos packs prepagados de evaluaciones del puesto de trabajo y fórmulas de suscripción, con la posibilidad de solicitar una evaluación en cualquier momento, cuando surja la necesidad. Las evaluaciones las realiza nuestra red de ergónomos. Condiciones bajo petición.',
+    levelsPackDesc: 'Ofrecemos packs prepagados de evaluaciones del puesto de trabajo, con la posibilidad de solicitar una evaluación en cualquier momento, cuando surja la necesidad. Las evaluaciones las realiza nuestra red de ergónomos. Condiciones bajo petición.',
     levelsIntl: '¿Opera en varios países? ScanUp se adapta a la normativa vigente en cada uno de ellos.',
     levelsPackNetwork: 'Ver nuestra red de ergónomos',
     levelsPackContact: 'Contactar con nosotros',
@@ -525,7 +525,7 @@ export const es = {
         {
           name: 'Fórmula todo incluido',
           price: '55 €',
-          sub: 'sin IVA por empleado y año, sin extras',
+          sub: 'sin IVA por empleado, sin extras',
           badge: '',
           items: [
             'Todo lo del pack Premium',
@@ -577,7 +577,7 @@ export const es = {
         {
           name: 'Fórmula todo incluido',
           price: '105 €',
-          sub: 'sin IVA por empleado y año de media, de 70 € a 150 € según su sector',
+          sub: 'sin IVA por empleado de media, de 70 € a 150 € según su sector',
           badge: '',
           items: [
             'Todo lo del pack Premium',
@@ -612,7 +612,7 @@ export const es = {
       { q: 'Tenemos nuestros propios expertos en prevención, ¿existe una fórmula adecuada?', a: 'Sí. Existe una fórmula en autonomía: sus ergónomos y psicólogos del trabajo utilizan la plataforma para realizar y cualificar los cribados ellos mismos. Contáctenos para hablarlo.' },
       { q: '¿Sustituye esto a la evaluación de riesgos exigida por la normativa?', a: 'No, la alimenta. Nuestros cuadros de mando aportan datos objetivos para actualizar la evaluación de riesgos profesionales exigida por la normativa vigente en su país y para justificar sus planes de acción.' },
       { q: '¿Cuánto se tarda en empezar?', a: 'En 48 horas. Sus empleados acceden a los cuestionarios mediante código QR o correo electrónico, sin necesidad de descargar nada, desde cualquier dispositivo.' },
-      { q: '¿Hay permanencia?', a: 'Sin permanencia. Los créditos son válidos durante 12 meses. Las suscripciones pueden cancelarse en cualquier momento, sin gastos ni preaviso.' },
+      { q: '¿Hay permanencia?', a: 'Sin permanencia. Usted compra créditos al precio de la fórmula elegida, válidos durante 12 meses.' },
     ],
     ctaTitle: '¿Todavía lo está pensando?',
     ctaSubtitle: '14 días de acceso gratuito, 5 cribados incluidos, sin compromiso.',

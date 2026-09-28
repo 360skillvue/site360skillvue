@@ -70,7 +70,7 @@ export const it = {
     level3Desc: 'Per i collaboratori individuati, un\'analisi completa della postazione svolta a distanza da un ergonomo certificato a partire dai video, con relazione individuale e raccomandazioni di adattamento. Poi il piano d\'azione costruito insieme e presentato alla direzione.',
     level3Price: 'Su richiesta, o incluso nel forfait tutto compreso',
     levelsPackTitle: 'Gruppi e implementazioni multisede',
-    levelsPackDesc: 'Proponiamo pacchetti prepagati di analisi delle postazioni e formule in abbonamento, con la possibilità di richiedere un\'analisi in qualsiasi momento, quando il bisogno si presenta. Le analisi sono svolte dalla nostra rete di ergonomi. Condizioni su richiesta.',
+    levelsPackDesc: 'Proponiamo pacchetti prepagati di analisi delle postazioni, con la possibilità di richiedere un\'analisi in qualsiasi momento, quando il bisogno si presenta. Le analisi sono svolte dalla nostra rete di ergonomi. Condizioni su richiesta.',
     levelsIntl: 'Operate in più Paesi? ScanUp si adatta alla normativa in vigore in ciascuno di essi.',
     levelsPackNetwork: 'Vedere la nostra rete di ergonomi',
     levelsPackContact: 'Contattateci',
@@ -525,7 +525,7 @@ export const it = {
         {
           name: 'Formula tutto compreso',
           price: '55 €',
-          sub: '+ IVA per collaboratore all\'anno, senza supplementi',
+          sub: '+ IVA per collaboratore, senza supplementi',
           badge: '',
           items: [
             'Tutto il Pack Premium',
@@ -577,7 +577,7 @@ export const it = {
         {
           name: 'Formula tutto compreso',
           price: '105 €',
-          sub: '+ IVA per collaboratore all\'anno in media, da 70 a 150 € secondo il vostro settore',
+          sub: '+ IVA per collaboratore in media, da 70 a 150 € secondo il vostro settore',
           badge: '',
           items: [
             'Tutto il Pack Premium',
@@ -612,7 +612,7 @@ export const it = {
       { q: 'Abbiamo i nostri esperti di prevenzione — esiste una formula adatta?', a: 'Sì. Esiste una formula in autonomia: i vostri ergonomi e psicologi del lavoro utilizzano la piattaforma per effettuare e qualificare gli screening in autonomia. Contattateci per parlarne.' },
       { q: 'Questo sostituisce la valutazione dei rischi prevista dalla legge?', a: 'No, la alimenta. Le nostre dashboard forniscono dati oggettivi per aggiornare la valutazione dei rischi professionali richiesta dalla normativa in vigore nel vostro Paese e giustificare i piani d\'azione.' },
       { q: 'Quanto tempo ci vuole per iniziare?', a: '48 ore. I vostri collaboratori accedono ai questionari tramite QR code o email, senza download, da qualsiasi dispositivo.' },
-      { q: 'Esiste un impegno di durata?', a: 'Nessun impegno di durata. I crediti sono validi 12 mesi. Gli abbonamenti sono annullabili in qualsiasi momento, senza spese né preavviso.' },
+      { q: 'Esiste un impegno di durata?', a: 'Nessun impegno di durata. Acquistate crediti al prezzo della formula scelta, validi 12 mesi.' },
     ],
     ctaTitle: 'Non siete sicuri?',
     ctaSubtitle: '14 giorni di accesso gratuito, 5 screening inclusi, senza impegno.',

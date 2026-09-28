@@ -70,7 +70,7 @@ export const pt = {
     level3Desc: 'Para os colaboradores identificados, uma avaliação completa do posto de trabalho realizada à distância por um ergonomista certificado a partir dos vídeos, com relatório individual e recomendações de adaptação. Depois, o plano de ação construído em conjunto e apresentado à direção.',
     level3Price: 'Sob consulta, ou incluído no pacote tudo incluído',
     levelsPackTitle: 'Grupos e implementações em vários locais',
-    levelsPackDesc: 'Propomos packs pré-pagos de avaliações do posto de trabalho e planos de subscrição, com a possibilidade de solicitar uma avaliação a qualquer momento, à medida que a necessidade surge. As avaliações são realizadas pela nossa rede de ergonomistas. Condições sob consulta.',
+    levelsPackDesc: 'Propomos packs pré-pagos de avaliações do posto de trabalho, com a possibilidade de solicitar uma avaliação a qualquer momento, à medida que a necessidade surge. As avaliações são realizadas pela nossa rede de ergonomistas. Condições sob consulta.',
     levelsIntl: 'Opera em vários países? A ScanUp adapta-se à regulamentação em vigor em cada um deles.',
     levelsPackNetwork: 'Ver a nossa rede de ergonomistas',
     levelsPackContact: 'Entrar em contacto',
@@ -525,7 +525,7 @@ export const pt = {
         {
           name: 'Plano tudo incluído',
           price: '55 €',
-          sub: 'sem IVA por colaborador por ano, sem custos adicionais',
+          sub: 'sem IVA por colaborador, sem custos adicionais',
           badge: '',
           items: [
             'Tudo o que inclui o Pack Premium',
@@ -577,7 +577,7 @@ export const pt = {
         {
           name: 'Plano tudo incluído',
           price: '105 €',
-          sub: 'sem IVA por colaborador por ano, em média, de 70 € a 150 € consoante o seu setor',
+          sub: 'sem IVA por colaborador, em média, de 70 € a 150 € consoante o seu setor',
           badge: '',
           items: [
             'Tudo o que inclui o Pack Premium',
@@ -612,7 +612,7 @@ export const pt = {
       { q: 'Temos os nossos próprios especialistas em prevenção — existe um plano adequado?', a: 'Sim. Existe um plano em autonomia: os seus ergonomistas e psicólogos do trabalho utilizam a plataforma para realizar e qualificar eles próprios os rastreios. Contacte-nos para falarmos sobre isso.' },
       { q: 'Isto substitui a avaliação regulamentar dos riscos?', a: 'Não, alimenta-a. Os nossos painéis fornecem dados objetivos para atualizar a avaliação dos riscos profissionais exigida pela regulamentação em vigor no seu país e justificar os seus planos de ação. A ScanUp adapta-se ao quadro de cada país.' },
       { q: 'Quanto tempo demora a começar?', a: 'No prazo de 48 horas. Os seus colaboradores acedem aos questionários por código QR ou por e-mail, sem necessidade de descarregar nada, a partir de qualquer dispositivo.' },
-      { q: 'Existe um período de fidelização?', a: 'Não existe qualquer período de fidelização. Os créditos são válidos durante 12 meses. As subscrições podem ser canceladas a qualquer momento, sem custos nem pré-aviso.' },
+      { q: 'Existe um período de fidelização?', a: 'Não existe qualquer período de fidelização. Compra créditos ao preço da fórmula escolhida, válidos durante 12 meses.' },
     ],
     ctaTitle: 'Ainda tem dúvidas?',
     ctaSubtitle: '14 dias de acesso gratuito, 5 rastreios incluídos, sem compromisso.',

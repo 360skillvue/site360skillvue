@@ -509,7 +509,7 @@ export const it = {
       title: "Screening RPS",
       subtitle: "Rischi psicosociali",
       plans: [
-        { name: "Riscontro via e-mail", price: "27 €", sub: "+ IVA / collaboratore", badge: '', items: ["Screening tramite questionario e testimonianza audio", "Qualificazione da parte di uno psicologo del lavoro", "Riscontro individuale riservato via e-mail, con indicazioni personalizzate", "Indicatori aggregati e anonimizzati per il datore di lavoro"], cta: "Prenota" },
+        { name: "Riscontro via e-mail", price: "27 €", sub: "+ IVA / collaboratore", badge: '', items: ["Screening tramite questionario e testimonianza audio", "Qualificazione da parte di uno psicologo del lavoro", "Riscontro individuale riservato via e-mail, con indicazioni personalizzate"], cta: "Prenota" },
         { name: "Riscontro con teleconsulto", price: "40 €", sub: "+ IVA / collaboratore", badge: '', items: ["Tutto il riscontro via e-mail", "Teleconsulto di orientamento di 30 minuti con uno psicologo del lavoro, per ogni collaboratore risultato positivo allo screening"], cta: "Prenota" },
       ],
     },

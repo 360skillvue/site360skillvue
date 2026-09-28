@@ -70,7 +70,7 @@ export const en = {
     level3Desc: 'For employees identified, a full workstation assessment carried out remotely by a certified ergonomist from the videos, with an individual report and adaptation recommendations. Then the jointly built action plan, presented to management.',
     level3Price: 'On request, or included in the all-inclusive package',
     levelsPackTitle: 'Groups and multi-site rollouts',
-    levelsPackDesc: 'We offer prepaid packs of workstation assessments and subscription plans, with the option to request an assessment at any time, as the need arises. Assessments are carried out by our network of ergonomists. Terms on request.',
+    levelsPackDesc: 'We offer prepaid packs of work situation assessments, with the option to request an assessment at any time, as the need arises. Assessments are carried out by our network of ergonomists. Terms on request.',
     levelsIntl: 'Operating in several countries? ScanUp adapts to the regulations in force in each of them.',
     levelsPackNetwork: 'See our network of ergonomists',
     levelsPackContact: 'Get in touch',
@@ -525,7 +525,7 @@ export const en = {
         {
           name: 'All-inclusive plan',
           price: '€55',
-          sub: 'excl. VAT per employee per year, no add-ons',
+          sub: 'excl. VAT per employee, no add-ons',
           badge: '',
           items: [
             'Everything in the Premium Pack',
@@ -577,7 +577,7 @@ export const en = {
         {
           name: 'All-inclusive plan',
           price: '€105',
-          sub: 'excl. VAT per employee per year on average, €70 to €150 depending on your sector',
+          sub: 'excl. VAT per employee on average, €70 to €150 depending on your sector',
           badge: '',
           items: [
             'Everything in the Premium Pack',
@@ -612,7 +612,7 @@ export const en = {
       { q: 'We have our own prevention experts — is there a suitable plan?', a: 'Yes. A self-service plan exists: your ergonomists and occupational psychologists use the platform to carry out and qualify screenings themselves. Contact us to discuss it.' },
       { q: 'Does this replace the regulatory risk assessment?', a: 'No, it feeds it. Our dashboards provide objective data to update the occupational risk assessment required by the regulations in force in your country, and justify your action plans. ScanUp adapts to the framework of each country.' },
       { q: 'How long to get started?', a: 'Within 48 hours. Your employees access questionnaires via QR code or email, no download required, from any device.' },
-      { q: 'Is there a commitment period?', a: 'No commitment period. Credits are valid for 12 months. Subscriptions can be cancelled at any time, with no fees or notice.' },
+      { q: 'Is there a commitment period?', a: 'No commitment period. You buy credits at the price of the plan you choose, and they are valid for 12 months.' },
     ],
     ctaTitle: 'Not sure yet?',
     ctaSubtitle: '14 days free access, 5 screenings included, no commitment.',

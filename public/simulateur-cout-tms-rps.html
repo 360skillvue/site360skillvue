@@ -556,10 +556,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <label class="scn"><input type="radio" name="svptms" value="non" checked><span>Sans plan d'action<small>retour au salarié seul</small></span></label>
               <label class="scn"><input type="radio" name="svptms" value="oui"><span>Plan d'action TMS<small id="sv-lab-ptms">750 € HT par tranche de 50 salariés</small></span></label>
             </div>
-            <div class="scn-set scn-2" style="margin-top:8px">
-              <label class="scn"><input type="radio" name="svetu" value="non"><span>Sans étude<small>dépistage seul</small></span></label>
-              <label class="scn"><input type="radio" name="svetu" value="oui" checked><span>Études de situation de travail<small id="sv-lab-etu">sur devis, indicatif de 240 à 400 € HT par rapport</small></span></label>
-            </div>
             <p class="hint" id="sv-hint-tms"></p>
           </div>
 
@@ -613,13 +609,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p class="hint">Un audit collectif rend un état des lieux, il ne repère personne. Pour identifier les salariés en difficulté et orienter ceux qui en ont besoin, il faut écouter chacun d'eux : un entretien de trente minutes par salarié, sur place, avec un psychologue du travail, notes comprises. Le dépistage ScanUp, lui, demande deux minutes par salarié et ne mobilise l'entretien de trente minutes que pour les personnes repérées.</p>
               </div>
 
-              <div class="field">
+              <div class="field" hidden>
                 <label for="sv-p-poste">Coût d'une étude de poste en présentiel</label>
                 <input type="number" id="sv-p-poste" min="0" max="10000" step="50" value="1200">
                 <p class="hint">Par étude, déplacement et rédaction compris. Le FIPHFP finance une étude ergonomique externe jusqu'à 3 000 €, et la journée d'ergonome se facture 685 € dans la grille publique 2026 d'un centre de gestion.</p>
               </div>
 
-              <div class="field">
+              <div class="field" hidden>
                 <div class="sl-head">
                   <label for="sv-part-etude">Part des salariés repérés pour lesquels vous commandez une étude</label>
                   <span class="sl-val" id="sv-part-etude-val"></span>
@@ -1038,7 +1034,7 @@ function calcule(){
   // donc lui ajouter un entretien individuel par salarie pour atteindre le meme
   // resultat qu'un depistage.
   var c1rps=vRps?pAudit*fPres:0, c1ent=vRps?eff*pEnt*fPres:0,
-      c1tms=vTms?nbCibles*pPoste*fPres:0, c1=c1rps+c1ent+c1tms;
+      c1tms=0, c1=c1rps+c1ent;
 
   // scénario 2 : dépistage à distance puis intervention ciblée
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
@@ -1047,18 +1043,16 @@ function calcule(){
   var nbTr=tranches50(eff);
   var planRps=(document.querySelector('input[name="svprps"]:checked').value==="oui");
   var planTms=(document.querySelector('input[name="svptms"]:checked').value==="oui");
-  var avecEtu=(document.querySelector('input[name="svetu"]:checked').value==="oui");
   var c2prps=planRps?nbTr*750:0, c2ptms=planTms?nbTr*750:0;
   var libTr=num(nbTr,0)+(nbTr>1?" tranches":" tranche")+" de 50 salariés × "+eur(750);
   var pctEtude=parseFloat($("sv-part-etude").value);
   if(isNaN(pctEtude)){ pctEtude=0; }
   var packTms=document.querySelector('input[name="svtms"]:checked').value;
-  var nbEtudes=avecEtu?Math.round(nbCibles*pctEtude/100):0;
+  var nbEtudes=0;
   var puTms=(packTms==="essential")?40:55;
-  var pEtu=prixEtude(nbEtudes);
-  var c2dep=eff*puTms, c2tms=nbEtudes*pEtu;
+  var c2dep=eff*puTms, c2tms=0;
   var lib2dep="Dépistage TMS"+(packTms==="essential"?"":" avec coaching vidéo")+", "+num(eff,0)+" × "+eur(puTms);
-  var lib2tms=avecEtu?"Études de situation de travail, "+num(nbEtudes,0)+" rapports × "+eur(pEtu)+", indicatif, sur devis":"Aucune étude commandée";
+  var lib2tms="Études de situation de travail, pour les salariés que vous choisissez";
   if(!vRps){ c2rps=0; }
   if(!vRps){ c2prps=0; }
   if(!vTms){ c2dep=0; c2tms=0; c2ptms=0; }
@@ -1081,18 +1075,17 @@ function calcule(){
   $("sv-p-label").textContent=(perim==="deux"?"Ce que le risque vous coûte":(perim==="rps"?"Ce que les RPS vous coûtent":"Ce que les TMS vous coûtent"));
   $("sv-roi-sur").textContent=libPer;
   $("sv-hint-tms").textContent="Le retour au salarié se choisit par risque ; les plans d'action se commandent en plus, "+
-    eur(750)+" HT par tranche de 50 salariés. Les études de situation de travail restent à votre main : vous "+
-    "décidez lesquelles commander, sur devis ; le calcul retient un tarif indicatif par rapport, de "+eur(400)+" à "+eur(240)+
-    " HT selon le volume du mois. Ajustez la part concernée dans les hypothèses.";
+    eur(750)+" HT par tranche de 50 salariés. Les études de situation de travail restent à votre main et sont sur devis : "+
+    "elles ne sont pas comptées dans la comparaison, pas plus que les études de poste en présentiel.";
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-ent").textContent=eur(c1ent);
   $("sv-c1-l-ent").textContent="Entretiens de 30 minutes, tout l'effectif, "+num(eff,0)+" × "+eur(pEnt*fPres);
-  $("sv-c1-tms").textContent=eur(c1tms);
-  $("sv-c1-l-tms").textContent="Études de poste par un ergonome, "+num(nbCibles,0)+" × "+eur(pPoste*fPres);
+  $("sv-c1-tms").textContent="sur devis";
+  $("sv-c1-l-tms").textContent="Études de poste par un ergonome";
   $("sv-cmp-t1").textContent=eur(c1);
   $("sv-cmp-b1").textContent=eur(c1);
   $("sv-c2-rps").textContent=eur(c2rps);
-  $("sv-c2-tms").textContent=eur(c2tms);
+  $("sv-c2-tms").textContent="sur devis";
   $("sv-c2-dep").textContent=eur(c2dep);
   $("sv-c2-l-rps").textContent=lib2rps;
   $("sv-c2-l-dep").textContent=lib2dep;
@@ -1148,6 +1141,17 @@ function calcule(){
     sub=sub+" L'écart, "+eur(ecart)+" par an, est à rapprocher des "+eur(totAff)+" que le risque coûte déjà.";
   }
   $("sv-cmp-sub").textContent=sub;
+  // TMS seuls : cote presentiel, seules les etudes de poste existent, sur devis ;
+  // il n'y a donc pas de montant a comparer.
+  var netRow=$("sv-cmp-ecart")?$("sv-cmp-ecart").parentNode:null;
+  if(netRow){ netRow.hidden=(perim==="tms"); }
+  if(perim==="tms"){
+    $("sv-cmp-t1").textContent="Sur devis";
+    $("sv-cmp-b1").textContent="sur devis";
+    $("sv-cmp-p1").textContent="études de poste";
+    $("sv-cmp-sub").textContent="En présentiel, les études de poste sont sur devis, comme nos études de situation de travail. "+
+      "ScanUp dépiste chaque salarié et coache les personnes repérées, pour "+eur(c2)+" ici.";
+  }
 
   var note="Les deux approches font analyser le travail par un professionnel ; ce qui les sépare est la "+
     "granularité.";
@@ -1176,7 +1180,6 @@ function calcule(){
    ["sv-lab-prps",750,"par tranche de 50 salariés"],["sv-lab-ptms",750,"par tranche de 50 salariés"]].forEach(function(t){
     var e=$(t[0]); if(e){ e.textContent=eur(t[1])+" HT "+t[2]; }
   });
-  var eEtu=$("sv-lab-etu"); if(eEtu){ eEtu.textContent="sur devis, indicatif de "+eur(240)+" à "+eur(400)+" HT par rapport"; }
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
   $("sv-part-etude-val").textContent=num(pctEtude,0)+" % · "+num(nbEtudes,0)+" études";
 
@@ -1281,7 +1284,7 @@ selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);
 });
-Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],input[name="svtms"],input[name="svperim"],input[name="svprps"],input[name="svptms"],input[name="svetu"]'),function(r){
+Array.prototype.forEach.call(document.querySelectorAll('input[name="svrps"],input[name="svtms"],input[name="svperim"],input[name="svprps"],input[name="svptms"]'),function(r){
   r.addEventListener("change",calcule);
 });
 Array.prototype.forEach.call(document.querySelectorAll('input[name="svscn"]'),function(r){

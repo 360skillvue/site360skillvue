@@ -70,7 +70,7 @@ export const fr = {
     level3Desc: 'Pour les salariés repérés, une étude de situation de travail complète réalisée à distance par un ergonome à partir des vidéos, avec rapport individuel et préconisations d\'adaptation. Puis le plan d\'action coconstruit, restitué à la direction.',
     level3Price: 'Sur devis, ou compris dans le forfait tout compris',
     levelsPackTitle: 'Groupes et déploiements multisites',
-    levelsPackDesc: 'Nous proposons des packs d\'études de situation de travail prépayées et des formules d\'abonnement, avec la possibilité de prescrire une étude au fil de l\'eau, quand le besoin apparaît. Les études sont réalisées par notre réseau d\'ergonomes. Conditions sur demande.',
+    levelsPackDesc: 'Nous proposons des packs d\'études de situation de travail prépayées, avec la possibilité de prescrire une étude au fil de l\'eau, quand le besoin apparaît. Les études sont réalisées par notre réseau d\'ergonomes. Conditions sur demande.',
     levelsIntl: 'Vous opérez dans plusieurs pays ? ScanUp s\'adapte à la réglementation en vigueur dans chacun d\'eux.',
     levelsPackNetwork: 'Voir notre réseau d\'ergonomes',
     levelsPackContact: 'Nous consulter',
@@ -619,7 +619,7 @@ export const fr = {
         {
           name: 'Forfait tout compris',
           price: '55 €',
-          sub: 'HT / collaborateur / an, sans supplément',
+          sub: 'HT / collaborateur, sans supplément',
           badge: '',
           items: [
             'Tout le Pack Premium',
@@ -671,7 +671,7 @@ export const fr = {
         {
           name: 'Forfait tout compris',
           price: '105 €',
-          sub: 'HT / collaborateur / an en moyenne, de 70 à 150 € selon la sinistralité de votre secteur',
+          sub: 'HT / collaborateur en moyenne, de 70 à 150 € selon la sinistralité de votre secteur',
           badge: '',
           items: [
             'Tout le Pack Premium',
@@ -706,7 +706,7 @@ export const fr = {
       { q: 'Nous disposons de nos propres experts en prévention — existe-t-il une formule adaptée ?', a: 'Oui. Une formule en autonomie existe : vos ergonomes et psychologues du travail utilisent la plateforme pour réaliser et qualifier eux-mêmes les dépistages. Contactez-nous pour en discuter.' },
       { q: 'Cela remplace-t-il l\'évaluation réglementaire des risques professionnels ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre évaluation des risques — Document Unique (DUERP) en France 🇫🇷, démarche MSST en Suisse 🇨🇭 — et justifier vos plans d\'action.' },
       { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Vos collaborateurs accèdent aux questionnaires par QR code ou email, sans téléchargement, depuis n\'importe quel appareil.' },
-      { q: 'Y a-t-il un engagement de durée ?', a: 'Aucun engagement de durée. Les crédits sont valables 12 mois. Les abonnements sont résiliables à tout moment, sans frais ni préavis.' },
+      { q: 'Y a-t-il un engagement de durée ?', a: 'Aucun engagement de durée. Vous achetez des crédits, au tarif de la formule choisie, et ils sont valables 12 mois.' },
     ],
     ctaTitle: 'Vous hésitez ?',
     ctaSubtitle: '14 jours d\'accès gratuit, 5 dépistages offerts, sans engagement.',

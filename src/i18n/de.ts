@@ -70,7 +70,7 @@ export const de = {
     level3Desc: 'Für die erkannten Personen eine vollständige Arbeitsplatzanalyse, aus der Ferne durch eine zertifizierte Ergonomin anhand der Videos erstellt, mit individuellem Bericht und Anpassungsempfehlungen. Anschliessend der gemeinsam erarbeitete Massnahmenplan, der der Geschäftsleitung vorgestellt wird.',
     level3Price: 'Auf Anfrage, oder im Komplettpaket enthalten',
     levelsPackTitle: 'Konzerne und Rollouts an mehreren Standorten',
-    levelsPackDesc: 'Wir bieten vorausbezahlte Pakete von Arbeitsplatzanalysen und Abonnementmodelle an, mit der Möglichkeit, eine Analyse jederzeit anzufordern, sobald der Bedarf entsteht. Die Analysen werden von unserem Ergonominnen- und Ergonomen-Netzwerk durchgeführt. Konditionen auf Anfrage.',
+    levelsPackDesc: 'Wir bieten vorausbezahlte Pakete von Arbeitsplatzanalysen an, mit der Möglichkeit, eine Analyse jederzeit anzufordern, sobald der Bedarf entsteht. Die Analysen werden von unserem Ergonominnen- und Ergonomen-Netzwerk durchgeführt. Konditionen auf Anfrage.',
     levelsIntl: 'Sie sind in mehreren Ländern tätig? ScanUp passt sich den jeweils geltenden Vorschriften an.',
     levelsPackNetwork: 'Unser Ergonomie-Netzwerk ansehen',
     levelsPackContact: 'Kontakt aufnehmen',
@@ -525,7 +525,7 @@ export const de = {
         {
           name: 'All-inclusive-Paket',
           price: '55 €',
-          sub: 'zzgl. MwSt. pro Mitarbeitenden und Jahr, ohne Zuschläge',
+          sub: 'zzgl. MwSt. pro Mitarbeitenden, ohne Zuschläge',
           badge: '',
           items: [
             'Alles aus dem Pack Premium',
@@ -577,7 +577,7 @@ export const de = {
         {
           name: 'All-inclusive-Paket',
           price: '105 €',
-          sub: 'zzgl. MwSt. pro Mitarbeitenden und Jahr im Durchschnitt, 70 bis 150 € je nach Branche',
+          sub: 'zzgl. MwSt. pro Mitarbeitenden im Durchschnitt, 70 bis 150 € je nach Branche',
           badge: '',
           items: [
             'Alles aus dem Pack Premium',
@@ -612,7 +612,7 @@ export const de = {
       { q: 'Wir haben eigene Präventionsexperten — gibt es ein passendes Paket?', a: 'Ja. Es gibt ein Selbstbedienungspaket: Ihre Ergonomen und Arbeitspsychologen nutzen die Plattform, um Screenings selbst durchzuführen und zu qualifizieren. Kontaktieren Sie uns.' },
       { q: 'Ersetzt dies die gesetzliche Gefährdungsbeurteilung?', a: 'Nein, es ergänzt sie. Unsere Dashboards liefern objektive Daten, um die in Ihrem Land vorgeschriebene Risikobeurteilung zu aktualisieren und Ihre Massnahmenpläne zu begründen. ScanUp passt sich dem jeweils geltenden Rahmen an.' },
       { q: 'Wie lange dauert es bis zum Start?', a: '48 Stunden. Ihre Mitarbeitenden greifen per QR-Code oder E-Mail auf die Fragebögen zu, ohne Download, von jedem Gerät aus.' },
-      { q: 'Gibt es eine Mindestlaufzeit?', a: 'Keine Mindestlaufzeit. Credits sind 12 Monate gültig. Abonnements können jederzeit ohne Gebühren oder Kündigungsfristen gekündigt werden.' },
+      { q: 'Gibt es eine Mindestlaufzeit?', a: 'Keine Mindestlaufzeit. Sie kaufen Credits zum Preis des gewählten Pakets, gültig 12 Monate.' },
     ],
     ctaTitle: 'Noch unschlüssig?',
     ctaSubtitle: '14 Tage kostenloser Zugang, 5 Screenings inklusive, ohne Verpflichtung.',

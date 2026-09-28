@@ -509,7 +509,7 @@ export const es = {
       title: "Cribado de RPS",
       subtitle: "Riesgos psicosociales",
       plans: [
-        { name: "Retorno por correo", price: "27 €", sub: "sin IVA / empleado", badge: '', items: ["Cribado mediante cuestionario y testimonio en audio", "Cualificación por un psicólogo del trabajo", "Retorno individual confidencial por correo electrónico, con pautas personalizadas", "Indicadores agregados y anonimizados para la empresa"], cta: "Reservar una llamada" },
+        { name: "Retorno por correo", price: "27 €", sub: "sin IVA / empleado", badge: '', items: ["Cribado mediante cuestionario y testimonio en audio", "Cualificación por un psicólogo del trabajo", "Retorno individual confidencial por correo electrónico, con pautas personalizadas"], cta: "Reservar una llamada" },
         { name: "Retorno con teleconsulta", price: "40 €", sub: "sin IVA / empleado", badge: '', items: ["Todo el retorno por correo", "Teleconsulta de orientación de 30 minutos con un psicólogo del trabajo, para cada empleado con cribado positivo"], cta: "Reservar una llamada" },
       ],
     },

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, X, ArrowRight, UserCog, Sparkles } from 'lucide-react';
+import { Check, ArrowRight, UserCog, Sparkles, Plus } from 'lucide-react';
 import { useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -28,36 +28,6 @@ type Plan = {
   badge: string;
   items: string[];
   cta: string;
-};
-
-// true = ✓, false = ✗ — row order matches i18n rps.features / tms.features
-const RPS_FEATURE_VALUES: boolean[][] = [
-  [true, true, true],   // Dépistage questionnaire + témoignage audio
-  [true, true, true],   // Analyse psychologue du travail
-  [true, true, true],   // Retour individuel confidentiel
-  [true, true, true],   // Conduites à tenir personnalisées
-  [true, true, true],   // Indicateurs agrégés anonymisés
-  [false, true, true],  // Téléconsultation 30 min
-  [false, false, true], // Restitution du plan d'action coconstruit à la direction
-];
-
-const TMS_FEATURE_VALUES: boolean[][] = [
-  // colonnes : Pack Essential, Pack Premium, Forfait tout compris
-  [true, true, true],    // Dépistage par vidéos
-  [true, true, true],    // Qualification par un ergonome
-  [true, true, true],    // Retour individuel confidentiel + conduites à tenir
-  [false, true, true],   // Coaching vidéo gestes & postures
-  [false, false, true],  // Étude de poste complète IPRP
-  [false, false, true],  // Rapport individuel
-  [false, false, true],  // Plan d'action TMS + restitution direction
-];
-
-// column palettes — same tints as the original comparison table
-type PaletteKey = 'white' | 'blue' | 'navy' | 'green';
-const COL_STYLES: Record<Exclude<PaletteKey, 'navy'>, { col: string; head: string; headText: string; check: string; x: string; price: string; sub: string }> = {
-  white: { col: '#ffffff', head: '#ffffff', headText: 'text-gray-500', check: 'text-green-500', x: 'text-gray-300', price: 'text-scanup-navy', sub: 'text-gray-400' },
-  blue:  { col: '#eff6ff', head: '#dbeafe', headText: 'text-blue-700', check: 'text-blue-600', x: 'text-blue-200', price: 'text-blue-700', sub: 'text-blue-400' },
-  green: { col: '#f0fdf4', head: '#bbf7d0', headText: 'text-emerald-700', check: 'text-emerald-600', x: 'text-emerald-200', price: 'text-emerald-800', sub: 'text-emerald-600' },
 };
 
 const PlanCard: React.FC<{ plan: Plan; featured?: boolean; onCta: () => void }> = ({ plan, featured = false, onCta }) => (
@@ -105,92 +75,11 @@ const PlanCard: React.FC<{ plan: Plan; featured?: boolean; onCta: () => void }> 
   </motion.div>
 );
 
-const CompareTable: React.FC<{
-  plans: Plan[];
-  features: string[];
-  values: boolean[][];
-  tarifLabel: string;
-  palette: PaletteKey[];
-}> = ({ plans, features, values, tarifLabel, palette }) => {
-  const styles = plans.map((_, i) => (palette[i] === 'navy' ? null : COL_STYLES[palette[i] as Exclude<PaletteKey, 'navy'>]));
-  return (
-    <div className={`overflow-x-auto rounded-2xl shadow-md border border-black/[0.07] bg-white ${plans.length === 2 ? 'max-w-3xl mx-auto' : ''}`}>
-      <table className={`w-full text-[13px] border-collapse ${plans.length === 2 ? 'min-w-[480px]' : 'min-w-[560px]'}`}>
-        <colgroup>
-          <col style={{ width: `${100 / (plans.length + 1)}%` }} />
-          {plans.map((_, i) => (
-            <col key={i} style={{ width: `${100 / (plans.length + 1)}%`, backgroundColor: styles[i] ? styles[i]!.col : '#0f1f3d' }} />
-          ))}
-        </colgroup>
-        <thead>
-          <tr>
-            <th className="text-left px-5 py-4 bg-white rounded-tl-2xl" />
-            {plans.map((plan, i) => {
-              const s = styles[i];
-              return s ? (
-                <th key={i} className={`text-center px-3 py-4 font-bold text-[12px] uppercase tracking-wide whitespace-nowrap ${s.headText} ${i === plans.length - 1 ? 'rounded-tr-2xl' : ''}`}
-                  style={{ backgroundColor: s.head }}>
-                  {plan.name}
-                  {plan.badge && <div className="text-[10px] font-normal opacity-60 mt-0.5 normal-case tracking-normal">{plan.badge}</div>}
-                </th>
-              ) : (
-                <th key={i} className={`text-center px-3 py-4 font-bold text-[12px] text-white uppercase tracking-wide whitespace-nowrap ${i === plans.length - 1 ? 'rounded-tr-2xl' : ''}`}
-                  style={{ backgroundColor: '#0f1f3d' }}>
-                  {plan.name}
-                  {plan.badge && <div className="text-[10px] font-normal text-white/50 mt-0.5 normal-case tracking-normal">{plan.badge}</div>}
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {features.map((label, i) => (
-            <tr key={i} style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
-              <td className="px-5 py-3.5 font-medium text-scanup-navy bg-white">{label}</td>
-              {plans.map((_, j) => {
-                const s = styles[j];
-                const on = values[i][j];
-                return s ? (
-                  <td key={j} className="px-3 py-3.5 text-center">
-                    {on ? <Check size={18} className={`${s.check} mx-auto`} strokeWidth={2.5} /> : <X size={16} className={`${s.x} mx-auto`} strokeWidth={2} />}
-                  </td>
-                ) : (
-                  <td key={j} className="px-3 py-3.5 text-center" style={{ backgroundColor: '#0f1f3d' }}>
-                    {on ? <Check size={18} className="text-emerald-400 mx-auto" strokeWidth={2.5} /> : <X size={16} className="text-white/20 mx-auto" strokeWidth={2} />}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-          <tr style={{ borderTop: '2px solid rgba(0,0,0,0.1)' }}>
-            <td className="px-5 py-4 font-bold text-scanup-navy bg-white rounded-bl-2xl">{tarifLabel}</td>
-            {plans.map((plan, i) => {
-              const s = styles[i];
-              return s ? (
-                <td key={i} className={`px-3 py-4 text-center ${i === plans.length - 1 ? 'rounded-br-2xl' : ''}`} style={{ backgroundColor: s.head }}>
-                  <div className={`font-bold text-[15px] ${s.price}`}>{plan.price}</div>
-                  <div className={`text-[11px] mt-0.5 ${s.sub}`}>{plan.sub}</div>
-                </td>
-              ) : (
-                <td key={i} className={`px-3 py-4 text-center ${i === plans.length - 1 ? 'rounded-br-2xl' : ''}`} style={{ backgroundColor: '#0f1f3d' }}>
-                  <div className="font-bold text-[15px] text-white">{plan.price}</div>
-                  <div className="text-[11px] text-white/40 mt-0.5">{plan.sub}</div>
-                </td>
-              );
-            })}
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
 export default function TarifsPage() {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const tr = t.tarifs;
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [tab, setTab] = useState<'rps' | 'tms'>('rps');
   const goContact = () => navigate('/aide-support');
 
   const TrialBanner = (
@@ -258,86 +147,78 @@ export default function TarifsPage() {
         </div>
       </section>
 
-      {/* ── Switch RPS / TMS ─────────────────────────────────── */}
+      {/* ── Étape 1 : retour au salarié ─────────────────────── */}
       <section className="px-4 sm:px-6 pb-16">
-        <div className="max-w-5xl mx-auto">
-          <Reveal className="flex justify-center mb-4">
-            <div className="inline-flex rounded-full border border-black/10 bg-[#f8f9fb] p-1">
-              {(['rps', 'tms'] as const).map((k) => (
-                <button
-                  key={k}
-                  onClick={() => setTab(k)}
-                  className={`relative px-6 sm:px-8 py-2.5 rounded-full text-[14px] font-semibold transition-colors ${
-                    tab === k ? 'text-white' : 'text-scanup-graytext hover:text-scanup-navy'
-                  }`}
-                >
-                  {tab === k && (
-                    <motion.div
-                      layoutId="tarifs-tab-pill"
-                      className="absolute inset-0 bg-scanup-blue rounded-full"
-                      transition={{ duration: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-                    />
-                  )}
-                  <span className="relative">{k === 'rps' ? tr.rps.title : tr.tms.title}</span>
-                </button>
-              ))}
-            </div>
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="text-center mb-10">
+            <div className="text-[12px] font-semibold uppercase tracking-widest text-scanup-blue mb-2">{tr.step1Label}</div>
+            <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-2">{tr.step1Title}</h2>
+            <p className="text-[15px] text-scanup-graytext">{tr.step1Subtitle}</p>
           </Reveal>
-          <p className="text-center text-[15px] text-scanup-graytext mb-10">
-            {tab === 'rps' ? tr.rps.subtitle : tr.tms.subtitle}
-          </p>
-
-          {tab === 'rps' ? (
-            <div key="rps">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
-                {tr.rps.plans.map((plan, i) => (
-                  <Reveal key={i} delay={i * 0.07}>
-                    <PlanCard plan={plan} featured={!!plan.badge} onCta={goContact} />
-                  </Reveal>
-                ))}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {([tr.tms, tr.rps] as const).map((risk, r) => (
+              <div key={r}>
+                <Reveal className="mb-4">
+                  <div className="text-[18px] font-bold text-scanup-navy">{risk.title}</div>
+                  <div className="text-[13px] text-scanup-graytext">{risk.subtitle}</div>
+                </Reveal>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {risk.plans.map((plan, i) => (
+                    <Reveal key={i} delay={i * 0.07}>
+                      <PlanCard plan={plan} featured={i === 1} onCta={goContact} />
+                    </Reveal>
+                  ))}
+                </div>
               </div>
-              <Reveal delay={0.15} className="mt-6">{TrialBanner}</Reveal>
-            </div>
-          ) : (
-            <div key="tms">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
-                {tr.tms.plans.map((plan, i) => (
-                  <Reveal key={i} delay={i * 0.07}>
-                    <PlanCard plan={plan} featured={!!plan.badge} onCta={goContact} />
-                  </Reveal>
-                ))}
-              </div>
-              <Reveal delay={0.15} className="mt-6">{TrialBanner}</Reveal>
-            </div>
-          )}
+            ))}
+          </div>
+          <Reveal delay={0.15} className="mt-8">{TrialBanner}</Reveal>
         </div>
       </section>
 
-      {/* ── Comparatif détaillé ──────────────────────────────── */}
+      {/* ── Étape 2 : options pour la direction ─────────────── */}
       <section className="py-16 px-4 sm:px-6 bg-[#f8f9fb]">
         <div className="max-w-5xl mx-auto">
           <Reveal className="text-center mb-10">
-            <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-2">{tr.tableTitle}</h2>
-            <p className="text-[15px] text-scanup-graytext">{tr.tableSubtitle}</p>
+            <div className="text-[12px] font-semibold uppercase tracking-widest text-scanup-blue mb-2">{tr.step2Label}</div>
+            <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-2">{tr.step2Title}</h2>
+            <p className="text-[15px] text-scanup-graytext">{tr.step2Subtitle}</p>
           </Reveal>
-          <Reveal>
-            {tab === 'rps' ? (
-              <CompareTable
-                plans={tr.rps.plans}
-                features={tr.rps.features}
-                values={RPS_FEATURE_VALUES}
-                tarifLabel={tr.tableTarif}
-                palette={['white', 'navy', 'green']}
-              />
-            ) : (
-              <CompareTable
-                plans={tr.tms.plans}
-                features={tr.tms.features}
-                values={TMS_FEATURE_VALUES}
-                tarifLabel={tr.tableTarif}
-                palette={['white', 'blue', 'navy']}
-              />
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {tr.options.map((opt, i) => (
+              <Reveal key={i} delay={i * 0.07}>
+                <div className="rounded-2xl p-6 h-full flex flex-col bg-white border border-black/[0.07] shadow-sm relative">
+                  <div className="w-8 h-8 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center mb-4">
+                    <Plus size={16} />
+                  </div>
+                  <div className="text-[15px] font-bold text-scanup-navy mb-2 leading-snug">{opt.name}</div>
+                  {opt.tag && (
+                    <div className="self-start text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-scanup-turquoise/20 text-scanup-navy tracking-wide mb-3">{opt.tag}</div>
+                  )}
+                  <p className="text-[13px] text-scanup-graytext leading-relaxed flex-grow mb-5">{opt.desc}</p>
+                  <div className="text-[24px] font-bold tracking-tight leading-none text-scanup-navy">{opt.price}</div>
+                  <div className="text-[12px] text-scanup-graytext mt-1">{opt.sub}</div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={0.1} className="mt-10">
+            <div className="max-w-3xl mx-auto rounded-2xl bg-white border border-black/[0.07] shadow-md overflow-hidden">
+              <div className="px-6 py-4 bg-scanup-navy text-white text-[14px] font-semibold">{tr.exampleTitle}</div>
+              <ul>
+                {tr.exampleLines.map((line, i) => (
+                  <li key={i} className="flex items-baseline justify-between gap-4 px-6 py-3 text-[13px] border-t border-black/[0.06] first:border-t-0">
+                    <span className="text-scanup-graytext">{line.label}</span>
+                    <span className="font-semibold text-scanup-navy whitespace-nowrap">{line.amount}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-baseline justify-between gap-4 px-6 py-4 border-t-2 border-black/10 bg-scanup-blue/[0.04]">
+                <span className="font-bold text-scanup-navy text-[14px]">{tr.exampleTotalLabel}</span>
+                <span className="font-bold text-scanup-blue text-[18px] whitespace-nowrap">{tr.exampleTotal}</span>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>

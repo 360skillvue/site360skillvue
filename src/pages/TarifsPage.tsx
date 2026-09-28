@@ -184,7 +184,7 @@ export default function TarifsPage() {
             <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-2">{tr.step2Title}</h2>
             <p className="text-[15px] text-scanup-graytext">{tr.step2Subtitle}</p>
           </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
             {tr.options.map((opt, i) => (
               <Reveal key={i} delay={i * 0.07}>
                 <div className="rounded-2xl p-6 h-full flex flex-col bg-white border border-black/[0.07] shadow-sm relative">
@@ -217,6 +217,37 @@ export default function TarifsPage() {
               <div className="flex items-baseline justify-between gap-4 px-6 py-4 border-t-2 border-black/10 bg-scanup-blue/[0.04]">
                 <span className="font-bold text-scanup-navy text-[14px]">{tr.exampleTotalLabel}</span>
                 <span className="font-bold text-scanup-blue text-[18px] whitespace-nowrap">{tr.exampleTotal}</span>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Autre cas d'usage : études de situation de travail ── */}
+      <section className="py-16 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto">
+          <Reveal>
+            <div className="rounded-2xl bg-scanup-navy text-white p-7 sm:p-10">
+              <div className="text-[12px] font-semibold uppercase tracking-widest text-scanup-turquoise mb-2">{tr.studyLabel}</div>
+              <h2 className="text-[24px] sm:text-[30px] font-bold tracking-tight mb-3 text-white">{tr.studyTitle}</h2>
+              <p className="text-[15px] text-white/60 leading-relaxed mb-6">{tr.studyDesc}</p>
+              <ul className="space-y-2.5 mb-8">
+                {tr.studyItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-[14px] leading-snug text-white/80">
+                    <Check size={13} className="flex-shrink-0 mt-1 text-scanup-turquoise" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                <div className="text-[24px] font-bold tracking-tight">{tr.studyPrice}</div>
+                <motion.button
+                  whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                  onClick={goContact}
+                  className="sm:ml-auto py-3 px-6 rounded-xl font-bold text-[13px] bg-white text-scanup-navy hover:bg-scanup-turquoise transition-all inline-flex items-center gap-2 self-start"
+                >
+                  {tr.studyCta} <ArrowRight size={13} />
+                </motion.button>
               </div>
             </div>
           </Reveal>

@@ -391,11 +391,6 @@ export const fr = {
       },
       {
         section: 'Comment ScanUp vous accompagne',
-        q: 'Combien coûte ScanUp ?',
-        a: '10 € par apprenant par an. Pas de licence, pas de frais de mise en place. Un tarif simple et prévisible pour votre établissement.',
-      },
-      {
-        section: 'Comment ScanUp vous accompagne',
         q: 'Puis-je tester ScanUp avant de m\'engager ?',
         a: 'Oui. Nous proposons un accès pilote gratuit pour vous permettre de tester la plateforme avec une équipe restreinte avant un déploiement plus large.',
       },

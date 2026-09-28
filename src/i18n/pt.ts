@@ -509,7 +509,7 @@ export const pt = {
       title: "Rastreio RPS",
       subtitle: "Riscos psicossociais",
       plans: [
-        { name: "Retorno por e-mail", price: "27 €", sub: "sem IVA / colaborador", badge: '', items: ["Rastreio por questionário e testemunho áudio", "Qualificação por um psicólogo do trabalho", "Retorno individual confidencial por e-mail, com orientações personalizadas", "Indicadores agregados e anonimizados para o empregador"], cta: "Marcar uma reunião" },
+        { name: "Retorno por e-mail", price: "27 €", sub: "sem IVA / colaborador", badge: '', items: ["Rastreio por questionário e testemunho áudio", "Qualificação por um psicólogo do trabalho", "Retorno individual confidencial por e-mail, com orientações personalizadas"], cta: "Marcar uma reunião" },
         { name: "Retorno com teleconsulta", price: "40 €", sub: "sem IVA / colaborador", badge: '', items: ["Tudo o que inclui o retorno por e-mail", "Teleconsulta de orientação de 30 minutos com um psicólogo do trabalho, para cada colaborador com rastreio positivo"], cta: "Marcar uma reunião" },
       ],
     },

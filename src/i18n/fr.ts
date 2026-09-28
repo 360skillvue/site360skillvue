@@ -598,7 +598,7 @@ export const fr = {
       title: "Dépistage RPS",
       subtitle: "Risques psychosociaux",
       plans: [
-        { name: "Retour par e-mail", price: "27 €", sub: "HT / collaborateur", badge: '', items: ["Dépistage par questionnaire et témoignage audio", "Qualification par un psychologue du travail", "Retour individuel confidentiel par e-mail, avec conduites à tenir personnalisées", "Indicateurs agrégés anonymisés pour l'employeur"], cta: "Prendre RDV" },
+        { name: "Retour par e-mail", price: "27 €", sub: "HT / collaborateur", badge: '', items: ["Dépistage par questionnaire et témoignage audio", "Qualification par un psychologue du travail", "Retour individuel confidentiel par e-mail, avec conduites à tenir personnalisées"], cta: "Prendre RDV" },
         { name: "Retour avec téléconsultation", price: "40 €", sub: "HT / collaborateur", badge: '', items: ["Tout le retour par e-mail", "Téléconsultation d'orientation de 30 min avec un psychologue du travail, pour chaque collaborateur détecté positif"], cta: "Prendre RDV" },
       ],
     },

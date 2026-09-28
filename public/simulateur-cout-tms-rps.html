@@ -558,7 +558,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
               <label class="scn"><input type="radio" name="svetu" value="non"><span>Sans étude<small>dépistage seul</small></span></label>
-              <label class="scn"><input type="radio" name="svetu" value="oui" checked><span>Études de situation de travail<small id="sv-lab-etu">de 240 à 400 € HT par rapport</small></span></label>
+              <label class="scn"><input type="radio" name="svetu" value="oui" checked><span>Études de situation de travail<small id="sv-lab-etu">sur devis, indicatif de 240 à 400 € HT par rapport</small></span></label>
             </div>
             <p class="hint" id="sv-hint-tms"></p>
           </div>
@@ -625,7 +625,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <span class="sl-val" id="sv-part-etude-val"></span>
                 </div>
                 <input type="range" id="sv-part-etude" min="0" max="100" step="5" value="40">
-                <p class="hint">C'est vous qui décidez des études à commander. Chaque étude donne lieu à un rapport, facturé selon la grille dégressive : 400 € HT par rapport de 1 à 20 études commandées dans le mois, 360 € de 21 à 50, 320 € de 51 à 100, 280 € de 101 à 200, 240 € au delà. La simulation suppose que les études sont commandées sur un même mois.</p>
+                <p class="hint">C'est vous qui décidez des études à commander. Chaque étude donne lieu à un rapport, sur devis ; le calcul retient le tarif indicatif dégressif : 400 € HT par rapport de 1 à 20 études commandées dans le mois, 360 € de 21 à 50, 320 € de 51 à 100, 280 € de 101 à 200, 240 € au delà. La simulation suppose que les études sont commandées sur un même mois.</p>
               </div>
             </div>
           </details>
@@ -1058,7 +1058,7 @@ function calcule(){
   var pEtu=prixEtude(nbEtudes);
   var c2dep=eff*puTms, c2tms=nbEtudes*pEtu;
   var lib2dep="Dépistage TMS"+(packTms==="essential"?"":" avec coaching vidéo")+", "+num(eff,0)+" × "+eur(puTms);
-  var lib2tms=avecEtu?"Études de situation de travail, "+num(nbEtudes,0)+" rapports × "+eur(pEtu):"Aucune étude commandée";
+  var lib2tms=avecEtu?"Études de situation de travail, "+num(nbEtudes,0)+" rapports × "+eur(pEtu)+", indicatif, sur devis":"Aucune étude commandée";
   if(!vRps){ c2rps=0; }
   if(!vRps){ c2prps=0; }
   if(!vTms){ c2dep=0; c2tms=0; c2ptms=0; }
@@ -1082,7 +1082,7 @@ function calcule(){
   $("sv-roi-sur").textContent=libPer;
   $("sv-hint-tms").textContent="Le retour au salarié se choisit par risque ; les plans d'action se commandent en plus, "+
     eur(750)+" HT par tranche de 50 salariés. Les études de situation de travail restent à votre main : vous "+
-    "décidez lesquelles commander, et chacune est facturée par rapport, de "+eur(400)+" à "+eur(240)+
+    "décidez lesquelles commander, sur devis ; le calcul retient un tarif indicatif par rapport, de "+eur(400)+" à "+eur(240)+
     " HT selon le volume du mois. Ajustez la part concernée dans les hypothèses.";
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-ent").textContent=eur(c1ent);
@@ -1176,7 +1176,7 @@ function calcule(){
    ["sv-lab-prps",750,"par tranche de 50 salariés"],["sv-lab-ptms",750,"par tranche de 50 salariés"]].forEach(function(t){
     var e=$(t[0]); if(e){ e.textContent=eur(t[1])+" HT "+t[2]; }
   });
-  var eEtu=$("sv-lab-etu"); if(eEtu){ eEtu.textContent="de "+eur(240)+" à "+eur(400)+" HT par rapport"; }
+  var eEtu=$("sv-lab-etu"); if(eEtu){ eEtu.textContent="sur devis, indicatif de "+eur(240)+" à "+eur(400)+" HT par rapport"; }
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";
   $("sv-part-etude-val").textContent=num(pctEtude,0)+" % · "+num(nbEtudes,0)+" études";
 

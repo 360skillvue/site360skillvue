@@ -514,11 +514,13 @@ export const en = {
       ],
     },
     step2Label: "Step 2",
-    step2Title: "Options for management",
-    step2Subtitle: "Add them as needed; they combine with each other and with employee feedback.",
+    step2Title: "Deliverables for the employer and occupational health",
+    step2Subtitle: "They combine with each other and with employee feedback: a collective action plan for HR and management, an individual report for the occupational physician or nurse, for MSD and psychosocial risks alike.",
     options: [
-      { name: "MSD prevention action plan", price: "€750", sub: "excl. VAT per 50 employees", desc: "Anonymised risk mapping, prioritised actions and management debrief.", tag: "" },
-      { name: "PSR prevention action plan", price: "€750", sub: "excl. VAT per 50 employees", desc: "Anonymised risk mapping, prioritised actions and management debrief.", tag: "" },
+      { name: "MSD prevention action plan", price: "€750", sub: "excl. VAT per 50 employees", desc: "Anonymised risk mapping, prioritised actions and management debrief.", tag: "For HR and management" },
+      { name: "PSR prevention action plan", price: "€750", sub: "excl. VAT per 50 employees", desc: "Anonymised risk mapping, prioritised actions and management debrief.", tag: "For HR and management" },
+      { name: "Individual MSD report", price: "On request", sub: "per report, individually or in volume", desc: "Remote work situation study by an ergonomist, based on the employee's videos: risk factors, room for manoeuvre, prioritised recommendations.", tag: "For the occupational physician or nurse" },
+      { name: "Individual PSR report", price: "On request", sub: "per report, individually or in volume", desc: "Remote analysis of work organisation and psychosocial factors, through an interview with a psychologist: resources, warning signs, prioritised recommendations.", tag: "For the occupational physician or nurse" },
     ],
     exampleTitle: "Example for 100 employees, MSD and PSR",
     exampleLines: [

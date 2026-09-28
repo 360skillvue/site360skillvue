@@ -396,7 +396,7 @@ export default function CertificationPage() {
               {t.certification.pricingBadge}
             </div>
             <h2 className="text-[32px] sm:text-[48px] md:text-[64px] font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-scanup-blue to-scanup-turquoise">
-              {t.certification.pricingPrice} <span className="text-[24px] text-scanup-navy font-semibold">{t.certification.pricingUnit}</span>
+              {t.certification.pricingPrice}{t.certification.pricingUnit && <> <span className="text-[24px] text-scanup-navy font-semibold">{t.certification.pricingUnit}</span></>}
             </h2>
             <h3 className="text-[20px] font-medium text-scanup-graytext mb-10">{t.certification.pricingSubtitle}</h3>
           </FadeIn>

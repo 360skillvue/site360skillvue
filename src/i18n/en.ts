@@ -509,7 +509,7 @@ export const en = {
       title: "PSR screening",
       subtitle: "Psychosocial risks",
       plans: [
-        { name: "Feedback by email", price: "€27", sub: "excl. VAT / employee", badge: '', items: ["Screening by questionnaire and audio testimonial", "Qualification by an occupational psychologist", "Confidential individual feedback by email, with personalised guidance", "Aggregated, anonymised indicators for the employer"], cta: "Book a call" },
+        { name: "Feedback by email", price: "€27", sub: "excl. VAT / employee", badge: '', items: ["Screening by questionnaire and audio testimonial", "Qualification by an occupational psychologist", "Confidential individual feedback by email, with personalised guidance"], cta: "Book a call" },
         { name: "Feedback with teleconsultation", price: "€40", sub: "excl. VAT / employee", badge: '', items: ["Everything in feedback by email", "30-minute orientation teleconsultation with an occupational psychologist, for every employee who screens positive"], cta: "Book a call" },
       ],
     },

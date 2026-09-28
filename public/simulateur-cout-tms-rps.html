@@ -609,6 +609,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p class="hint">Un audit collectif rend un état des lieux, il ne repère personne. Pour identifier les salariés en difficulté et orienter ceux qui en ont besoin, il faut écouter chacun d'eux : un entretien de trente minutes par salarié, sur place, avec un psychologue du travail, notes comprises. Le dépistage ScanUp, lui, demande deux minutes par salarié et ne mobilise l'entretien de trente minutes que pour les personnes repérées.</p>
               </div>
 
+              <div class="field">
+                <label for="sv-p-elearn">Coût d'une formation e-learning gestes et postures, par salarié</label>
+                <input type="number" id="sv-p-elearn" min="0" max="1000" step="1" value="30">
+                <p class="hint">Comparée au dépistage TMS avec retour par e-mail. Les modules du marché se vendent de 25 à 35 € HT par apprenant, pour 45 minutes à 3 heures de contenu.</p>
+              </div>
+
+              <div class="field">
+                <label for="sv-p-presform">Coût d'une journée de formation gestes et postures en présentiel, pour un groupe de 10</label>
+                <input type="number" id="sv-p-presform" min="0" max="20000" step="10" value="850">
+                <p class="hint">Comparée au dépistage TMS avec coaching vidéo. Les organismes affichent de 550 € HT la demi-journée à 1 290 € HT la journée, en intra, par groupe de 10 à 12 personnes.</p>
+              </div>
+
               <div class="field" hidden>
                 <label for="sv-p-poste">Coût d'une étude de poste en présentiel</label>
                 <input type="number" id="sv-p-poste" min="0" max="10000" step="50" value="1200">
@@ -648,6 +660,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="roi-fam-head fam-classique"><span>Méthodes classiques, en présentiel</span><b id="sv-cmp-b1"></b></div>
               <div class="roi-row" id="sv-r1-rps"><span>Audit RPS collectif</span><b id="sv-c1-rps"></b></div>
               <div class="roi-row" id="sv-r1-ent"><span id="sv-c1-l-ent">Entretiens de 30 minutes, tout l'effectif</span><b id="sv-c1-ent"></b></div>
+              <div class="roi-row" id="sv-r1-form"><span id="sv-c1-l-form">Formation gestes et postures</span><b id="sv-c1-form"></b></div>
               <div class="roi-row" id="sv-r1-tms"><span id="sv-c1-l-tms">Études de poste par un ergonome</span><b id="sv-c1-tms"></b></div>
               <p class="bd-desc" id="sv-c1-desc"></p>
             </div>
@@ -1034,7 +1047,22 @@ function calcule(){
   // donc lui ajouter un entretien individuel par salarie pour atteindre le meme
   // resultat qu'un depistage.
   var c1rps=vRps?pAudit*fPres:0, c1ent=vRps?eff*pEnt*fPres:0,
-      c1tms=0, c1=c1rps+c1ent;
+      c1tms=0;
+  // TMS : le depistage ScanUp se compare a une formation gestes et postures ;
+  // retour par e-mail contre e-learning, coaching video contre presentiel.
+  var packTms0=document.querySelector('input[name="svtms"]:checked').value;
+  var pElearn=lire("sv-p-elearn",30), pPresForm=lire("sv-p-presform",850);
+  var nbGroupes=Math.ceil(eff/10);
+  var c1form=0, lib1form="";
+  if(packTms0==="essential"){
+    c1form=eff*pElearn;
+    lib1form="Formation e-learning gestes et postures, "+num(eff,0)+" × "+eur(pElearn);
+  } else {
+    c1form=nbGroupes*pPresForm*fPres;
+    lib1form="Formation gestes et postures en présentiel, "+num(nbGroupes,0)+(nbGroupes>1?" journées":" journée")+" de 10 salariés × "+eur(pPresForm*fPres);
+  }
+  if(!vTms){ c1form=0; }
+  var c1=c1rps+c1ent+c1form;
 
   // scénario 2 : dépistage à distance puis intervention ciblée
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
@@ -1062,7 +1090,7 @@ function calcule(){
   if(perim==="tms"){ totAff=totTms; }
   function aff(id,v){ var e=$(id); if(e){ e.hidden=!v; } }
   aff("sv-f-rps",vRps); aff("sv-f-tms",vTms);
-  aff("sv-r1-rps",vRps); aff("sv-r1-ent",vRps); aff("sv-r1-tms",vTms);
+  aff("sv-r1-rps",vRps); aff("sv-r1-ent",vRps); aff("sv-r1-tms",vTms); aff("sv-r1-form",vTms);
   aff("sv-r2-rps",vRps); aff("sv-r2-dep",vTms); aff("sv-r2-tms",vTms);
   aff("sv-r2-prps",vRps&&planRps); aff("sv-r2-ptms",vTms&&planTms);
   aff("sv-split",perim==="deux");
@@ -1074,13 +1102,16 @@ function calcule(){
   $("sv-roi-l").textContent="Ce qu'il faut investir pour agir";
   $("sv-p-label").textContent=(perim==="deux"?"Ce que le risque vous coûte":(perim==="rps"?"Ce que les RPS vous coûtent":"Ce que les TMS vous coûtent"));
   $("sv-roi-sur").textContent=libPer;
-  $("sv-hint-tms").textContent="Le retour au salarié se choisit par risque ; les plans d'action se commandent en plus, "+
-    eur(750)+" HT par tranche de 50 salariés. Les études de situation de travail restent à votre main et sont sur devis : "+
-    "elles ne sont pas comptées dans la comparaison, pas plus que les études de poste en présentiel.";
+  $("sv-hint-tms").textContent="Côté TMS, ScanUp se compare à une formation gestes et postures : le retour par e-mail à un "+
+    "module e-learning, le coaching vidéo à une formation en présentiel. Les plans d'action se commandent en plus, "+
+    eur(750)+" HT par tranche de 50 salariés. Les études de situation de travail à distance se comparent aux études "+
+    "de poste en présentiel ; elles sont sur devis des deux côtés et restent hors du calcul.";
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-ent").textContent=eur(c1ent);
   $("sv-c1-l-ent").textContent="Entretiens de 30 minutes, tout l'effectif, "+num(eff,0)+" × "+eur(pEnt*fPres);
   $("sv-c1-tms").textContent="sur devis";
+  $("sv-c1-form").textContent=eur(c1form);
+  $("sv-c1-l-form").textContent=lib1form;
   $("sv-c1-l-tms").textContent="Études de poste par un ergonome";
   $("sv-cmp-t1").textContent=eur(c1);
   $("sv-cmp-b1").textContent=eur(c1);
@@ -1105,14 +1136,14 @@ function calcule(){
       "propre retour et se voit orienter si son état le justifie, sans que l'entreprise en soit informée. "+
       "Vous, vous recevez des indicateurs agrégés, jamais des noms.";
   } else if(perim==="tms"){
-    d1="Un ergonome vient voir le travail, l'analyse est réelle. Mais elle raisonne par poste et non par "+
-      "personne : une étude couvre une situation de travail et vaut pour tous ceux qui l'occupent.";
+    d1="La formation gestes et postures transmet des règles générales, en groupe ou en ligne : elle ne "+
+      "regarde pas comment chacun travaille. Les études de poste, sur devis, raisonnent par poste et non par personne.";
     d2="On part de la personne et non du poste. Le travail est capté en situation réelle, et l'étude "+
       "approfondie, elle, reste à votre main : vous commandez les études de situation de travail qui vous semblent justifiées, isolés compris.";
   } else {
     d1="L'audit psychosocial est collectif, il décrit des services et non des personnes : le repérage "+
-      "individuel suppose d'y ajouter un entretien par salarié, mené sur place. L'étude de poste, elle, "+
-      "raisonne par poste et vaut pour tous ceux qui l'occupent.";
+      "individuel suppose d'y ajouter un entretien par salarié, mené sur place. La formation gestes et "+
+      "postures, elle, transmet des règles générales sans regarder comment chacun travaille.";
     d2="Chaque salarié est écouté et observé individuellement, puis analysé par un psychologue ou un "+
       "ergonome. Le dépistage est anonyme : la personne repérée est orientée directement, et vous ne "+
       "recevez que des données agrégées, jamais des noms. L'analyse approfondie n'est engagée que sur "+
@@ -1141,17 +1172,6 @@ function calcule(){
     sub=sub+" L'écart, "+eur(ecart)+" par an, est à rapprocher des "+eur(totAff)+" que le risque coûte déjà.";
   }
   $("sv-cmp-sub").textContent=sub;
-  // TMS seuls : cote presentiel, seules les etudes de poste existent, sur devis ;
-  // il n'y a donc pas de montant a comparer.
-  var netRow=$("sv-cmp-ecart")?$("sv-cmp-ecart").parentNode:null;
-  if(netRow){ netRow.hidden=(perim==="tms"); }
-  if(perim==="tms"){
-    $("sv-cmp-t1").textContent="Sur devis";
-    $("sv-cmp-b1").textContent="sur devis";
-    $("sv-cmp-p1").textContent="études de poste";
-    $("sv-cmp-sub").textContent="En présentiel, les études de poste sont sur devis, comme nos études de situation de travail. "+
-      "ScanUp dépiste chaque salarié et coache les personnes repérées, pour "+eur(c2)+" ici.";
-  }
 
   var note="Les deux approches font analyser le travail par un professionnel ; ce qui les sépare est la "+
     "granularité.";
@@ -1160,8 +1180,8 @@ function calcule(){
       "par un et en repère "+num(nbCibles,0)+". Quand il coûte davantage, ce surcoût n'achète pas une "+
       "économie : il achète un retour individuel et une orientation pour chaque personne concernée.";
   } else if(perim==="tms"){
-    note=note+" Le présentiel étudie un poste, pour tous ceux qui l'occupent ; ScanUp dépiste les "+
-      num(eff,0)+" salariés puis concentre l'analyse sur les "+num(nbCibles,0)+" personnes repérées.";
+    note=note+" La formation apprend les mêmes gestes à tous ; ScanUp observe les "+
+      num(eff,0)+" salariés au travail et renvoie à chacun ses propres corrections.";
   } else {
     note=note+" Les méthodes classiques décrivent des services et des postes ; ScanUp part de chaque "+
       "salarié, en dépiste "+num(eff,0)+" et en repère "+num(nbCibles,0)+".";
@@ -1279,7 +1299,7 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-sal-brut","sv-salaire","sv-desorg","sv-rps",
- "sv-part","sv-part-etude","sv-p-audit","sv-p-entretien","sv-p-poste"].forEach(function(id){
+ "sv-part","sv-part-etude","sv-p-audit","sv-p-entretien","sv-p-poste","sv-p-elearn","sv-p-presform"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);

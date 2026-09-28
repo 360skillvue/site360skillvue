@@ -29,6 +29,7 @@ const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 
 const refs = [
   { name: "Roche",  src: "/partners/roche.webp" },
+  { name: "Cargill", src: "/partners/cargill.svg" },
   { name: "Cerba",  src: "/partners/cerba.webp" },
   { name: "HCL",    src: "/partners/LogoHCL.webp" },
   { name: "BIC",    src: "/partners/Bic.webp" },
@@ -75,7 +76,7 @@ export default function HomePage() {
             {t.home.trustStrip}
           </p>
           <div className="w-px h-8 bg-scanup-graylight hidden md:block flex-shrink-0" />
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-8 md:gap-10">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-8 md:gap-7">
             {refs.map((ref, i) => (
               <motion.img
                 key={ref.name}

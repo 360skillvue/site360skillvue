@@ -509,7 +509,7 @@ export const de = {
       title: "PSR-Screening",
       subtitle: "Psychosoziale Risiken",
       plans: [
-        { name: "Rückmeldung per E-Mail", price: "27 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Screening per Fragebogen und Audio-Bericht", "Qualifizierung durch eine:n Arbeitspsycholog:in", "Vertrauliche individuelle Rückmeldung per E-Mail mit personalisierten Handlungsempfehlungen", "Aggregierte, anonymisierte Indikatoren für den Arbeitgeber"], cta: "Termin vereinbaren" },
+        { name: "Rückmeldung per E-Mail", price: "27 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Screening per Fragebogen und Audio-Bericht", "Qualifizierung durch eine:n Arbeitspsycholog:in", "Vertrauliche individuelle Rückmeldung per E-Mail mit personalisierten Handlungsempfehlungen"], cta: "Termin vereinbaren" },
         { name: "Rückmeldung mit Telekonsultation", price: "40 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Alles aus der Rückmeldung per E-Mail", "30-minütige Orientierungs-Telekonsultation mit einem:r Arbeitspsycholog:in für jede positiv gescreente Person"], cta: "Termin vereinbaren" },
       ],
     },

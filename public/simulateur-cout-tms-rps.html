@@ -621,6 +621,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p class="hint">Comparée au dépistage TMS avec coaching vidéo. Les organismes affichent de 550 € HT la demi-journée à 1 290 € HT la journée, en intra, par groupe de 10 à 12 personnes.</p>
               </div>
 
+              <div class="field">
+                <label for="sv-p-planergo">Coût d'un plan d'action TMS rédigé par un ergonome sur site, par tranche de 50 salariés</label>
+                <input type="number" id="sv-p-planergo" min="0" max="20000" step="50" value="1000">
+                <p class="hint">Comparé au plan d'action TMS ScanUp. Ordre de grandeur : une journée d'ergonome en entreprise pour 50 salariés, déplacement et rédaction compris.</p>
+              </div>
+
               <div class="field" hidden>
                 <label for="sv-p-poste">Coût d'une étude de poste en présentiel</label>
                 <input type="number" id="sv-p-poste" min="0" max="10000" step="50" value="1200">
@@ -661,6 +667,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="roi-row" id="sv-r1-rps"><span>Audit RPS collectif</span><b id="sv-c1-rps"></b></div>
               <div class="roi-row" id="sv-r1-ent"><span id="sv-c1-l-ent">Entretiens de 30 minutes, tout l'effectif</span><b id="sv-c1-ent"></b></div>
               <div class="roi-row" id="sv-r1-form"><span id="sv-c1-l-form">Formation gestes et postures</span><b id="sv-c1-form"></b></div>
+              <div class="roi-row" id="sv-r1-ptms"><span id="sv-c1-l-ptms">Plan d'action TMS par un ergonome sur site</span><b id="sv-c1-ptms"></b></div>
               <div class="roi-row" id="sv-r1-tms"><span id="sv-c1-l-tms">Études de poste par un ergonome</span><b id="sv-c1-tms"></b></div>
               <p class="bd-desc" id="sv-c1-desc"></p>
             </div>
@@ -1061,8 +1068,14 @@ function calcule(){
     c1form=nbGroupes*pPresForm*fPres;
     lib1form="Formation gestes et postures en présentiel, "+num(nbGroupes,0)+(nbGroupes>1?" journées":" journée")+" de 10 salariés × "+eur(pPresForm*fPres);
   }
-  if(!vTms){ c1form=0; }
-  var c1=c1rps+c1ent+c1form;
+  // Plan d'action TMS : en presentiel, un ergonome se deplace et le redige,
+  // de l'ordre d'une journee par tranche de 50 salaries.
+  var planTms0=(document.querySelector('input[name="svptms"]:checked').value==="oui");
+  var pPlanErgo=lire("sv-p-planergo",1000);
+  var nbTr0=Math.ceil(eff/50);
+  var c1ptms=planTms0?nbTr0*pPlanErgo*fPres:0;
+  if(!vTms){ c1form=0; c1ptms=0; }
+  var c1=c1rps+c1ent+c1form+c1ptms;
 
   // scénario 2 : dépistage à distance puis intervention ciblée
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
@@ -1090,7 +1103,7 @@ function calcule(){
   if(perim==="tms"){ totAff=totTms; }
   function aff(id,v){ var e=$(id); if(e){ e.hidden=!v; } }
   aff("sv-f-rps",vRps); aff("sv-f-tms",vTms);
-  aff("sv-r1-rps",vRps); aff("sv-r1-ent",vRps); aff("sv-r1-tms",vTms); aff("sv-r1-form",vTms);
+  aff("sv-r1-rps",vRps); aff("sv-r1-ent",vRps); aff("sv-r1-tms",vTms); aff("sv-r1-form",vTms); aff("sv-r1-ptms",vTms&&planTms0);
   aff("sv-r2-rps",vRps); aff("sv-r2-dep",vTms); aff("sv-r2-tms",vTms);
   aff("sv-r2-prps",vRps&&planRps); aff("sv-r2-ptms",vTms&&planTms);
   aff("sv-split",perim==="deux");
@@ -1104,13 +1117,15 @@ function calcule(){
   $("sv-roi-sur").textContent=libPer;
   $("sv-hint-tms").textContent="Côté TMS, ScanUp se compare à une formation gestes et postures : le retour par e-mail à un "+
     "module e-learning, le coaching vidéo à une formation en présentiel. Les plans d'action se commandent en plus, "+
-    eur(750)+" HT par tranche de 50 salariés. Les études de situation de travail à distance se comparent aux études "+
+    eur(750)+" HT par tranche de 50 salariés ; le plan TMS se compare à celui d'un ergonome qui se déplace. Les études de situation de travail à distance se comparent aux études "+
     "de poste en présentiel ; elles sont sur devis des deux côtés et restent hors du calcul.";
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-ent").textContent=eur(c1ent);
   $("sv-c1-l-ent").textContent="Entretiens de 30 minutes, tout l'effectif, "+num(eff,0)+" × "+eur(pEnt*fPres);
   $("sv-c1-tms").textContent="sur devis";
   $("sv-c1-form").textContent=eur(c1form);
+  $("sv-c1-ptms").textContent=eur(c1ptms);
+  $("sv-c1-l-ptms").textContent="Plan d'action TMS par un ergonome sur site, "+num(nbTr0,0)+(nbTr0>1?" journées":" journée")+" × "+eur(pPlanErgo*fPres);
   $("sv-c1-l-form").textContent=lib1form;
   $("sv-c1-l-tms").textContent="Études de poste par un ergonome";
   $("sv-cmp-t1").textContent=eur(c1);
@@ -1299,7 +1314,7 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-sal-brut","sv-salaire","sv-desorg","sv-rps",
- "sv-part","sv-part-etude","sv-p-audit","sv-p-entretien","sv-p-poste","sv-p-elearn","sv-p-presform"].forEach(function(id){
+ "sv-part","sv-part-etude","sv-p-audit","sv-p-entretien","sv-p-poste","sv-p-elearn","sv-p-presform","sv-p-planergo"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);

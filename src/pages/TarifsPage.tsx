@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, ArrowRight, UserCog, Sparkles } from 'lucide-react';
+import { Check, ArrowRight, UserCog, Sparkles, User, Building2, Stethoscope } from 'lucide-react';
 import { useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -150,12 +150,21 @@ export default function TarifsPage() {
               { label: tr.step2Label, sub: tr.step2Subtitle },
               { label: tr.step3Label, sub: tr.step3Subtitle },
             ];
-            const UseHead = ({ u }: { u: { label: string; sub: string } }) => (
-              <div className="mb-3 lg:min-h-[60px]">
-                <div className="text-[11px] font-semibold uppercase tracking-widest text-scanup-blue">{u.label}</div>
-                <div className="text-[12px] text-scanup-graytext leading-snug mt-0.5">{u.sub}</div>
-              </div>
-            );
+            const useIcons = [User, Building2, Stethoscope];
+            const UseHead = ({ u, n }: { u: { label: string; sub: string }; n: number }) => {
+              const Icon = useIcons[n];
+              return (
+                <div className="mb-5 lg:min-h-[132px] pt-4 border-t-[3px] border-scanup-blue">
+                  <div className="flex items-center gap-3">
+                    <span className="flex-shrink-0 w-10 h-10 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center">
+                      <Icon size={20} />
+                    </span>
+                    <div className="text-[20px] sm:text-[22px] font-bold text-scanup-navy tracking-tight leading-tight">{u.label}</div>
+                  </div>
+                  <div className="text-[14px] text-scanup-graytext leading-snug mt-2">{u.sub}</div>
+                </div>
+              );
+            };
             return (
               <div key={r} className="mb-16 last:mb-10">
                 <Reveal className="mb-6 pb-4 border-b border-black/[0.08]">
@@ -167,7 +176,7 @@ export default function TarifsPage() {
                 </Reveal>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8">
                   <div className="md:col-span-2 flex flex-col">
-                    <UseHead u={uses[0]} />
+                    <UseHead u={uses[0]} n={0} />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
                       {risk.plans.map((plan, i) => (
                         <Reveal key={i} delay={i * 0.07}>
@@ -178,7 +187,7 @@ export default function TarifsPage() {
                   </div>
                   {risk.options.map((opt, k) => (
                     <div key={k} className="flex flex-col">
-                      <UseHead u={uses[k + 1]} />
+                      <UseHead u={uses[k + 1]} n={k + 1} />
                       <Reveal delay={0.14 + k * 0.07} className="flex-grow">
                         <div className="rounded-2xl p-7 h-full flex flex-col bg-white border border-black/[0.07] shadow-sm">
                           <div className="text-[11px] font-semibold uppercase tracking-widest mb-3 text-scanup-blue">{opt.name}</div>

@@ -552,8 +552,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <label>TMS : les usages des données</label>
             <p class="hint" style="margin:0 0 6px">Pour le salarié</p>
             <div class="scn-set">
-              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Retour par e-mail<small id="sv-lab-tms-e">40 € HT par salarié</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Avec coaching vidéo<small id="sv-lab-tms-p">55 € HT par salarié</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Retour par e-mail<small id="sv-lab-tms-e">27 € HT par salarié</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Avec coaching vidéo<small id="sv-lab-tms-p">40 € HT par salarié</small></span></label>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
               <label class="scn"><input type="radio" name="svptms" value="non" checked><span>Sans plan d'action<small>pas d'usage direction</small></span></label>
@@ -1095,7 +1095,7 @@ function calcule(){
   if(isNaN(pctEtude)){ pctEtude=0; }
   var packTms=document.querySelector('input[name="svtms"]:checked').value;
   var nbEtudes=0;
-  var puTms=(packTms==="essential")?40:55;
+  var puTms=(packTms==="essential")?27:40;
   var c2dep=eff*puTms, c2tms=0;
   var lib2dep="TMS, pour le salarié : retour "+(packTms==="essential"?"par e-mail":"avec coaching vidéo")+", "+num(eff,0)+" × "+eur(puTms);
   var lib2tms="TMS, pour la santé au travail : rapport individuel, étude de situation de travail à distance, pour les salariés que vous choisissez";
@@ -1218,7 +1218,7 @@ function calcule(){
   // La grille est identique en euros et en francs : seuls la monnaie et le
   // format d'affichage changent d'un pays a l'autre.
   [["sv-lab-rps-e",27,"par salarié"],["sv-lab-rps-p",40,"par salarié"],
-   ["sv-lab-tms-e",40,"par salarié"],["sv-lab-tms-p",55,"par salarié"],
+   ["sv-lab-tms-e",27,"par salarié"],["sv-lab-tms-p",40,"par salarié"],
    ["sv-lab-prps",750,"par tranche de 50 salariés"],["sv-lab-ptms",750,"par tranche de 50 salariés"]].forEach(function(t){
     var e=$(t[0]); if(e){ e.textContent=eur(t[1])+" HT "+t[2]; }
   });

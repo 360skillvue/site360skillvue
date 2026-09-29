@@ -343,7 +343,7 @@ export const it = {
     offresTitleEnd: 'una sola piattaforma.',
     offres: [
       { title: 'Screening dei rischi psicosociali e muscoloscheletrici', body: 'Ogni dipendente è analizzato individualmente da uno psicologo del lavoro o da un ergonomo. Risultati in 48 ore, a partire da 27 € per collaboratore.', cta: 'Simulare il mio costo' },
-      { title: 'Studio ergonomico della postazione a distanza', body: 'Per le persone individuate, uno studio completo della postazione condotto a distanza da un ergonomo, con relazione individuale e raccomandazioni concrete.', cta: 'Richiedere uno studio' },
+      { title: 'Studio ergonomico della postazione a distanza', body: "Per le persone individuate, uno studio completo della postazione condotto a distanza da un ergonomo, con relazione individuale e raccomandazioni concrete. Stessi ergonomi, stessi riferimenti che in presenza; meno costoso, quindi più collaboratori e sedi coperti con lo stesso budget.", cta: 'Richiedere uno studio' },
       { title: 'Formazione sui rischi psicosociali', body: 'Sette ore per i vostri responsabili, corsi online e poi un\'aula virtuale condotta da una psicologa del lavoro. Erogata da IEF Biologie, organismo certificato Qualiopi.', cta: 'Vedere la formazione' },
     ],
     problemsLabel: 'La realtà sul campo',
@@ -450,12 +450,20 @@ export const it = {
     solutionBody2: 'Integrando ScanUp nella vostra offerta, proponete alle vostre aziende clienti uno strumento concreto di riduzione dell\'assenteismo, e disponete di dati ricchi per guidare la vostra strategia di copertura e prevenzione.',
     processLabel: 'Come funziona',
     processTitle: 'Un processo semplice, risultati potenti',
-    processSubtitle: 'Dalla raccolta sul campo al cruscotto decisionale, ScanUp automatizza la catena di screening in quattro passaggi chiave.',
+    processSubtitle: "Dalla raccolta sul campo al cruscotto decisionale, in quattro passaggi: la piattaforma raccoglie e tratta tecnicamente i dati, l'analisi resta esclusivamente umana.",
     steps: [
       { n: '01', title: 'Raccolta audio o video', body: 'L\'operatore sul campo carica una registrazione audio o video direttamente dal proprio smartphone o tablet. Semplice, rapido, senza formazione preliminare.' },
       { n: '02', title: 'Analisi da parte dei nostri esperti', body: 'I nostri esperti sanitari valutano ogni registrazione per qualificare lo screening: identificazione dei segnali DMS e RPS, valutazione dei livelli di rischio, validazione clinica.' },
       { n: '03', title: 'Anonimizzazione e aggregazione', body: 'I dati sono anonimizzati e aggregati in una dashboard sicura. Ottenete una mappatura chiara dei rischi senza mai compromettere la privacy dei collaboratori.' },
       { n: '04', title: 'Pilotaggio e azioni mirate', body: 'Grazie al tasso di screening positivo, identificate le zone a rischio, prioritizzate le vostre azioni di prevenzione e ne misurate l\'impatto nel tempo.' },
+    ],
+    impactLabel: "L'impatto",
+    impactTitle: "Stesso metodo, stessi professionisti.",
+    impactSubtitle: "Lo studio della situazione di lavoro è svolto da ergonomi e psicologi qualificati, con gli stessi riferimenti utilizzati sul campo. Cambia solo il modo di raccolta: il video, a distanza.",
+    impactItems: [
+      { title: "Un'efficacia già riconosciuta", body: "Assicuratori e servizi di salute sul lavoro finanziano già questi interventi in presenza. ScanUp non vi chiede di credere in un nuovo metodo, ma in una nuova modalità di erogazione." },
+      { title: "Più collaboratori coperti, con lo stesso budget", body: "Meno costoso della presenza, ScanUp raggiunge molte più postazioni e sedi con lo stesso budget di prevenzione, comprese quelle che la presenza non raggiunge mai: piccole sedi, zone isolate, turni." },
+      { title: "La copertura del portafoglio", body: "È l'argomento economico per un assicuratore o un riassicuratore: la prevenzione non si limita più ai pochi grandi clienti dove un ergonomo può spostarsi, ma si estende a tutto il portafoglio." },
     ],
     benefitsLabel: 'I vostri benefici',
     benefitsTitle: 'Cosa cambia ScanUp per la vostra mutua',
@@ -676,7 +684,7 @@ export const it = {
 
     etudeLabel: 'Analisi della postazione a distanza',
     etudeTitle: 'L\'analisi ergonomica, senza spostamenti',
-    etudeSubtitle: 'Il collaboratore filma la propria situazione reale di lavoro dal telefono, secondo istruzioni costruite con voi, un modulo per mestiere. Un ergonomo certificato analizza la sequenza e redige una relazione individuale con raccomandazioni di adattamento.',
+    etudeSubtitle: "Il collaboratore filma la propria situazione reale di lavoro dal telefono, secondo istruzioni costruite con voi, un modulo per mestiere. Un ergonomo certificato analizza la sequenza e redige una relazione individuale con raccomandazioni di adattamento. Stesso metodo, stessi professionisti: ergonomi qualificati, gli stessi riferimenti usati sul campo; cambia solo il modo di raccolta.",
     etudePoints: [
       {
         title: 'Un\'analisi per persona, non per postazione',

@@ -343,7 +343,7 @@ export const es = {
     offresTitleEnd: 'una sola plataforma.',
     offres: [
       { title: 'Detección de riesgos psicosociales y musculoesqueléticos', body: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo. Resultados en 48 horas, desde 27 € por colaborador.', cta: 'Calcular mi coste' },
-      { title: 'Estudio ergonómico del puesto a distancia', body: 'Para las personas detectadas, un estudio completo del puesto realizado a distancia por un ergónomo, con informe individual y recomendaciones concretas.', cta: 'Solicitar un estudio' },
+      { title: 'Estudio ergonómico del puesto a distancia', body: "Para las personas detectadas, un estudio completo del puesto realizado a distancia por un ergónomo, con informe individual y recomendaciones concretas. Mismos ergónomos, mismos referenciales que en presencial; más barato, por tanto más empleados y centros cubiertos con el mismo presupuesto.", cta: 'Solicitar un estudio' },
       { title: 'Formación en riesgos psicosociales', body: 'Siete horas para sus mandos, cursos en línea y después un aula virtual dirigida por una psicóloga del trabajo. Impartida por IEF Biologie, organismo certificado Qualiopi.', cta: 'Ver la formación' },
     ],
     problemsLabel: 'La realidad del terreno',
@@ -450,12 +450,20 @@ export const es = {
     solutionBody2: 'Al integrar ScanUp en su oferta, proporciona a sus clientes empresa una herramienta concreta para reducir el absentismo y obtiene datos ricos para dirigir su estrategia de cobertura y de prevención.',
     processLabel: 'Cómo funciona',
     processTitle: 'Un proceso sencillo, resultados potentes',
-    processSubtitle: 'De la captura sobre el terreno al cuadro de mando de decisión, ScanUp automatiza la cadena de cribado en cuatro etapas clave.',
+    processSubtitle: "De la captura sobre el terreno al cuadro de mando de decisión, en cuatro etapas: la plataforma recoge y trata técnicamente los datos, el análisis sigue siendo exclusivamente humano.",
     steps: [
       { n: '01', title: 'Captura de audio o vídeo', body: 'El trabajador sube una grabación de audio o de vídeo directamente desde su móvil o su tableta. Sencillo, rápido y sin formación previa.' },
       { n: '02', title: 'Análisis por nuestros expertos', body: 'Nuestros expertos en salud analizan cada grabación para cualificar el cribado: identificación de las señales de TME y de riesgos psicosociales, puntuación del nivel de riesgo, validación clínica.' },
       { n: '03', title: 'Anonimización y agregación', body: 'Los datos se anonimizan y se agregan en un cuadro de mando seguro. Obtiene un mapa de riesgos claro sin comprometer nunca la privacidad de los empleados.' },
       { n: '04', title: 'Pilotaje y acciones específicas', body: 'Gracias a la tasa de cribado positivo, identifique las zonas de riesgo, priorice sus acciones de prevención y mida su impacto a lo largo del tiempo.' },
+    ],
+    impactLabel: "El impacto",
+    impactTitle: "Mismo método, mismos profesionales.",
+    impactSubtitle: "El estudio de la situación de trabajo lo realizan ergónomos y psicólogos cualificados, con los mismos referenciales que sobre el terreno. Solo cambia el modo de recogida: el vídeo, a distancia.",
+    impactItems: [
+      { title: "Una eficacia ya reconocida", body: "Aseguradoras y servicios de salud laboral ya financian estas intervenciones presenciales. ScanUp no le pide creer en un método nuevo, sino en un nuevo modo de prestación." },
+      { title: "Más empleados cubiertos con el mismo presupuesto", body: "Más barato que lo presencial, ScanUp llega a muchos más puestos y centros con el mismo presupuesto de prevención, incluidos los que lo presencial nunca alcanza: centros pequeños, zonas aisladas, turnos." },
+      { title: "La cobertura de la cartera", body: "Es el argumento económico para una aseguradora o reaseguradora: la prevención ya no se limita a unas pocas grandes cuentas a las que puede desplazarse un ergónomo, se extiende a toda la cartera." },
     ],
     benefitsLabel: 'Sus beneficios',
     benefitsTitle: 'Lo que ScanUp cambia para su aseguradora',
@@ -676,7 +684,7 @@ export const es = {
 
     etudeLabel: 'Evaluación del puesto a distancia',
     etudeTitle: 'El análisis ergonómico, sin desplazamiento',
-    etudeSubtitle: 'El empleado graba su situación real de trabajo desde su teléfono, siguiendo consignas construidas con usted, un módulo por oficio. Un ergónomo acreditado analiza la secuencia y redacta un informe individual con recomendaciones de adaptación.',
+    etudeSubtitle: "El empleado graba su situación real de trabajo desde su teléfono, siguiendo consignas construidas con usted, un módulo por oficio. Un ergónomo acreditado analiza la secuencia y redacta un informe individual con recomendaciones de adaptación. Mismo método, mismos profesionales: ergónomos cualificados, los mismos referenciales que sobre el terreno; solo cambia el modo de recogida.",
     etudePoints: [
       {
         title: 'Un análisis por persona, no por puesto',

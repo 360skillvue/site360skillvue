@@ -343,7 +343,7 @@ export const pt = {
     offresTitleEnd: 'uma única plataforma.',
     offres: [
       { title: 'Rastreio dos riscos psicossociais e musculoesqueléticos', body: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista. Resultados em 48 horas, a partir de 27 € por colaborador.', cta: 'Simular o meu custo' },
-      { title: 'Estudo ergonómico do posto à distância', body: 'Para as pessoas identificadas, um estudo completo do posto realizado à distância por um ergonomista, com relatório individual e recomendações concretas.', cta: 'Pedir um estudo' },
+      { title: 'Estudo ergonómico do posto à distância', body: "Para as pessoas identificadas, um estudo completo do posto realizado à distância por um ergonomista, com relatório individual e recomendações concretas. Mesmos ergonomistas, mesmos referenciais que no presencial; mais barato, logo mais colaboradores e locais abrangidos com o mesmo orçamento.", cta: 'Pedir um estudo' },
       { title: 'Formação em riscos psicossociais', body: 'Sete horas para os seus responsáveis, cursos online seguidos de uma aula virtual conduzida por uma psicóloga do trabalho. Ministrada pela IEF Biologie, organismo certificado Qualiopi.', cta: 'Ver a formação' },
     ],
     problemsLabel: 'A realidade no terreno',
@@ -450,12 +450,20 @@ export const pt = {
     solutionBody2: 'Ao integrar o ScanUp na sua oferta, disponibiliza aos seus clientes empresariais uma ferramenta concreta para reduzir o absentismo, e obtém dados ricos para orientar a sua estratégia de cobertura e de prevenção.',
     processLabel: 'Como funciona',
     processTitle: 'Um processo simples, resultados poderosos',
-    processSubtitle: 'Da captação no terreno ao painel de decisão, o ScanUp automatiza a cadeia de rastreio em quatro etapas essenciais.',
+    processSubtitle: "Da captação no terreno ao painel de decisão, em quatro etapas: a plataforma recolhe e trata tecnicamente os dados, a análise continua exclusivamente humana.",
     steps: [
       { n: '01', title: 'Captação áudio ou vídeo', body: 'O operador no terreno carrega uma gravação áudio ou vídeo diretamente a partir do seu smartphone ou tablet. Simples, rápido e sem formação prévia.' },
       { n: '02', title: 'Análise pelos nossos especialistas', body: 'Os nossos especialistas de saúde analisam cada captação para qualificar o rastreio: identificação dos sinais de LME e RPS, classificação do nível de risco, validação clínica.' },
       { n: '03', title: 'Anonimização e agregação', body: 'Os dados são anonimizados e agregados num painel seguro. Obtém um mapa de risco claro sem nunca comprometer a privacidade dos colaboradores.' },
       { n: '04', title: 'Pilotagem e ações direcionadas', body: 'Graças à taxa de rastreio positivo, identifique as zonas de risco, priorize as suas ações de prevenção e meça o seu impacto ao longo do tempo.' },
+    ],
+    impactLabel: "O impacto",
+    impactTitle: "Mesmo método, mesmos profissionais.",
+    impactSubtitle: "O estudo da situação de trabalho é realizado por ergonomistas e psicólogos qualificados, com os mesmos referenciais usados no terreno. Só muda o modo de recolha: o vídeo, à distância.",
+    impactItems: [
+      { title: "Uma eficácia já reconhecida", body: "Seguradoras e serviços de saúde no trabalho já financiam estas intervenções presenciais. O ScanUp não lhe pede que acredite num novo método, mas num novo modo de prestação." },
+      { title: "Mais colaboradores abrangidos com o mesmo orçamento", body: "Mais barato do que o presencial, o ScanUp chega a muitos mais postos e locais com o mesmo orçamento de prevenção, incluindo os que o presencial nunca alcança: pequenos locais, zonas isoladas, horários por turnos." },
+      { title: "A cobertura da carteira", body: "É o argumento económico para uma seguradora ou resseguradora: a prevenção já não se limita a poucas grandes contas onde um ergonomista se pode deslocar, estende-se a toda a carteira." },
     ],
     benefitsLabel: 'Os seus benefícios',
     benefitsTitle: 'O que o ScanUp muda para a sua seguradora',
@@ -676,7 +684,7 @@ export const pt = {
 
     etudeLabel: 'Avaliação do posto à distância',
     etudeTitle: 'A análise ergonómica, sem deslocação',
-    etudeSubtitle: 'O colaborador filma a sua situação real de trabalho a partir do telemóvel, seguindo instruções construídas consigo, um módulo por profissão. Um ergonomista certificado analisa a sequência e redige um relatório individual com recomendações de adaptação.',
+    etudeSubtitle: "O colaborador filma a sua situação real de trabalho a partir do telemóvel, seguindo instruções construídas consigo, um módulo por profissão. Um ergonomista certificado analisa a sequência e redige um relatório individual com recomendações de adaptação. Mesmo método, mesmos profissionais: ergonomistas qualificados, os mesmos referenciais que no terreno; só muda o modo de recolha.",
     etudePoints: [
       {
         title: 'Uma análise por pessoa, não por posto',

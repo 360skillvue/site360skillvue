@@ -343,7 +343,7 @@ export const en = {
     offresTitleEnd: 'one single platform.',
     offres: [
       { title: 'Psychosocial and musculoskeletal risk screening', body: 'Every employee is reviewed individually by an occupational psychologist or an ergonomist. Results within 48 hours, from €27 per employee.', cta: 'Estimate my cost' },
-      { title: 'Remote workstation assessment', body: 'For the employees flagged by the screening, a full workstation assessment carried out remotely by an ergonomist, with an individual report and concrete recommendations.', cta: 'Request an assessment' },
+      { title: 'Remote workstation assessment', body: "For the employees flagged by the screening, a full workstation assessment carried out remotely by an ergonomist, with an individual report and concrete recommendations. Same ergonomists, same frameworks as on site; cheaper, so more employees and sites covered with the same budget.", cta: 'Request an assessment' },
       { title: 'Training on psychosocial risks', body: 'Seven hours for your managers, online courses followed by a virtual classroom led by an occupational psychologist. Delivered by IEF Biologie, a Qualiopi-certified training provider.', cta: 'See the training' },
     ],
     problemsLabel: 'The field reality',
@@ -450,12 +450,20 @@ export const en = {
     solutionBody2: 'By integrating ScanUp into your offer, you give your corporate clients a concrete tool to reduce absenteeism, and you gain rich data to drive your coverage and prevention strategy.',
     processLabel: 'How it works',
     processTitle: 'A simple process, powerful results',
-    processSubtitle: 'From field capture to decision dashboard, ScanUp automates the screening chain in four key steps.',
+    processSubtitle: "From field capture to decision dashboard, in four steps: the platform collects and technically processes the data, the analysis remains exclusively human.",
     steps: [
       { n: '01', title: 'Audio or video capture', body: 'The field operator uploads an audio or video recording directly from their smartphone or tablet. Simple, fast, no prior training required.' },
       { n: '02', title: 'Analysis by our experts', body: 'Our health experts review each capture to qualify the screening: identification of MSD and PSR signals, risk-level scoring, clinical validation.' },
       { n: '03', title: 'Anonymisation and aggregation', body: 'Data is anonymised and aggregated into a secure dashboard. You get a clear risk map without ever compromising employee privacy.' },
       { n: '04', title: 'Steering and targeted actions', body: 'Thanks to the positive screening rate, identify risk zones, prioritise your prevention actions and measure their impact over time.' },
+    ],
+    impactLabel: "Impact",
+    impactTitle: "Same method, same professionals.",
+    impactSubtitle: "The work situation study is carried out by qualified ergonomists and psychologists, using the same frameworks as on site. Only the way data is collected changes: video, remotely.",
+    impactItems: [
+      { title: "Effectiveness already recognised", body: "Insurers and occupational health services already fund these interventions on site. ScanUp does not ask you to believe in a new method, only in a new way of delivering it." },
+      { title: "More employees covered for the same budget", body: "Cheaper than on-site work, ScanUp reaches far more workstations and sites with the same prevention budget, including those on-site work never reaches: small sites, remote areas, shift work." },
+      { title: "Portfolio coverage", body: "This is the economic argument for an insurer or reinsurer: prevention is no longer limited to the few large accounts an ergonomist can visit, it extends to the whole portfolio." },
     ],
     benefitsLabel: 'Your benefits',
     benefitsTitle: 'What ScanUp changes for your insurance',
@@ -641,8 +649,8 @@ export const en = {
     contact: 'Got a question? Contact us',
   },
   spsti: {
-    metaTitle: 'Occupational health services: remote job studies and RPS screening',
-    metaDescription: 'Psychosocial risk screening with referral and remote workstation studies by a certified ergonomist, for multidisciplinary occupational health teams.',
+    metaTitle: 'Occupational health services: remote work situation studies and RPS screening',
+    metaDescription: 'Psychosocial risk screening with referral and remote work situation studies by a certified ergonomist, for multidisciplinary occupational health teams.',
     heroBadge: 'Primary prevention · PDP unit · Certification',
     heroTitle: 'Spot the situations at risk,',
     heroTitleHighlight: 'before the sick leave',
@@ -676,7 +684,7 @@ export const en = {
 
     etudeLabel: 'Remote workstation assessment',
     etudeTitle: 'Ergonomic analysis, without travel',
-    etudeSubtitle: 'The employee films their real working situation from their phone, following instructions built with you, one module per job role. A certified ergonomist reviews the footage and writes an individual report with adaptation recommendations.',
+    etudeSubtitle: "The employee films their real working situation from their phone, following instructions built with you, one module per job role. A certified ergonomist reviews the footage and writes an individual report with adaptation recommendations. Same method, same professionals: qualified ergonomists, the same frameworks as on site; only the way data is collected changes.",
     etudePoints: [
       {
         title: 'One analysis per person, not per workstation',

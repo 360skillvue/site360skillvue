@@ -343,7 +343,7 @@ export const de = {
     offresTitleEnd: 'eine einzige Plattform.',
     offres: [
       { title: 'Screening psychosozialer und muskuloskelettaler Risiken', body: 'Jeder Mitarbeitende wird einzeln von einer Arbeitspsychologin oder einem Ergonomen ausgewertet. Ergebnisse in 48 Stunden, ab 27 € pro Person.', cta: 'Kosten berechnen' },
-      { title: 'Arbeitsplatzanalyse aus der Ferne', body: 'Für die erkannten Personen eine vollständige Arbeitsplatzanalyse, aus der Ferne von einem Ergonomen durchgeführt, mit individuellem Bericht und konkreten Empfehlungen.', cta: 'Analyse anfragen' },
+      { title: 'Arbeitsplatzanalyse aus der Ferne', body: "Für die erkannten Personen eine vollständige Arbeitsplatzanalyse, aus der Ferne von einem Ergonomen durchgeführt, mit individuellem Bericht und konkreten Empfehlungen. Gleiche Ergonom:innen, gleiche Referenzrahmen wie vor Ort; günstiger, also mehr Mitarbeitende und Standorte mit demselben Budget abgedeckt.", cta: 'Analyse anfragen' },
       { title: 'Schulung zu psychosozialen Risiken', body: 'Sieben Stunden für Ihre Führungskräfte, Online-Kurse und anschließend ein virtuelles Klassenzimmer mit einer Arbeitspsychologin. Durchgeführt von IEF Biologie, Qualiopi-zertifiziert.', cta: 'Schulung ansehen' },
     ],
     problemsLabel: 'Die Realität vor Ort',
@@ -450,12 +450,20 @@ export const de = {
     solutionBody2: 'Indem Sie ScanUp in Ihr Angebot integrieren, bieten Sie Ihren Kundenunternehmen ein konkretes Instrument zur Senkung des Absentismus, und Sie verfügen über reichhaltige Daten, um Ihre Absicherungs- und Präventionsstrategie zu steuern.',
     processLabel: 'So funktioniert es',
     processTitle: 'Ein einfacher Prozess, starke Ergebnisse',
-    processSubtitle: 'Von der Erfassung vor Ort bis zum Entscheidungs-Dashboard automatisiert ScanUp die Screening-Kette in vier Schlüsselschritten.',
+    processSubtitle: "Von der Erfassung vor Ort bis zum Entscheidungs-Dashboard, in vier Schritten: Die Plattform erfasst und verarbeitet die Daten technisch, die Analyse bleibt ausschliesslich menschlich.",
     steps: [
       { n: '01', title: 'Audio- oder Videoaufnahme', body: 'Der Bediener vor Ort lädt eine Audio- oder Videoaufnahme direkt von seinem Smartphone oder Tablet hoch. Einfach, schnell, ohne Vorschulung.' },
       { n: '02', title: 'Analyse durch unsere Experten', body: 'Unsere Gesundheitsexperten bewerten jede Aufnahme zur Qualifizierung des Screenings: Identifikation von MSE- und PSR-Signalen, Bewertung der Risikoniveaus, klinische Validierung.' },
       { n: '03', title: 'Anonymisierung und Aggregation', body: 'Die Daten werden anonymisiert und in einem sicheren Dashboard aggregiert. Sie erhalten eine klare Risikokartierung, ohne jemals die Privatsphäre der Mitarbeitenden zu gefährden.' },
       { n: '04', title: 'Steuerung und gezielte Massnahmen', body: 'Dank der positiven Screening-Rate identifizieren Sie Risikozonen, priorisieren Ihre Präventionsmassnahmen und messen deren Wirkung im Zeitverlauf.' },
+    ],
+    impactLabel: "Wirkung",
+    impactTitle: "Gleiche Methode, gleiche Fachleute.",
+    impactSubtitle: "Die Analyse der Arbeitssituation wird von qualifizierten Ergonom:innen und Psycholog:innen durchgeführt, mit denselben Referenzrahmen wie vor Ort. Nur die Art der Erfassung ändert sich: per Video, aus der Ferne.",
+    impactItems: [
+      { title: "Wirksamkeit bereits anerkannt", body: "Versicherer und arbeitsmedizinische Dienste finanzieren diese Einsätze bereits vor Ort. ScanUp verlangt nicht, an eine neue Methode zu glauben, sondern an eine neue Form der Durchführung." },
+      { title: "Mehr Mitarbeitende abgedeckt, gleiches Budget", body: "Günstiger als vor Ort erreicht ScanUp mit demselben Präventionsbudget deutlich mehr Arbeitsplätze und Standorte, auch solche, die vor Ort nie erreicht werden: kleine Standorte, abgelegene Regionen, Schichtarbeit." },
+      { title: "Abdeckung des Portfolios", body: "Das ist das wirtschaftliche Argument für Versicherer und Rückversicherer: Prävention beschränkt sich nicht mehr auf wenige Grosskunden, die eine Ergonomin besuchen kann, sondern erstreckt sich auf das gesamte Portfolio." },
     ],
     benefitsLabel: 'Ihre Vorteile',
     benefitsTitle: 'Was ScanUp für Ihre Krankenkasse verändert',
@@ -676,7 +684,7 @@ export const de = {
 
     etudeLabel: 'Arbeitsplatzanalyse aus der Ferne',
     etudeTitle: 'Ergonomische Analyse, ohne Anfahrt',
-    etudeSubtitle: 'Die Person filmt ihre reale Arbeitssituation mit dem Telefon, nach Anweisungen, die gemeinsam mit Ihnen erstellt wurden, ein Modul pro Berufsbild. Eine zertifizierte Ergonomin wertet die Sequenz aus und verfasst einen individuellen Bericht mit Anpassungsempfehlungen.',
+    etudeSubtitle: "Die Person filmt ihre reale Arbeitssituation mit dem Telefon, nach Anweisungen, die gemeinsam mit Ihnen erstellt wurden, ein Modul pro Berufsbild. Eine zertifizierte Ergonomin wertet die Sequenz aus und verfasst einen individuellen Bericht mit Anpassungsempfehlungen. Gleiche Methode, gleiche Fachleute: qualifizierte Ergonom:innen, dieselben Referenzrahmen wie vor Ort; nur die Art der Erfassung ändert sich.",
     etudePoints: [
       {
         title: 'Eine Analyse pro Person, nicht pro Arbeitsplatz',

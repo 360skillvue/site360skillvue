@@ -425,7 +425,7 @@ export const fr = {
     offresTitleEnd: 'une seule plateforme.',
     offres: [
       { title: 'Dépistage RPS et TMS', body: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome. Résultats en 48 heures, dès 27 € par collaborateur.', cta: 'Simuler mon coût' },
-      { title: 'Étude de situation de travail', body: 'Pour les personnes repérées, une étude de situation de travail complète menée à distance par un ergonome, avec rapport individuel et préconisations concrètes.', cta: 'Demander une étude' },
+      { title: 'Étude de situation de travail', body: "Pour les personnes repérées, une étude de situation de travail complète menée à distance par un ergonome, avec rapport individuel et préconisations concrètes. Mêmes ergonomes, mêmes référentiels qu'en présentiel ; moins cher, donc plus de salariés et de sites couverts avec le même budget.", cta: 'Demander une étude' },
       { title: 'Formation aux risques psychosociaux', body: 'Sept heures pour vos managers, cours en ligne puis classe virtuelle animée par une psychologue du travail. Dispensée par IEF Biologie, organisme certifié Qualiopi.', cta: 'Voir la formation' },
     ],
     problemsLabel: 'La réalité terrain',
@@ -535,7 +535,7 @@ export const fr = {
     // ── Comment ça marche ────────────────────────────────────────
     processLabel: 'Comment ça marche',
     processTitle: 'Un processus simple, des résultats puissants',
-    processSubtitle: 'De la captation terrain au tableau de bord décisionnel, ScanUp automatise la chaîne de dépistage en quatre étapes clés.',
+    processSubtitle: "De la captation terrain au tableau de bord décisionnel, en quatre étapes : la plateforme collecte et traite techniquement les données, l'analyse reste exclusivement humaine.",
     steps: [
       { n: '01', title: 'Captation audio ou vidéo', body: 'L\'opérateur sur le terrain dépose un enregistrement audio ou vidéo directement depuis son smartphone ou sa tablette. Simple, rapide, sans formation préalable.' },
       { n: '02', title: 'Analyse par nos experts', body: 'Nos experts santé évaluent chaque captation pour qualifier le dépistage : identification des signaux TMS et RPS, cotation des niveaux de risque, validation clinique.' },
@@ -543,6 +543,14 @@ export const fr = {
       { n: '04', title: 'Pilotage et actions ciblées', body: 'Grâce au taux de dépistage positif, identifiez les zones à risque, priorisez vos actions de prévention et mesurez leur impact dans le temps.' },
     ],
     // ── Bénéfices ────────────────────────────────────────────────
+    impactLabel: "L'impact",
+    impactTitle: "Même méthode, mêmes professionnels.",
+    impactSubtitle: "L'étude de situation de travail est réalisée par des ergonomes et des psychologues qualifiés, avec les mêmes référentiels que ceux utilisés sur le terrain. Seul le mode de recueil change : la vidéo, à distance.",
+    impactItems: [
+      { title: "Une efficacité déjà reconnue", body: "Assureurs et services de santé au travail financent déjà ces interventions en présentiel. ScanUp ne vous demande pas de croire à une nouvelle méthode, mais à un nouveau mode de délivrance." },
+      { title: "Plus de salariés couverts, pour le même budget", body: "Moins cher que le présentiel, ScanUp touche beaucoup plus de postes et de sites avec le même budget de prévention, y compris ceux que le présentiel n'atteint jamais : petits sites, zones isolées, horaires décalés." },
+      { title: "La couverture du portefeuille", body: "C'est l'argument économique pour un assureur ou un réassureur : la prévention ne se limite plus aux quelques grands comptes où un ergonome peut se déplacer, elle s'étend à l'ensemble du portefeuille." },
+    ],
     benefitsLabel: 'Vos bénéfices',
     benefitsTitle: 'Ce que ScanUp change pour votre mutuelle',
     benefits: [
@@ -730,8 +738,8 @@ export const fr = {
     contact: 'Une question ? Contactez-nous',
   },
   spsti: {
-    metaTitle: 'SPST : étude de poste à distance et dépistage RPS avec orientation',
-    metaDescription: 'Dépistage RPS avec orientation et étude de poste à distance par un ergonome IPRP, pour les équipes pluridisciplinaires des SPST. Traçable pour la certification.',
+    metaTitle: 'SPST : étude de situation de travail à distance et dépistage RPS avec orientation',
+    metaDescription: 'Dépistage RPS avec orientation et étude de situation de travail à distance par un ergonome IPRP, pour les équipes pluridisciplinaires des SPST. Traçable pour la certification.',
     heroBadge: 'Prévention primaire · Cellule PDP · Certification',
     heroTitle: 'Repérer les situations à risque,',
     heroTitleHighlight: 'avant l\'arrêt',
@@ -765,7 +773,7 @@ export const fr = {
 
     etudeLabel: 'Étude de situation de travail à distance',
     etudeTitle: 'L\'analyse ergonomique, sans déplacement',
-    etudeSubtitle: 'Le salarié filme sa situation réelle de travail depuis son téléphone, selon des consignes construites avec vous, un module par métier. Un ergonome IPRP analyse la séquence et rédige un rapport individuel assorti de préconisations d\'aménagement.',
+    etudeSubtitle: "Le salarié filme sa situation réelle de travail depuis son téléphone, selon des consignes construites avec vous, un module par métier. Un ergonome IPRP analyse la séquence et rédige un rapport individuel assorti de préconisations d'aménagement. Même méthode, mêmes professionnels : des ergonomes qualifiés, les mêmes référentiels que sur le terrain ; seul le mode de recueil change.",
     etudePoints: [
       {
         title: 'Une analyse par personne, pas par poste',

@@ -30,7 +30,7 @@ type Plan = {
   cta: string;
 };
 
-const PlanCard: React.FC<{ plan: Plan; featured?: boolean; onCta: () => void }> = ({ plan, featured = false, onCta }) => (
+const PlanCard: React.FC<{ plan: Plan; featured?: boolean }> = ({ plan, featured = false }) => (
   <motion.div
     whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
     transition={{ duration: 0.25 }}
@@ -54,7 +54,7 @@ const PlanCard: React.FC<{ plan: Plan; featured?: boolean; onCta: () => void }> 
     <div className={`text-[12px] leading-snug mb-6 ${featured ? 'text-white/40' : 'text-scanup-graytext'}`}>
       {plan.sub}
     </div>
-    <ul className="space-y-2.5 flex-grow mb-7">
+    <ul className="space-y-2.5 flex-grow">
       {plan.items.map((item, j) => (
         <li key={j} className={`flex items-start gap-2 text-[13px] leading-snug ${featured ? 'text-white/70' : 'text-scanup-graytext'}`}>
           <Check size={11} className={`flex-shrink-0 mt-1 ${featured ? 'text-scanup-turquoise' : 'text-scanup-blue'}`} />
@@ -62,16 +62,6 @@ const PlanCard: React.FC<{ plan: Plan; featured?: boolean; onCta: () => void }> 
         </li>
       ))}
     </ul>
-    <button
-      onClick={onCta}
-      className={`w-full py-2.5 rounded-xl font-semibold text-[13px] transition-all mt-2 ${
-        featured
-          ? 'bg-white text-scanup-navy hover:bg-scanup-turquoise'
-          : 'border border-black/10 hover:border-scanup-blue hover:text-scanup-blue'
-      }`}
-    >
-      {plan.cta}
-    </button>
   </motion.div>
 );
 
@@ -154,7 +144,7 @@ export default function TarifsPage() {
             <h2 className="text-[26px] sm:text-[32px] font-bold tracking-tight mb-2">{tr.step1Title}</h2>
             <p className="text-[15px] text-scanup-graytext max-w-2xl mx-auto">{tr.step2Title}</p>
           </Reveal>
-          {([tr.tms, tr.rps] as const).map((risk, r) => {
+          {([tr.both] as const).map((risk, r) => {
             const uses = [
               { label: tr.step1Label, sub: tr.step1Subtitle },
               { label: tr.step2Label, sub: tr.step2Subtitle },
@@ -181,12 +171,12 @@ export default function TarifsPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
                       {risk.plans.map((plan, i) => (
                         <Reveal key={i} delay={i * 0.07}>
-                          <PlanCard plan={plan} featured={i === 1} onCta={goContact} />
+                          <PlanCard plan={plan} featured={i === 1} />
                         </Reveal>
                       ))}
                     </div>
                   </div>
-                  {[tr.options[r], tr.options[2 + r]].map((opt, k) => (
+                  {risk.options.map((opt, k) => (
                     <div key={k} className="flex flex-col">
                       <UseHead u={uses[k + 1]} />
                       <Reveal delay={0.14 + k * 0.07} className="flex-grow">

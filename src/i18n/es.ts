@@ -507,7 +507,7 @@ export const es = {
       ],
       options: [
         { name: "Plan de acción de prevención", price: "750 €", sub: "sin IVA por tramo de 50 empleados y por riesgo", desc: "Recibe una cartografía anónima de los riesgos en sus equipos, las acciones prioritarias y una restitución por nuestros expertos. Nunca tiene acceso a los resultados individuales.", tag: "" },
-        { name: "Informe individual", price: "Desde 240 €", sub: "sin IVA por estudio TME, según el volumen; RPS bajo presupuesto", desc: "Su médico o enfermera del trabajo recibe un estudio de la situación de trabajo realizado a distancia por un ergónomo (TME) o un análisis en entrevista con un psicólogo (RPS), con recomendaciones priorizadas.", tag: "" },
+        { name: "Informe individual", price: "Desde 240 €", sub: "sin IVA por estudio TME, según el volumen; RPS bajo presupuesto", desc: "Su médico o enfermera del trabajo recibe un estudio de la situación de trabajo realizado a distancia por un ergónomo (TME) o un análisis en entrevista con un psicólogo (RPS), con recomendaciones clasificadas por nivel de coste: sin coste (ajustes, organización), bajo coste, inversión. Usted decide el ritmo.", tag: "" },
       ],
     },
     tms: {

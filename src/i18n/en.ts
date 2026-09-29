@@ -507,7 +507,7 @@ export const en = {
       ],
       options: [
         { name: "Prevention action plan", price: "€750", sub: "excl. VAT per block of 50 employees, per risk", desc: "You receive an anonymous map of the risks in your teams, the priority actions and a debrief by our experts. You never have access to individual results.", tag: "" },
-        { name: "Individual report", price: "From €240", sub: "excl. VAT per MSD study, depending on volume; PSR on quotation", desc: "Your occupational physician or nurse receives a work situation study carried out remotely by an ergonomist (MSD) or an interview-based analysis by a psychologist (PSR), with prioritised recommendations.", tag: "" },
+        { name: "Individual report", price: "From €240", sub: "excl. VAT per MSD study, depending on volume; PSR on quotation", desc: "Your occupational physician or nurse receives a work situation study carried out remotely by an ergonomist (MSD) or an interview-based analysis by a psychologist (PSR), with recommendations ranked by cost: no cost (adjustments, organisation), low cost, investment. You decide the pace.", tag: "" },
       ],
     },
     tms: {

@@ -507,7 +507,7 @@ export const it = {
       ],
       options: [
         { name: "Piano d'azione di prevenzione", price: "750 €", sub: "+ IVA per fascia di 50 collaboratori e per rischio", desc: "Ricevete una mappatura anonima dei rischi nei vostri team, le azioni prioritarie e una restituzione da parte dei nostri esperti. Non avete mai accesso ai risultati individuali.", tag: "" },
-        { name: "Relazione individuale", price: "Da 240 €", sub: "+ IVA per studio DMS, in base al volume; RPS su preventivo", desc: "Il medico o l'infermiere del lavoro riceve uno studio della situazione di lavoro svolto a distanza da un ergonomo (DMS) o un'analisi in colloquio con uno psicologo (RPS), con raccomandazioni prioritarie.", tag: "" },
+        { name: "Relazione individuale", price: "Da 240 €", sub: "+ IVA per studio DMS, in base al volume; RPS su preventivo", desc: "Il medico o l'infermiere del lavoro riceve uno studio della situazione di lavoro svolto a distanza da un ergonomo (DMS) o un'analisi in colloquio con uno psicologo (RPS), con raccomandazioni classificate per livello di costo: senza costi (regolazioni, organizzazione), a basso costo, investimento. Siete voi a decidere i tempi.", tag: "" },
       ],
     },
     tms: {

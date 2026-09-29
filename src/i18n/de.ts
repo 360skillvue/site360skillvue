@@ -507,7 +507,7 @@ export const de = {
       ],
       options: [
         { name: "Präventions-Aktionsplan", price: "750 €", sub: "zzgl. MwSt. pro 50 Mitarbeitende und Risiko", desc: "Sie erhalten eine anonyme Risikokartierung Ihrer Teams, die prioritären Massnahmen und eine Präsentation durch unsere Fachleute. Auf individuelle Ergebnisse haben Sie nie Zugriff.", tag: "" },
-        { name: "Individueller Bericht", price: "Ab 240 €", sub: "zzgl. MwSt. pro MSE-Analyse, je nach Volumen; PSR auf Anfrage", desc: "Ihr Arbeitsmediziner oder Ihre Pflegefachperson erhält eine aus der Ferne durchgeführte Analyse der Arbeitssituation durch eine:n Ergonom:in (MSE) oder eine Analyse im Gespräch mit einem:r Psycholog:in (PSR), mit priorisierten Empfehlungen.", tag: "" },
+        { name: "Individueller Bericht", price: "Ab 240 €", sub: "zzgl. MwSt. pro MSE-Analyse, je nach Volumen; PSR auf Anfrage", desc: "Ihr Arbeitsmediziner oder Ihre Pflegefachperson erhält eine aus der Ferne durchgeführte Analyse der Arbeitssituation durch eine:n Ergonom:in (MSE) oder eine Analyse im Gespräch mit einem:r Psycholog:in (PSR), mit Empfehlungen nach Kostenstufe: kostenlos (Einstellungen, Organisation), geringe Kosten, Investition. Sie bestimmen das Tempo.", tag: "" },
       ],
     },
     tms: {

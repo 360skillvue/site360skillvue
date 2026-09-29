@@ -596,7 +596,7 @@ export const fr = {
       ],
       options: [
         { name: "Plan d'action de prévention", price: "750 €", sub: "HT par tranche de 50 collaborateurs et par risque", desc: "Vous recevez une cartographie anonyme des risques dans vos équipes, les actions à mener en priorité et une restitution par nos experts. Vous n'avez jamais accès aux résultats individuels.", tag: "" },
-        { name: "Rapport individuel", price: "Dès 240 €", sub: "HT par étude TMS, selon le volume ; RPS sur devis", desc: "Votre médecin ou infirmier du travail reçoit une étude de situation de travail réalisée à distance par un ergonome (TMS) ou une analyse en entretien avec un psychologue (RPS), avec des préconisations hiérarchisées.", tag: "" },
+        { name: "Rapport individuel", price: "Dès 240 €", sub: "HT par étude TMS, selon le volume ; RPS sur devis", desc: "Votre médecin ou infirmier du travail reçoit une étude de situation de travail réalisée à distance par un ergonome (TMS) ou une analyse en entretien avec un psychologue (RPS), avec des préconisations classées par niveau de coût : sans coût (réglages, organisation), faible coût, investissement. Vous décidez du rythme.", tag: "" },
       ],
     },
     tms: {

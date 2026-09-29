@@ -507,7 +507,7 @@ export const pt = {
       ],
       options: [
         { name: "Plano de ação de prevenção", price: "750 €", sub: "sem IVA por escalão de 50 colaboradores e por risco", desc: "Recebe uma cartografia anónima dos riscos nas suas equipas, as ações prioritárias e uma restituição pelos nossos especialistas. Nunca tem acesso aos resultados individuais.", tag: "" },
-        { name: "Relatório individual", price: "A partir de 240 €", sub: "sem IVA por estudo LME, consoante o volume; RPS sob orçamento", desc: "O seu médico ou enfermeiro do trabalho recebe um estudo da situação de trabalho realizado à distância por um ergonomista (LME) ou uma análise em entrevista com um psicólogo (RPS), com recomendações prioritárias.", tag: "" },
+        { name: "Relatório individual", price: "A partir de 240 €", sub: "sem IVA por estudo LME, consoante o volume; RPS sob orçamento", desc: "O seu médico ou enfermeiro do trabalho recebe um estudo da situação de trabalho realizado à distância por um ergonomista (LME) ou uma análise em entrevista com um psicólogo (RPS), com recomendações classificadas por nível de custo: sem custo (ajustes, organização), baixo custo, investimento. É você quem decide o ritmo.", tag: "" },
       ],
     },
     tms: {

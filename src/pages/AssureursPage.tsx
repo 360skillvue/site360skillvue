@@ -147,8 +147,30 @@ export default function AssureursPage() {
         </div>
       </section>
 
-      {/* ── Bénéfices + KPI ────────────────────────────────────────── */}
+      {/* ── Impact ─────────────────────────────────────────────────── */}
       <section className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <FadeIn className="mb-12">
+            <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-3">{ta.impactLabel}</p>
+            <h2 className="text-[26px] md:text-[38px] font-bold mb-3 tracking-tight">{ta.impactTitle}</h2>
+            <p className="text-[15px] text-scanup-graytext max-w-2xl leading-relaxed">{ta.impactSubtitle}</p>
+          </FadeIn>
+          <div className="grid md:grid-cols-3 gap-6">
+            {(ta.impactItems || []).map((it: any, i: number) => (
+              <FadeIn key={i} delay={i * 0.08}>
+                <div className="h-full rounded-2xl border border-black/[0.07] bg-[#f7f9fc] p-7">
+                  <div className="text-[11px] text-scanup-blue font-semibold uppercase tracking-widest mb-3">{String(i + 1).padStart(2, '0')}</div>
+                  <h3 className="text-[17px] font-semibold mb-2 text-scanup-navy">{it.title}</h3>
+                  <p className="text-[14px] text-scanup-graytext leading-relaxed">{it.body}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Bénéfices + KPI ────────────────────────────────────────── */}
+      <section className="py-24 bg-[#f7f9fc] border-t border-black/[0.05]">
         <div className="max-w-5xl mx-auto px-6">
           <FadeIn className="mb-14">
             <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-3">{ta.benefitsLabel}</p>
@@ -197,7 +219,7 @@ export default function AssureursPage() {
       </section>
 
       {/* ── Tarification ───────────────────────────────────────────── */}
-      <section className="bg-[#f7f9fc] py-16 border-t border-black/[0.05]">
+      <section className="bg-white py-16 border-t border-black/[0.05]">
         <div className="max-w-5xl mx-auto px-6">
           <FadeIn>
             <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-3">{ta.pricingLabel}</p>

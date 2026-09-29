@@ -535,28 +535,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
 
           <div class="field" id="sv-f-rps">
-            <label>RPS : les usages des données</label>
-            <p class="hint" style="margin:0 0 6px">Pour le salarié</p>
+            <label>RPS : ce que vous choisissez</label>
+            <p class="hint" style="margin:0 0 6px">Pour vos salariés</p>
             <div class="scn-set">
               <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Retour par e-mail<small id="sv-lab-rps-e">27 € HT par salarié</small></span></label>
               <label class="scn"><input type="radio" name="svrps" value="40"><span>Avec téléconsultation<small id="sv-lab-rps-p">40 € HT par salarié</small></span></label>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
-              <label class="scn"><input type="radio" name="svprps" value="non"><span>Sans plan d'action<small>pas d'usage direction</small></span></label>
+              <label class="scn"><input type="radio" name="svprps" value="non"><span>Sans plan d'action<small>rien pour la direction</small></span></label>
               <label class="scn"><input type="radio" name="svprps" value="oui" checked><span>Plan d'action RPS<small id="sv-lab-prps">750 € HT par tranche de 50 salariés</small></span></label>
             </div>
-            <p class="hint">Pour la direction : le plan d'action collectif. Pour le service de santé au travail : le rapport individuel RPS, sur devis, comparé à des entretiens approfondis en présentiel.</p>
+            <p class="hint">Pour vous, RH et direction : le plan d'action collectif. Pour votre médecin du travail : le rapport individuel RPS, sur devis, comparé à des entretiens approfondis en présentiel.</p>
           </div>
 
           <div class="field" id="sv-f-tms">
-            <label>TMS : les usages des données</label>
-            <p class="hint" style="margin:0 0 6px">Pour le salarié</p>
+            <label>TMS : ce que vous choisissez</label>
+            <p class="hint" style="margin:0 0 6px">Pour vos salariés</p>
             <div class="scn-set">
               <label class="scn"><input type="radio" name="svtms" value="essential"><span>Retour par e-mail<small id="sv-lab-tms-e">27 € HT par salarié</small></span></label>
               <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Avec coaching vidéo<small id="sv-lab-tms-p">40 € HT par salarié</small></span></label>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
-              <label class="scn"><input type="radio" name="svptms" value="non" checked><span>Sans plan d'action<small>pas d'usage direction</small></span></label>
+              <label class="scn"><input type="radio" name="svptms" value="non" checked><span>Sans plan d'action<small>rien pour la direction</small></span></label>
               <label class="scn"><input type="radio" name="svptms" value="oui"><span>Plan d'action TMS<small id="sv-lab-ptms">750 € HT par tranche de 50 salariés</small></span></label>
             </div>
             <p class="hint" id="sv-hint-tms"></p>
@@ -631,7 +631,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
 
               <div class="field" hidden>
-                <label for="sv-p-poste">Coût d'une étude de poste en présentiel</label>
+                <label for="sv-p-poste">Coût d'une étude de situation de travail en présentiel</label>
                 <input type="number" id="sv-p-poste" min="0" max="10000" step="50" value="1200">
                 <p class="hint">Par étude, déplacement et rédaction compris. Le FIPHFP finance une étude ergonomique externe jusqu'à 3 000 €, et la journée d'ergonome se facture 685 € dans la grille publique 2026 d'un centre de gestion.</p>
               </div>
@@ -1120,10 +1120,10 @@ function calcule(){
   $("sv-roi-l").textContent="Ce qu'il faut investir pour agir";
   $("sv-p-label").textContent=(perim==="deux"?"Ce que le risque vous coûte":(perim==="rps"?"Ce que les RPS vous coûtent":"Ce que les TMS vous coûtent"));
   $("sv-roi-sur").textContent=libPer;
-  $("sv-hint-tms").textContent="Chaque usage se compare à son équivalent en présentiel. Pour le salarié, le retour par e-mail "+
-    "se compare à un module e-learning gestes et postures, le coaching vidéo à une formation en présentiel. Pour la direction, "+
+  $("sv-hint-tms").textContent="Chaque choix se compare à son équivalent en présentiel. Pour vos salariés, le retour par e-mail "+
+    "se compare à un module e-learning gestes et postures, le coaching vidéo à une formation en présentiel. Pour vous, RH et direction, "+
     "le plan d'action TMS, "+eur(750)+" HT par tranche de 50 salariés, se compare à celui d'un ergonome qui se déplace. "+
-    "Pour le service de santé au travail, le rapport individuel à distance se compare à une étude de poste en présentiel ; "+
+    "Pour votre médecin du travail, le rapport individuel à distance se compare à une étude de situation de travail en présentiel ; "+
     "sur devis des deux côtés, il reste hors du calcul.";
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-ent").textContent=eur(c1ent);
@@ -1134,7 +1134,7 @@ function calcule(){
   $("sv-c1-ptms").textContent=eur(c1ptms);
   $("sv-c1-l-ptms").textContent="TMS, pour la direction : plan d'action par un ergonome sur site, "+num(nbTr0,0)+(nbTr0>1?" journées":" journée")+" × "+eur(pPlanErgo*fPres);
   $("sv-c1-l-form").textContent="TMS, pour le salarié : "+lib1form.charAt(0).toLowerCase()+lib1form.slice(1);
-  $("sv-c1-l-tms").textContent="TMS, pour la santé au travail : études de poste par un ergonome, en présentiel";
+  $("sv-c1-l-tms").textContent="TMS, pour votre médecin du travail : études de situation de travail par un ergonome, en présentiel";
   $("sv-cmp-t1").textContent=eur(c1);
   $("sv-cmp-b1").textContent=eur(c1);
   $("sv-c2-rps").textContent=eur(c2rps);
@@ -1159,9 +1159,9 @@ function calcule(){
       "Vous, vous recevez des indicateurs agrégés, jamais des noms.";
   } else if(perim==="tms"){
     d1="La formation gestes et postures transmet des règles générales, en groupe ou en ligne : elle ne "+
-      "regarde pas comment chacun travaille. Les études de poste en présentiel, sur devis, raisonnent par poste et non par personne.";
+      "regarde pas comment chacun travaille. Les études ergonomiques en présentiel, sur devis, raisonnent par poste et non par personne.";
     d2="On part de la personne et non du poste. Le travail est capté en situation réelle, et l'étude "+
-      "approfondie, elle, reste à votre main : vous commandez les rapports individuels qui vous semblent justifiés, pour le service de santé au travail.";
+      "approfondie, elle, reste à votre main : vous commandez les rapports individuels qui vous semblent justifiés, pour votre médecin du travail.";
   } else {
     d1="L'audit psychosocial est collectif, il décrit des services et non des personnes : le repérage "+
       "individuel suppose d'y ajouter un entretien par salarié, mené sur place. La formation gestes et "+

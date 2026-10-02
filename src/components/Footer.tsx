@@ -32,6 +32,8 @@ export default function Footer() {
           </a>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+          <a href="https://blog.360skillvue.com/" className="hover:text-white transition-colors">Blog</a>
+          <span aria-hidden="true">·</span>
           <Link to="/a-propos" className="hover:text-white transition-colors">{t.footer.about}</Link>
           <span aria-hidden="true">·</span>
           <Link to="/mentions-legales" className="hover:text-white transition-colors">{t.footer.legal}</Link>

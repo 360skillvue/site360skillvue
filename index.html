@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Google Consent Mode v2 — defaults BEFORE GTM -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        wait_for_update: 500
+      });
+    </script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z9DG0GC785"></script>
     <script>
@@ -52,29 +65,18 @@
         "@type": "ContactPoint",
         "telephone": "+33-4-50-27-91-02",
         "contactType": "customer support",
-        "availableLanguage": ["French", "English"],
+        "availableLanguage": ["French", "English", "German", "Italian", "Spanish", "Portuguese"],
         "hoursAvailable": "Mo-Fr 09:00-18:00"
       },
       "sameAs": [
-        "https://scanup.360skillvue.com"
+        "https://scanup.360skillvue.com",
+        "https://www.linkedin.com/company/360skillvue/",
+        "https://360skillvue.ch"
       ],
       "areaServed": ["FR", "CH", "BE", "LU"]
     }
     </script>
 
-    <!-- Google Consent Mode v2 — defaults BEFORE GTM -->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('consent', 'default', {
-        analytics_storage: 'denied',
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
-        wait_for_update: 500
-      });
-      gtag('js', new Date());
-    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

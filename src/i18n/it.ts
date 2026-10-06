@@ -21,7 +21,7 @@ export const it = {
   },
   meta: {
     home: { title: 'Prevenzione dei DMS e dei rischi psicosociali', description: 'ScanUp effettua lo screening dei disturbi muscoloscheletrici e dei rischi psicosociali dei vostri team e gestisce la certificazione periodica dei professionisti sanitari.' },
-    entreprises: { title: 'Aziende e HR, screening a distanza', description: 'Ogni collaboratore è analizzato individualmente da uno psicologo del lavoro o da un ergonomo certificato. Analisi della postazione a distanza per le persone individuate.' },
+    entreprises: { title: 'Aziende e HR, screening a distanza', description: 'Ogni collaboratore è analizzato individualmente da uno psicologo del lavoro o da un ergonomo certificato. Studio della situazione di lavoro a distanza, muscoloscheletrico o psicosociale.' },
     assureurs: { title: 'Assicuratori e mutue, governo del rischio salute', description: 'Trasformate i dati di screening dei vostri assicurati in una mappa del rischio utilizzabile, per ridurre l\'assenteismo e affinare la vostra tariffazione.' },
     certification: { title: 'Certificazione periodica dei professionisti sanitari', description: 'Distribuite i moduli, monitorate l\'avanzamento e mettete in sicurezza la certificazione periodica dei vostri professionisti su un ciclo di sei anni.' },
     tarifs: { title: 'Prezzi ScanUp, screening DMS e rischi psicosociali', description: 'Screening dei rischi psicosociali da 27 € e screening dei DMS da 27 € per collaboratore, analisi dei nostri esperti inclusa. Prova gratuita di 14 giorni.' },
@@ -332,7 +332,7 @@ export const it = {
     heroTitle: 'Screening dei rischi',
     heroTitleHighlight: 'DMS & RPS',
     heroTitleEnd: 'senza audit in 48 ore.',
-    heroSubtitle: 'Ogni collaboratore è analizzato individualmente da uno psicologo del lavoro o da un ergonomo certificato. Per le persone individuate, analisi completa della postazione a distanza e relazione individuale. A partire da 27 € per collaboratore.',
+    heroSubtitle: 'Ogni collaboratore è analizzato individualmente da uno psicologo del lavoro o da un ergonomo certificato. Se necessario, studio completo della situazione di lavoro a distanza, muscoloscheletrico o psicosociale, con relazione individuale. A partire da 27 € per collaboratore.',
     heroCtaPrimary: 'Simula il mio costo gratis (in francese)',
     heroCtaSecondary: 'Vedi una demo',
     stats: [
@@ -346,7 +346,7 @@ export const it = {
     offresTitleEnd: 'una sola piattaforma.',
     offres: [
       { title: 'Screening dei rischi psicosociali e muscoloscheletrici', body: 'Ogni dipendente è analizzato individualmente da uno psicologo del lavoro o da un ergonomo. Risultati in 48 ore, a partire da 27 € per collaboratore.', cta: 'Simulare il mio costo' },
-      { title: 'Studio ergonomico della postazione a distanza', body: "Per le persone individuate, uno studio completo della postazione condotto a distanza da un ergonomo, con relazione individuale e raccomandazioni concrete. Stessi ergonomi, stessi riferimenti che in presenza; meno costoso, quindi più collaboratori e sedi coperti con lo stesso budget.", cta: 'Richiedere uno studio' },
+      { title: 'Studio della situazione di lavoro a distanza', body: "Uno studio completo della situazione di lavoro condotto a distanza, con dominante muscoloscheletrica o psicosociale, da un ergonomo o da uno psicologo del lavoro, con relazione individuale e raccomandazioni concrete. Può seguire uno screening o essere svolto su prescrizione. Stessi esperti, stessi riferimenti che in presenza; meno costoso, quindi più collaboratori e sedi coperti con lo stesso budget.", cta: 'Richiedere uno studio' },
       { title: 'Formazione sui rischi psicosociali', body: 'Sette ore per i vostri responsabili, corsi online e poi un\'aula virtuale condotta da una psicologa del lavoro. Erogata da IEF Biologie, organismo certificato Qualiopi.', cta: 'Vedere la formazione' },
     ],
     problemsLabel: 'La realtà sul campo',

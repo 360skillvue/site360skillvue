@@ -21,7 +21,7 @@ export const en = {
   },
   meta: {
     home: { title: 'Musculoskeletal and psychosocial risk prevention', description: 'ScanUp screens your teams for musculoskeletal and psychosocial risks and manages the periodic certification of your healthcare professionals. From €27 per employee.' },
-    entreprises: { title: 'Companies and HR, remote risk screening', description: 'Every employee reviewed individually by an occupational psychologist or a certified ergonomist. Remote workstation assessment for those identified. From €27.' },
+    entreprises: { title: 'Companies and HR, remote risk screening', description: 'Every employee reviewed individually by an occupational psychologist or a certified ergonomist. Remote work situation assessment, musculoskeletal or psychosocial. From €27.' },
     assureurs: { title: 'Insurers and mutuals, health risk steering', description: 'Turn your members\' screening data into an actionable risk map, to reduce absenteeism and refine your pricing.' },
     certification: { title: 'Periodic certification for healthcare professionals', description: 'Deploy the modules, track progress and secure the periodic certification of your healthcare professionals over a six-year cycle. Certified health-data hosting.' },
     tarifs: { title: 'ScanUp pricing, risk screening', description: 'Psychosocial risk screening from €27 and musculoskeletal screening from €27 per employee, expert review included. Free 14-day trial, no credit card.' },
@@ -332,7 +332,7 @@ export const en = {
     heroTitle: 'Screen your',
     heroTitleHighlight: 'MSD & PSR',
     heroTitleEnd: 'risks without an audit in 48h.',
-    heroSubtitle: 'Every employee is reviewed individually by an occupational psychologist or a certified ergonomist. For those identified, a full remote workstation assessment and an individual report. From €27 per employee.',
+    heroSubtitle: 'Every employee is reviewed individually by an occupational psychologist or a certified ergonomist. Where needed, a full remote work situation assessment, musculoskeletal or psychosocial, with an individual report. From €27 per employee.',
     heroCtaPrimary: 'Simulate my cost for free (in French)',
     heroCtaSecondary: 'See a demo',
     stats: [
@@ -346,7 +346,7 @@ export const en = {
     offresTitleEnd: 'one single platform.',
     offres: [
       { title: 'Psychosocial and musculoskeletal risk screening', body: 'Every employee is reviewed individually by an occupational psychologist or an ergonomist. Results within 48 hours, from €27 per employee.', cta: 'Estimate my cost' },
-      { title: 'Remote workstation assessment', body: "For the employees flagged by the screening, a full workstation assessment carried out remotely by an ergonomist, with an individual report and concrete recommendations. Same ergonomists, same frameworks as on site; cheaper, so more employees and sites covered with the same budget.", cta: 'Request an assessment' },
+      { title: 'Remote work situation assessment', body: "A full work situation assessment carried out remotely, focused on musculoskeletal or psychosocial risks, by an ergonomist or an occupational psychologist, with an individual report and concrete recommendations. It can follow a screening or be carried out on prescription. Same experts, same frameworks as on site; cheaper, so more employees and sites covered with the same budget.", cta: 'Request an assessment' },
       { title: 'Training on psychosocial risks', body: 'Seven hours for your managers, online courses followed by a virtual classroom led by an occupational psychologist. Delivered by IEF Biologie, a Qualiopi-certified training provider.', cta: 'See the training' },
     ],
     problemsLabel: 'The field reality',

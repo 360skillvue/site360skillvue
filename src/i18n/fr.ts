@@ -21,7 +21,7 @@ export const fr = {
   },
   meta: {
     home: { title: 'Prévention TMS et RPS, certification santé', description: 'ScanUp dépiste les risques TMS et RPS de vos équipes et pilote la certification périodique de vos professionnels de santé. Dès 27 € par collaborateur.' },
-    entreprises: { title: 'Entreprises et DRH, dépistage TMS et RPS', description: 'Chaque salarié analysé individuellement par un psychologue du travail ou un ergonome IPRP. Étude de poste à distance pour les personnes repérées. Dès 27 €.' },
+    entreprises: { title: 'Entreprises et DRH, dépistage TMS et RPS', description: 'Chaque salarié analysé individuellement par un psychologue du travail ou un ergonome IPRP. Étude de situation de travail à distance, TMS ou RPS. Dès 27 €.' },
     assureurs: { title: 'Assureurs et mutuelles, pilotage du risque santé', description: 'Transformez les données de dépistage TMS et RPS de vos assurés en cartographie du risque actionnable, pour réduire l\'absentéisme et affiner votre tarification.' },
     certification: { title: 'Certification périodique des professionnels de santé', description: 'Déployez les modules, suivez l\'avancement et sécurisez la certification périodique de vos professionnels de santé sur un cycle de six ans. Hébergement HDS.' },
     tarifs: { title: 'Tarifs ScanUp, dépistage TMS et RPS', description: 'Dépistage RPS dès 27 € et dépistage TMS dès 27 € HT par collaborateur, analyse par nos experts incluse. Essai gratuit 14 jours, sans carte bancaire.' },
@@ -414,7 +414,7 @@ export const fr = {
     heroTitle: 'Dépistez vos risques',
     heroTitleHighlight: 'TMS & RPS',
     heroTitleEnd: 'sans audit en 48h.',
-    heroSubtitle: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome. Pour les personnes repérées, étude de situation de travail complète à distance et rapport individuel. Dès 27 € par collaborateur.',
+    heroSubtitle: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome. Si besoin, étude de situation de travail complète à distance, TMS ou RPS, avec rapport individuel. Dès 27 € par collaborateur.',
     heroCtaPrimary: 'Simuler mon coût gratuitement',
     heroCtaSecondary: 'Voir une démo',
     stats: [
@@ -428,7 +428,7 @@ export const fr = {
     offresTitleEnd: 'une seule plateforme.',
     offres: [
       { title: 'Dépistage RPS et TMS', body: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome. Résultats en 48 heures, dès 27 € par collaborateur.', cta: 'Simuler mon coût' },
-      { title: 'Étude de situation de travail', body: "Pour les personnes repérées, une étude de situation de travail complète menée à distance par un ergonome, avec rapport individuel et préconisations concrètes. Mêmes ergonomes, mêmes référentiels qu'en présentiel ; moins cher, donc plus de salariés et de sites couverts avec le même budget.", cta: 'Demander une étude' },
+      { title: 'Étude de situation de travail', body: "Une étude de situation de travail complète, menée à distance, à dominante TMS ou RPS, par un ergonome ou un psychologue du travail, avec rapport individuel et préconisations concrètes. Elle peut faire suite à un dépistage ou être réalisée sur prescription. Mêmes experts, mêmes référentiels qu'en présentiel ; moins cher, donc plus de salariés et de sites couverts avec le même budget.", cta: 'Demander une étude' },
       { title: 'Formation aux risques psychosociaux', body: 'Sept heures pour vos managers, cours en ligne puis classe virtuelle animée par une psychologue du travail. Dispensée par IEF Biologie, organisme certifié Qualiopi.', cta: 'Voir la formation' },
     ],
     problemsLabel: 'La réalité terrain',

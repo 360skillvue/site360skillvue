@@ -21,7 +21,7 @@ export const es = {
   },
   meta: {
     home: { title: 'Prevención de TME y riesgos psicosociales', description: 'ScanUp criba los trastornos musculoesqueléticos y los riesgos psicosociales de sus equipos y gestiona la certificación periódica de sus profesionales sanitarios.' },
-    entreprises: { title: 'Empresas y RR. HH., cribado a distancia', description: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo acreditado. Evaluación del puesto a distancia para las personas detectadas.' },
+    entreprises: { title: 'Empresas y RR. HH., cribado a distancia', description: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo acreditado. Estudio de la situación de trabajo a distancia, musculoesquelético o psicosocial.' },
     assureurs: { title: 'Aseguradoras y mutuas, gestión del riesgo de salud', description: 'Convierta los datos de cribado de sus asegurados en un mapa de riesgo accionable, para reducir el absentismo y afinar su tarificación.' },
     certification: { title: 'Certificación periódica de profesionales sanitarios', description: 'Despliegue los módulos, siga el avance y asegure la certificación periódica de sus profesionales sanitarios a lo largo de un ciclo de seis años.' },
     tarifs: { title: 'Tarifas ScanUp, cribado de TME y riesgos psicosociales', description: 'Cribado de riesgos psicosociales desde 27 € y cribado de TME desde 27 € por empleado, análisis de nuestros expertos incluido. Prueba gratuita de 14 días.' },
@@ -332,7 +332,7 @@ export const es = {
     heroTitle: 'Detecte sus riesgos',
     heroTitleHighlight: 'de TME y RPS',
     heroTitleEnd: 'sin auditoría, en 48 h.',
-    heroSubtitle: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo acreditado. Para las personas detectadas, una evaluación completa del puesto de trabajo a distancia y un informe individual. Desde 27 € por empleado.',
+    heroSubtitle: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo acreditado. Si es necesario, un estudio completo de la situación de trabajo a distancia, musculoesquelético o psicosocial, con informe individual. Desde 27 € por empleado.',
     heroCtaPrimary: 'Calcular mi coste gratis (en francés)',
     heroCtaSecondary: 'Ver una demo',
     stats: [
@@ -346,7 +346,7 @@ export const es = {
     offresTitleEnd: 'una sola plataforma.',
     offres: [
       { title: 'Detección de riesgos psicosociales y musculoesqueléticos', body: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo. Resultados en 48 horas, desde 27 € por colaborador.', cta: 'Calcular mi coste' },
-      { title: 'Estudio ergonómico del puesto a distancia', body: "Para las personas detectadas, un estudio completo del puesto realizado a distancia por un ergónomo, con informe individual y recomendaciones concretas. Mismos ergónomos, mismos referenciales que en presencial; más barato, por tanto más empleados y centros cubiertos con el mismo presupuesto.", cta: 'Solicitar un estudio' },
+      { title: 'Estudio de la situación de trabajo a distancia', body: "Un estudio completo de la situación de trabajo realizado a distancia, con dominante musculoesquelética o psicosocial, por un ergónomo o un psicólogo del trabajo, con informe individual y recomendaciones concretas. Puede derivarse de un cribado o realizarse por prescripción. Mismos expertos, mismos referenciales que en presencial; más barato, por tanto más empleados y centros cubiertos con el mismo presupuesto.", cta: 'Solicitar un estudio' },
       { title: 'Formación en riesgos psicosociales', body: 'Siete horas para sus mandos, cursos en línea y después un aula virtual dirigida por una psicóloga del trabajo. Impartida por IEF Biologie, organismo certificado Qualiopi.', cta: 'Ver la formación' },
     ],
     problemsLabel: 'La realidad del terreno',

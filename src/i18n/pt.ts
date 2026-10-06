@@ -21,7 +21,7 @@ export const pt = {
   },
   meta: {
     home: { title: 'Prevenção de LME e riscos psicossociais', description: 'A ScanUp faz o rastreio das lesões musculoesqueléticas e dos riscos psicossociais das suas equipas e gere a certificação periódica dos seus profissionais de saúde.' },
-    entreprises: { title: 'Empresas e RH, rastreio à distância', description: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista certificado. Avaliação do posto à distância para as pessoas identificadas.' },
+    entreprises: { title: 'Empresas e RH, rastreio à distância', description: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista certificado. Estudo da situação de trabalho à distância, musculoesquelético ou psicossocial.' },
     assureurs: { title: 'Seguradoras e mútuas, gestão do risco de saúde', description: 'Transforme os dados de rastreio dos seus segurados num mapa de risco acionável, para reduzir o absentismo e afinar a sua tarifação.' },
     certification: { title: 'Certificação periódica dos profissionais de saúde', description: 'Implemente os módulos, acompanhe o progresso e assegure a certificação periódica dos seus profissionais de saúde ao longo de um ciclo de seis anos.' },
     tarifs: { title: 'Preços ScanUp, rastreio de LME e riscos psicossociais', description: 'Rastreio dos riscos psicossociais a partir de 27 € e rastreio das LME a partir de 27 € por colaborador, análise dos nossos peritos incluída. 14 dias grátis.' },
@@ -332,7 +332,7 @@ export const pt = {
     heroTitle: 'Rastreie os seus riscos',
     heroTitleHighlight: 'LME & RPS',
     heroTitleEnd: 'sem auditoria, em 48 h.',
-    heroSubtitle: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista certificado. Para as pessoas identificadas, uma avaliação completa do posto de trabalho à distância e um relatório individual. A partir de 27 € por colaborador.',
+    heroSubtitle: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista certificado. Se necessário, um estudo completo da situação de trabalho à distância, musculoesquelético ou psicossocial, com relatório individual. A partir de 27 € por colaborador.',
     heroCtaPrimary: 'Simular o meu custo gratuitamente (em francês)',
     heroCtaSecondary: 'Ver uma demonstração',
     stats: [
@@ -346,7 +346,7 @@ export const pt = {
     offresTitleEnd: 'uma única plataforma.',
     offres: [
       { title: 'Rastreio dos riscos psicossociais e musculoesqueléticos', body: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista. Resultados em 48 horas, a partir de 27 € por colaborador.', cta: 'Simular o meu custo' },
-      { title: 'Estudo ergonómico do posto à distância', body: "Para as pessoas identificadas, um estudo completo do posto realizado à distância por um ergonomista, com relatório individual e recomendações concretas. Mesmos ergonomistas, mesmos referenciais que no presencial; mais barato, logo mais colaboradores e locais abrangidos com o mesmo orçamento.", cta: 'Pedir um estudo' },
+      { title: 'Estudo da situação de trabalho à distância', body: "Um estudo completo da situação de trabalho realizado à distância, com dominante musculoesquelética ou psicossocial, por um ergonomista ou um psicólogo do trabalho, com relatório individual e recomendações concretas. Pode decorrer de um rastreio ou ser realizado mediante prescrição. Mesmos especialistas, mesmos referenciais que no presencial; mais barato, logo mais colaboradores e locais abrangidos com o mesmo orçamento.", cta: 'Pedir um estudo' },
       { title: 'Formação em riscos psicossociais', body: 'Sete horas para os seus responsáveis, cursos online seguidos de uma aula virtual conduzida por uma psicóloga do trabalho. Ministrada pela IEF Biologie, organismo certificado Qualiopi.', cta: 'Ver a formação' },
     ],
     problemsLabel: 'A realidade no terreno',

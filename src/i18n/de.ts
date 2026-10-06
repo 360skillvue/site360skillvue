@@ -21,7 +21,7 @@ export const de = {
   },
   meta: {
     home: { title: 'Prävention von MSE und psychosozialen Risiken', description: 'ScanUp screent Ihre Teams auf Muskel-Skelett-Erkrankungen und psychosoziale Risiken und steuert die periodische Zertifizierung Ihrer Gesundheitsfachkräfte. Ab 27 €.' },
-    entreprises: { title: 'Unternehmen und HR, Screening aus der Ferne', description: 'Jede Person wird einzeln von einem Arbeitspsychologen oder einer zertifizierten Ergonomin ausgewertet. Arbeitsplatzanalyse aus der Ferne für erkannte Personen. Ab 27 €.' },
+    entreprises: { title: 'Unternehmen und HR, Screening aus der Ferne', description: 'Jede Person wird einzeln von einem Arbeitspsychologen oder einer zertifizierten Ergonomin ausgewertet. Analyse der Arbeitssituation aus der Ferne, muskuloskelettal oder psychosozial. Ab 27 €.' },
     assureurs: { title: 'Versicherer und Kassen, Steuerung des Gesundheitsrisikos', description: 'Verwandeln Sie die Screening-Daten Ihrer Versicherten in eine handlungsfähige Risikokarte, um Absenzen zu senken und Ihre Tarife zu schärfen.' },
     certification: { title: 'Periodische Zertifizierung von Gesundheitsfachkräften', description: 'Module ausrollen, Fortschritt verfolgen und die periodische Zertifizierung Ihrer Fachkräfte über einen Zyklus von sechs Jahren absichern. Zertifiziertes Hosting.' },
     tarifs: { title: 'ScanUp Preise, Screening MSE und PSR', description: 'Screening psychosozialer Risiken ab 27 € und MSE-Screening ab 27 € pro Mitarbeitendem, Expertenauswertung inbegriffen. 14 Tage kostenlos testen, ohne Kreditkarte.' },
@@ -332,7 +332,7 @@ export const de = {
     heroTitle: 'Erkennen Sie Ihre',
     heroTitleHighlight: 'MSE- & PSR-Risiken',
     heroTitleEnd: 'ohne Audit in 48 Stunden.',
-    heroSubtitle: 'Jede Person wird einzeln von einem Arbeitspsychologen oder einer zertifizierten Ergonomin ausgewertet. Für die erkannten Personen: vollständige Arbeitsplatzanalyse aus der Ferne und individueller Bericht. Ab 27 € pro Mitarbeitendem.',
+    heroSubtitle: 'Jede Person wird einzeln von einem Arbeitspsychologen oder einer zertifizierten Ergonomin ausgewertet. Bei Bedarf: vollständige Analyse der Arbeitssituation aus der Ferne, muskuloskelettal oder psychosozial, mit individuellem Bericht. Ab 27 € pro Mitarbeitendem.',
     heroCtaPrimary: 'Kosten kostenlos simulieren (auf Französisch)',
     heroCtaSecondary: 'Demo ansehen',
     stats: [
@@ -346,7 +346,7 @@ export const de = {
     offresTitleEnd: 'eine einzige Plattform.',
     offres: [
       { title: 'Screening psychosozialer und muskuloskelettaler Risiken', body: 'Jeder Mitarbeitende wird einzeln von einer Arbeitspsychologin oder einem Ergonomen ausgewertet. Ergebnisse in 48 Stunden, ab 27 € pro Person.', cta: 'Kosten berechnen' },
-      { title: 'Arbeitsplatzanalyse aus der Ferne', body: "Für die erkannten Personen eine vollständige Arbeitsplatzanalyse, aus der Ferne von einem Ergonomen durchgeführt, mit individuellem Bericht und konkreten Empfehlungen. Gleiche Ergonom:innen, gleiche Referenzrahmen wie vor Ort; günstiger, also mehr Mitarbeitende und Standorte mit demselben Budget abgedeckt.", cta: 'Analyse anfragen' },
+      { title: 'Analyse der Arbeitssituation aus der Ferne', body: "Eine vollständige Analyse der Arbeitssituation aus der Ferne, mit Schwerpunkt auf muskuloskelettalen oder psychosozialen Risiken, durchgeführt von einer Ergonomin oder einem Arbeitspsychologen, mit individuellem Bericht und konkreten Empfehlungen. Sie kann auf ein Screening folgen oder auf Verordnung erfolgen. Gleiche Fachleute, gleiche Referenzrahmen wie vor Ort; günstiger, also mehr Mitarbeitende und Standorte mit demselben Budget abgedeckt.", cta: 'Analyse anfragen' },
       { title: 'Schulung zu psychosozialen Risiken', body: 'Sieben Stunden für Ihre Führungskräfte, Online-Kurse und anschließend ein virtuelles Klassenzimmer mit einer Arbeitspsychologin. Durchgeführt von IEF Biologie, Qualiopi-zertifiziert.', cta: 'Schulung ansehen' },
     ],
     problemsLabel: 'Die Realität vor Ort',

@@ -85,7 +85,7 @@ export const de = {
     pillar1Title: 'Bewerten',
     pillar1Desc: 'Wissenschaftlich validierte Fragebögen zur Erfassung von MSE, psychosozialen Risiken und Kompetenzen — in wenigen Klicks einsatzbereit.',
     pillar2Title: 'Analysieren',
-    pillar2Desc: 'Echtzeit-Dashboards, Segmentierung nach Bevölkerungsgruppen und automatische Warnungen für Risikogruppen.',
+    pillar2Desc: "Echtzeit-Dashboards und Segmentierung nach Bevölkerungsgruppen, auf Basis der Analysen Ihrer Fachpersonen, um prioritäre Teams zu erkennen.",
     pillar3Title: 'Handeln',
     pillar3Desc: 'Individuelle Präventionspläne, automatische Erinnerungen und vollständige Rückverfolgbarkeit für jeden Mitarbeitenden.',
     productsLabel: 'Unsere Lösungen',

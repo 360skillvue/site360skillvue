@@ -85,7 +85,7 @@ export const it = {
     pillar1Title: 'Valutare',
     pillar1Desc: 'Questionari scientificamente validati per misurare DMS, rischi psicosociali e competenze — operativi in pochi clic.',
     pillar2Title: 'Analizzare',
-    pillar2Desc: 'Dashboard in tempo reale, segmentazione per popolazione e avvisi automatici sulle coorti a rischio.',
+    pillar2Desc: "Dashboard in tempo reale e segmentazione per popolazione, basate sulle analisi dei vostri esperti, per individuare i team prioritari.",
     pillar3Title: 'Agire',
     pillar3Desc: 'Piani di prevenzione personalizzati, solleciti automatici e tracciabilità completa per ogni collaboratore.',
     productsLabel: 'Le nostre soluzioni',

@@ -85,7 +85,7 @@ export const en = {
     pillar1Title: 'Assess',
     pillar1Desc: 'Scientifically validated questionnaires to measure MSDs, psychosocial risks and skills — deployed in just a few clicks.',
     pillar2Title: 'Analyze',
-    pillar2Desc: 'Real-time dashboards, population segmentation, and automatic alerts on at-risk cohorts.',
+    pillar2Desc: "Real-time dashboards and population segmentation, built on your experts' analyses, to identify priority teams.",
     pillar3Title: 'Act',
     pillar3Desc: 'Personalized prevention plans, automatic reminders and full traceability for every employee.',
     productsLabel: 'Our solutions',

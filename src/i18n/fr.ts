@@ -85,7 +85,7 @@ export const fr = {
     pillar1Title: 'Évaluer',
     pillar1Desc: 'Des questionnaires scientifiquement validés par des modules à personnaliser.',
     pillar2Title: 'Analyser',
-    pillar2Desc: 'Tableaux de bord en temps réel, segmentation par population, alertes automatiques sur les cohortes à risque.',
+    pillar2Desc: "Tableaux de bord en temps réel et segmentation par population, à partir des analyses de vos experts, pour repérer les équipes prioritaires.",
     pillar3Title: 'Agir',
     pillar3Desc: 'Plans de prévention personnalisés, relances automatiques et traçabilité complète pour chaque collaborateur.',
     productsLabel: 'Nos solutions',

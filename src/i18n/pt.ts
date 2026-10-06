@@ -85,7 +85,7 @@ export const pt = {
     pillar1Title: 'Avaliar',
     pillar1Desc: 'Questionários cientificamente validados para medir as lesões musculoesqueléticas, os riscos psicossociais e as competências — implementados em apenas alguns cliques.',
     pillar2Title: 'Analisar',
-    pillar2Desc: 'Painéis em tempo real, segmentação por população e alertas automáticos sobre as coortes em risco.',
+    pillar2Desc: "Painéis em tempo real e segmentação por população, com base nas análises dos seus especialistas, para identificar as equipas prioritárias.",
     pillar3Title: 'Agir',
     pillar3Desc: 'Planos de prevenção personalizados, lembretes automáticos e rastreabilidade completa para cada colaborador.',
     productsLabel: 'As nossas soluções',

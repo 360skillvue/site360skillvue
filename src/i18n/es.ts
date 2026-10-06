@@ -85,7 +85,7 @@ export const es = {
     pillar1Title: 'Evaluar',
     pillar1Desc: 'Cuestionarios científicamente validados para medir los TME, los riesgos psicosociales y las competencias, desplegados en unos pocos clics.',
     pillar2Title: 'Analizar',
-    pillar2Desc: 'Cuadros de mando en tiempo real, segmentación por poblaciones y alertas automáticas sobre los grupos en riesgo.',
+    pillar2Desc: "Cuadros de mando en tiempo real y segmentación por poblaciones, basados en los análisis de sus expertos, para identificar los equipos prioritarios.",
     pillar3Title: 'Actuar',
     pillar3Desc: 'Planes de prevención personalizados, recordatorios automáticos y trazabilidad completa para cada empleado.',
     productsLabel: 'Nuestras soluciones',

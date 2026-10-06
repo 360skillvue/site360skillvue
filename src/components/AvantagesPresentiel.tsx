@@ -212,7 +212,7 @@ export default function AvantagesPresentiel({ hero = false }: { hero?: boolean }
                   </p>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight text-scanup-turquoise">≈ 10 %</p>
+                  <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight text-scanup-turquoise">≈ 20 %</p>
                   <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">
                     <span className="font-semibold text-white">{t.rpsLabel}</span> {t.rpsText}
                   </p>

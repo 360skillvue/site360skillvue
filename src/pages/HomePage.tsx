@@ -133,7 +133,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── NIVEAUX D'ACCOMPAGNEMENT ──────────────────────────── */}
+      {/* ─── COMMENT ÇA MARCHE ──────────────────────────── */}
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <FadeIn className="text-center mb-14">
@@ -152,7 +152,7 @@ export default function HomePage() {
             {[
               { n: '01', title: t.home.level1Title, desc: t.home.level1Desc, price: t.home.level1Price, hi: false },
               { n: '02', title: t.home.level2Title, desc: t.home.level2Desc, price: t.home.level2Price, hi: false },
-              { n: '03', title: t.home.level3Title, desc: t.home.level3Desc, price: t.home.level3Price, hi: true },
+              { n: '03', title: t.home.level3Title, desc: t.home.level3Desc, price: t.home.level3Price, hi: false },
             ].map((lv, i) => (
               <FadeIn key={lv.n} delay={i * 0.1}>
                 <div
@@ -194,6 +194,20 @@ export default function HomePage() {
               </FadeIn>
             ))}
           </div>
+
+          <FadeIn delay={0.1} className="mb-12">
+            <div className="rounded-[20px] bg-scanup-navy text-white p-8 md:p-9 text-center">
+              <p className="text-[18px] md:text-[20px] font-bold tracking-tight mb-2">
+                {t.home.levelsPrivacyTitle}
+              </p>
+              <p className="text-[15px] text-white/80 leading-relaxed max-w-3xl mx-auto">
+                {t.home.levelsPrivacyDesc}
+              </p>
+              <p className="text-[15px] text-scanup-turquoise font-medium leading-relaxed max-w-3xl mx-auto mt-5 pt-5 border-t border-white/15">
+                {t.home.levelsBenefit}
+              </p>
+            </div>
+          </FadeIn>
 
           <FadeIn delay={0.15} className="mb-12">
             <div className="rounded-[20px] bg-scanup-lightblue/50 border border-scanup-blue/15 p-8 md:p-9">

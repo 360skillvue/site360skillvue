@@ -184,7 +184,7 @@ export default function HomePage() {
                     {lv.desc}
                   </p>
                   <p
-                    className={`text-[14px] font-semibold mt-6 pt-5 border-t ${
+                    className={`text-[14px] font-semibold mt-6 pt-5 border-t min-h-[62px] ${
                       lv.hi ? 'text-scanup-turquoise border-white/15' : 'text-scanup-navy border-scanup-graylight'
                     }`}
                   >
@@ -210,17 +210,17 @@ export default function HomePage() {
           </FadeIn>
 
           <FadeIn delay={0.15} className="mb-12">
-            <div className="rounded-[20px] bg-scanup-lightblue/50 border border-scanup-blue/15 p-8 md:p-9">
+            <div className="rounded-[20px] bg-scanup-lightblue/50 border border-scanup-blue/15 p-8 md:p-9 text-center">
               <h3 className="text-[18px] font-bold tracking-tight text-scanup-navy mb-3">
                 {t.home.levelsPackTitle}
               </h3>
-              <p className="text-[15px] text-scanup-graytext leading-relaxed max-w-3xl">
+              <p className="text-[15px] text-scanup-graytext leading-relaxed max-w-3xl mx-auto">
                 {t.home.levelsPackDesc}
               </p>
-              <p className="text-[15px] text-scanup-navy font-medium leading-relaxed max-w-3xl mt-3">
+              <p className="text-[15px] text-scanup-navy font-medium leading-relaxed max-w-3xl mx-auto mt-3">
                 {t.home.levelsIntl}
               </p>
-              <div className="flex flex-wrap gap-x-8 gap-y-3 mt-6">
+              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mt-6">
                 <Link
                   to="/partenaires"
                   className="inline-flex items-center gap-2 text-[14px] font-semibold text-scanup-blue hover:gap-3 transition-all duration-300"

@@ -347,7 +347,7 @@ export default function AidePage() {
               </div>
               <div
                 className="calendly-inline-widget"
-                data-url="https://calendly.com/d/cwdj-qsf-79c/presentation-de-360skillvue"
+                data-url="https://calendly.com/d/d2p2-4k5-8wp"
                 style={{ minWidth: '100%', height: 580 }}
               />
             </motion.div>

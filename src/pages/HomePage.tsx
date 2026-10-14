@@ -12,6 +12,7 @@ import { useLanguage } from '../i18n';
 import PageMeta from '../components/PageMeta';
 import VideoEmbed from '../components/VideoEmbed';
 import AvantagesPresentiel from '../components/AvantagesPresentiel';
+import { WebinaireEncadre } from '../components/WebinaireDecembre';
 
 const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: string }> = ({
   children, delay = 0, className = ""
@@ -94,6 +95,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ─── WEBINAIRE DU 3 DECEMBRE (disparait apres le webinaire) ─── */}
+      <WebinaireEncadre />
 
       {/* ─── PARCOURS SALARIE, QUATRE VIDEOS ───────────────────── */}
       <section className="py-24 px-6 bg-[#f8f9fb]">

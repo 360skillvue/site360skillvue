@@ -4,6 +4,7 @@ import { Link } from '../i18n/Link';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, Building2, Shield, Stethoscope, Award, Briefcase, Menu, X, Globe, Wrench } from 'lucide-react';
 import { useLanguage, LANGUAGES } from '../i18n';
+import { WebinaireBandeau } from './WebinaireDecembre';
 
 /** Libelles du public « cabinets de sante au travail », par langue. */
 const CABINETS_ITEM: Record<string, { label: string; desc: string }> = {
@@ -85,6 +86,9 @@ export default function Navbar() {
           <span>{t.nav.maintenance}</span>
         </div>
       </div>
+
+      {/* Webinaire du 3 decembre (disparait apres le webinaire) */}
+      <WebinaireBandeau />
 
       <nav className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-black/[0.06]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">

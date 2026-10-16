@@ -216,7 +216,8 @@ ol.deroule .q{font-size:14px;color:var(--gris);margin:4px 0 0}
       <div class="champ"><label for="nom">Nom</label><input id="nom" name="nom" autocomplete="family-name" required></div>
     </div>
     <div class="champ"><label for="email">E-mail professionnel</label><input id="email" name="email" type="email" autocomplete="email" required></div>
-    <div class="champ"><label for="telephone">Téléphone</label><input id="telephone" name="telephone" type="tel" autocomplete="tel" required></div>
+    <div class="champ"><label for="entreprise">Entreprise</label><input id="entreprise" name="entreprise" autocomplete="organization" required></div>
+    <div class="champ"><label for="telephone">Téléphone <span style="font-weight:400;opacity:.7">(facultatif)</span></label><input id="telephone" name="telephone" type="tel" autocomplete="tel"></div>
     <div class="hp" aria-hidden="true"><label for="website">Site web</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
     <button class="btn" type="submit" id="envoyer">Je réserve ma place</button>
     <p class="rgpd">Vos coordonnées servent à vous envoyer le lien, les rappels et le replay du webinaire, ainsi que des informations de 360SkillVue sur la prévention ; vous pouvez vous désinscrire à tout moment par le lien présent dans chaque e-mail. <a href="/politique-confidentialite">Politique de confidentialité</a>.</p>
@@ -231,7 +232,7 @@ ol.deroule .q{font-size:14px;color:var(--gris);margin:4px 0 0}
     <li><span class="h">12h05</span><div><strong>Ce que l’employeur doit réellement évaluer, tous postes confondus</strong><p class="q">Julie Sallamand, responsable qualité et conformité</p></div></li>
     <li><span class="h">12h15</span><div><strong>Mener une étude de situation de travail sérieuse sans se déplacer</strong><p class="q">Laura Gasqueres, ergonome</p></div></li>
     <li><span class="h">12h30</span><div><strong>L’aller vers, pour atteindre ceux qui ne demandent jamais rien</strong><p class="q">Isabelle Auray, psychologue clinicienne</p></div></li>
-    <li><span class="h">12h42</span><div><strong>Table ronde et questions du public</strong></div></li>
+    <li><span class="h">12h42</span><div><strong>Échanges entre les intervenantes et questions des participants</strong></div></li>
     <li><span class="h">12h52</span><div><strong>Témoignage d’Ingeos, entreprise cliente</strong><p class="q">Anne Habozit, responsable RH chez <a href="https://www.ingeos.fr/" target="_blank" rel="noopener">Ingeos</a>, bureau d’études en dépollution et amiante (Annecy, Lyon, Grenoble)</p></div></li>
     <li><span class="h">12h57</span><div><strong>Conclusion</strong>, fin à 13h00 précises</div></li>
   </ol>
@@ -248,8 +249,8 @@ ol.deroule .q{font-size:14px;color:var(--gris);margin:4px 0 0}
   function show(t,ok){m.className='msg '+(ok?'ok':'err');m.textContent=t;}
   f.addEventListener('submit',function(e){
     e.preventDefault();
-    var p=f.prenom.value.trim(), n=f.nom.value.trim(), em=f.email.value.trim(), t=f.telephone.value.trim();
-    if(!p||!n||!t||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){show('Merci de remplir les quatre champs avec une adresse e-mail valide.',false);return;}
+    var p=f.prenom.value.trim(), n=f.nom.value.trim(), em=f.email.value.trim(), t=f.telephone.value.trim(), en=f.entreprise.value.trim();
+    if(!p||!n||!en||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){show('Merci d’indiquer votre prénom, votre nom, votre entreprise et une adresse e-mail valide.',false);return;}
     b.disabled=true; b.textContent='Envoi en cours…';
     var d=new FormData(f);
     fetch('https://hook.eu1.make.com/lu985hdapx6e8j82fbylcefguypp9a62',{method:'POST',body:d})

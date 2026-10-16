@@ -543,7 +543,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
               <label class="scn"><input type="radio" name="svprps" value="non"><span>Sans plan d'action<small>rien pour la direction</small></span></label>
-              <label class="scn"><input type="radio" name="svprps" value="oui" checked><span>Plan d'action RPS<small id="sv-lab-prps">750 € HT par tranche de 50 salariés</small></span></label>
+              <label class="scn"><input type="radio" name="svprps" value="oui" checked><span>Plan d'action RPS<small id="sv-lab-prps">sur devis, selon le volume</small></span></label>
             </div>
             <p class="hint">Pour vous, RH et direction : le plan d'action collectif. Pour votre médecin du travail : le rapport individuel RPS, sur devis, comparé à des entretiens approfondis en présentiel.</p>
           </div>
@@ -557,7 +557,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
               <label class="scn"><input type="radio" name="svptms" value="non" checked><span>Sans plan d'action<small>rien pour la direction</small></span></label>
-              <label class="scn"><input type="radio" name="svptms" value="oui"><span>Plan d'action TMS<small id="sv-lab-ptms">750 € HT par tranche de 50 salariés</small></span></label>
+              <label class="scn"><input type="radio" name="svptms" value="oui"><span>Plan d'action TMS<small id="sv-lab-ptms">sur devis, selon le volume</small></span></label>
             </div>
             <p class="hint" id="sv-hint-tms"></p>
           </div>
@@ -624,8 +624,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p class="hint">Comparée au retour TMS avec coaching vidéo. Les organismes affichent de 550 € HT la demi-journée à 1 290 € HT la journée, en intra, par groupe de 10 à 12 personnes.</p>
               </div>
 
-              <div class="field">
-                <label for="sv-p-planergo">Coût d'un plan d'action TMS rédigé par un ergonome sur site, par tranche de 50 salariés</label>
+              <div class="field" hidden> <label for="sv-p-planergo">Coût d'un plan d'action TMS rédigé par un ergonome sur site, par tranche de 50 salariés</label>
                 <input type="number" id="sv-p-planergo" min="0" max="20000" step="50" value="1000">
                 <p class="hint">Comparé au plan d'action TMS ScanUp. Ordre de grandeur : une journée d'ergonome en entreprise pour 50 salariés, déplacement et rédaction compris.</p>
               </div>
@@ -684,8 +683,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="roi-row" id="sv-r2-dep"><span id="sv-c2-l-dep">Retour TMS au salarié</span><b id="sv-c2-dep"></b></div>
               <div class="roi-row" id="sv-r2-ptms"><span id="sv-c2-l-ptms">Plan d'action TMS</span><b id="sv-c2-ptms"></b></div>
               <div class="roi-row" id="sv-r2-tms"><span id="sv-c2-l-tms">Rapport individuel TMS</span><b id="sv-c2-tms"></b></div>
-              <p class="bd-desc" id="sv-c2-desc"></p>
-            </div>
+              <p class="bd-desc" id="sv-c2-desc"></p> </div> <p class="bd-desc" id="sv-ex-plan"></p>
 
             <div class="roi-rows">
               <div class="roi-row roi-net"><span id="sv-cmp-l-ecart">Économie sur le budget prévention</span><b id="sv-cmp-ecart"></b></div>
@@ -1078,7 +1076,7 @@ function calcule(){
   var planTms0=(document.querySelector('input[name="svptms"]:checked').value==="oui");
   var pPlanErgo=lire("sv-p-planergo",1000);
   var nbTr0=Math.ceil(eff/50);
-  var c1ptms=planTms0?nbTr0*pPlanErgo*fPres:0;
+  var c1ptms=0;
   if(!vTms){ c1form=0; c1ptms=0; }
   var c1=c1rps+c1ent+c1form+c1ptms;
 
@@ -1089,8 +1087,8 @@ function calcule(){
   var nbTr=tranches50(eff);
   var planRps=(document.querySelector('input[name="svprps"]:checked').value==="oui");
   var planTms=(document.querySelector('input[name="svptms"]:checked').value==="oui");
-  var c2prps=planRps?nbTr*750:0, c2ptms=planTms?nbTr*750:0;
-  var libTr=num(nbTr,0)+(nbTr>1?" tranches":" tranche")+" de 50 salariés × "+eur(750);
+  var c2prps=0, c2ptms=0;
+  var libTr="sur devis, selon le volume";
   var pctEtude=parseFloat($("sv-part-etude").value);
   if(isNaN(pctEtude)){ pctEtude=0; }
   var packTms=document.querySelector('input[name="svtms"]:checked').value;
@@ -1113,16 +1111,16 @@ function calcule(){
   aff("sv-r2-prps",vRps&&planRps); aff("sv-r2-ptms",vTms&&planTms);
   aff("sv-split",perim==="deux");
   $("sv-total").textContent=eur(totAff);
-  $("sv-total-sub").textContent="soit "+eur(totAff/eff)+" par salarié et par an, pour "+num(eff,0)+" salariés.";
+  $("sv-total-sub").textContent="soit "+eur(totAff/eff)+" par salarié et par an, pour "+num(eff,0)+" salariés."+(((vRps&&planRps)||(vTms&&planTms))?" Plans d'action sur devis, non inclus.":"");
   var libPer="Agir sur les RPS et les TMS";
   if(perim==="rps"){ libPer="Agir sur les risques psychosociaux"; }
   if(perim==="tms"){ libPer="Agir sur les troubles musculo-squelettiques"; }
   $("sv-roi-l").textContent="Ce qu'il faut investir pour agir";
   $("sv-p-label").textContent=(perim==="deux"?"Ce que le risque vous coûte":(perim==="rps"?"Ce que les RPS vous coûtent":"Ce que les TMS vous coûtent"));
   $("sv-roi-sur").textContent=libPer;
-  $("sv-hint-tms").textContent="Chaque choix se compare à son équivalent en présentiel. Pour vos salariés, le retour par e-mail "+
+  $("sv-ex-plan").textContent="Plan d'action de prévention, exemple d'un site de 50 collaborateurs : "+eur(750)+" HT avec ScanUp, contre de l'ordre de "+eur(5000*fPres)+" HT en présentiel. Au delà de 50 collaborateurs, tarif dégressif sur devis."; $("sv-hint-tms").textContent="Chaque choix se compare à son équivalent en présentiel. Pour vos salariés, le retour par e-mail "+
     "se compare à un module e-learning gestes et postures, le coaching vidéo à une formation en présentiel. Pour vous, RH et direction, "+
-    "le plan d'action TMS, "+eur(750)+" HT par tranche de 50 salariés, se compare à celui d'un ergonome qui se déplace. "+
+    "le plan d'action se compare à celui d'un ergonome qui se déplace ; sur devis selon le volume, il reste hors du calcul. "+
     "Pour votre médecin du travail, le rapport individuel à distance se compare à une étude de situation de travail en présentiel ; "+
     "sur devis des deux côtés, il reste hors du calcul.";
   $("sv-c1-rps").textContent=eur(c1rps);
@@ -1131,8 +1129,8 @@ function calcule(){
   $("sv-c1-l-rps").textContent="RPS, pour la direction : audit collectif en présentiel";
   $("sv-c1-tms").textContent="sur devis";
   $("sv-c1-form").textContent=eur(c1form);
-  $("sv-c1-ptms").textContent=eur(c1ptms);
-  $("sv-c1-l-ptms").textContent="TMS, pour la direction : plan d'action par un ergonome sur site, "+num(nbTr0,0)+(nbTr0>1?" journées":" journée")+" × "+eur(pPlanErgo*fPres);
+  $("sv-c1-ptms").textContent="Sur devis";
+  $("sv-c1-l-ptms").textContent="TMS, pour la direction : plan d'action par un ergonome sur site, sur devis";
   $("sv-c1-l-form").textContent="TMS, pour le salarié : "+lib1form.charAt(0).toLowerCase()+lib1form.slice(1);
   $("sv-c1-l-tms").textContent="TMS, pour votre médecin du travail : études de situation de travail par un ergonome, en présentiel";
   $("sv-cmp-t1").textContent=eur(c1);
@@ -1143,8 +1141,8 @@ function calcule(){
   $("sv-c2-l-rps").textContent=lib2rps;
   $("sv-c2-l-dep").textContent=lib2dep;
   $("sv-c2-l-tms").textContent=lib2tms;
-  $("sv-c2-prps").textContent=eur(c2prps);
-  $("sv-c2-ptms").textContent=eur(c2ptms);
+  $("sv-c2-prps").textContent="Sur devis";
+  $("sv-c2-ptms").textContent="Sur devis";
   $("sv-c2-l-prps").textContent="RPS, pour la direction : plan d'action, "+libTr;
   $("sv-c2-l-ptms").textContent="TMS, pour la direction : plan d'action, "+libTr;
   var d1,d2;
@@ -1218,8 +1216,7 @@ function calcule(){
   // La grille est identique en euros et en francs : seuls la monnaie et le
   // format d'affichage changent d'un pays a l'autre.
   [["sv-lab-rps-e",27,"par salarié"],["sv-lab-rps-p",40,"par salarié"],
-   ["sv-lab-tms-e",27,"par salarié"],["sv-lab-tms-p",40,"par salarié"],
-   ["sv-lab-prps",750,"par tranche de 50 salariés"],["sv-lab-ptms",750,"par tranche de 50 salariés"]].forEach(function(t){
+   ["sv-lab-tms-e",27,"par salarié"],["sv-lab-tms-p",40,"par salarié"]].forEach(function(t){
     var e=$(t[0]); if(e){ e.textContent=eur(t[1])+" HT "+t[2]; }
   });
   $("sv-part-val").textContent=num(part,0)+" % · "+num(nbCibles,0)+" salariés";

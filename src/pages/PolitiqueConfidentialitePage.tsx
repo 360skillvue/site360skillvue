@@ -10,7 +10,7 @@ const SECTIONS = [
     title: '1. Responsable du traitement',
     content: [
       { label: 'Société', value: '360SkillVue Sàrl' },
-      { label: 'Siège social', value: 'Rue du Centre 142, c/o Cofidex SA, 1025 Saint-Sulpice (VD), Suisse' },
+      { label: 'Siège social', value: 'Route de Crassier 7, 1262 Eysins (VD), Suisse' },
       { label: 'Contact', value: 'tech@360skillvue.com' },
     ],
   },
@@ -122,7 +122,7 @@ export default function PolitiqueConfidentialitePage() {
           <h1 className="text-[36px] font-bold tracking-tight mb-4">Politique de confidentialité</h1>
           <p className="text-[13px] text-scanup-graytext">
             Seule la version française des informations légales fait foi.<br />
-            Dernière mise à jour : <strong>23 mars 2026</strong>
+            Dernière mise à jour : <strong>20 octobre 2026</strong>
           </p>
           <div className="flex gap-4 mt-4">
             <Link to="/mentions-legales" className="text-[13px] text-scanup-blue hover:underline font-medium">Mentions légales</Link>

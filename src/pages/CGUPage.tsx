@@ -1,4 +1,4 @@
-import React from 'react';
+èàimport React from 'react';
 import { useLanguage } from '../i18n';
 import { Link } from '../i18n/Link';
 import Navbar from '../components/Navbar';
@@ -11,7 +11,7 @@ const SECTIONS = [
     content: [
       { label: 'Raison sociale', value: '360SkillVue Sàrl' },
       { label: 'Forme juridique', value: 'Société à responsabilité limitée de droit suisse' },
-      { label: 'Siège social', value: 'Rue du Centre 142, c/o Cofidex SA, 1025 Saint-Sulpice (VD), Suisse' },
+      { label: 'Siège social', value: 'Route de Crassier 7, 1262 Eysins (VD), Suisse' },
       { label: 'Numéro IDE', value: 'CHE-451.592.837' },
       { label: 'Capital social', value: 'CHF 20\'000' },
       { label: 'Date de constitution', value: '11 septembre 2024' },
@@ -21,8 +21,8 @@ const SECTIONS = [
   {
     title: '2. Représentants légaux',
     paragraphs: [
-      'Gérant et président : David Pereira, avec signature individuelle.',
-      'Associée-gérante : Laure Dellamonica, avec signature collective à deux.',
+      'Associée-gérante et présidente : Laure Dellamonica, avec signature collective à deux.',
+      'Gérant : Maxime Bailloud, avec signature individuelle.',
     ],
   },
   {
@@ -113,7 +113,7 @@ export default function CGUPage() {
           <h1 className="text-[36px] font-bold tracking-tight mb-4">Conditions Générales d'Utilisation</h1>
           <p className="text-[13px] text-scanup-graytext">
             Seule la version française des informations légales fait foi.<br />
-            Dernière mise à jour : <strong>23 mars 2026</strong>
+            Dernière mise à jour : <strong>20 octobre 2026</strong>
           </p>
           <div className="flex gap-4 mt-4">
             <Link to="/mentions-legales" className="text-[13px] text-scanup-blue hover:underline font-medium">Mentions légales</Link>

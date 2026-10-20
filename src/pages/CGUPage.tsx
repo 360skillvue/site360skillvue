@@ -1,4 +1,4 @@
-èàimport React from 'react';
+import React from 'react';
 import { useLanguage } from '../i18n';
 import { Link } from '../i18n/Link';
 import Navbar from '../components/Navbar';

@@ -460,7 +460,7 @@ export default function HomePage() {
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
-              onClick={() => navigate('/aide-support')}
+              onClick={() => { window.location.href = '/aide-support?sujet=test#contact'; }}
               className="bg-scanup-turquoise text-scanup-navy px-8 py-4 rounded-[12px] font-bold text-[16px] hover:brightness-105 transition-all shadow-lg shadow-scanup-turquoise/20"
             >
               {t.home.ctaButtonTrial}

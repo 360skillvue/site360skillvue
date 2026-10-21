@@ -95,6 +95,18 @@ export default function AidePage() {
     document.body.appendChild(script);
   }, []);
 
+  // Lien « Demander à tester » : /aide-support?sujet=test#contact
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('sujet') === 'test') {
+      const opt = SUJET_OPTIONS.find(o => /test/i.test(o));
+      if (opt) setForm(prev => ({ ...prev, sujet: opt }));
+    }
+    if (window.location.hash === '#contact') {
+      setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
+    }
+  }, []);
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }

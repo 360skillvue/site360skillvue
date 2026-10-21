@@ -36,7 +36,7 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'RPS :', rpsText: 'les personnes à risque repérées, seules reçues en entretien individuel.',
     inclusiveTag: 'Plus inclusif', inclusiveFigure: 'Chacun participe',
     inclusiveText: "y compris les collaborateurs isolés, en horaires décalés ou sur des sites éloignés, où qu'ils soient.",
-    cta: 'Parler à notre équipe',
+    cta: 'Demander à tester',
   },
   en: {
     label: 'Why digital',
@@ -231,7 +231,7 @@ export default function AvantagesPresentiel({ hero = false }: { hero?: boolean }
 
         <FadeIn delay={0.2} className="text-center mt-12">
           <Link
-            to="/aide-support"
+            to="/aide-support?sujet=test#contact"
             className="inline-flex items-center gap-2 bg-scanup-blue text-white px-7 py-3.5 rounded-[10px] font-semibold text-[15px] hover:brightness-110 transition-all"
           >
             {t.cta}

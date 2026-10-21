@@ -229,7 +229,7 @@ export default function Navbar() {
 
             {/* CTA — desktop */}
             <motion.a
-              href="/aide-support#contact"
+              href="/aide-support?sujet=test#contact"
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="hidden sm:flex bg-scanup-blue text-white px-4 py-2 rounded-full text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-scanup-blue/20 whitespace-nowrap"
             >
@@ -378,7 +378,7 @@ export default function Navbar() {
                   {t.nav.login}
                 </a>
                 <a
-                  href="/aide-support#contact"
+                  href="/aide-support?sujet=test#contact"
                   className="block w-full bg-scanup-blue text-white py-3 rounded-full text-[14px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20 text-center"
                 >
                   {t.nav.trial}

@@ -163,39 +163,6 @@ export default function AidePage() {
       />
       <Navbar />
 
-      {/* ── FAQ ──────────────────────────────────────────────────────── */}
-      <section id="faq" className="max-w-6xl mx-auto px-6 py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10"
-        >
-          <div>
-            <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-2">{t.aide.faqBadge}</p>
-            <h1 className="text-[28px] font-bold tracking-tight">{t.aide.faqTitle}</h1>
-            <p className="text-[14px] text-scanup-graytext mt-1.5">{t.aide.faqSubtitle}</p>
-          </div>
-          <a href="#contact"
-            className="flex-shrink-0 flex items-center gap-2 text-[13px] font-medium text-scanup-blue hover:text-blue-700 transition-colors group">
-            {t.aide.faqNoAnswer}
-            <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
-          </a>
-        </motion.div>
-
-        <div className="bg-white border border-black/[0.07] rounded-3xl shadow-sm shadow-black/[0.04] px-6 md:px-8 divide-y divide-black/[0.05]">
-          {FAQ_ITEMS.map((item, i) => (
-            <FaqItem
-              key={i}
-              item={item}
-              index={i}
-              openIndex={openIndex}
-              setOpenIndex={setOpenIndex}
-            />
-          ))}
-        </div>
-      </section>
-
       {/* ── Contact + Calendly ───────────────────────────────────────── */}
       <section id="contact" className="bg-[#f8f9fb] border-t border-black/[0.05] py-16">
         <div className="max-w-6xl mx-auto px-6">
@@ -364,6 +331,39 @@ export default function AidePage() {
               />
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ──────────────────────────────────────────────────────── */}
+      <section id="faq" className="max-w-6xl mx-auto px-6 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10"
+        >
+          <div>
+            <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-2">{t.aide.faqBadge}</p>
+            <h1 className="text-[28px] font-bold tracking-tight">{t.aide.faqTitle}</h1>
+            <p className="text-[14px] text-scanup-graytext mt-1.5">{t.aide.faqSubtitle}</p>
+          </div>
+          <a href="#contact"
+            className="flex-shrink-0 flex items-center gap-2 text-[13px] font-medium text-scanup-blue hover:text-blue-700 transition-colors group">
+            {t.aide.faqNoAnswer}
+            <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+          </a>
+        </motion.div>
+
+        <div className="bg-white border border-black/[0.07] rounded-3xl shadow-sm shadow-black/[0.04] px-6 md:px-8 divide-y divide-black/[0.05]">
+          {FAQ_ITEMS.map((item, i) => (
+            <FaqItem
+              key={i}
+              item={item}
+              index={i}
+              openIndex={openIndex}
+              setOpenIndex={setOpenIndex}
+            />
+          ))}
         </div>
       </section>
 

@@ -856,6 +856,14 @@ export const fr = {
     subtitle: 'Articles, interviews et mentions de 360SkillVue dans les médias spécialisés.',
     items: [
       {
+        date: '28 octobre 2026',
+        label: 'Curiosités Magazine',
+        title: 'Simulateur ScanUp : un nouvel outil pour évaluer le coût des TMS et des RPS en entreprise',
+        description: 'Présentation du simulateur ScanUp, qui estime le coût des TMS et des RPS à partir des statistiques de l\'Assurance Maladie et le compare à celui des actions de prévention.',
+        href: 'https://curiosites-magazine.com/2026/10/28/simulateur-scanup-un-nouvel-outil-pour-evaluer-le-cout-des-tms-et-des-rps-en-entreprise/',
+        image: '/curiosites-simulateur-scanup.webp',
+      },
+      {
         date: '27 mai 2026',
         label: 'Social CSE',
         title: 'Détecter les signaux faibles avant l\'arrêt maladie',

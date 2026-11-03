@@ -766,6 +766,14 @@ export const pt = {
     subtitle: 'Artigos, entrevistas e menções da 360SkillVue em meios de comunicação especializados.',
     items: [
       {
+        date: '28 de outubro de 2026',
+        label: 'Curiosités Magazine',
+        title: 'Simulador ScanUp: uma nova ferramenta para avaliar o custo das LMERT e dos riscos psicossociais na empresa',
+        description: 'Apresentação do simulador ScanUp, que estima o custo das LMERT e dos riscos psicossociais a partir das estatísticas do seguro de doença francês e o compara com o das ações de prevenção.',
+        href: 'https://curiosites-magazine.com/2026/10/28/simulateur-scanup-un-nouvel-outil-pour-evaluer-le-cout-des-tms-et-des-rps-en-entreprise/',
+        image: '/curiosites-simulateur-scanup.webp',
+      },
+      {
         date: '27 de maio de 2026',
         label: 'Social CSE',
         title: 'Detetar os sinais fracos antes da baixa médica',

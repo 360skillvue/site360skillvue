@@ -766,6 +766,14 @@ export const en = {
     subtitle: 'Articles, interviews and mentions of 360SkillVue in specialist media.',
     items: [
       {
+        date: 'October 28, 2026',
+        label: 'Curiosités Magazine',
+        title: 'ScanUp simulator: a new tool to assess the cost of MSDs and psychosocial risks in the workplace',
+        description: 'An overview of the ScanUp simulator, which estimates the cost of MSDs and psychosocial risks from French national health insurance statistics and compares it with the cost of prevention measures.',
+        href: 'https://curiosites-magazine.com/2026/10/28/simulateur-scanup-un-nouvel-outil-pour-evaluer-le-cout-des-tms-et-des-rps-en-entreprise/',
+        image: '/curiosites-simulateur-scanup.webp',
+      },
+      {
         date: 'May 27, 2026',
         label: 'Social CSE',
         title: 'Detecting weak signals before sick leave',

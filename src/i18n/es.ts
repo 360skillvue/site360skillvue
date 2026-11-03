@@ -766,6 +766,14 @@ export const es = {
     subtitle: 'Artículos, entrevistas y menciones de 360SkillVue en los medios especializados.',
     items: [
       {
+        date: '28 de octubre de 2026',
+        label: 'Curiosités Magazine',
+        title: 'Simulador ScanUp: una nueva herramienta para evaluar el coste de los TME y de los riesgos psicosociales en la empresa',
+        description: 'Presentación del simulador ScanUp, que estima el coste de los TME y de los riesgos psicosociales a partir de las estadísticas del seguro de enfermedad francés y lo compara con el de las acciones de prevención.',
+        href: 'https://curiosites-magazine.com/2026/10/28/simulateur-scanup-un-nouvel-outil-pour-evaluer-le-cout-des-tms-et-des-rps-en-entreprise/',
+        image: '/curiosites-simulateur-scanup.webp',
+      },
+      {
         date: '27 de mayo de 2026',
         label: 'Social CSE',
         title: 'Detectar las señales débiles antes de la baja médica',

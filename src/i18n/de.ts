@@ -766,6 +766,14 @@ export const de = {
     subtitle: 'Artikel, Interviews und Erwähnungen von 360SkillVue in Fachmedien.',
     items: [
       {
+        date: '28. Oktober 2026',
+        label: 'Curiosités Magazine',
+        title: 'ScanUp-Simulator: ein neues Tool zur Bewertung der Kosten von MSE und psychosozialen Risiken im Unternehmen',
+        description: 'Vorstellung des ScanUp-Simulators, der die Kosten von MSE und psychosozialen Risiken anhand der Statistiken der französischen Krankenversicherung schätzt und mit den Kosten von Präventionsmaßnahmen vergleicht.',
+        href: 'https://curiosites-magazine.com/2026/10/28/simulateur-scanup-un-nouvel-outil-pour-evaluer-le-cout-des-tms-et-des-rps-en-entreprise/',
+        image: '/curiosites-simulateur-scanup.webp',
+      },
+      {
         date: '27. Mai 2026',
         label: 'Social CSE',
         title: 'Schwache Signale vor der Krankschreibung erkennen',

@@ -766,6 +766,14 @@ export const it = {
     subtitle: 'Articoli, interviste e menzioni di 360SkillVue nei media specializzati.',
     items: [
       {
+        date: '28 ottobre 2026',
+        label: 'Curiosités Magazine',
+        title: 'Simulatore ScanUp: un nuovo strumento per valutare il costo dei DMS e dei rischi psicosociali in azienda',
+        description: 'Presentazione del simulatore ScanUp, che stima il costo dei DMS e dei rischi psicosociali a partire dalle statistiche dell\'assicurazione malattia francese e lo confronta con quello delle azioni di prevenzione.',
+        href: 'https://curiosites-magazine.com/2026/10/28/simulateur-scanup-un-nouvel-outil-pour-evaluer-le-cout-des-tms-et-des-rps-en-entreprise/',
+        image: '/curiosites-simulateur-scanup.webp',
+      },
+      {
         date: '27 maggio 2026',
         label: 'Social CSE',
         title: 'Rilevare i segnali deboli prima della malattia',

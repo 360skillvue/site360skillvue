@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, StaticRouter, Routes, Route } from 'react-router-dom';
 import { LanguageProvider, PREFIXED_LANGS } from './i18n';
 import CookieConsent from './components/CookieConsent';
 
@@ -44,7 +44,16 @@ const PAGES: { path: string; element: React.ReactNode }[] = [
   { path: '/revue-de-presse',               element: <RevueDePressePage /> },
 ];
 
-export default function App() {
+/**
+ * location : renseigne uniquement au pre-rendu (scripts/prerender-content.mjs),
+ * pour produire le HTML d'une adresse donnee sans navigateur. Dans le
+ * navigateur, l'application utilise le routeur habituel.
+ */
+export default function App({ location }: { location?: string } = {}) {
+  const Router = ({ children }: { children: React.ReactNode }) =>
+    location !== undefined
+      ? <StaticRouter location={location}>{children}</StaticRouter>
+      : <BrowserRouter>{children}</BrowserRouter>;
   return (
     <Router>
       <LanguageProvider>

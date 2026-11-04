@@ -31,7 +31,7 @@ const OFFRE_LINKS = [
   { href: '/simulateur-cout-tms-rps',         spa: false },
   { href: '/aide-support',                    spa: true  },
   { href: '/formation-risques-psychosociaux', spa: false },
-  { href: '/formation-prevention-tms-sur-mesure', spa: false },
+  { href: '/formation-prevention-tms-sur-mesure.html', spa: false },
 ];
 
 

@@ -26,6 +26,10 @@
       "destination": "/spsti/index.html"
     },
     {
+      "source": "/cabinets-sante-travail",
+      "destination": "/cabinets-sante-travail/index.html"
+    },
+    {
       "source": "/partenaires",
       "destination": "/partenaires/index.html"
     },
@@ -80,6 +84,10 @@
     {
       "source": "/en/spsti",
       "destination": "/en/spsti/index.html"
+    },
+    {
+      "source": "/en/cabinets-sante-travail",
+      "destination": "/en/cabinets-sante-travail/index.html"
     },
     {
       "source": "/en/partenaires",
@@ -138,6 +146,10 @@
       "destination": "/de/spsti/index.html"
     },
     {
+      "source": "/de/cabinets-sante-travail",
+      "destination": "/de/cabinets-sante-travail/index.html"
+    },
+    {
       "source": "/de/partenaires",
       "destination": "/de/partenaires/index.html"
     },
@@ -192,6 +204,10 @@
     {
       "source": "/it/spsti",
       "destination": "/it/spsti/index.html"
+    },
+    {
+      "source": "/it/cabinets-sante-travail",
+      "destination": "/it/cabinets-sante-travail/index.html"
     },
     {
       "source": "/it/partenaires",
@@ -250,6 +266,10 @@
       "destination": "/es/spsti/index.html"
     },
     {
+      "source": "/es/cabinets-sante-travail",
+      "destination": "/es/cabinets-sante-travail/index.html"
+    },
+    {
       "source": "/es/partenaires",
       "destination": "/es/partenaires/index.html"
     },
@@ -304,6 +324,10 @@
     {
       "source": "/pt/spsti",
       "destination": "/pt/spsti/index.html"
+    },
+    {
+      "source": "/pt/cabinets-sante-travail",
+      "destination": "/pt/cabinets-sante-travail/index.html"
     },
     {
       "source": "/pt/partenaires",

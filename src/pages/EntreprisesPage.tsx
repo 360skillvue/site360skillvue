@@ -25,12 +25,13 @@ const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 
 /* ── Data ────────────────────────────────────────────────── */
 
-/* Destinations des trois offres. Le simulateur et la page formation sont des
+/* Destinations des quatre offres. Le simulateur et la page formation sont des
    pages statiques hors SPA, d'où la navigation par lien plein. */
 const OFFRE_LINKS = [
   { href: '/simulateur-cout-tms-rps',         spa: false },
   { href: '/aide-support',                    spa: true  },
   { href: '/formation-risques-psychosociaux', spa: false },
+  { href: '/formation-prevention-tms-sur-mesure', spa: false },
 ];
 
 
@@ -134,7 +135,7 @@ export default function EntreprisesPage() {
         </div>
       </section>
 
-      {/* ── Nos trois offres ─────────────────────────────────── */}
+      {/* ── Nos quatre offres ─────────────────────────────────── */}
       <section className="py-24 px-6 border-t border-black/[0.06]">
         <div className="max-w-5xl mx-auto">
           <Reveal className="mb-14">
@@ -144,7 +145,7 @@ export default function EntreprisesPage() {
             </h2>
           </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {offres.map((o: { title: string; body: string; cta: string }, i: number) => (
               <motion.a
                 key={i}

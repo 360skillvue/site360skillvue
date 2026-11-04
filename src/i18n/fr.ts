@@ -431,7 +431,7 @@ export const fr = {
       { title: 'Dépistage RPS et TMS', body: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome. Résultats en 48 heures, dès 27 € par collaborateur.', cta: 'Simuler mon coût' },
       { title: 'Étude de situation de travail', body: "Une étude de situation de travail complète, menée à distance, à dominante TMS ou RPS, par un ergonome ou un psychologue du travail, avec rapport individuel et préconisations concrètes. Elle peut faire suite à un dépistage ou être réalisée sur prescription. Mêmes experts, mêmes référentiels qu'en présentiel ; moins cher, donc plus de salariés et de sites couverts avec le même budget.", cta: 'Demander une étude' },
       { title: 'Formation aux risques psychosociaux', body: 'Sept heures pour vos managers, cours en ligne puis classe virtuelle animée par une psychologue du travail. Dispensée par IEF Biologie, organisme certifié Qualiopi.', cta: 'Voir la formation' },
-      { title: 'Formation prévention des TMS, sur mesure', body: "Une formation en ligne construite pour chaque métier de votre entreprise : gestes, postures et situations de travail réelles, vidéos et quiz, attestation à la clé. Prix par apprenant, conception incluse. Dispensée par IEF Biologie, organisme certifié Qualiopi.", cta: 'Voir la formation' },
+      { title: "Formation prévention des TMS", body: "Au choix : un module générique de sensibilisation de 10 minutes, prêt à l'emploi pour tous les salariés, ou des modules construits pour chaque métier exposé. Quiz et attestation à la clé, prix par apprenant. Dispensée par IEF Biologie, organisme certifié Qualiopi.", cta: 'Voir la formation' },
     ],
     problemsLabel: 'La réalité terrain',
     problemsTitle: 'Vous le voyez',

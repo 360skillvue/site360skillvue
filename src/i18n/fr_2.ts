@@ -109,7 +109,7 @@ export const fr = {
     compareColQuestionnaires: 'Questionnaires de feedback',
     compareColQuestionnairesSub: 'Karasek, COPSOQ, Google Forms',
     compareColLogiciels: 'Questionnaires RPS avec scoring',
-    compareColLogicielsSub: 'JSA, Holicare, RPS Detector',
+    compareColLogicielsSub: 'Holicare, RPS Detector',
     compareColIA: 'Analyse de la voix passive par IA',
     compareColIASub: 'Virtuosis',
     compareRows: [

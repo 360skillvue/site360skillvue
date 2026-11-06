@@ -538,6 +538,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <label>RPS : ce que vous choisissez</label>
             <p class="hint" style="margin:0 0 6px">Pour vos salariés</p>
             <div class="scn-set">
+              <label class="scn"><input type="radio" name="svrps" value="20"><span>Sans retour au salarié<small id="sv-lab-rps-s">20 € HT par salarié</small></span></label>
               <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Retour par e-mail<small id="sv-lab-rps-e">27 € HT par salarié</small></span></label>
               <label class="scn"><input type="radio" name="svrps" value="40"><span>Avec téléconsultation<small id="sv-lab-rps-p">40 € HT par salarié</small></span></label>
             </div>
@@ -552,6 +553,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <label>TMS : ce que vous choisissez</label>
             <p class="hint" style="margin:0 0 6px">Pour vos salariés</p>
             <div class="scn-set">
+              <label class="scn"><input type="radio" name="svtms" value="sansretour"><span>Sans retour au salarié<small id="sv-lab-tms-s">20 € HT par salarié</small></span></label>
               <label class="scn"><input type="radio" name="svtms" value="essential"><span>Retour par e-mail<small id="sv-lab-tms-e">27 € HT par salarié</small></span></label>
               <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Avec coaching vidéo<small id="sv-lab-tms-p">40 € HT par salarié</small></span></label>
             </div>
@@ -1064,7 +1066,7 @@ function calcule(){
   var pElearn=lire("sv-p-elearn",30), pPresForm=lire("sv-p-presform",850);
   var nbGroupes=Math.ceil(eff/10);
   var c1form=0, lib1form="";
-  if(packTms0==="essential"){
+  if(packTms0==="essential"||packTms0==="sansretour"){
     c1form=eff*pElearn;
     lib1form="Formation e-learning gestes et postures, "+num(eff,0)+" × "+eur(pElearn);
   } else {
@@ -1083,7 +1085,7 @@ function calcule(){
   // scénario 2 : en digital, avec ScanUp
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
   var pu=parseFloat(packRps);
-  var c2rps=eff*pu, lib2rps="RPS, pour le salarié : retour "+(pu>30?"avec téléconsultation":"par e-mail")+", "+num(eff,0)+" × "+eur(pu);
+  var c2rps=eff*pu, lib2rps="RPS, pour le salarié : "+(pu>30?"retour avec téléconsultation":(pu<25?"sans retour":"retour par e-mail"))+", "+num(eff,0)+" × "+eur(pu);
   var nbTr=tranches50(eff);
   var planRps=(document.querySelector('input[name="svprps"]:checked').value==="oui");
   var planTms=(document.querySelector('input[name="svptms"]:checked').value==="oui");
@@ -1093,9 +1095,9 @@ function calcule(){
   if(isNaN(pctEtude)){ pctEtude=0; }
   var packTms=document.querySelector('input[name="svtms"]:checked').value;
   var nbEtudes=0;
-  var puTms=(packTms==="essential")?27:40;
+  var puTms=(packTms==="sansretour")?20:((packTms==="essential")?27:40);
   var c2dep=eff*puTms, c2tms=0;
-  var lib2dep="TMS, pour le salarié : retour "+(packTms==="essential"?"par e-mail":"avec coaching vidéo")+", "+num(eff,0)+" × "+eur(puTms);
+  var lib2dep="TMS, pour le salarié : "+(packTms==="sansretour"?"sans retour":(packTms==="essential"?"retour par e-mail":"retour avec coaching vidéo"))+", "+num(eff,0)+" × "+eur(puTms);
   var lib2tms="TMS, pour la santé au travail : rapport individuel, étude de situation de travail à distance, pour les salariés que vous choisissez";
   if(!vRps){ c2rps=0; }
   if(!vRps){ c2prps=0; }
@@ -1215,7 +1217,7 @@ function calcule(){
 
   // La grille est identique en euros et en francs : seuls la monnaie et le
   // format d'affichage changent d'un pays a l'autre.
-  [["sv-lab-rps-e",27,"par salarié"],["sv-lab-rps-p",40,"par salarié"],
+  [["sv-lab-rps-s",20,"par salarié"],["sv-lab-tms-s",20,"par salarié"],["sv-lab-rps-e",27,"par salarié"],["sv-lab-rps-p",40,"par salarié"],
    ["sv-lab-tms-e",27,"par salarié"],["sv-lab-tms-p",40,"par salarié"]].forEach(function(t){
     var e=$(t[0]); if(e){ e.textContent=eur(t[1])+" HT "+t[2]; }
   });

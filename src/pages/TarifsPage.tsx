@@ -175,18 +175,18 @@ export default function TarifsPage() {
                   <div className="text-[13px] text-scanup-navy/80 mt-1">{risk.collect}</div>
                 </Reveal>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8">
-                  <div className="md:col-span-2 flex flex-col">
+                  <div className="md:col-span-2 lg:col-span-4 flex flex-col">
                     <UseHead u={uses[0]} n={0} />
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 flex-grow">
                       {risk.plans.map((plan, i) => (
                         <Reveal key={i} delay={i * 0.07}>
-                          <PlanCard plan={plan} featured={i === 1} />
+                          <PlanCard plan={plan} featured={i === risk.plans.length - 1} />
                         </Reveal>
                       ))}
                     </div>
                   </div>
                   {risk.options.map((opt, k) => (
-                    <div key={k} className="flex flex-col">
+                    <div key={k} className="lg:col-span-2 flex flex-col">
                       <UseHead u={uses[k + 1]} n={k + 1} />
                       <Reveal delay={0.14 + k * 0.07} className="flex-grow">
                         <div className="rounded-2xl p-7 h-full flex flex-col bg-white border border-black/[0.07] shadow-sm">

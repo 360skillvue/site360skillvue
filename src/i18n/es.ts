@@ -109,7 +109,7 @@ export const es = {
     compareColQuestionnaires: 'Cuestionarios de feedback',
     compareColQuestionnairesSub: 'Karasek, COPSOQ, Google Forms',
     compareColLogiciels: 'Cuestionarios de RPS con puntuación',
-    compareColLogicielsSub: 'JSA, Holicare, RPS Detector',
+    compareColLogicielsSub: 'Holicare, RPS Detector',
     compareColIA: 'Análisis pasivo de la voz por IA',
     compareColIASub: 'Virtuosis',
     compareRows: [
@@ -514,13 +514,13 @@ export const es = {
       subtitle: "Mismo precio para los dos riesgos",
       collect: "Cada empleado responde en pocos minutos desde su teléfono: cuestionario y vídeos de su puesto para los TME, cuestionario y mensaje de audio para los RPS. Sus respuestas son confidenciales.",
       plans: [
-        { name: "Sin retorno al empleado", price: "20 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Análisis de las respuestas por un ergónomo (TME) o un psicólogo del trabajo (RPS)", "El empleado no recibe ni su resultado ni una pauta de actuación: sus respuestas solo sirven para el diagnóstico colectivo de la dirección"], cta: "Reservar una llamada" },
+        { name: "Sin retorno al empleado", price: "20 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Análisis de las respuestas por un ergónomo (TME) o un psicólogo del trabajo (RPS)", "El empleado no recibe ni su resultado ni una pauta de actuación: sus respuestas solo sirven para los entregables colectivos de la dirección"], cta: "Reservar una llamada" },
         { name: "Retorno por correo", price: "27 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Análisis de las respuestas por un ergónomo (TME) o un psicólogo del trabajo (RPS)", "Empleado con cribado positivo: recibe por correo la pauta de actuación que usted ha definido para cada módulo (a quién contactar, qué pasos seguir)"], cta: "Reservar una llamada" },
         { name: "Retorno personalizado", price: "40 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Todo lo incluido en el retorno por correo", "TME: coaching en vídeo sobre gestos y posturas por un ergónomo, para cada empleado en riesgo", "RPS: teleconsulta de orientación de 30 minutos con un psicólogo del trabajo, para cada empleado con cribado positivo"], cta: "Reservar una llamada" },
       ],
       options: [
-        { name: "Plan de acción o cartografía de riesgos", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados, por riesgo", desc: "Con retorno al empleado, recibe un plan de acción de prevención: cartografía anónima de los riesgos en sus equipos, acciones prioritarias y restitución por nuestros expertos. Sin retorno al empleado, recibe una cartografía de riesgos, para alertar a la dirección y orientar sus acciones. Nunca tiene acceso a los resultados individuales.", tag: "" },
-        { name: "Informe individual", price: "Desde 240 €", sub: "sin IVA por estudio TME, según el volumen; RPS bajo presupuesto", desc: "Su médico o enfermera del trabajo recibe un estudio de la situación de trabajo realizado a distancia por un ergónomo (TME) o un análisis en entrevista con un psicólogo (RPS), con recomendaciones clasificadas por nivel de coste: sin coste (ajustes, organización), bajo coste, inversión. Usted decide el ritmo.", tag: "" },
+        { name: "Plan de acción o cartografía de riesgos", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados, por riesgo", desc: "TME: un plan de acción de prevención, con o sin retorno al empleado, con una ficha por puesto de trabajo (gestos y exigencias observados, nivel de riesgo, recomendaciones de adaptación) y una síntesis de las acciones prioritarias. RPS: con la teleconsulta, un plan de acción restituido por servicio o por equipo; sin teleconsulta, una cartografía de riesgos para alertar a la dirección y orientar sus acciones. Nunca tiene acceso a los resultados individuales.", tag: "" },
+        { name: "Informe individual", price: "Bajo presupuesto", sub: "según el número de informes, TME y RPS", desc: "Su médico o enfermera del trabajo recibe un estudio de la situación de trabajo realizado a distancia por un ergónomo (TME) o un análisis en entrevista con un psicólogo (RPS), con recomendaciones clasificadas por nivel de coste: sin coste (ajustes, organización), bajo coste, inversión. Usted decide el ritmo.", tag: "" },
       ],
     },
     tms: {
@@ -548,8 +548,8 @@ export const es = {
     step3Title: "El informe individual",
     step3Subtitle: "Un informe individual, dirigido al médico o a la enfermera del trabajo",
     options: [
-      { name: "Plan de acción preventiva de TME", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados", desc: "Cartografía anonimizada de los riesgos, acciones priorizadas y presentación a la dirección.", tag: "" },
-      { name: "Plan de acción preventiva de RPS", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados", desc: "Cartografía anonimizada de los riesgos, acciones priorizadas y presentación a la dirección.", tag: "" },
+      { name: "Plan de acción preventiva de TME", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados", desc: "Una ficha por puesto de trabajo y una síntesis de las acciones prioritarias, con o sin retorno al empleado.", tag: "" },
+      { name: "Plan de acción preventiva de RPS", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados", desc: "Restitución por servicio o por equipo y acciones prioritarias; con teleconsulta. Sin teleconsulta: cartografía de riesgos.", tag: "" },
       { name: "Informe individual de TME", price: "Bajo presupuesto", sub: "por informe, por unidad o en volumen", desc: "Estudio de la situación de trabajo a distancia por un ergónomo, a partir de los vídeos del empleado: factores de riesgo, márgenes de maniobra, recomendaciones jerarquizadas.", tag: "" },
       { name: "Informe individual de RPS", price: "Bajo presupuesto", sub: "por informe, por unidad o en volumen", desc: "Análisis a distancia de la organización del trabajo y de los factores psicosociales, en entrevista con un psicólogo: puntos de apoyo, señales de alerta, recomendaciones jerarquizadas.", tag: "" },
     ],

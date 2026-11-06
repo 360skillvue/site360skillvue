@@ -109,7 +109,7 @@ export const fr = {
     compareColQuestionnaires: 'Questionnaires de feedback',
     compareColQuestionnairesSub: 'Karasek, COPSOQ, Google Forms',
     compareColLogiciels: 'Questionnaires RPS avec scoring',
-    compareColLogicielsSub: 'JSA, Holicare, RPS Detector',
+    compareColLogicielsSub: 'Holicare, RPS Detector',
     compareColIA: 'Analyse de la voix passive par IA',
     compareColIASub: 'Virtuosis',
     compareRows: [
@@ -604,13 +604,13 @@ export const fr = {
       subtitle: "Même prix pour les deux risques",
       collect: "Chaque salarié répond en quelques minutes depuis son téléphone : questionnaire et vidéos de son poste pour les TMS, questionnaire et message audio pour les RPS. Ses réponses restent confidentielles.",
       plans: [
-        { name: "Sans retour au salarié", price: "20 €", sub: "HT par salarié et par risque", badge: '', items: ["Analyse des réponses par un ergonome (TMS) ou un psychologue du travail (RPS)", "Le salarié ne reçoit ni son résultat ni de conduite à tenir : ses réponses servent uniquement à l'état des lieux collectif pour la direction"], cta: "Prendre RDV" },
+        { name: "Sans retour au salarié", price: "20 €", sub: "HT par salarié et par risque", badge: '', items: ["Analyse des réponses par un ergonome (TMS) ou un psychologue du travail (RPS)", "Le salarié ne reçoit ni son résultat ni de conduite à tenir : ses réponses servent uniquement aux livrables collectifs pour la direction"], cta: "Prendre RDV" },
         { name: "Retour par e-mail", price: "27 €", sub: "HT par salarié et par risque", badge: '', items: ["Analyse des réponses par un ergonome (TMS) ou un psychologue du travail (RPS)", "Salarié dépisté positif : il reçoit par e-mail la conduite à tenir que vous avez définie pour chaque module (qui contacter, quelle démarche suivre)"], cta: "Prendre RDV" },
         { name: "Retour personnalisé", price: "40 €", sub: "HT par salarié et par risque", badge: '', items: ["Tout ce que comprend le retour par e-mail", "TMS : coaching vidéo gestes et postures par un ergonome, pour chaque salarié à risque", "RPS : téléconsultation d'orientation de 30 min avec un psychologue du travail, pour chaque salarié dépisté positif"], cta: "Prendre RDV" },
       ],
       options: [
-        { name: "Plan d'action ou cartographie des risques", price: "Sur devis", sub: "Tarif dégressif selon le nombre de collaborateurs, par risque", desc: "Avec un retour au salarié, vous recevez un plan d'action de prévention : cartographie anonyme des risques dans vos équipes, actions à mener en priorité et restitution par nos experts. Sans retour au salarié, vous recevez une cartographie des risques, pour alerter la direction et orienter vos actions. Vous n'avez jamais accès aux résultats individuels.", tag: "" },
-        { name: "Rapport individuel", price: "Dès 240 €", sub: "HT par étude TMS, selon le volume ; RPS sur devis", desc: "Votre médecin ou infirmier du travail reçoit une étude de situation de travail réalisée à distance par un ergonome (TMS) ou une analyse en entretien avec un psychologue (RPS), avec des préconisations classées par niveau de coût : sans coût (réglages, organisation), faible coût, investissement. Vous décidez du rythme.", tag: "" },
+        { name: "Plan d'action ou cartographie des risques", price: "Sur devis", sub: "Tarif dégressif selon le nombre de collaborateurs, par risque", desc: "TMS : un plan d'action de prévention, avec ou sans retour au salarié, avec une fiche par poste de travail (gestes et contraintes observés, niveau de risque, préconisations d'aménagement) et une synthèse des actions prioritaires. RPS : avec la téléconsultation, un plan d'action restitué par service ou par équipe ; sans téléconsultation, une cartographie des risques pour alerter la direction et orienter vos actions. Vous n'avez jamais accès aux résultats individuels.", tag: "" },
+        { name: "Rapport individuel", price: "Sur devis", sub: "selon le nombre de rapports, TMS et RPS", desc: "Votre médecin ou infirmier du travail reçoit une étude de situation de travail réalisée à distance par un ergonome (TMS) ou une analyse en entretien avec un psychologue (RPS), avec des préconisations classées par niveau de coût : sans coût (réglages, organisation), faible coût, investissement. Vous décidez du rythme.", tag: "" },
       ],
     },
     tms: {
@@ -638,8 +638,8 @@ export const fr = {
     step3Title: "Le rapport individuel",
     step3Subtitle: "Un rapport individuel, adressé au médecin ou à l'infirmier du travail",
     options: [
-      { name: "Plan d'action de prévention TMS", price: "Sur devis", sub: "Tarif dégressif selon le nombre de collaborateurs", desc: "Cartographie anonymisée des risques, actions priorisées et restitution à la direction.", tag: "" },
-      { name: "Plan d'action de prévention RPS", price: "Sur devis", sub: "Tarif dégressif selon le nombre de collaborateurs", desc: "Cartographie anonymisée des risques, actions priorisées et restitution à la direction.", tag: "" },
+      { name: "Plan d'action de prévention TMS", price: "Sur devis", sub: "Tarif dégressif selon le nombre de collaborateurs", desc: "Une fiche par poste de travail et une synthèse des actions prioritaires, avec ou sans retour au salarié.", tag: "" },
+      { name: "Plan d'action de prévention RPS", price: "Sur devis", sub: "Tarif dégressif selon le nombre de collaborateurs", desc: "Restitution par service ou par équipe et actions prioritaires ; avec téléconsultation. Sans téléconsultation : cartographie des risques.", tag: "" },
       { name: "Rapport individuel TMS", price: "Sur devis", sub: "par rapport, à l'unité ou en volume", desc: "Étude de situation de travail à distance par un ergonome, à partir des vidéos du salarié : facteurs de risque, marges de manœuvre, préconisations hiérarchisées.", tag: "" },
       { name: "Rapport individuel RPS", price: "Sur devis", sub: "par rapport, à l'unité ou en volume", desc: "Analyse à distance de l'organisation du travail et des facteurs psychosociaux, en entretien avec un psychologue : points d'appui, signaux d'alerte, préconisations hiérarchisées.", tag: "" },
     ],

@@ -109,7 +109,7 @@ export const en = {
     compareColQuestionnaires: 'Feedback questionnaires',
     compareColQuestionnairesSub: 'Karasek, COPSOQ, Google Forms',
     compareColLogiciels: 'PSR questionnaires with scoring',
-    compareColLogicielsSub: 'JSA, Holicare, RPS Detector',
+    compareColLogicielsSub: 'Holicare, RPS Detector',
     compareColIA: 'Passive voice analysis by AI',
     compareColIASub: 'Virtuosis',
     compareRows: [
@@ -514,13 +514,13 @@ export const en = {
       subtitle: "Same price for both risks",
       collect: "Each employee answers in a few minutes from their phone: questionnaire and videos of their workstation for MSD, questionnaire and audio message for psychosocial risks. Their answers remain confidential.",
       plans: [
-        { name: "No feedback to the employee", price: "€20", sub: "excl. VAT / employee, per risk", badge: '', items: ["Answers analysed by an ergonomist (MSD) or an occupational psychologist (PSR)", "The employee receives neither their result nor a course of action: their answers are used only for the collective overview for management"], cta: "Book a call" },
+        { name: "No feedback to the employee", price: "€20", sub: "excl. VAT / employee, per risk", badge: '', items: ["Answers analysed by an ergonomist (MSD) or an occupational psychologist (PSR)", "The employee receives neither their result nor a course of action: their answers are used only for the collective deliverables for management"], cta: "Book a call" },
         { name: "Feedback by email", price: "€27", sub: "excl. VAT / employee, per risk", badge: '', items: ["Answers analysed by an ergonomist (MSD) or an occupational psychologist (PSR)", "Employee who screens positive: receives by email the course of action you have defined for each module (who to contact, what steps to take)"], cta: "Book a call" },
         { name: "Personalised feedback", price: "€40", sub: "excl. VAT / employee, per risk", badge: '', items: ["Everything included in feedback by email", "MSD: movements and postures video coaching by an ergonomist, for every at-risk employee", "PSR: 30-minute orientation teleconsultation with an occupational psychologist, for every employee who screens positive"], cta: "Book a call" },
       ],
       options: [
-        { name: "Action plan or risk map", price: "On quote", sub: "Tiered pricing based on headcount, per risk", desc: "With feedback to employees, you receive a prevention action plan: an anonymous map of the risks in your teams, the priority actions and a debrief by our experts. Without feedback to employees, you receive a risk map, to alert management and guide your actions. You never have access to individual results.", tag: "" },
-        { name: "Individual report", price: "From €240", sub: "excl. VAT per MSD study, depending on volume; PSR on quotation", desc: "Your occupational physician or nurse receives a work situation study carried out remotely by an ergonomist (MSD) or an interview-based analysis by a psychologist (PSR), with recommendations ranked by cost: no cost (adjustments, organisation), low cost, investment. You decide the pace.", tag: "" },
+        { name: "Action plan or risk map", price: "On quote", sub: "Tiered pricing based on headcount, per risk", desc: "MSD: a prevention action plan, with or without feedback to employees, with one sheet per workstation (observed movements and constraints, risk level, workstation adjustment recommendations) and a summary of priority actions. PSR: with teleconsultation, an action plan debriefed by department or team; without teleconsultation, a risk map to alert management and guide your actions. You never have access to individual results.", tag: "" },
+        { name: "Individual report", price: "On quote", sub: "depending on the number of reports, MSD and PSR", desc: "Your occupational physician or nurse receives a work situation study carried out remotely by an ergonomist (MSD) or an interview-based analysis by a psychologist (PSR), with recommendations ranked by cost: no cost (adjustments, organisation), low cost, investment. You decide the pace.", tag: "" },
       ],
     },
     tms: {
@@ -548,8 +548,8 @@ export const en = {
     step3Title: "The individual report",
     step3Subtitle: "An individual report, sent to the occupational physician or nurse",
     options: [
-      { name: "MSD prevention action plan", price: "On quote", sub: "Tiered pricing based on headcount", desc: "Anonymised risk mapping, prioritised actions and management debrief.", tag: "" },
-      { name: "PSR prevention action plan", price: "On quote", sub: "Tiered pricing based on headcount", desc: "Anonymised risk mapping, prioritised actions and management debrief.", tag: "" },
+      { name: "MSD prevention action plan", price: "On quote", sub: "Tiered pricing based on headcount", desc: "One sheet per workstation and a summary of priority actions, with or without feedback to employees.", tag: "" },
+      { name: "PSR prevention action plan", price: "On quote", sub: "Tiered pricing based on headcount", desc: "Debrief by department or team and priority actions; with teleconsultation. Without teleconsultation: risk map.", tag: "" },
       { name: "Individual MSD report", price: "On request", sub: "per report, individually or in volume", desc: "Remote work situation study by an ergonomist, based on the employee's videos: risk factors, room for manoeuvre, prioritised recommendations.", tag: "" },
       { name: "Individual PSR report", price: "On request", sub: "per report, individually or in volume", desc: "Remote analysis of work organisation and psychosocial factors, through an interview with a psychologist: resources, warning signs, prioritised recommendations.", tag: "" },
     ],

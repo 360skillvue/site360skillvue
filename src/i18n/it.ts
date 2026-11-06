@@ -109,7 +109,7 @@ export const it = {
     compareColQuestionnaires: 'Questionari di feedback',
     compareColQuestionnairesSub: 'Karasek, COPSOQ, Google Forms',
     compareColLogiciels: 'Questionari RPS con scoring',
-    compareColLogicielsSub: 'JSA, Holicare, RPS Detector',
+    compareColLogicielsSub: 'Holicare, RPS Detector',
     compareColIA: 'Analisi passiva della voce tramite IA',
     compareColIASub: 'Virtuosis',
     compareRows: [
@@ -514,13 +514,13 @@ export const it = {
       subtitle: "Stesso prezzo per i due rischi",
       collect: "Ogni collaboratore risponde in pochi minuti dal proprio telefono: questionario e video della postazione per i DMS, questionario e messaggio audio per i RPS. Le risposte restano riservate.",
       plans: [
-        { name: "Senza riscontro al collaboratore", price: "20 €", sub: "+ IVA / collaboratore e per rischio", badge: '', items: ["Analisi delle risposte da parte di un ergonomo (DMS) o di uno psicologo del lavoro (RPS)", "Il collaboratore non riceve né il suo risultato né una condotta da seguire: le sue risposte servono solo alla fotografia collettiva per la direzione"], cta: "Prenota" },
+        { name: "Senza riscontro al collaboratore", price: "20 €", sub: "+ IVA / collaboratore e per rischio", badge: '', items: ["Analisi delle risposte da parte di un ergonomo (DMS) o di uno psicologo del lavoro (RPS)", "Il collaboratore non riceve né il suo risultato né una condotta da seguire: le sue risposte servono solo agli elaborati collettivi per la direzione"], cta: "Prenota" },
         { name: "Riscontro via e-mail", price: "27 €", sub: "+ IVA / collaboratore e per rischio", badge: '', items: ["Analisi delle risposte da parte di un ergonomo (DMS) o di uno psicologo del lavoro (RPS)", "Collaboratore risultato positivo: riceve via e-mail la condotta da seguire che avete definito per ogni modulo (chi contattare, quali passi seguire)"], cta: "Prenota" },
         { name: "Riscontro personalizzato", price: "40 €", sub: "+ IVA / collaboratore e per rischio", badge: '', items: ["Tutto quanto incluso nel riscontro via e-mail", "DMS: coaching video su gesti e posture da parte di un ergonomo, per ogni collaboratore a rischio", "RPS: teleconsulto di orientamento di 30 minuti con uno psicologo del lavoro, per ogni collaboratore risultato positivo"], cta: "Prenota" },
       ],
       options: [
-        { name: "Piano d'azione o mappatura dei rischi", price: "Su preventivo", sub: "Prezzo decrescente in base al numero di collaboratori, per rischio", desc: "Con riscontro al collaboratore, ricevete un piano d'azione di prevenzione: mappatura anonima dei rischi nei vostri team, azioni prioritarie e restituzione da parte dei nostri esperti. Senza riscontro, ricevete una mappatura dei rischi, per allertare la direzione e orientare le vostre azioni. Non avete mai accesso ai risultati individuali.", tag: "" },
-        { name: "Relazione individuale", price: "Da 240 €", sub: "+ IVA per studio DMS, in base al volume; RPS su preventivo", desc: "Il medico o l'infermiere del lavoro riceve uno studio della situazione di lavoro svolto a distanza da un ergonomo (DMS) o un'analisi in colloquio con uno psicologo (RPS), con raccomandazioni classificate per livello di costo: senza costi (regolazioni, organizzazione), a basso costo, investimento. Siete voi a decidere i tempi.", tag: "" },
+        { name: "Piano d'azione o mappatura dei rischi", price: "Su preventivo", sub: "Prezzo decrescente in base al numero di collaboratori, per rischio", desc: "DMS: un piano d'azione di prevenzione, con o senza riscontro al collaboratore, con una scheda per postazione di lavoro (gesti e vincoli osservati, livello di rischio, raccomandazioni di adeguamento) e una sintesi delle azioni prioritarie. RPS: con il teleconsulto, un piano d'azione restituito per reparto o per team; senza teleconsulto, una mappatura dei rischi per allertare la direzione e orientare le vostre azioni. Non avete mai accesso ai risultati individuali.", tag: "" },
+        { name: "Relazione individuale", price: "Su preventivo", sub: "in base al numero di relazioni, DMS e RPS", desc: "Il medico o l'infermiere del lavoro riceve uno studio della situazione di lavoro svolto a distanza da un ergonomo (DMS) o un'analisi in colloquio con uno psicologo (RPS), con raccomandazioni classificate per livello di costo: senza costi (regolazioni, organizzazione), a basso costo, investimento. Siete voi a decidere i tempi.", tag: "" },
       ],
     },
     tms: {
@@ -548,8 +548,8 @@ export const it = {
     step3Title: "Il rapporto individuale",
     step3Subtitle: "Una relazione individuale, indirizzata al medico o all'infermiere del lavoro",
     options: [
-      { name: "Piano d'azione di prevenzione DMS", price: "Su preventivo", sub: "Prezzo decrescente in base al numero di collaboratori", desc: "Mappatura anonimizzata dei rischi, azioni prioritarie e restituzione alla direzione.", tag: "" },
-      { name: "Piano d'azione di prevenzione RPS", price: "Su preventivo", sub: "Prezzo decrescente in base al numero di collaboratori", desc: "Mappatura anonimizzata dei rischi, azioni prioritarie e restituzione alla direzione.", tag: "" },
+      { name: "Piano d'azione di prevenzione DMS", price: "Su preventivo", sub: "Prezzo decrescente in base al numero di collaboratori", desc: "Una scheda per postazione di lavoro e una sintesi delle azioni prioritarie, con o senza riscontro al collaboratore.", tag: "" },
+      { name: "Piano d'azione di prevenzione RPS", price: "Su preventivo", sub: "Prezzo decrescente in base al numero di collaboratori", desc: "Restituzione per reparto o per team e azioni prioritarie; con teleconsulto. Senza teleconsulto: mappatura dei rischi.", tag: "" },
       { name: "Rapporto individuale DMS", price: "Su richiesta", sub: "per rapporto, singolo o in volume", desc: "Studio della situazione di lavoro a distanza da parte di un ergonomo, a partire dai video del collaboratore: fattori di rischio, margini di manovra, raccomandazioni in ordine di priorità.", tag: "" },
       { name: "Rapporto individuale RPS", price: "Su richiesta", sub: "per rapporto, singolo o in volume", desc: "Analisi a distanza dell'organizzazione del lavoro e dei fattori psicosociali, in colloquio con uno psicologo: risorse, segnali d'allarme, raccomandazioni in ordine di priorità.", tag: "" },
     ],

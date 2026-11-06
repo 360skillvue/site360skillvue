@@ -109,7 +109,7 @@ export const pt = {
     compareColQuestionnaires: 'Questionários de feedback',
     compareColQuestionnairesSub: 'Karasek, COPSOQ, Google Forms',
     compareColLogiciels: 'Questionários de RPS com pontuação',
-    compareColLogicielsSub: 'JSA, Holicare, RPS Detector',
+    compareColLogicielsSub: 'Holicare, RPS Detector',
     compareColIA: 'Análise passiva da voz por IA',
     compareColIASub: 'Virtuosis',
     compareRows: [
@@ -514,13 +514,13 @@ export const pt = {
       subtitle: "Mesmo preço para os dois riscos",
       collect: "Cada colaborador responde em poucos minutos a partir do telemóvel: questionário e vídeos do posto de trabalho para as LME, questionário e mensagem áudio para os RPS. As respostas são confidenciais.",
       plans: [
-        { name: "Sem retorno ao colaborador", price: "20 €", sub: "sem IVA / colaborador e por risco", badge: '', items: ["Análise das respostas por um ergonomista (LME) ou um psicólogo do trabalho (RPS)", "O colaborador não recebe nem o seu resultado nem uma conduta a seguir: as suas respostas servem apenas para o diagnóstico coletivo da direção"], cta: "Marcar uma reunião" },
+        { name: "Sem retorno ao colaborador", price: "20 €", sub: "sem IVA / colaborador e por risco", badge: '', items: ["Análise das respostas por um ergonomista (LME) ou um psicólogo do trabalho (RPS)", "O colaborador não recebe nem o seu resultado nem uma conduta a seguir: as suas respostas servem apenas para os entregáveis coletivos da direção"], cta: "Marcar uma reunião" },
         { name: "Retorno por e-mail", price: "27 €", sub: "sem IVA / colaborador e por risco", badge: '', items: ["Análise das respostas por um ergonomista (LME) ou um psicólogo do trabalho (RPS)", "Colaborador com rastreio positivo: recebe por e-mail a conduta a seguir que definiu para cada módulo (quem contactar, que passos seguir)"], cta: "Marcar uma reunião" },
         { name: "Retorno personalizado", price: "40 €", sub: "sem IVA / colaborador e por risco", badge: '', items: ["Tudo o que inclui o retorno por e-mail", "LME: coaching em vídeo sobre gestos e posturas por um ergonomista, para cada colaborador em risco", "RPS: teleconsulta de orientação de 30 minutos com um psicólogo do trabalho, para cada colaborador com rastreio positivo"], cta: "Marcar uma reunião" },
       ],
       options: [
-        { name: "Plano de ação ou cartografia de riscos", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores, por risco", desc: "Com retorno ao colaborador, recebe um plano de ação de prevenção: cartografia anónima dos riscos nas suas equipas, ações prioritárias e restituição pelos nossos especialistas. Sem retorno, recebe uma cartografia de riscos, para alertar a direção e orientar as suas ações. Nunca tem acesso aos resultados individuais.", tag: "" },
-        { name: "Relatório individual", price: "A partir de 240 €", sub: "sem IVA por estudo LME, consoante o volume; RPS sob orçamento", desc: "O seu médico ou enfermeiro do trabalho recebe um estudo da situação de trabalho realizado à distância por um ergonomista (LME) ou uma análise em entrevista com um psicólogo (RPS), com recomendações classificadas por nível de custo: sem custo (ajustes, organização), baixo custo, investimento. É você quem decide o ritmo.", tag: "" },
+        { name: "Plano de ação ou cartografia de riscos", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores, por risco", desc: "LME: um plano de ação de prevenção, com ou sem retorno ao colaborador, com uma ficha por posto de trabalho (gestos e constrangimentos observados, nível de risco, recomendações de adaptação) e uma síntese das ações prioritárias. RPS: com a teleconsulta, um plano de ação restituído por serviço ou por equipa; sem teleconsulta, uma cartografia de riscos para alertar a direção e orientar as suas ações. Nunca tem acesso aos resultados individuais.", tag: "" },
+        { name: "Relatório individual", price: "Sob orçamento", sub: "consoante o número de relatórios, LME e RPS", desc: "O seu médico ou enfermeiro do trabalho recebe um estudo da situação de trabalho realizado à distância por um ergonomista (LME) ou uma análise em entrevista com um psicólogo (RPS), com recomendações classificadas por nível de custo: sem custo (ajustes, organização), baixo custo, investimento. É você quem decide o ritmo.", tag: "" },
       ],
     },
     tms: {
@@ -548,8 +548,8 @@ export const pt = {
     step3Title: "O relatório individual",
     step3Subtitle: "Um relatório individual, dirigido ao médico ou ao enfermeiro do trabalho",
     options: [
-      { name: "Plano de ação de prevenção de LME", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores", desc: "Mapeamento anonimizado dos riscos, ações priorizadas e apresentação à direção.", tag: "" },
-      { name: "Plano de ação de prevenção de RPS", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores", desc: "Mapeamento anonimizado dos riscos, ações priorizadas e apresentação à direção.", tag: "" },
+      { name: "Plano de ação de prevenção de LME", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores", desc: "Uma ficha por posto de trabalho e uma síntese das ações prioritárias, com ou sem retorno ao colaborador.", tag: "" },
+      { name: "Plano de ação de prevenção de RPS", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores", desc: "Restituição por serviço ou por equipa e ações prioritárias; com teleconsulta. Sem teleconsulta: cartografia de riscos.", tag: "" },
       { name: "Relatório individual LME", price: "Sob consulta", sub: "por relatório, à unidade ou em volume", desc: "Estudo da situação de trabalho à distância por um ergonomista, a partir dos vídeos do colaborador: fatores de risco, margens de manobra, recomendações hierarquizadas.", tag: "" },
       { name: "Relatório individual RPS", price: "Sob consulta", sub: "por relatório, à unidade ou em volume", desc: "Análise à distância da organização do trabalho e dos fatores psicossociais, em entrevista com um psicólogo: pontos de apoio, sinais de alerta, recomendações hierarquizadas.", tag: "" },
     ],

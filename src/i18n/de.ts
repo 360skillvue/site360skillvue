@@ -109,7 +109,7 @@ export const de = {
     compareColQuestionnaires: 'Feedback-Fragebögen',
     compareColQuestionnairesSub: 'Karasek, COPSOQ, Google Forms',
     compareColLogiciels: 'PSR-Fragebögen mit Scoring',
-    compareColLogicielsSub: 'JSA, Holicare, RPS Detector',
+    compareColLogicielsSub: 'Holicare, RPS Detector',
     compareColIA: 'Passive Stimmanalyse per KI',
     compareColIASub: 'Virtuosis',
     compareRows: [
@@ -514,13 +514,13 @@ export const de = {
       subtitle: "Gleicher Preis für beide Risiken",
       collect: "Jede Person antwortet in wenigen Minuten auf dem Smartphone: Fragebogen und Videos des Arbeitsplatzes für MSE, Fragebogen und Audionachricht für PSR. Die Antworten bleiben vertraulich.",
       plans: [
-        { name: "Ohne Rückmeldung an die Mitarbeitenden", price: "20 €", sub: "zzgl. MwSt. / Mitarbeitendem und Risiko", badge: '', items: ["Auswertung der Antworten durch eine:n Ergonom:in (MSE) oder eine:n Arbeitspsycholog:in (PSR)", "Die Person erhält weder ihr Ergebnis noch ein Vorgehen: Ihre Antworten dienen nur der gemeinsamen Bestandsaufnahme für die Geschäftsleitung"], cta: "Termin vereinbaren" },
+        { name: "Ohne Rückmeldung an die Mitarbeitenden", price: "20 €", sub: "zzgl. MwSt. / Mitarbeitendem und Risiko", badge: '', items: ["Auswertung der Antworten durch eine:n Ergonom:in (MSE) oder eine:n Arbeitspsycholog:in (PSR)", "Die Person erhält weder ihr Ergebnis noch ein Vorgehen: Ihre Antworten dienen nur den gemeinsamen Ergebnisberichten für die Geschäftsleitung"], cta: "Termin vereinbaren" },
         { name: "Rückmeldung per E-Mail", price: "27 €", sub: "zzgl. MwSt. / Mitarbeitendem und Risiko", badge: '', items: ["Auswertung der Antworten durch eine:n Ergonom:in (MSE) oder eine:n Arbeitspsycholog:in (PSR)", "Positiv gescreente Person: erhält per E-Mail das Vorgehen, das Sie für jedes Modul festgelegt haben (wen kontaktieren, welche Schritte unternehmen)"], cta: "Termin vereinbaren" },
         { name: "Persönliche Rückmeldung", price: "40 €", sub: "zzgl. MwSt. / Mitarbeitendem und Risiko", badge: '', items: ["Alles aus der Rückmeldung per E-Mail", "MSE: Video-Coaching zu Bewegungen und Haltungen durch eine:n Ergonom:in für jede Person mit Risiko", "PSR: 30-minütige Orientierungs-Telekonsultation mit einem:r Arbeitspsycholog:in für jede positiv gescreente Person"], cta: "Termin vereinbaren" },
       ],
       options: [
-        { name: "Aktionsplan oder Risikokartierung", price: "Auf Anfrage", sub: "Gestaffelter Preis je nach Anzahl Mitarbeitender, pro Risiko", desc: "Mit Rückmeldung an die Mitarbeitenden erhalten Sie einen Präventions-Aktionsplan: anonyme Risikokartierung Ihrer Teams, prioritäre Massnahmen und eine Präsentation durch unsere Fachleute. Ohne Rückmeldung erhalten Sie eine Risikokartierung, um die Geschäftsleitung zu informieren und Ihre Massnahmen auszurichten. Auf individuelle Ergebnisse haben Sie nie Zugriff.", tag: "" },
-        { name: "Individueller Bericht", price: "Ab 240 €", sub: "zzgl. MwSt. pro MSE-Analyse, je nach Volumen; PSR auf Anfrage", desc: "Ihr Arbeitsmediziner oder Ihre Pflegefachperson erhält eine aus der Ferne durchgeführte Analyse der Arbeitssituation durch eine:n Ergonom:in (MSE) oder eine Analyse im Gespräch mit einem:r Psycholog:in (PSR), mit Empfehlungen nach Kostenstufe: kostenlos (Einstellungen, Organisation), geringe Kosten, Investition. Sie bestimmen das Tempo.", tag: "" },
+        { name: "Aktionsplan oder Risikokartierung", price: "Auf Anfrage", sub: "Gestaffelter Preis je nach Anzahl Mitarbeitender, pro Risiko", desc: "MSE: ein Präventions-Aktionsplan, mit oder ohne Rückmeldung an die Mitarbeitenden, mit einem Blatt pro Arbeitsplatz (beobachtete Bewegungen und Belastungen, Risikostufe, Empfehlungen zur Arbeitsplatzgestaltung) und einer Übersicht der prioritären Massnahmen. PSR: mit Telekonsultation ein Aktionsplan, präsentiert pro Abteilung oder Team; ohne Telekonsultation eine Risikokartierung, um die Geschäftsleitung zu informieren und Ihre Massnahmen auszurichten. Auf individuelle Ergebnisse haben Sie nie Zugriff.", tag: "" },
+        { name: "Individueller Bericht", price: "Auf Anfrage", sub: "je nach Anzahl der Berichte, MSE und PSR", desc: "Ihr Arbeitsmediziner oder Ihre Pflegefachperson erhält eine aus der Ferne durchgeführte Analyse der Arbeitssituation durch eine:n Ergonom:in (MSE) oder eine Analyse im Gespräch mit einem:r Psycholog:in (PSR), mit Empfehlungen nach Kostenstufe: kostenlos (Einstellungen, Organisation), geringe Kosten, Investition. Sie bestimmen das Tempo.", tag: "" },
       ],
     },
     tms: {
@@ -548,8 +548,8 @@ export const de = {
     step3Title: "Der individuelle Bericht",
     step3Subtitle: "Ein individueller Bericht, adressiert an den Arbeitsmediziner oder die Pflegefachperson",
     options: [
-      { name: "MSE-Präventionsaktionsplan", price: "Auf Anfrage", sub: "Gestaffelter Preis je nach Anzahl Mitarbeitender", desc: "Anonymisierte Risikokartierung, priorisierte Maßnahmen und Präsentation für die Geschäftsleitung.", tag: "" },
-      { name: "PSR-Präventionsaktionsplan", price: "Auf Anfrage", sub: "Gestaffelter Preis je nach Anzahl Mitarbeitender", desc: "Anonymisierte Risikokartierung, priorisierte Maßnahmen und Präsentation für die Geschäftsleitung.", tag: "" },
+      { name: "MSE-Präventionsaktionsplan", price: "Auf Anfrage", sub: "Gestaffelter Preis je nach Anzahl Mitarbeitender", desc: "Ein Blatt pro Arbeitsplatz und eine Übersicht der prioritären Maßnahmen, mit oder ohne Rückmeldung an die Mitarbeitenden.", tag: "" },
+      { name: "PSR-Präventionsaktionsplan", price: "Auf Anfrage", sub: "Gestaffelter Preis je nach Anzahl Mitarbeitender", desc: "Präsentation pro Abteilung oder Team und prioritäre Maßnahmen; mit Telekonsultation. Ohne Telekonsultation: Risikokartierung.", tag: "" },
       { name: "Individueller MSE-Bericht", price: "Auf Anfrage", sub: "pro Bericht, einzeln oder im Volumen", desc: "Analyse der Arbeitssituation aus der Ferne durch eine Ergonomin, anhand der Videos der Person: Risikofaktoren, Handlungsspielräume, priorisierte Empfehlungen.", tag: "" },
       { name: "Individueller PSR-Bericht", price: "Auf Anfrage", sub: "pro Bericht, einzeln oder im Volumen", desc: "Analyse der Arbeitsorganisation und der psychosozialen Faktoren aus der Ferne, im Gespräch mit einer Psychologin: Ressourcen, Warnsignale, priorisierte Empfehlungen.", tag: "" },
     ],

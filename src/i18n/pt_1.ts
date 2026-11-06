@@ -519,7 +519,7 @@ export const pt = {
       ],
       options: [
         { name: "Plano de ação de prevenção", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores, por risco", desc: "Recebe uma cartografia anónima dos riscos nas suas equipas, as ações prioritárias e uma restituição pelos nossos especialistas. Nunca tem acesso aos resultados individuais.", tag: "" },
-        { name: "Relatório individual", price: "A partir de 240 €", sub: "sem IVA por estudo LME, consoante o volume; RPS sob orçamento", desc: "O seu médico ou enfermeiro do trabalho recebe um estudo da situação de trabalho realizado à distância por um ergonomista (LME) ou uma análise em entrevista com um psicólogo (RPS), com recomendações classificadas por nível de custo: sem custo (ajustes, organização), baixo custo, investimento. É você quem decide o ritmo.", tag: "" },
+        { name: "Relatório individual", price: "Sob orçamento", sub: "consoante o número de relatórios, LME e RPS", desc: "O seu médico ou enfermeiro do trabalho recebe um estudo da situação de trabalho realizado à distância por um ergonomista (LME) ou uma análise em entrevista com um psicólogo (RPS), com recomendações classificadas por nível de custo: sem custo (ajustes, organização), baixo custo, investimento. É você quem decide o ritmo.", tag: "" },
       ],
     },
     tms: {
@@ -564,8 +564,8 @@ export const pt = {
     studyLabel: "Outro caso de utilização",
     studyTitle: "Digitalizar os seus estudos de situação de trabalho",
     studyDesc: "Para os serviços de prevenção e saúde no trabalho e as equipas de prevenção que prescrevem os seus próprios estudos. É o cliente que decide que situações de trabalho estudar; o ScanUp evita a deslocação do ergonomista.",
-    studyItems: ["Escolhe os colaboradores ou as situações a estudar, com ou sem rastreio prévio", "O colaborador filma a sua situação de trabalho e carrega os vídeos no ScanUp", "Um ergonomista realiza o estudo à distância e redige um relatório individual com recomendações de adaptação", "A partir de 240 € sem IVA por estudo, tarifa degressiva consoante o volume mensal"],
-    studyPrice: "A partir de 240 € sem IVA",
+    studyItems: ["Escolhe os colaboradores ou as situações a estudar, com ou sem rastreio prévio", "O colaborador filma a sua situação de trabalho e carrega os vídeos no ScanUp", "Um ergonomista realiza o estudo à distância e redige um relatório individual com recomendações de adaptação", "Sob orçamento, consoante o número de estudos"],
+    studyPrice: "Sob orçamento",
     studyCta: "Contacte-nos",
     trainingLabel: "Formação",
     trainingTitle: "Módulos de formação à medida",

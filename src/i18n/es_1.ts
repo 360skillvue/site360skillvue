@@ -519,7 +519,7 @@ export const es = {
       ],
       options: [
         { name: "Plan de acción de prevención", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados, por riesgo", desc: "Recibe una cartografía anónima de los riesgos en sus equipos, las acciones prioritarias y una restitución por nuestros expertos. Nunca tiene acceso a los resultados individuales.", tag: "" },
-        { name: "Informe individual", price: "Desde 240 €", sub: "sin IVA por estudio TME, según el volumen; RPS bajo presupuesto", desc: "Su médico o enfermera del trabajo recibe un estudio de la situación de trabajo realizado a distancia por un ergónomo (TME) o un análisis en entrevista con un psicólogo (RPS), con recomendaciones clasificadas por nivel de coste: sin coste (ajustes, organización), bajo coste, inversión. Usted decide el ritmo.", tag: "" },
+        { name: "Informe individual", price: "Bajo presupuesto", sub: "según el número de informes, TME y RPS", desc: "Su médico o enfermera del trabajo recibe un estudio de la situación de trabajo realizado a distancia por un ergónomo (TME) o un análisis en entrevista con un psicólogo (RPS), con recomendaciones clasificadas por nivel de coste: sin coste (ajustes, organización), bajo coste, inversión. Usted decide el ritmo.", tag: "" },
       ],
     },
     tms: {
@@ -564,8 +564,8 @@ export const es = {
     studyLabel: "Otro caso de uso",
     studyTitle: "Digitalice sus estudios de situación de trabajo",
     studyDesc: "Para los servicios de prevención y salud laboral y los equipos de prevención que prescriben sus propios estudios. Usted decide qué situaciones de trabajo estudiar; ScanUp evita el desplazamiento del ergónomo.",
-    studyItems: ["Usted elige los empleados o las situaciones que se estudian, con o sin cribado previo", "El empleado graba su situación de trabajo y sube los vídeos a ScanUp", "Un ergónomo realiza el estudio a distancia y redacta un informe individual con recomendaciones de adaptación", "Desde 240 € sin IVA por estudio, tarifa decreciente según el volumen mensual"],
-    studyPrice: "Desde 240 € sin IVA",
+    studyItems: ["Usted elige los empleados o las situaciones que se estudian, con o sin cribado previo", "El empleado graba su situación de trabajo y sube los vídeos a ScanUp", "Un ergónomo realiza el estudio a distancia y redacta un informe individual con recomendaciones de adaptación", "Bajo presupuesto, según el número de estudios"],
+    studyPrice: "Bajo presupuesto",
     studyCta: "Consúltenos",
     trainingLabel: "Formación",
     trainingTitle: "Módulos de formación a medida",

@@ -519,7 +519,7 @@ export const it = {
       ],
       options: [
         { name: "Piano d'azione di prevenzione", price: "Su preventivo", sub: "Prezzo decrescente in base al numero di collaboratori, per rischio", desc: "Ricevete una mappatura anonima dei rischi nei vostri team, le azioni prioritarie e una restituzione da parte dei nostri esperti. Non avete mai accesso ai risultati individuali.", tag: "" },
-        { name: "Relazione individuale", price: "Da 240 €", sub: "+ IVA per studio DMS, in base al volume; RPS su preventivo", desc: "Il medico o l'infermiere del lavoro riceve uno studio della situazione di lavoro svolto a distanza da un ergonomo (DMS) o un'analisi in colloquio con uno psicologo (RPS), con raccomandazioni classificate per livello di costo: senza costi (regolazioni, organizzazione), a basso costo, investimento. Siete voi a decidere i tempi.", tag: "" },
+        { name: "Relazione individuale", price: "Su preventivo", sub: "in base al numero di relazioni, DMS e RPS", desc: "Il medico o l'infermiere del lavoro riceve uno studio della situazione di lavoro svolto a distanza da un ergonomo (DMS) o un'analisi in colloquio con uno psicologo (RPS), con raccomandazioni classificate per livello di costo: senza costi (regolazioni, organizzazione), a basso costo, investimento. Siete voi a decidere i tempi.", tag: "" },
       ],
     },
     tms: {
@@ -564,8 +564,8 @@ export const it = {
     studyLabel: "Un altro caso d'uso",
     studyTitle: "Digitalizzare gli studi delle situazioni di lavoro",
     studyDesc: "Per i servizi di prevenzione e salute sul lavoro e i team di prevenzione che prescrivono direttamente i propri studi. Siete voi a decidere quali situazioni di lavoro studiare; ScanUp evita la trasferta dell'ergonomo.",
-    studyItems: ["Scegliete i collaboratori o le situazioni da studiare, con o senza screening preliminare", "Il collaboratore filma la propria situazione di lavoro e carica i video su ScanUp", "Un ergonomo svolge lo studio a distanza e redige un rapporto individuale con raccomandazioni di adattamento", "Da 240 € + IVA per studio, tariffa decrescente in base al volume mensile"],
-    studyPrice: "Da 240 € + IVA",
+    studyItems: ["Scegliete i collaboratori o le situazioni da studiare, con o senza screening preliminare", "Il collaboratore filma la propria situazione di lavoro e carica i video su ScanUp", "Un ergonomo svolge lo studio a distanza e redige un rapporto individuale con raccomandazioni di adattamento", "Su preventivo, in base al numero di studi"],
+    studyPrice: "Su preventivo",
     studyCta: "Contattateci",
     trainingLabel: "Formazione",
     trainingTitle: "Moduli di formazione su misura",

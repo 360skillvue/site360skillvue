@@ -609,7 +609,7 @@ export const fr = {
       ],
       options: [
         { name: "Plan d'action de prévention", price: "Sur devis", sub: "Tarif dégressif selon le nombre de collaborateurs, par risque", desc: "Vous recevez une cartographie anonyme des risques dans vos équipes, les actions à mener en priorité et une restitution par nos experts. Vous n'avez jamais accès aux résultats individuels.", tag: "" },
-        { name: "Rapport individuel", price: "Dès 240 €", sub: "HT par étude TMS, selon le volume ; RPS sur devis", desc: "Votre médecin ou infirmier du travail reçoit une étude de situation de travail réalisée à distance par un ergonome (TMS) ou une analyse en entretien avec un psychologue (RPS), avec des préconisations classées par niveau de coût : sans coût (réglages, organisation), faible coût, investissement. Vous décidez du rythme.", tag: "" },
+        { name: "Rapport individuel", price: "Sur devis", sub: "selon le nombre de rapports, TMS et RPS", desc: "Votre médecin ou infirmier du travail reçoit une étude de situation de travail réalisée à distance par un ergonome (TMS) ou une analyse en entretien avec un psychologue (RPS), avec des préconisations classées par niveau de coût : sans coût (réglages, organisation), faible coût, investissement. Vous décidez du rythme.", tag: "" },
       ],
     },
     tms: {
@@ -654,8 +654,8 @@ export const fr = {
     studyLabel: "Un autre cas d'usage",
     studyTitle: "Digitaliser vos études de situation de travail",
     studyDesc: "Pour les services de prévention et de santé au travail et les équipes prévention qui prescrivent eux-mêmes leurs études. C'est vous qui décidez quelles situations étudier ; ScanUp évite le déplacement de l'ergonome.",
-    studyItems: ["Vous choisissez les salariés ou les situations à étudier, avec ou sans dépistage préalable", "Le salarié filme sa situation de travail et dépose ses vidéos dans ScanUp", "Un ergonome réalise l'étude à distance et rédige un rapport individuel avec préconisations d'adaptation", "À partir de 240 € HT par étude, tarif dégressif selon le volume mensuel"],
-    studyPrice: "Dès 240 € HT",
+    studyItems: ["Vous choisissez les salariés ou les situations à étudier, avec ou sans dépistage préalable", "Le salarié filme sa situation de travail et dépose ses vidéos dans ScanUp", "Un ergonome réalise l'étude à distance et rédige un rapport individuel avec préconisations d'adaptation", "Sur devis, selon le nombre d'études"],
+    studyPrice: "Sur devis",
     studyCta: "Nous consulter",
     trainingLabel: "Formation",
     trainingTitle: "Des modules de formation sur mesure",

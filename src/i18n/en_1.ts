@@ -519,7 +519,7 @@ export const en = {
       ],
       options: [
         { name: "Prevention action plan", price: "On quote", sub: "Tiered pricing based on headcount, per risk", desc: "You receive an anonymous map of the risks in your teams, the priority actions and a debrief by our experts. You never have access to individual results.", tag: "" },
-        { name: "Individual report", price: "From €240", sub: "excl. VAT per MSD study, depending on volume; PSR on quotation", desc: "Your occupational physician or nurse receives a work situation study carried out remotely by an ergonomist (MSD) or an interview-based analysis by a psychologist (PSR), with recommendations ranked by cost: no cost (adjustments, organisation), low cost, investment. You decide the pace.", tag: "" },
+        { name: "Individual report", price: "On quote", sub: "depending on the number of reports, MSD and PSR", desc: "Your occupational physician or nurse receives a work situation study carried out remotely by an ergonomist (MSD) or an interview-based analysis by a psychologist (PSR), with recommendations ranked by cost: no cost (adjustments, organisation), low cost, investment. You decide the pace.", tag: "" },
       ],
     },
     tms: {
@@ -564,8 +564,8 @@ export const en = {
     studyLabel: "Another use case",
     studyTitle: "Digitise your work situation studies",
     studyDesc: "For occupational health and prevention services and prevention teams who prescribe their own studies. You decide which work situations to study; ScanUp saves the ergonomist a site visit.",
-    studyItems: ["You choose the employees or situations to study, with or without prior screening", "The employee films their work situation and uploads the videos to ScanUp", "An ergonomist carries out the study remotely and writes an individual report with adaptation recommendations", "From €240 excl. VAT per study, with volume discounts based on monthly volume"],
-    studyPrice: "From €240 excl. VAT",
+    studyItems: ["You choose the employees or situations to study, with or without prior screening", "The employee films their work situation and uploads the videos to ScanUp", "An ergonomist carries out the study remotely and writes an individual report with adaptation recommendations", "On quote, depending on the number of studies"],
+    studyPrice: "On quote",
     studyCta: "Contact us",
     trainingLabel: "Training",
     trainingTitle: "Custom training modules",

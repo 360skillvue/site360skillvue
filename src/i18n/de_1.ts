@@ -519,7 +519,7 @@ export const de = {
       ],
       options: [
         { name: "Präventions-Aktionsplan", price: "Auf Anfrage", sub: "Gestaffelter Preis je nach Anzahl Mitarbeitender, pro Risiko", desc: "Sie erhalten eine anonyme Risikokartierung Ihrer Teams, die prioritären Massnahmen und eine Präsentation durch unsere Fachleute. Auf individuelle Ergebnisse haben Sie nie Zugriff.", tag: "" },
-        { name: "Individueller Bericht", price: "Ab 240 €", sub: "zzgl. MwSt. pro MSE-Analyse, je nach Volumen; PSR auf Anfrage", desc: "Ihr Arbeitsmediziner oder Ihre Pflegefachperson erhält eine aus der Ferne durchgeführte Analyse der Arbeitssituation durch eine:n Ergonom:in (MSE) oder eine Analyse im Gespräch mit einem:r Psycholog:in (PSR), mit Empfehlungen nach Kostenstufe: kostenlos (Einstellungen, Organisation), geringe Kosten, Investition. Sie bestimmen das Tempo.", tag: "" },
+        { name: "Individueller Bericht", price: "Auf Anfrage", sub: "je nach Anzahl der Berichte, MSE und PSR", desc: "Ihr Arbeitsmediziner oder Ihre Pflegefachperson erhält eine aus der Ferne durchgeführte Analyse der Arbeitssituation durch eine:n Ergonom:in (MSE) oder eine Analyse im Gespräch mit einem:r Psycholog:in (PSR), mit Empfehlungen nach Kostenstufe: kostenlos (Einstellungen, Organisation), geringe Kosten, Investition. Sie bestimmen das Tempo.", tag: "" },
       ],
     },
     tms: {
@@ -564,8 +564,8 @@ export const de = {
     studyLabel: "Ein weiterer Anwendungsfall",
     studyTitle: "Analysen von Arbeitssituationen digitalisieren",
     studyDesc: "Für arbeitsmedizinische Dienste und Präventionsteams, die ihre Analysen selbst veranlassen. Sie entscheiden, welche Arbeitssituationen analysiert werden; ScanUp erspart der Ergonomin die Anreise.",
-    studyItems: ["Sie wählen die Mitarbeitenden oder Situationen aus, mit oder ohne vorheriges Screening", "Die Person filmt ihre Arbeitssituation und lädt die Videos in ScanUp hoch", "Eine Ergonomin führt die Analyse aus der Ferne durch und verfasst einen individuellen Bericht mit Anpassungsempfehlungen", "Ab 240 € zzgl. MwSt. pro Analyse, degressiv nach monatlichem Volumen"],
-    studyPrice: "Ab 240 € zzgl. MwSt.",
+    studyItems: ["Sie wählen die Mitarbeitenden oder Situationen aus, mit oder ohne vorheriges Screening", "Die Person filmt ihre Arbeitssituation und lädt die Videos in ScanUp hoch", "Eine Ergonomin führt die Analyse aus der Ferne durch und verfasst einen individuellen Bericht mit Anpassungsempfehlungen", "Auf Anfrage, je nach Anzahl der Analysen"],
+    studyPrice: "Auf Anfrage",
     studyCta: "Kontakt aufnehmen",
     trainingLabel: "Schulung",
     trainingTitle: "Massgeschneiderte Schulungsmodule",

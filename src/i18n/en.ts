@@ -515,11 +515,11 @@ export const en = {
       collect: "Each employee answers in a few minutes from their phone: questionnaire and videos of their workstation for MSD, questionnaire and audio message for psychosocial risks. Their answers remain confidential.",
       plans: [
         { name: "No feedback to the employee", price: "€20", sub: "excl. VAT / employee, per risk", badge: '', items: ["Answers analysed by an ergonomist (MSD) or an occupational psychologist (PSR)", "The employee receives neither their result nor a course of action: their answers are used only for the collective deliverables for management"], cta: "Book a call" },
-        { name: "Feedback by email", price: "€27", sub: "excl. VAT / employee, per risk", badge: '', items: ["Answers analysed by an ergonomist (MSD) or an occupational psychologist (PSR)", "Employee who screens positive: receives by email the course of action you have defined for each module (who to contact, what steps to take)"], cta: "Book a call" },
-        { name: "Personalised feedback", price: "€40", sub: "excl. VAT / employee, per risk", badge: '', items: ["Everything included in feedback by email", "MSD: movements and postures video coaching by an ergonomist, for every at-risk employee", "PSR: 30-minute orientation teleconsultation with an occupational psychologist, for every employee who screens positive"], cta: "Book a call" },
+        { name: "Result and course of action", price: "€27", sub: "excl. VAT / employee, per risk", badge: '', items: ["Answers analysed by an ergonomist (MSD) or an occupational psychologist (PSR)", "The employee sees their result in their own space; if they screen positive, they receive the course of action you have defined for the module (who to contact, what steps to take, training to follow)"], cta: "Book a call" },
+        { name: "Personalised feedback", price: "€40", sub: "excl. VAT / employee, per risk", badge: '', items: ["Everything included in the Result and course of action level", "MSD: movements and postures video coaching by an ergonomist, for every at-risk employee", "PSR: 30-minute orientation teleconsultation with an occupational psychologist, for every employee who screens positive"], cta: "Book a call" },
       ],
       options: [
-        { name: "Action plan or risk map", price: "On quote", sub: "Tiered pricing based on headcount, per risk", desc: "MSD: a prevention action plan, with or without feedback to employees, with one sheet per workstation (observed movements and constraints, risk level, workstation adjustment recommendations) and a summary of priority actions. PSR: with teleconsultation, an action plan debriefed by department or team; without teleconsultation, a risk map to alert management and guide your actions. You never have access to individual results.", tag: "" },
+        { name: "Action plan or risk map", price: "On quote", sub: "Tiered pricing based on headcount, per risk", desc: "MSD: a prevention action plan, regardless of the feedback to employees, with one sheet per workstation (observed movements and constraints, risk level, workstation adjustment recommendations) and a summary of priority actions. PSR: with teleconsultation, an action plan debriefed by department or team; without teleconsultation, a risk map to alert management and guide your actions. You never have access to individual results.", tag: "" },
         { name: "Individual report", price: "On quote", sub: "depending on the number of reports, MSD and PSR", desc: "Your occupational physician or nurse receives a work situation study carried out remotely by an ergonomist (MSD) or an interview-based analysis by a psychologist (PSR), with recommendations ranked by cost: no cost (adjustments, organisation), low cost, investment. You decide the pace.", tag: "" },
       ],
     },
@@ -528,8 +528,8 @@ export const en = {
       subtitle: "Musculoskeletal disorders",
       collect: "Data collected: questionnaire and videos of the real work situation",
       plans: [
-        { name: "Feedback by email", price: "€27", sub: "excl. VAT / employee", badge: '', items: ["Qualification by an ergonomist", "Employee who screens positive: course of action defined by you for each module, sent by email"], cta: "Book a call" },
-        { name: "Feedback with video coaching", price: "€40", sub: "excl. VAT / employee", badge: '', items: ["Everything in feedback by email", "Personalised video coaching (movements and postures) by an ergonomist, for every at-risk employee"], cta: "Book a call" },
+        { name: "Result and course of action", price: "€27", sub: "excl. VAT / employee", badge: '', items: ["Qualification by an ergonomist", "Employee who screens positive: course of action defined by you for the module, shown in their own space"], cta: "Book a call" },
+        { name: "Feedback with video coaching", price: "€40", sub: "excl. VAT / employee", badge: '', items: ["Everything included in the Result and course of action level", "Personalised video coaching (movements and postures) by an ergonomist, for every at-risk employee"], cta: "Book a call" },
       ],
     },
     rps: {
@@ -537,8 +537,8 @@ export const en = {
       subtitle: "Psychosocial risks",
       collect: "Data collected: questionnaire and audio testimony",
       plans: [
-        { name: "Feedback by email", price: "€27", sub: "excl. VAT / employee", badge: '', items: ["Qualification by an occupational psychologist", "Employee who screens positive: course of action defined by you for each module, sent by email"], cta: "Book a call" },
-        { name: "Feedback with teleconsultation", price: "€40", sub: "excl. VAT / employee", badge: '', items: ["Everything in feedback by email", "30-minute orientation teleconsultation with an occupational psychologist, for every employee who screens positive"], cta: "Book a call" },
+        { name: "Result and course of action", price: "€27", sub: "excl. VAT / employee", badge: '', items: ["Qualification by an occupational psychologist", "Employee who screens positive: course of action defined by you for the module, shown in their own space"], cta: "Book a call" },
+        { name: "Feedback with teleconsultation", price: "€40", sub: "excl. VAT / employee", badge: '', items: ["Everything included in the Result and course of action level", "30-minute orientation teleconsultation with an occupational psychologist, for every employee who screens positive"], cta: "Book a call" },
       ],
     },
     step2Label: "For you, HR and management",
@@ -548,8 +548,8 @@ export const en = {
     step3Title: "The individual report",
     step3Subtitle: "An individual report, sent to the occupational physician or nurse",
     options: [
-      { name: "MSD prevention action plan", price: "On quote", sub: "Tiered pricing based on headcount", desc: "One sheet per workstation and a summary of priority actions, with or without feedback to employees.", tag: "" },
-      { name: "PSR prevention action plan", price: "On quote", sub: "Tiered pricing based on headcount", desc: "Debrief by department or team and priority actions; with teleconsultation. Without teleconsultation: risk map.", tag: "" },
+      { name: "MSD prevention action plan", price: "On quote", sub: "Tiered pricing based on headcount", desc: "One sheet per workstation and a summary of priority actions, regardless of the feedback to employees.", tag: "" },
+      { name: "PSR prevention action plan", price: "On quote", sub: "Tiered pricing based on headcount", desc: "Debrief by department or team and priority actions, with teleconsultation. Without teleconsultation: risk map.", tag: "" },
       { name: "Individual MSD report", price: "On request", sub: "per report, individually or in volume", desc: "Remote work situation study by an ergonomist, based on the employee's videos: risk factors, room for manoeuvre, prioritised recommendations.", tag: "" },
       { name: "Individual PSR report", price: "On request", sub: "per report, individually or in volume", desc: "Remote analysis of work organisation and psychosocial factors, through an interview with a psychologist: resources, warning signs, prioritised recommendations.", tag: "" },
     ],
@@ -557,7 +557,7 @@ export const en = {
     exampleLines: [
       { label: "MSD, personalised feedback (video coaching), 100 × €40", amount: "€4,000" },
       { label: "MSD action plan", amount: "On quote" },
-      { label: "PSR, feedback by email, 100 × €27", amount: "€2,700" },
+      { label: "PSR, result and course of action, 100 × €27", amount: "€2,700" },
       { label: "PSR action plan", amount: "On quote" },
     ],
     exampleTotalLabel: "Total excl. action plans",
@@ -579,7 +579,7 @@ export const en = {
     faqs: [
       { q: 'What are ScanUp PSR and MSD?', a: 'Scientifically validated assessment modules to screen for Psychosocial Risks and Musculoskeletal Disorders in your teams. Results in 48 hours.' },
       { q: 'Is employee data confidential?', a: 'Absolutely. Individual results are strictly confidential. The employer only receives aggregated, anonymised indicators. Email is optional.' },
-      { q: "What does the employee receive with feedback by email?", a: "If they screen positive, they receive by email the course of action you set up with us for each module at launch: who to contact, what steps to take, internal resources. You do not know who received it." },
+      { q: "What does the employee receive with the Result and course of action level?", a: "They see their screening result in their ScanUp space, and also receive it by email if they have provided an address. If they screen positive, they receive the course of action you set up with us for the module: who to contact, what steps to take, internal resources or a training module. You do not know who received it." },
       { q: 'Where is the data hosted?', a: 'Your choice: in France 🇫🇷 on HDS-certified infrastructure (the French health-data hosting certification), or in Switzerland 🇨🇭 with Infomaniak. Data is never sold or shared.' },
       { q: 'More than 500 employees, or a partner or reseller?', a: 'Contact us: we will build a proposal suited to your volume and organisation.' },
       { q: 'We have our own prevention experts — is there a suitable plan?', a: 'Yes. A self-service plan exists: your ergonomists and occupational psychologists use the platform to carry out and qualify screenings themselves. Contact us to discuss it.' },

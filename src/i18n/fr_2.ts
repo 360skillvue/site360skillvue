@@ -604,8 +604,8 @@ export const fr = {
       subtitle: "Même prix pour les deux risques",
       collect: "Chaque salarié répond en quelques minutes depuis son téléphone : questionnaire et vidéos de son poste pour les TMS, questionnaire et message audio pour les RPS. Ses réponses restent confidentielles.",
       plans: [
-        { name: "Retour par e-mail", price: "27 €", sub: "HT par salarié et par risque", badge: '', items: ["Analyse des réponses par un ergonome (TMS) ou un psychologue du travail (RPS)", "Salarié dépisté positif : il reçoit par e-mail la conduite à tenir que vous avez définie pour chaque module (qui contacter, quelle démarche suivre)"], cta: "Prendre RDV" },
-        { name: "Retour personnalisé", price: "40 €", sub: "HT par salarié et par risque", badge: '', items: ["Tout ce que comprend le retour par e-mail", "TMS : coaching vidéo gestes et postures par un ergonome, pour chaque salarié à risque", "RPS : téléconsultation d'orientation de 30 min avec un psychologue du travail, pour chaque salarié dépisté positif"], cta: "Prendre RDV" },
+        { name: "Résultat et conduite à tenir", price: "27 €", sub: "HT par salarié et par risque", badge: '', items: ["Analyse des réponses par un ergonome (TMS) ou un psychologue du travail (RPS)", "Le salarié voit son résultat dans son espace ; s'il est dépisté positif, il reçoit la conduite à tenir que vous avez définie pour le module (qui contacter, quelle démarche suivre, formation à suivre)"], cta: "Prendre RDV" },
+        { name: "Retour personnalisé", price: "40 €", sub: "HT par salarié et par risque", badge: '', items: ["Tout ce que comprend le niveau Résultat et conduite à tenir", "TMS : coaching vidéo gestes et postures par un ergonome, pour chaque salarié à risque", "RPS : téléconsultation d'orientation de 30 min avec un psychologue du travail, pour chaque salarié dépisté positif"], cta: "Prendre RDV" },
       ],
       options: [
         { name: "Plan d'action de prévention", price: "Sur devis", sub: "Tarif dégressif selon le nombre de collaborateurs, par risque", desc: "Vous recevez une cartographie anonyme des risques dans vos équipes, les actions à mener en priorité et une restitution par nos experts. Vous n'avez jamais accès aux résultats individuels.", tag: "" },
@@ -617,8 +617,8 @@ export const fr = {
       subtitle: "Troubles musculo-squelettiques",
       collect: "Données collectées : questionnaire et vidéos de la situation réelle de travail",
       plans: [
-        { name: "Retour par e-mail", price: "27 €", sub: "HT / collaborateur", badge: '', items: ["Qualification par un ergonome", "Salarié dépisté positif : conduite à tenir définie par vous pour chaque module, envoyée par e-mail"], cta: "Prendre RDV" },
-        { name: "Retour avec coaching vidéo", price: "40 €", sub: "HT / collaborateur", badge: '', items: ["Tout le retour par e-mail", "Coaching vidéo personnalisé (gestes et postures) par un ergonome, pour chaque collaborateur à risque"], cta: "Prendre RDV" },
+        { name: "Résultat et conduite à tenir", price: "27 €", sub: "HT / collaborateur", badge: '', items: ["Qualification par un ergonome", "Salarié dépisté positif : conduite à tenir définie par vous pour le module, affichée dans son espace"], cta: "Prendre RDV" },
+        { name: "Retour avec coaching vidéo", price: "40 €", sub: "HT / collaborateur", badge: '', items: ["Tout ce que comprend le niveau Résultat et conduite à tenir", "Coaching vidéo personnalisé (gestes et postures) par un ergonome, pour chaque collaborateur à risque"], cta: "Prendre RDV" },
       ],
     },
     rps: {
@@ -626,8 +626,8 @@ export const fr = {
       subtitle: "Risques psychosociaux",
       collect: "Données collectées : questionnaire et témoignage audio",
       plans: [
-        { name: "Retour par e-mail", price: "27 €", sub: "HT / collaborateur", badge: '', items: ["Qualification par un psychologue du travail", "Salarié dépisté positif : conduite à tenir définie par vous pour chaque module, envoyée par e-mail"], cta: "Prendre RDV" },
-        { name: "Retour avec téléconsultation", price: "40 €", sub: "HT / collaborateur", badge: '', items: ["Tout le retour par e-mail", "Téléconsultation d'orientation de 30 min avec un psychologue du travail, pour chaque collaborateur détecté positif"], cta: "Prendre RDV" },
+        { name: "Résultat et conduite à tenir", price: "27 €", sub: "HT / collaborateur", badge: '', items: ["Qualification par un psychologue du travail", "Salarié dépisté positif : conduite à tenir définie par vous pour le module, affichée dans son espace"], cta: "Prendre RDV" },
+        { name: "Retour avec téléconsultation", price: "40 €", sub: "HT / collaborateur", badge: '', items: ["Tout ce que comprend le niveau Résultat et conduite à tenir", "Téléconsultation d'orientation de 30 min avec un psychologue du travail, pour chaque collaborateur détecté positif"], cta: "Prendre RDV" },
       ],
     },
     step2Label: "Pour vous, RH et direction",
@@ -646,7 +646,7 @@ export const fr = {
     exampleLines: [
       { label: "TMS, retour personnalisé (coaching vidéo), 100 × 40 €", amount: "4 000 €" },
       { label: "Plan d'action TMS", amount: "Sur devis" },
-      { label: "RPS, retour par e-mail, 100 × 27 €", amount: "2 700 €" },
+      { label: "RPS, résultat et conduite à tenir, 100 × 27 €", amount: "2 700 €" },
       { label: "Plan d'action RPS", amount: "Sur devis" },
     ],
     exampleTotalLabel: "Total hors plans d'action",
@@ -668,7 +668,7 @@ export const fr = {
     faqs: [
       { q: 'Qu\'est-ce que ScanUp RPS et TMS ?', a: 'Des modules d\'évaluation scientifiquement validés pour dépister les Risques Psycho-Sociaux et les Troubles Musculo-Squelettiques au sein de vos équipes. Résultats en 48 h.' },
       { q: 'Les données des salariés sont-elles confidentielles ?', a: 'Absolument. Les résultats individuels sont strictement confidentiels. L\'employeur ne reçoit que des indicateurs agrégés et anonymisés. L\'email est facultatif.' },
-      { q: "Que reçoit le salarié avec le retour par e-mail ?", a: "S'il est dépisté positif, il reçoit par e-mail la conduite à tenir que vous avez paramétrée avec nous pour chaque module au lancement : interlocuteur à contacter, démarche à suivre, ressources internes. Vous ne savez pas qui l'a reçue." },
+      { q: "Que reçoit le salarié avec le niveau Résultat et conduite à tenir ?", a: "Il voit le résultat de son dépistage dans son espace ScanUp, et le reçoit aussi par e-mail s'il en a renseigné un. S'il est dépisté positif, il reçoit la conduite à tenir que vous avez paramétrée avec nous pour le module : interlocuteur à contacter, démarche à suivre, ressources internes ou module de formation. Vous ne savez pas qui l'a reçue." },
       { q: 'Où sont hébergées les données ?', a: 'Au choix : en France 🇫🇷 sur une infrastructure certifiée HDS (Hébergeur de Données de Santé), ou en Suisse 🇨🇭 chez Infomaniak. Les données ne sont jamais revendues ni partagées.' },
       { q: 'Plus de 500 collaborateurs, partenaire ou revendeur ?', a: 'Contactez-nous : nous construisons une proposition adaptée à votre volume et à votre organisation.' },
       { q: 'Nous disposons de nos propres experts en prévention — existe-t-il une formule adaptée ?', a: 'Oui. Une formule en autonomie existe : vos ergonomes et psychologues du travail utilisent la plateforme pour réaliser et qualifier eux-mêmes les dépistages. Contactez-nous pour en discuter.' },

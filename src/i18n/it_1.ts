@@ -514,8 +514,8 @@ export const it = {
       subtitle: "Stesso prezzo per i due rischi",
       collect: "Ogni collaboratore risponde in pochi minuti dal proprio telefono: questionario e video della postazione per i DMS, questionario e messaggio audio per i RPS. Le risposte restano riservate.",
       plans: [
-        { name: "Riscontro via e-mail", price: "27 €", sub: "+ IVA / collaboratore e per rischio", badge: '', items: ["Analisi delle risposte da parte di un ergonomo (DMS) o di uno psicologo del lavoro (RPS)", "Collaboratore risultato positivo: riceve via e-mail la condotta da seguire che avete definito per ogni modulo (chi contattare, quali passi seguire)"], cta: "Prenota" },
-        { name: "Riscontro personalizzato", price: "40 €", sub: "+ IVA / collaboratore e per rischio", badge: '', items: ["Tutto quanto incluso nel riscontro via e-mail", "DMS: coaching video su gesti e posture da parte di un ergonomo, per ogni collaboratore a rischio", "RPS: teleconsulto di orientamento di 30 minuti con uno psicologo del lavoro, per ogni collaboratore risultato positivo"], cta: "Prenota" },
+        { name: "Risultato e condotta da seguire", price: "27 €", sub: "+ IVA / collaboratore e per rischio", badge: '', items: ["Analisi delle risposte da parte di un ergonomo (DMS) o di uno psicologo del lavoro (RPS)", "Il collaboratore vede il suo risultato nel proprio spazio; se risulta positivo, riceve la condotta da seguire che avete definito per il modulo (chi contattare, quali passi seguire, formazione da seguire)"], cta: "Prenota" },
+        { name: "Riscontro personalizzato", price: "40 €", sub: "+ IVA / collaboratore e per rischio", badge: '', items: ["Tutto quanto incluso nel livello Risultato e condotta da seguire", "DMS: coaching video su gesti e posture da parte di un ergonomo, per ogni collaboratore a rischio", "RPS: teleconsulto di orientamento di 30 minuti con uno psicologo del lavoro, per ogni collaboratore risultato positivo"], cta: "Prenota" },
       ],
       options: [
         { name: "Piano d'azione di prevenzione", price: "Su preventivo", sub: "Prezzo decrescente in base al numero di collaboratori, per rischio", desc: "Ricevete una mappatura anonima dei rischi nei vostri team, le azioni prioritarie e una restituzione da parte dei nostri esperti. Non avete mai accesso ai risultati individuali.", tag: "" },
@@ -527,8 +527,8 @@ export const it = {
       subtitle: "Disturbi muscoloscheletrici",
       collect: "Dati raccolti: questionario e video della situazione di lavoro reale",
       plans: [
-        { name: "Riscontro via e-mail", price: "27 €", sub: "+ IVA / collaboratore", badge: '', items: ["Qualificazione da parte di un ergonomo", "Collaboratore risultato positivo: condotta da seguire definita da voi per ogni modulo, inviata via e-mail"], cta: "Prenota" },
-        { name: "Riscontro con coaching video", price: "40 €", sub: "+ IVA / collaboratore", badge: '', items: ["Tutto il riscontro via e-mail", "Coaching video personalizzato (gesti e posture) da parte di un ergonomo, per ogni collaboratore a rischio"], cta: "Prenota" },
+        { name: "Risultato e condotta da seguire", price: "27 €", sub: "+ IVA / collaboratore", badge: '', items: ["Qualificazione da parte di un ergonomo", "Collaboratore risultato positivo: condotta da seguire definita da voi per il modulo, visualizzata nel suo spazio"], cta: "Prenota" },
+        { name: "Riscontro con coaching video", price: "40 €", sub: "+ IVA / collaboratore", badge: '', items: ["Tutto quanto incluso nel livello Risultato e condotta da seguire", "Coaching video personalizzato (gesti e posture) da parte di un ergonomo, per ogni collaboratore a rischio"], cta: "Prenota" },
       ],
     },
     rps: {
@@ -536,8 +536,8 @@ export const it = {
       subtitle: "Rischi psicosociali",
       collect: "Dati raccolti: questionario e testimonianza audio",
       plans: [
-        { name: "Riscontro via e-mail", price: "27 €", sub: "+ IVA / collaboratore", badge: '', items: ["Qualificazione da parte di uno psicologo del lavoro", "Collaboratore risultato positivo: condotta da seguire definita da voi per ogni modulo, inviata via e-mail"], cta: "Prenota" },
-        { name: "Riscontro con teleconsulto", price: "40 €", sub: "+ IVA / collaboratore", badge: '', items: ["Tutto il riscontro via e-mail", "Teleconsulto di orientamento di 30 minuti con uno psicologo del lavoro, per ogni collaboratore risultato positivo allo screening"], cta: "Prenota" },
+        { name: "Risultato e condotta da seguire", price: "27 €", sub: "+ IVA / collaboratore", badge: '', items: ["Qualificazione da parte di uno psicologo del lavoro", "Collaboratore risultato positivo: condotta da seguire definita da voi per il modulo, visualizzata nel suo spazio"], cta: "Prenota" },
+        { name: "Riscontro con teleconsulto", price: "40 €", sub: "+ IVA / collaboratore", badge: '', items: ["Tutto quanto incluso nel livello Risultato e condotta da seguire", "Teleconsulto di orientamento di 30 minuti con uno psicologo del lavoro, per ogni collaboratore risultato positivo allo screening"], cta: "Prenota" },
       ],
     },
     step2Label: "Per voi, HR e direzione",
@@ -556,7 +556,7 @@ export const it = {
     exampleLines: [
       { label: "DMS, riscontro personalizzato (coaching video), 100 × 40 €", amount: "4.000 €" },
       { label: "Piano d'azione DMS", amount: "Su preventivo" },
-      { label: "RPS, riscontro via e-mail, 100 × 27 €", amount: "2.700 €" },
+      { label: "RPS, risultato e condotta da seguire, 100 × 27 €", amount: "2.700 €" },
       { label: "Piano d'azione RPS", amount: "Su preventivo" },
     ],
     exampleTotalLabel: "Totale esclusi piani d'azione",
@@ -578,7 +578,7 @@ export const it = {
     faqs: [
       { q: 'Cosa sono ScanUp RPS e DMS?', a: 'Moduli di valutazione scientificamente validati per individuare i Rischi Psicosociali e i Disturbi Muscoloscheletrici nei vostri team. Risultati in 48 ore.' },
       { q: 'I dati dei dipendenti sono riservati?', a: 'Assolutamente. I risultati individuali sono strettamente riservati. Il datore di lavoro riceve solo indicatori aggregati e anonimizzati.' },
-      { q: "Cosa riceve il collaboratore con il riscontro via e-mail?", a: "Se risulta positivo, riceve via e-mail la condotta da seguire che avete impostato con noi per ogni modulo all'avvio: chi contattare, quali passi seguire, risorse interne. Voi non sapete chi l'ha ricevuta." },
+      { q: "Cosa riceve il collaboratore con il livello Risultato e condotta da seguire?", a: "Vede il risultato del suo screening nel proprio spazio ScanUp e lo riceve anche via e-mail se ne ha indicata una. Se risulta positivo, riceve la condotta da seguire che avete impostato con noi per il modulo: chi contattare, quali passi seguire, risorse interne o modulo di formazione. Voi non sapete chi l'ha ricevuta." },
       { q: 'Dove sono ospitati i dati?', a: 'A scelta: in Francia 🇫🇷 su un\'infrastruttura certificata HDS (certificazione francese per l\'hosting di dati sanitari), oppure in Svizzera 🇨🇭 presso Infomaniak. I dati non vengono mai venduti né condivisi.' },
       { q: 'Più di 500 collaboratori, partner o rivenditori?', a: 'Contattateci: costruiremo una proposta adatta al vostro volume e alla vostra organizzazione.' },
       { q: 'Abbiamo i nostri esperti di prevenzione — esiste una formula adatta?', a: 'Sì. Esiste una formula in autonomia: i vostri ergonomi e psicologi del lavoro utilizzano la piattaforma per effettuare e qualificare gli screening in autonomia. Contattateci per parlarne.' },

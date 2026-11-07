@@ -539,7 +539,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <p class="hint" style="margin:0 0 6px">Pour vos salariés</p>
             <div class="scn-set">
               <label class="scn"><input type="radio" name="svrps" value="20"><span>Sans retour au salarié<small id="sv-lab-rps-s">20 € HT par salarié</small></span></label>
-              <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Retour par e-mail<small id="sv-lab-rps-e">27 € HT par salarié</small></span></label>
+              <label class="scn"><input type="radio" name="svrps" value="27" checked><span>Résultat et conduite à tenir<small id="sv-lab-rps-e">27 € HT par salarié</small></span></label>
               <label class="scn"><input type="radio" name="svrps" value="40"><span>Avec téléconsultation<small id="sv-lab-rps-p">40 € HT par salarié</small></span></label>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
@@ -554,7 +554,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <p class="hint" style="margin:0 0 6px">Pour vos salariés</p>
             <div class="scn-set">
               <label class="scn"><input type="radio" name="svtms" value="sansretour"><span>Sans retour au salarié<small id="sv-lab-tms-s">20 € HT par salarié</small></span></label>
-              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Retour par e-mail<small id="sv-lab-tms-e">27 € HT par salarié</small></span></label>
+              <label class="scn"><input type="radio" name="svtms" value="essential"><span>Résultat et conduite à tenir<small id="sv-lab-tms-e">27 € HT par salarié</small></span></label>
               <label class="scn"><input type="radio" name="svtms" value="premium" checked><span>Avec coaching vidéo<small id="sv-lab-tms-p">40 € HT par salarié</small></span></label>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
@@ -617,7 +617,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="field">
                 <label for="sv-p-elearn">Coût d'une formation e-learning gestes et postures, par salarié</label>
                 <input type="number" id="sv-p-elearn" min="0" max="1000" step="1" value="30">
-                <p class="hint">Comparée au retour TMS par e-mail. Les modules du marché se vendent de 25 à 35 € HT par apprenant, pour 45 minutes à 3 heures de contenu.</p>
+                <p class="hint">Comparée au niveau TMS Résultat et conduite à tenir. Les modules du marché se vendent de 25 à 35 € HT par apprenant, pour 45 minutes à 3 heures de contenu.</p>
               </div>
 
               <div class="field">
@@ -1061,7 +1061,7 @@ function calcule(){
   var c1rps=vRps?pAudit*fPres:0, c1ent=vRps?eff*pEnt*fPres:0,
       c1tms=0;
   // TMS : le depistage ScanUp se compare a une formation gestes et postures ;
-  // retour par e-mail contre e-learning, coaching video contre presentiel.
+  // resultat et conduite a tenir contre e-learning, coaching video contre presentiel.
   var packTms0=document.querySelector('input[name="svtms"]:checked').value;
   var pElearn=lire("sv-p-elearn",30), pPresForm=lire("sv-p-presform",850);
   var nbGroupes=Math.ceil(eff/10);
@@ -1085,7 +1085,7 @@ function calcule(){
   // scénario 2 : en digital, avec ScanUp
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
   var pu=parseFloat(packRps);
-  var c2rps=eff*pu, lib2rps="RPS, pour le salarié : "+(pu>30?"retour avec téléconsultation":(pu<25?"sans retour":"retour par e-mail"))+", "+num(eff,0)+" × "+eur(pu);
+  var c2rps=eff*pu, lib2rps="RPS, pour le salarié : "+(pu>30?"retour avec téléconsultation":(pu<25?"sans retour":"résultat et conduite à tenir"))+", "+num(eff,0)+" × "+eur(pu);
   var nbTr=tranches50(eff);
   var planRps=(document.querySelector('input[name="svprps"]:checked').value==="oui");
   var planTms=(document.querySelector('input[name="svptms"]:checked').value==="oui");
@@ -1097,7 +1097,7 @@ function calcule(){
   var nbEtudes=0;
   var puTms=(packTms==="sansretour")?20:((packTms==="essential")?27:40);
   var c2dep=eff*puTms, c2tms=0;
-  var lib2dep="TMS, pour le salarié : "+(packTms==="sansretour"?"sans retour":(packTms==="essential"?"retour par e-mail":"retour avec coaching vidéo"))+", "+num(eff,0)+" × "+eur(puTms);
+  var lib2dep="TMS, pour le salarié : "+(packTms==="sansretour"?"sans retour":(packTms==="essential"?"résultat et conduite à tenir":"retour avec coaching vidéo"))+", "+num(eff,0)+" × "+eur(puTms);
   var lib2tms="TMS, pour la santé au travail : rapport individuel, étude de situation de travail à distance, pour les salariés que vous choisissez";
   if(!vRps){ c2rps=0; }
   if(!vRps){ c2prps=0; }
@@ -1120,7 +1120,7 @@ function calcule(){
   $("sv-roi-l").textContent="Ce qu'il faut investir pour agir";
   $("sv-p-label").textContent=(perim==="deux"?"Ce que le risque vous coûte":(perim==="rps"?"Ce que les RPS vous coûtent":"Ce que les TMS vous coûtent"));
   $("sv-roi-sur").textContent=libPer;
-  $("sv-ex-plan").textContent="Plan d'action de prévention, exemple d'un site de 50 collaborateurs : "+eur(750)+" HT avec ScanUp, contre de l'ordre de "+eur(5000*fPres)+" HT en présentiel. Au delà de 50 collaborateurs, tarif dégressif sur devis."; $("sv-hint-tms").textContent="Chaque choix se compare à son équivalent en présentiel. Pour vos salariés, le retour par e-mail "+
+  $("sv-ex-plan").textContent="Plan d'action de prévention, exemple d'un site de 50 collaborateurs : "+eur(750)+" HT avec ScanUp, contre de l'ordre de "+eur(5000*fPres)+" HT en présentiel. Au delà de 50 collaborateurs, tarif dégressif sur devis."; $("sv-hint-tms").textContent="Chaque choix se compare à son équivalent en présentiel. Pour vos salariés, le niveau Résultat et conduite à tenir "+
     "se compare à un module e-learning gestes et postures, le coaching vidéo à une formation en présentiel. Pour vous, RH et direction, "+
     "le plan d'action se compare à celui d'un ergonome qui se déplace ; sur devis selon le volume, il reste hors du calcul. "+
     "Pour votre médecin du travail, le rapport individuel à distance se compare à une étude de situation de travail en présentiel ; "+

@@ -515,11 +515,11 @@ export const pt = {
       collect: "Cada colaborador responde em poucos minutos a partir do telemóvel: questionário e vídeos do posto de trabalho para as LME, questionário e mensagem áudio para os RPS. As respostas são confidenciais.",
       plans: [
         { name: "Sem retorno ao colaborador", price: "20 €", sub: "sem IVA / colaborador e por risco", badge: '', items: ["Análise das respostas por um ergonomista (LME) ou um psicólogo do trabalho (RPS)", "O colaborador não recebe nem o seu resultado nem uma conduta a seguir: as suas respostas servem apenas para os entregáveis coletivos da direção"], cta: "Marcar uma reunião" },
-        { name: "Retorno por e-mail", price: "27 €", sub: "sem IVA / colaborador e por risco", badge: '', items: ["Análise das respostas por um ergonomista (LME) ou um psicólogo do trabalho (RPS)", "Colaborador com rastreio positivo: recebe por e-mail a conduta a seguir que definiu para cada módulo (quem contactar, que passos seguir)"], cta: "Marcar uma reunião" },
-        { name: "Retorno personalizado", price: "40 €", sub: "sem IVA / colaborador e por risco", badge: '', items: ["Tudo o que inclui o retorno por e-mail", "LME: coaching em vídeo sobre gestos e posturas por um ergonomista, para cada colaborador em risco", "RPS: teleconsulta de orientação de 30 minutos com um psicólogo do trabalho, para cada colaborador com rastreio positivo"], cta: "Marcar uma reunião" },
+        { name: "Resultado e conduta a seguir", price: "27 €", sub: "sem IVA / colaborador e por risco", badge: '', items: ["Análise das respostas por um ergonomista (LME) ou um psicólogo do trabalho (RPS)", "O colaborador vê o seu resultado no seu espaço; se o rastreio for positivo, recebe a conduta a seguir que definiu para o módulo (quem contactar, que passos seguir, formação a seguir)"], cta: "Marcar uma reunião" },
+        { name: "Retorno personalizado", price: "40 €", sub: "sem IVA / colaborador e por risco", badge: '', items: ["Tudo o que inclui o nível Resultado e conduta a seguir", "LME: coaching em vídeo sobre gestos e posturas por um ergonomista, para cada colaborador em risco", "RPS: teleconsulta de orientação de 30 minutos com um psicólogo do trabalho, para cada colaborador com rastreio positivo"], cta: "Marcar uma reunião" },
       ],
       options: [
-        { name: "Plano de ação ou cartografia de riscos", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores, por risco", desc: "LME: um plano de ação de prevenção, com ou sem retorno ao colaborador, com uma ficha por posto de trabalho (gestos e constrangimentos observados, nível de risco, recomendações de adaptação) e uma síntese das ações prioritárias. RPS: com a teleconsulta, um plano de ação restituído por serviço ou por equipa; sem teleconsulta, uma cartografia de riscos para alertar a direção e orientar as suas ações. Nunca tem acesso aos resultados individuais.", tag: "" },
+        { name: "Plano de ação ou cartografia de riscos", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores, por risco", desc: "LME: um plano de ação de prevenção, qualquer que seja o retorno ao colaborador, com uma ficha por posto de trabalho (gestos e constrangimentos observados, nível de risco, recomendações de adaptação) e uma síntese das ações prioritárias. RPS: com a teleconsulta, um plano de ação restituído por serviço ou por equipa; sem teleconsulta, uma cartografia de riscos para alertar a direção e orientar as suas ações. Nunca tem acesso aos resultados individuais.", tag: "" },
         { name: "Relatório individual", price: "Sob orçamento", sub: "consoante o número de relatórios, LME e RPS", desc: "O seu médico ou enfermeiro do trabalho recebe um estudo da situação de trabalho realizado à distância por um ergonomista (LME) ou uma análise em entrevista com um psicólogo (RPS), com recomendações classificadas por nível de custo: sem custo (ajustes, organização), baixo custo, investimento. É você quem decide o ritmo.", tag: "" },
       ],
     },
@@ -528,8 +528,8 @@ export const pt = {
       subtitle: "Lesões musculoesqueléticas",
       collect: "Dados recolhidos: questionário e vídeos da situação real de trabalho",
       plans: [
-        { name: "Retorno por e-mail", price: "27 €", sub: "sem IVA / colaborador", badge: '', items: ["Qualificação por um ergonomista", "Colaborador com rastreio positivo: conduta a seguir definida por si para cada módulo, enviada por e-mail"], cta: "Marcar uma reunião" },
-        { name: "Retorno com coaching em vídeo", price: "40 €", sub: "sem IVA / colaborador", badge: '', items: ["Tudo o que inclui o retorno por e-mail", "Coaching em vídeo personalizado (gestos e posturas) por um ergonomista, para cada colaborador em risco"], cta: "Marcar uma reunião" },
+        { name: "Resultado e conduta a seguir", price: "27 €", sub: "sem IVA / colaborador", badge: '', items: ["Qualificação por um ergonomista", "Colaborador com rastreio positivo: conduta a seguir definida por si para o módulo, apresentada no seu espaço"], cta: "Marcar uma reunião" },
+        { name: "Retorno com coaching em vídeo", price: "40 €", sub: "sem IVA / colaborador", badge: '', items: ["Tudo o que inclui o nível Resultado e conduta a seguir", "Coaching em vídeo personalizado (gestos e posturas) por um ergonomista, para cada colaborador em risco"], cta: "Marcar uma reunião" },
       ],
     },
     rps: {
@@ -537,8 +537,8 @@ export const pt = {
       subtitle: "Riscos psicossociais",
       collect: "Dados recolhidos: questionário e testemunho áudio",
       plans: [
-        { name: "Retorno por e-mail", price: "27 €", sub: "sem IVA / colaborador", badge: '', items: ["Qualificação por um psicólogo do trabalho", "Colaborador com rastreio positivo: conduta a seguir definida por si para cada módulo, enviada por e-mail"], cta: "Marcar uma reunião" },
-        { name: "Retorno com teleconsulta", price: "40 €", sub: "sem IVA / colaborador", badge: '', items: ["Tudo o que inclui o retorno por e-mail", "Teleconsulta de orientação de 30 minutos com um psicólogo do trabalho, para cada colaborador com rastreio positivo"], cta: "Marcar uma reunião" },
+        { name: "Resultado e conduta a seguir", price: "27 €", sub: "sem IVA / colaborador", badge: '', items: ["Qualificação por um psicólogo do trabalho", "Colaborador com rastreio positivo: conduta a seguir definida por si para o módulo, apresentada no seu espaço"], cta: "Marcar uma reunião" },
+        { name: "Retorno com teleconsulta", price: "40 €", sub: "sem IVA / colaborador", badge: '', items: ["Tudo o que inclui o nível Resultado e conduta a seguir", "Teleconsulta de orientação de 30 minutos com um psicólogo do trabalho, para cada colaborador com rastreio positivo"], cta: "Marcar uma reunião" },
       ],
     },
     step2Label: "Para si, RH e direção",
@@ -548,8 +548,8 @@ export const pt = {
     step3Title: "O relatório individual",
     step3Subtitle: "Um relatório individual, dirigido ao médico ou ao enfermeiro do trabalho",
     options: [
-      { name: "Plano de ação de prevenção de LME", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores", desc: "Uma ficha por posto de trabalho e uma síntese das ações prioritárias, com ou sem retorno ao colaborador.", tag: "" },
-      { name: "Plano de ação de prevenção de RPS", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores", desc: "Restituição por serviço ou por equipa e ações prioritárias; com teleconsulta. Sem teleconsulta: cartografia de riscos.", tag: "" },
+      { name: "Plano de ação de prevenção de LME", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores", desc: "Uma ficha por posto de trabalho e uma síntese das ações prioritárias, qualquer que seja o retorno ao colaborador.", tag: "" },
+      { name: "Plano de ação de prevenção de RPS", price: "Sob orçamento", sub: "Preço degressivo consoante o número de colaboradores", desc: "Restituição por serviço ou por equipa e ações prioritárias, com teleconsulta. Sem teleconsulta: cartografia de riscos.", tag: "" },
       { name: "Relatório individual LME", price: "Sob consulta", sub: "por relatório, à unidade ou em volume", desc: "Estudo da situação de trabalho à distância por um ergonomista, a partir dos vídeos do colaborador: fatores de risco, margens de manobra, recomendações hierarquizadas.", tag: "" },
       { name: "Relatório individual RPS", price: "Sob consulta", sub: "por relatório, à unidade ou em volume", desc: "Análise à distância da organização do trabalho e dos fatores psicossociais, em entrevista com um psicólogo: pontos de apoio, sinais de alerta, recomendações hierarquizadas.", tag: "" },
     ],
@@ -557,7 +557,7 @@ export const pt = {
     exampleLines: [
       { label: "LME, retorno personalizado (coaching em vídeo), 100 × 40 €", amount: "4000 €" },
       { label: "Plano de ação LME", amount: "Sob orçamento" },
-      { label: "RPS, retorno por e-mail, 100 × 27 €", amount: "2700 €" },
+      { label: "RPS, resultado e conduta a seguir, 100 × 27 €", amount: "2700 €" },
       { label: "Plano de ação RPS", amount: "Sob orçamento" },
     ],
     exampleTotalLabel: "Total sem planos de ação",
@@ -579,7 +579,7 @@ export const pt = {
     faqs: [
       { q: 'O que são o ScanUp RPS e o ScanUp LME?', a: 'Módulos de avaliação cientificamente validados para rastrear os riscos psicossociais e as lesões musculoesqueléticas nas suas equipas. Resultados em 48 horas.' },
       { q: 'Os dados dos colaboradores são confidenciais?', a: 'Sem dúvida. Os resultados individuais são estritamente confidenciais. O empregador recebe apenas indicadores agregados e anonimizados. O e-mail é facultativo.' },
-      { q: "O que recebe o colaborador com o retorno por e-mail?", a: "Se o rastreio for positivo, recebe por e-mail a conduta a seguir que configurou connosco para cada módulo no arranque: quem contactar, que passos seguir, recursos internos. Não sabe quem a recebeu." },
+      { q: "O que recebe o colaborador com o nível Resultado e conduta a seguir?", a: "Vê o resultado do seu rastreio no seu espaço ScanUp e recebe-o também por e-mail, se tiver indicado um. Se o rastreio for positivo, recebe a conduta a seguir que configurou connosco para o módulo: quem contactar, que passos seguir, recursos internos ou módulo de formação. Não sabe quem a recebeu." },
       { q: 'Onde são alojados os dados?', a: 'À sua escolha: em França 🇫🇷 numa infraestrutura certificada HDS (a certificação francesa de alojamento de dados de saúde), ou na Suíça 🇨🇭 na Infomaniak. Os dados nunca são vendidos nem partilhados.' },
       { q: 'Mais de 500 colaboradores, ou parceiro ou revendedor?', a: 'Contacte-nos: construímos uma proposta adaptada ao seu volume e à sua organização.' },
       { q: 'Temos os nossos próprios especialistas em prevenção — existe um plano adequado?', a: 'Sim. Existe um plano em autonomia: os seus ergonomistas e psicólogos do trabalho utilizam a plataforma para realizar e qualificar eles próprios os rastreios. Contacte-nos para falarmos sobre isso.' },

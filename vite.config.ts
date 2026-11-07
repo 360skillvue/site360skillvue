@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig, loadEnv, type Plugin} from 'vite';
+import {defineConfig, type Plugin} from 'vite';
 
 // Mirrors the /simulateur-cout-tms-rps -> .html rewrite from vercel.json for local dev.
 const simulateurRewrite: Plugin = {
@@ -17,12 +17,8 @@ const simulateurRewrite: Plugin = {
 };
 
 export default defineConfig(({mode}) => {
-  const env = loadEnv(mode, '.', '');
   return {
     plugins: [react(), tailwindcss(), simulateurRewrite],
-    define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-    },
     build: {
       outDir: 'www',
       rollupOptions: {

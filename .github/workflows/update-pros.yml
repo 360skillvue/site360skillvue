@@ -20,6 +20,8 @@ jobs:
 
       - name: Fetch & geocode professionals
         run: node scripts/fetch-pros.mjs
+        env:
+          PIPEDRIVE_API_TOKEN: ${{ secrets.PIPEDRIVE_API_TOKEN }}
 
       - name: Commit updated JSON
         run: |

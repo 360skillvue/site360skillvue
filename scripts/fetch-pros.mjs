@@ -6,7 +6,11 @@ import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const API_KEY = '9253b27b43a478f140271664aa4d040d9079c848';
+const API_KEY = process.env.PIPEDRIVE_API_TOKEN;
+if (!API_KEY) {
+  console.error('PIPEDRIVE_API_TOKEN manquant : ajoutez le secret dans GitHub (Settings > Secrets and variables > Actions).');
+  process.exit(1);
+}
 
 const FIELD_ADDRESS       = 'af8d1eee2986e4b3f27659fbe12d74912ec9f888';
 const FIELD_COMPETENCES   = '744a9d6bd818c9ab7716fa4485b37c2bc1d10e46';

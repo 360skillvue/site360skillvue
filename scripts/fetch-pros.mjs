@@ -1,5 +1,7 @@
 // scripts/fetch-pros.mjs
 // Fetches professionals from Pipedrive, geocodes them, writes public/professionals.json
+// Plus lancé automatiquement : la carte des partenaires est figée jusqu'à son retrait.
+// Pour une mise à jour manuelle : PIPEDRIVE_API_TOKEN=... node scripts/fetch-pros.mjs
 import { writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';

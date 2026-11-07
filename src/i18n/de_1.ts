@@ -109,7 +109,7 @@ export const de = {
     compareColQuestionnaires: 'Feedback-Fragebögen',
     compareColQuestionnairesSub: 'Karasek, COPSOQ, Google Forms',
     compareColLogiciels: 'PSR-Fragebögen mit Scoring',
-    compareColLogicielsSub: 'JSA, Holicare, RPS Detector',
+    compareColLogicielsSub: 'Holicare, RPS Detector',
     compareColIA: 'Passive Stimmanalyse per KI',
     compareColIASub: 'Virtuosis',
     compareRows: [
@@ -514,12 +514,12 @@ export const de = {
       subtitle: "Gleicher Preis für beide Risiken",
       collect: "Jede Person antwortet in wenigen Minuten auf dem Smartphone: Fragebogen und Videos des Arbeitsplatzes für MSE, Fragebogen und Audionachricht für PSR. Die Antworten bleiben vertraulich.",
       plans: [
-        { name: "Rückmeldung per E-Mail", price: "27 €", sub: "zzgl. MwSt. / Mitarbeitendem und Risiko", badge: '', items: ["Auswertung der Antworten durch eine:n Ergonom:in (MSE) oder eine:n Arbeitspsycholog:in (PSR)", "Positiv gescreente Person: erhält per E-Mail das Vorgehen, das Sie für jedes Modul festgelegt haben (wen kontaktieren, welche Schritte unternehmen)"], cta: "Termin vereinbaren" },
-        { name: "Persönliche Rückmeldung", price: "40 €", sub: "zzgl. MwSt. / Mitarbeitendem und Risiko", badge: '', items: ["Alles aus der Rückmeldung per E-Mail", "MSE: Video-Coaching zu Bewegungen und Haltungen durch eine:n Ergonom:in für jede Person mit Risiko", "PSR: 30-minütige Orientierungs-Telekonsultation mit einem:r Arbeitspsycholog:in für jede positiv gescreente Person"], cta: "Termin vereinbaren" },
+        { name: "Ergebnis und Vorgehen", price: "27 €", sub: "zzgl. MwSt. / Mitarbeitendem und Risiko", badge: '', items: ["Auswertung der Antworten durch eine:n Ergonom:in (MSE) oder eine:n Arbeitspsycholog:in (PSR)", "Die Person sieht ihr Ergebnis in ihrem Bereich; bei einem positiven Screening erhält sie das Vorgehen, das Sie für das Modul festgelegt haben (wen kontaktieren, welche Schritte unternehmen, welche Schulung absolvieren)"], cta: "Termin vereinbaren" },
+        { name: "Persönliche Rückmeldung", price: "40 €", sub: "zzgl. MwSt. / Mitarbeitendem und Risiko", badge: '', items: ["Alles aus der Stufe Ergebnis und Vorgehen", "MSE: Video-Coaching zu Bewegungen und Haltungen durch eine:n Ergonom:in für jede Person mit Risiko", "PSR: 30-minütige Orientierungs-Telekonsultation mit einem:r Arbeitspsycholog:in für jede positiv gescreente Person"], cta: "Termin vereinbaren" },
       ],
       options: [
         { name: "Präventions-Aktionsplan", price: "Auf Anfrage", sub: "Gestaffelter Preis je nach Anzahl Mitarbeitender, pro Risiko", desc: "Sie erhalten eine anonyme Risikokartierung Ihrer Teams, die prioritären Massnahmen und eine Präsentation durch unsere Fachleute. Auf individuelle Ergebnisse haben Sie nie Zugriff.", tag: "" },
-        { name: "Individueller Bericht", price: "Ab 240 €", sub: "zzgl. MwSt. pro MSE-Analyse, je nach Volumen; PSR auf Anfrage", desc: "Ihr Arbeitsmediziner oder Ihre Pflegefachperson erhält eine aus der Ferne durchgeführte Analyse der Arbeitssituation durch eine:n Ergonom:in (MSE) oder eine Analyse im Gespräch mit einem:r Psycholog:in (PSR), mit Empfehlungen nach Kostenstufe: kostenlos (Einstellungen, Organisation), geringe Kosten, Investition. Sie bestimmen das Tempo.", tag: "" },
+        { name: "Individueller Bericht", price: "Auf Anfrage", sub: "je nach Anzahl der Berichte, MSE und PSR", desc: "Ihr Arbeitsmediziner oder Ihre Pflegefachperson erhält eine aus der Ferne durchgeführte Analyse der Arbeitssituation durch eine:n Ergonom:in (MSE) oder eine Analyse im Gespräch mit einem:r Psycholog:in (PSR), mit Empfehlungen nach Kostenstufe: kostenlos (Einstellungen, Organisation), geringe Kosten, Investition. Sie bestimmen das Tempo.", tag: "" },
       ],
     },
     tms: {
@@ -527,8 +527,8 @@ export const de = {
       subtitle: "Muskel-Skelett-Erkrankungen",
       collect: "Erhobene Daten: Fragebogen und Videos der realen Arbeitssituation",
       plans: [
-        { name: "Rückmeldung per E-Mail", price: "27 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Qualifizierung durch eine:n Ergonom:in", "Positiv gescreente Person: von Ihnen pro Modul festgelegtes Vorgehen, per E-Mail"], cta: "Termin vereinbaren" },
-        { name: "Rückmeldung mit Video-Coaching", price: "40 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Alles aus der Rückmeldung per E-Mail", "Personalisiertes Video-Coaching (Bewegungen und Haltungen) durch eine:n Ergonom:in für jede Person mit Risiko"], cta: "Termin vereinbaren" },
+        { name: "Ergebnis und Vorgehen", price: "27 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Qualifizierung durch eine:n Ergonom:in", "Positiv gescreente Person: von Ihnen für das Modul festgelegtes Vorgehen, in ihrem Bereich angezeigt"], cta: "Termin vereinbaren" },
+        { name: "Rückmeldung mit Video-Coaching", price: "40 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Alles aus der Stufe Ergebnis und Vorgehen", "Personalisiertes Video-Coaching (Bewegungen und Haltungen) durch eine:n Ergonom:in für jede Person mit Risiko"], cta: "Termin vereinbaren" },
       ],
     },
     rps: {
@@ -536,8 +536,8 @@ export const de = {
       subtitle: "Psychosoziale Risiken",
       collect: "Erhobene Daten: Fragebogen und Audio-Erfahrungsbericht",
       plans: [
-        { name: "Rückmeldung per E-Mail", price: "27 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Qualifizierung durch eine:n Arbeitspsycholog:in", "Positiv gescreente Person: von Ihnen pro Modul festgelegtes Vorgehen, per E-Mail"], cta: "Termin vereinbaren" },
-        { name: "Rückmeldung mit Telekonsultation", price: "40 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Alles aus der Rückmeldung per E-Mail", "30-minütige Orientierungs-Telekonsultation mit einem:r Arbeitspsycholog:in für jede positiv gescreente Person"], cta: "Termin vereinbaren" },
+        { name: "Ergebnis und Vorgehen", price: "27 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Qualifizierung durch eine:n Arbeitspsycholog:in", "Positiv gescreente Person: von Ihnen für das Modul festgelegtes Vorgehen, in ihrem Bereich angezeigt"], cta: "Termin vereinbaren" },
+        { name: "Rückmeldung mit Telekonsultation", price: "40 €", sub: "zzgl. MwSt. / Mitarbeitendem", badge: '', items: ["Alles aus der Stufe Ergebnis und Vorgehen", "30-minütige Orientierungs-Telekonsultation mit einem:r Arbeitspsycholog:in für jede positiv gescreente Person"], cta: "Termin vereinbaren" },
       ],
     },
     step2Label: "Für Sie, HR und Geschäftsleitung",
@@ -556,7 +556,7 @@ export const de = {
     exampleLines: [
       { label: "MSE, persönliche Rückmeldung (Video-Coaching), 100 × 40 €", amount: "4.000 €" },
       { label: "MSE-Aktionsplan", amount: "Auf Anfrage" },
-      { label: "PSR, Rückmeldung per E-Mail, 100 × 27 €", amount: "2.700 €" },
+      { label: "PSR, Ergebnis und Vorgehen, 100 × 27 €", amount: "2.700 €" },
       { label: "PSR-Aktionsplan", amount: "Auf Anfrage" },
     ],
     exampleTotalLabel: "Gesamt ohne Aktionspläne",
@@ -564,8 +564,8 @@ export const de = {
     studyLabel: "Ein weiterer Anwendungsfall",
     studyTitle: "Analysen von Arbeitssituationen digitalisieren",
     studyDesc: "Für arbeitsmedizinische Dienste und Präventionsteams, die ihre Analysen selbst veranlassen. Sie entscheiden, welche Arbeitssituationen analysiert werden; ScanUp erspart der Ergonomin die Anreise.",
-    studyItems: ["Sie wählen die Mitarbeitenden oder Situationen aus, mit oder ohne vorheriges Screening", "Die Person filmt ihre Arbeitssituation und lädt die Videos in ScanUp hoch", "Eine Ergonomin führt die Analyse aus der Ferne durch und verfasst einen individuellen Bericht mit Anpassungsempfehlungen", "Ab 240 € zzgl. MwSt. pro Analyse, degressiv nach monatlichem Volumen"],
-    studyPrice: "Ab 240 € zzgl. MwSt.",
+    studyItems: ["Sie wählen die Mitarbeitenden oder Situationen aus, mit oder ohne vorheriges Screening", "Die Person filmt ihre Arbeitssituation und lädt die Videos in ScanUp hoch", "Eine Ergonomin führt die Analyse aus der Ferne durch und verfasst einen individuellen Bericht mit Anpassungsempfehlungen", "Auf Anfrage, je nach Anzahl der Analysen"],
+    studyPrice: "Auf Anfrage",
     studyCta: "Kontakt aufnehmen",
     trainingLabel: "Schulung",
     trainingTitle: "Massgeschneiderte Schulungsmodule",
@@ -578,7 +578,7 @@ export const de = {
     faqs: [
       { q: 'Was sind ScanUp PSR und MSE?', a: 'Wissenschaftlich validierte Bewertungsmodule zur Erkennung von psychosozialen Risiken und Muskel-Skelett-Erkrankungen. Ergebnisse in 48 Stunden.' },
       { q: 'Sind die Mitarbeiterdaten vertraulich?', a: 'Absolut. Individuelle Ergebnisse sind streng vertraulich. Der Arbeitgeber erhält nur aggregierte, anonymisierte Indikatoren.' },
-      { q: "Was erhält die Person bei der Rückmeldung per E-Mail?", a: "Bei einem positiven Screening erhält sie per E-Mail das Vorgehen, das Sie beim Start für jedes Modul mit uns festgelegt haben: Ansprechperson, nächste Schritte, interne Angebote. Sie erfahren nicht, wer es erhalten hat." },
+      { q: "Was erhält die Person bei der Stufe Ergebnis und Vorgehen?", a: "Die Person sieht das Ergebnis ihres Screenings in ihrem ScanUp-Bereich und erhält es zusätzlich per E-Mail, wenn sie eine Adresse angegeben hat. Bei einem positiven Screening erhält sie das Vorgehen, das Sie mit uns für das Modul festgelegt haben: Ansprechperson, nächste Schritte, interne Angebote oder Schulungsmodul. Sie erfahren nicht, wer es erhalten hat." },
       { q: 'Wo werden die Daten gehostet?', a: 'Nach Wahl: in Frankreich 🇫🇷 auf HDS-zertifizierter Infrastruktur (französische Zertifizierung für das Hosting von Gesundheitsdaten) oder in der Schweiz 🇨🇭 bei Infomaniak. Daten werden niemals verkauft oder weitergegeben.' },
       { q: 'Mehr als 500 Mitarbeitende, Partner oder Wiederverkäufer?', a: 'Kontaktieren Sie uns: Wir erstellen ein Angebot, das zu Ihrem Volumen und Ihrer Organisation passt.' },
       { q: 'Wir haben eigene Präventionsexperten — gibt es ein passendes Paket?', a: 'Ja. Es gibt ein Selbstbedienungspaket: Ihre Ergonomen und Arbeitspsychologen nutzen die Plattform, um Screenings selbst durchzuführen und zu qualifizieren. Kontaktieren Sie uns.' },

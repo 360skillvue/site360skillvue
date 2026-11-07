@@ -109,7 +109,7 @@ export const es = {
     compareColQuestionnaires: 'Cuestionarios de feedback',
     compareColQuestionnairesSub: 'Karasek, COPSOQ, Google Forms',
     compareColLogiciels: 'Cuestionarios de RPS con puntuación',
-    compareColLogicielsSub: 'JSA, Holicare, RPS Detector',
+    compareColLogicielsSub: 'Holicare, RPS Detector',
     compareColIA: 'Análisis pasivo de la voz por IA',
     compareColIASub: 'Virtuosis',
     compareRows: [
@@ -514,13 +514,13 @@ export const es = {
       subtitle: "Mismo precio para los dos riesgos",
       collect: "Cada empleado responde en pocos minutos desde su teléfono: cuestionario y vídeos de su puesto para los TME, cuestionario y mensaje de audio para los RPS. Sus respuestas son confidenciales.",
       plans: [
-        { name: "Sin retorno al empleado", price: "20 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Análisis de las respuestas por un ergónomo (TME) o un psicólogo del trabajo (RPS)", "El empleado no recibe ni su resultado ni una pauta de actuación: sus respuestas solo sirven para el diagnóstico colectivo de la dirección"], cta: "Reservar una llamada" },
-        { name: "Retorno por correo", price: "27 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Análisis de las respuestas por un ergónomo (TME) o un psicólogo del trabajo (RPS)", "Empleado con cribado positivo: recibe por correo la pauta de actuación que usted ha definido para cada módulo (a quién contactar, qué pasos seguir)"], cta: "Reservar una llamada" },
-        { name: "Retorno personalizado", price: "40 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Todo lo incluido en el retorno por correo", "TME: coaching en vídeo sobre gestos y posturas por un ergónomo, para cada empleado en riesgo", "RPS: teleconsulta de orientación de 30 minutos con un psicólogo del trabajo, para cada empleado con cribado positivo"], cta: "Reservar una llamada" },
+        { name: "Sin retorno al empleado", price: "20 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Análisis de las respuestas por un ergónomo (TME) o un psicólogo del trabajo (RPS)", "El empleado no recibe ni su resultado ni una pauta de actuación: sus respuestas solo sirven para los entregables colectivos de la dirección"], cta: "Reservar una llamada" },
+        { name: "Resultado y pauta de actuación", price: "27 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Análisis de las respuestas por un ergónomo (TME) o un psicólogo del trabajo (RPS)", "El empleado ve su resultado en su espacio; si su cribado es positivo, recibe la pauta de actuación que usted ha definido para el módulo (a quién contactar, qué pasos seguir, formación a realizar)"], cta: "Reservar una llamada" },
+        { name: "Retorno personalizado", price: "40 €", sub: "sin IVA / empleado y por riesgo", badge: '', items: ["Todo lo incluido en el nivel Resultado y pauta de actuación", "TME: coaching en vídeo sobre gestos y posturas por un ergónomo, para cada empleado en riesgo", "RPS: teleconsulta de orientación de 30 minutos con un psicólogo del trabajo, para cada empleado con cribado positivo"], cta: "Reservar una llamada" },
       ],
       options: [
-        { name: "Plan de acción o cartografía de riesgos", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados, por riesgo", desc: "Con retorno al empleado, recibe un plan de acción de prevención: cartografía anónima de los riesgos en sus equipos, acciones prioritarias y restitución por nuestros expertos. Sin retorno al empleado, recibe una cartografía de riesgos, para alertar a la dirección y orientar sus acciones. Nunca tiene acceso a los resultados individuales.", tag: "" },
-        { name: "Informe individual", price: "Desde 240 €", sub: "sin IVA por estudio TME, según el volumen; RPS bajo presupuesto", desc: "Su médico o enfermera del trabajo recibe un estudio de la situación de trabajo realizado a distancia por un ergónomo (TME) o un análisis en entrevista con un psicólogo (RPS), con recomendaciones clasificadas por nivel de coste: sin coste (ajustes, organización), bajo coste, inversión. Usted decide el ritmo.", tag: "" },
+        { name: "Plan de acción o cartografía de riesgos", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados, por riesgo", desc: "TME: un plan de acción de prevención, sea cual sea el retorno al empleado, con una ficha por puesto de trabajo (gestos y exigencias observados, nivel de riesgo, recomendaciones de adaptación) y una síntesis de las acciones prioritarias. RPS: con la teleconsulta, un plan de acción restituido por servicio o por equipo; sin teleconsulta, una cartografía de riesgos para alertar a la dirección y orientar sus acciones. Nunca tiene acceso a los resultados individuales.", tag: "" },
+        { name: "Informe individual", price: "Bajo presupuesto", sub: "según el número de informes, TME y RPS", desc: "Su médico o enfermera del trabajo recibe un estudio de la situación de trabajo realizado a distancia por un ergónomo (TME) o un análisis en entrevista con un psicólogo (RPS), con recomendaciones clasificadas por nivel de coste: sin coste (ajustes, organización), bajo coste, inversión. Usted decide el ritmo.", tag: "" },
       ],
     },
     tms: {
@@ -528,8 +528,8 @@ export const es = {
       subtitle: "Trastornos musculoesqueléticos",
       collect: "Datos recogidos: cuestionario y vídeos de la situación real de trabajo",
       plans: [
-        { name: "Retorno por correo", price: "27 €", sub: "sin IVA / empleado", badge: '', items: ["Cualificación por un ergónomo", "Empleado con cribado positivo: pauta de actuación definida por usted para cada módulo, enviada por correo"], cta: "Reservar una llamada" },
-        { name: "Retorno con coaching en vídeo", price: "40 €", sub: "sin IVA / empleado", badge: '', items: ["Todo el retorno por correo", "Coaching en vídeo personalizado (gestos y posturas) por un ergónomo, para cada empleado en riesgo"], cta: "Reservar una llamada" },
+        { name: "Resultado y pauta de actuación", price: "27 €", sub: "sin IVA / empleado", badge: '', items: ["Cualificación por un ergónomo", "Empleado con cribado positivo: pauta de actuación definida por usted para el módulo, mostrada en su espacio"], cta: "Reservar una llamada" },
+        { name: "Retorno con coaching en vídeo", price: "40 €", sub: "sin IVA / empleado", badge: '', items: ["Todo lo incluido en el nivel Resultado y pauta de actuación", "Coaching en vídeo personalizado (gestos y posturas) por un ergónomo, para cada empleado en riesgo"], cta: "Reservar una llamada" },
       ],
     },
     rps: {
@@ -537,8 +537,8 @@ export const es = {
       subtitle: "Riesgos psicosociales",
       collect: "Datos recogidos: cuestionario y testimonio de audio",
       plans: [
-        { name: "Retorno por correo", price: "27 €", sub: "sin IVA / empleado", badge: '', items: ["Cualificación por un psicólogo del trabajo", "Empleado con cribado positivo: pauta de actuación definida por usted para cada módulo, enviada por correo"], cta: "Reservar una llamada" },
-        { name: "Retorno con teleconsulta", price: "40 €", sub: "sin IVA / empleado", badge: '', items: ["Todo el retorno por correo", "Teleconsulta de orientación de 30 minutos con un psicólogo del trabajo, para cada empleado con cribado positivo"], cta: "Reservar una llamada" },
+        { name: "Resultado y pauta de actuación", price: "27 €", sub: "sin IVA / empleado", badge: '', items: ["Cualificación por un psicólogo del trabajo", "Empleado con cribado positivo: pauta de actuación definida por usted para el módulo, mostrada en su espacio"], cta: "Reservar una llamada" },
+        { name: "Retorno con teleconsulta", price: "40 €", sub: "sin IVA / empleado", badge: '', items: ["Todo lo incluido en el nivel Resultado y pauta de actuación", "Teleconsulta de orientación de 30 minutos con un psicólogo del trabajo, para cada empleado con cribado positivo"], cta: "Reservar una llamada" },
       ],
     },
     step2Label: "Para usted, RR. HH. y dirección",
@@ -548,8 +548,8 @@ export const es = {
     step3Title: "El informe individual",
     step3Subtitle: "Un informe individual, dirigido al médico o a la enfermera del trabajo",
     options: [
-      { name: "Plan de acción preventiva de TME", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados", desc: "Cartografía anonimizada de los riesgos, acciones priorizadas y presentación a la dirección.", tag: "" },
-      { name: "Plan de acción preventiva de RPS", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados", desc: "Cartografía anonimizada de los riesgos, acciones priorizadas y presentación a la dirección.", tag: "" },
+      { name: "Plan de acción preventiva de TME", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados", desc: "Una ficha por puesto de trabajo y una síntesis de las acciones prioritarias, sea cual sea el retorno al empleado.", tag: "" },
+      { name: "Plan de acción preventiva de RPS", price: "Bajo presupuesto", sub: "Precio decreciente según el número de empleados", desc: "Restitución por servicio o por equipo y acciones prioritarias, con teleconsulta. Sin teleconsulta: cartografía de riesgos.", tag: "" },
       { name: "Informe individual de TME", price: "Bajo presupuesto", sub: "por informe, por unidad o en volumen", desc: "Estudio de la situación de trabajo a distancia por un ergónomo, a partir de los vídeos del empleado: factores de riesgo, márgenes de maniobra, recomendaciones jerarquizadas.", tag: "" },
       { name: "Informe individual de RPS", price: "Bajo presupuesto", sub: "por informe, por unidad o en volumen", desc: "Análisis a distancia de la organización del trabajo y de los factores psicosociales, en entrevista con un psicólogo: puntos de apoyo, señales de alerta, recomendaciones jerarquizadas.", tag: "" },
     ],
@@ -557,7 +557,7 @@ export const es = {
     exampleLines: [
       { label: "TME, retorno personalizado (coaching en vídeo), 100 × 40 €", amount: "4000 €" },
       { label: "Plan de acción de TME", amount: "Bajo presupuesto" },
-      { label: "RPS, retorno por correo, 100 × 27 €", amount: "2700 €" },
+      { label: "RPS, resultado y pauta de actuación, 100 × 27 €", amount: "2700 €" },
       { label: "Plan de acción de RPS", amount: "Bajo presupuesto" },
     ],
     exampleTotalLabel: "Total sin planes de acción",
@@ -565,8 +565,8 @@ export const es = {
     studyLabel: "Otro caso de uso",
     studyTitle: "Digitalice sus estudios de situación de trabajo",
     studyDesc: "Para los servicios de prevención y salud laboral y los equipos de prevención que prescriben sus propios estudios. Usted decide qué situaciones de trabajo estudiar; ScanUp evita el desplazamiento del ergónomo.",
-    studyItems: ["Usted elige los empleados o las situaciones que se estudian, con o sin cribado previo", "El empleado graba su situación de trabajo y sube los vídeos a ScanUp", "Un ergónomo realiza el estudio a distancia y redacta un informe individual con recomendaciones de adaptación", "Desde 240 € sin IVA por estudio, tarifa decreciente según el volumen mensual"],
-    studyPrice: "Desde 240 € sin IVA",
+    studyItems: ["Usted elige los empleados o las situaciones que se estudian, con o sin cribado previo", "El empleado graba su situación de trabajo y sube los vídeos a ScanUp", "Un ergónomo realiza el estudio a distancia y redacta un informe individual con recomendaciones de adaptación", "Bajo presupuesto, según el número de estudios"],
+    studyPrice: "Bajo presupuesto",
     studyCta: "Consúltenos",
     trainingLabel: "Formación",
     trainingTitle: "Módulos de formación a medida",
@@ -579,7 +579,7 @@ export const es = {
     faqs: [
       { q: '¿Qué son ScanUp RPS y TME?', a: 'Módulos de evaluación científicamente validados para cribar los riesgos psicosociales y los trastornos musculoesqueléticos en sus equipos. Resultados en 48 horas.' },
       { q: '¿Son confidenciales los datos de los empleados?', a: 'Absolutamente. Los resultados individuales son estrictamente confidenciales. La empresa solo recibe indicadores agregados y anonimizados. El correo electrónico es opcional.' },
-      { q: "¿Qué recibe el empleado con el retorno por correo?", a: "Si su cribado es positivo, recibe por correo la pauta de actuación que usted configuró con nosotros para cada módulo al inicio: a quién contactar, qué pasos seguir, recursos internos. Usted no sabe quién la ha recibido." },
+      { q: "¿Qué recibe el empleado con el nivel Resultado y pauta de actuación?", a: "Ve el resultado de su cribado en su espacio ScanUp, y también lo recibe por correo si ha indicado una dirección. Si su cribado es positivo, recibe la pauta de actuación que usted configuró con nosotros para el módulo: a quién contactar, qué pasos seguir, recursos internos o módulo de formación. Usted no sabe quién la ha recibido." },
       { q: '¿Dónde se alojan los datos?', a: 'Usted elige: en Francia 🇫🇷 en una infraestructura certificada HDS (la certificación francesa para el alojamiento de datos de salud), o en Suiza 🇨🇭 con Infomaniak. Los datos nunca se venden ni se comparten.' },
       { q: '¿Más de 500 empleados, o es socio o distribuidor?', a: 'Contáctenos: construiremos una propuesta adaptada a su volumen y a su organización.' },
       { q: 'Tenemos nuestros propios expertos en prevención, ¿existe una fórmula adecuada?', a: 'Sí. Existe una fórmula en autonomía: sus ergónomos y psicólogos del trabajo utilizan la plataforma para realizar y cualificar los cribados ellos mismos. Contáctenos para hablarlo.' },

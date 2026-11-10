@@ -768,6 +768,13 @@ export const en = {
     subtitle: 'Articles, interviews and mentions of 360SkillVue in specialist media.',
     items: [
       {
+        date: 'November 2026',
+        label: 'Social CSE',
+        title: 'MSDs and psychosocial risks: ScanUp launches a simulator to measure the cost of occupational wear and tear in the company',
+        description: 'Social CSE presents the ScanUp simulator, which estimates the cost of MSDs and psychosocial risks for each company from French national health insurance statistics, a useful tool for works councils and HR alike.',
+        href: 'https://socialcse.fr/tms-et-rps-scanup-lance-un-simulateur-pour-mesurer-le-cout-de-lusure-professionnelle-dans-lentreprise/',
+      },
+      {
         date: 'October 28, 2026',
         label: 'Curiosités Magazine',
         title: 'ScanUp simulator: a new tool to assess the cost of MSDs and psychosocial risks in the workplace',

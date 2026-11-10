@@ -768,11 +768,12 @@ export const pt = {
     subtitle: 'Artigos, entrevistas e menções da 360SkillVue em meios de comunicação especializados.',
     items: [
       {
-        date: 'Novembro de 2026',
+        date: '4 de novembro de 2026',
         label: 'Social CSE',
         title: 'LMERT e riscos psicossociais: ScanUp lança um simulador para medir o custo do desgaste profissional na empresa',
         description: 'A Social CSE apresenta o simulador ScanUp, que estima o custo das LMERT e dos riscos psicossociais para cada empresa a partir das estatísticas do seguro de doença francês, uma ferramenta útil para as comissões de trabalhadores e para os RH.',
         href: 'https://socialcse.fr/tms-et-rps-scanup-lance-un-simulateur-pour-mesurer-le-cout-de-lusure-professionnelle-dans-lentreprise/',
+        image: '/socialcse-simulateur-scanup.webp',
       },
       {
         date: '28 de outubro de 2026',

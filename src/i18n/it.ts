@@ -768,11 +768,12 @@ export const it = {
     subtitle: 'Articoli, interviste e menzioni di 360SkillVue nei media specializzati.',
     items: [
       {
-        date: 'Novembre 2026',
+        date: '4 novembre 2026',
         label: 'Social CSE',
         title: 'DMS e rischi psicosociali: ScanUp lancia un simulatore per misurare il costo dell\'usura professionale in azienda',
         description: 'Social CSE presenta il simulatore ScanUp, che stima il costo dei DMS e dei rischi psicosociali per ogni azienda a partire dalle statistiche dell\'assicurazione sanitaria francese, uno strumento utile ai comitati aziendali e alle risorse umane.',
         href: 'https://socialcse.fr/tms-et-rps-scanup-lance-un-simulateur-pour-mesurer-le-cout-de-lusure-professionnelle-dans-lentreprise/',
+        image: '/socialcse-simulateur-scanup.webp',
       },
       {
         date: '28 ottobre 2026',

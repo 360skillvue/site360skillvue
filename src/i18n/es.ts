@@ -768,11 +768,12 @@ export const es = {
     subtitle: 'Artículos, entrevistas y menciones de 360SkillVue en los medios especializados.',
     items: [
       {
-        date: 'Noviembre de 2026',
+        date: '4 de noviembre de 2026',
         label: 'Social CSE',
         title: 'TME y riesgos psicosociales: ScanUp lanza un simulador para medir el coste del desgaste profesional en la empresa',
         description: 'Social CSE presenta el simulador ScanUp, que estima el coste de los TME y de los riesgos psicosociales para cada empresa a partir de las estadísticas del seguro de enfermedad francés, una herramienta útil tanto para los comités de empresa como para RR. HH.',
         href: 'https://socialcse.fr/tms-et-rps-scanup-lance-un-simulateur-pour-mesurer-le-cout-de-lusure-professionnelle-dans-lentreprise/',
+        image: '/socialcse-simulateur-scanup.webp',
       },
       {
         date: '28 de octubre de 2026',

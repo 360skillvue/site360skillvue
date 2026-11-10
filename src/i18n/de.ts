@@ -768,11 +768,12 @@ export const de = {
     subtitle: 'Artikel, Interviews und Erwähnungen von 360SkillVue in Fachmedien.',
     items: [
       {
-        date: 'November 2026',
+        date: '4. November 2026',
         label: 'Social CSE',
         title: 'MSE und psychosoziale Risiken: ScanUp startet einen Simulator, um die Kosten des beruflichen Verschleißes im Unternehmen zu messen',
         description: 'Social CSE stellt den ScanUp-Simulator vor, der die Kosten von MSE und psychosozialen Risiken für jedes Unternehmen anhand der Statistiken der französischen Krankenversicherung schätzt, ein nützliches Werkzeug für Betriebsräte und HR.',
         href: 'https://socialcse.fr/tms-et-rps-scanup-lance-un-simulateur-pour-mesurer-le-cout-de-lusure-professionnelle-dans-lentreprise/',
+        image: '/socialcse-simulateur-scanup.webp',
       },
       {
         date: '28. Oktober 2026',

@@ -858,6 +858,13 @@ export const fr = {
     subtitle: 'Articles, interviews et mentions de 360SkillVue dans les médias spécialisés.',
     items: [
       {
+        date: 'Novembre 2026',
+        label: 'Social CSE',
+        title: 'TMS et RPS : ScanUp lance un simulateur pour mesurer le coût de l\'usure professionnelle dans l\'entreprise',
+        description: 'Social CSE présente le simulateur ScanUp, qui estime le coût des TMS et des RPS pour chaque entreprise à partir des statistiques de l\'Assurance Maladie, un outil utile aux CSE comme aux RH.',
+        href: 'https://socialcse.fr/tms-et-rps-scanup-lance-un-simulateur-pour-mesurer-le-cout-de-lusure-professionnelle-dans-lentreprise/',
+      },
+      {
         date: '28 octobre 2026',
         label: 'Curiosités Magazine',
         title: 'Simulateur ScanUp : un nouvel outil pour évaluer le coût des TMS et des RPS en entreprise',

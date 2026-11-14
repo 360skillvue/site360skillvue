@@ -1,0 +1,15 @@
+# Sécurité du dossier du CRM
+Options -Indexes
+DirectoryIndex index.php
+
+# Forcer HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Fichiers jamais accessibles depuis le web
+RewriteRule ^(lib|tests)(/|$) - [F,L]
+<FilesMatch "^(config\.php|config\.sample\.php|cron\.php|.*\.md|\.htaccess|\.gitignore)$">
+  Require all denied
+</FilesMatch>

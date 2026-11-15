@@ -715,6 +715,7 @@ function openAct(a, preset = {}) {
     deal_id: preset.deal_id || null, deal_title: d0?.title || null, org_id: preset.org_id || d0?.org_id || null, org_name: preset.org_name || d0?.org_name || null,
     person_id: preset.person_id || d0?.person_id || null, person_name: preset.person_name || d0?.person_name || null};
   S.modal = m;
+  histPush();
   let ctxHtml = "";
   if (!isNew) actContext(a).then(h => { ctxHtml = h; const box = $("#actCtx"); if (box && S.modal === m) box.innerHTML = h; }).catch(() => {});
   const draw = () => {
@@ -760,11 +761,24 @@ function openAct(a, preset = {}) {
   };
   draw();
 }
-function closeModal() { S.modal = null; $("#layer").innerHTML = ""; afterChange(); }
+/* Retour arrière du téléphone ou du navigateur : il referme la fiche ou la fenêtre ouverte au lieu de quitter le CRM.
+   On ajoute une entrée d'historique à l'ouverture, et on la retire quand tout est refermé à la main. */
+let HIST_OPEN = false, HIST_SELF = false;
+function histPush() { if (HIST_OPEN) return; try { history.pushState({crm: 1}, ""); HIST_OPEN = true; } catch {} }
+function histPop() { if (!HIST_OPEN || S.panel || S.modal) return; HIST_OPEN = false; HIST_SELF = true; try { history.back(); } catch { HIST_SELF = false; } }
+window.addEventListener("popstate", () => {
+  // Retour déclenché par le CRM lui-même après une fermeture à la main : rien à refermer.
+  if (HIST_SELF) { HIST_SELF = false; if (S.panel || S.modal) { HIST_OPEN = false; histPush(); } return; }
+  if (!HIST_OPEN) return;
+  HIST_OPEN = false; if (S.modal) closeModal(true); if (S.panel) closePanel(true);
+});
+
+function closeModal(fromBack) { S.modal = null; $("#layer").innerHTML = ""; afterChange(); if (fromBack !== true) histPop(); }
 
 /* ---------- Panneau : affaire, organisation, personne ---------- */
-function closePanel() { const had = S.panel; S.panel = null; S.panelActs = []; S.panelEnt = null; const p = $("#panel"); if (p) p.remove(); if (had) { if (S.view === "contacts") loadContacts(); else render(); } }
+function closePanel(fromBack) { const had = S.panel; S.panel = null; S.panelActs = []; S.panelEnt = null; const p = $("#panel"); if (p) p.remove(); if (had) { if (S.view === "contacts") loadContacts(); else render(); } if (fromBack !== true) histPop(); }
 function openPanelShell() {
+  histPush();
   const old = $("#panel"); if (old) old.remove();
   const host = document.createElement("div"); host.id = "panel";
   host.innerHTML = `<div class="scrim" data-pclose></div><aside class="drawer" role="dialog" aria-modal="true"></aside>`;

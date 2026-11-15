@@ -73,6 +73,14 @@ function mc_tags(string $list): array {
 // Tags du CRM transmis à Mailchimp, pour cibler une communication indépendamment de la nature de l'organisation.
 // Le tag peut être posé sur la personne ou sur son organisation : dans ce cas il vaut pour toutes ses personnes.
 const MC_PUSH_TAGS = ['Certification périodique'];
+// Établissements de santé : tous concernés par la certification périodique. Leurs contacts reçoivent le tag d'office,
+// sans avoir à le poser à la main : domaine d'activité de l'organisation ci-dessous, ou nature « certification périodique ».
+const MC_HEALTH_TAG = 'Certification périodique';
+const MC_HEALTH_DOMAINS = ['santé', 'lbm', 'formation santé']; // pas « ambulance » : non concerné
+
+function mc_is_health(string $domaine, string $nature): bool {
+    return in_array(mb_strtolower(trim($domaine)), MC_HEALTH_DOMAINS, true) || str_contains(mb_strtolower($nature), 'certification p');
+}
 
 function mc_push_schema(): void {
     static $done = false;
@@ -112,6 +120,7 @@ function mc_push_rows(): array {
     $fPays = $pick('person', ['pays texte', 'pays']);
     $fNatP = $pick('person', ["nature de l'organisation (texte)", 'nature organisation (marketing)']);
     $fNatO = $pick('org', ["nature de l'organisation"]);
+    $fDom = $pick('org', ['domaine activité', "domaine d'activité"]);
     $use = "(EXISTS (SELECT 1 FROM deals ud WHERE ud.person_id = p.id) OR EXISTS (SELECT 1 FROM activities ua WHERE ua.person_id = p.id)"
          . " OR EXISTS (SELECT 1 FROM crm_emails ue WHERE ue.person_id = p.id) OR EXISTS (SELECT 1 FROM crm_tags ut WHERE ut.entity = 'person' AND ut.entity_id = p.id)"
          . " OR EXISTS (SELECT 1 FROM deals ud2 WHERE ud2.org_id = p.org_id)"
@@ -147,12 +156,35 @@ function mc_push_rows(): array {
         $pays = ''; foreach ($fPays as $f) { $pays = mc_field_value($extra, $f); if ($pays !== '') break; }
         $nature = ''; foreach ($fNatP as $f) { $nature = mc_field_value($extra, $f); if ($nature !== '') break; }
         if ($nature === '') foreach ($fNatO as $f) { $nature = mc_field_value($oextra, $f); if ($nature !== '') break; }
-        $tags = array_keys(($tagP[(int)$p['id']] ?? []) + ($p['org_id'] ? ($tagO[(int)$p['org_id']] ?? []) : []));
+        $tagSet = ($tagP[(int)$p['id']] ?? []) + ($p['org_id'] ? ($tagO[(int)$p['org_id']] ?? []) : []);
+        $domaine = ''; foreach ($fDom as $f) { $domaine = mc_field_value($oextra, $f); if ($domaine !== '') break; }
+        if (mc_is_health($domaine, $nature)) $tagSet[MC_HEALTH_TAG] = true;
+        $tags = array_keys($tagSet);
         sort($tags);
         $rows[] = ['id' => (int)$p['id'], 'email' => $email, 'first' => mb_substr($first, 0, 100), 'last' => mb_substr($last, 0, 100), 'phone' => mb_substr($phone, 0, 40), 'pays' => $pays, 'nature' => $nature,
             'tags' => implode('|', $tags)];
     }
     return $rows;
+}
+
+/* Pour information : contacts d'établissements de santé qui ont une adresse e-mail mais ne sont pas « utiles » (donc pas envoyés à Mailchimp). */
+function mc_health_outside(): int {
+    $fields = [];
+    foreach (q("SELECT entity, fkey, label, options FROM fields WHERE entity IN ('person', 'org')")->fetchAll() as $f) $fields[$f['entity']][mb_strtolower(trim((string)$f['label']))] = $f;
+    $fDom = $fields['org']['domaine activité'] ?? null;
+    $fNatO = $fields['org']["nature de l'organisation"] ?? null;
+    $fNatP = $fields['person']['nature organisation (marketing)'] ?? null;
+    $use = "(EXISTS (SELECT 1 FROM deals ud WHERE ud.person_id = p.id) OR EXISTS (SELECT 1 FROM activities ua WHERE ua.person_id = p.id)"
+         . " OR EXISTS (SELECT 1 FROM crm_emails ue WHERE ue.person_id = p.id) OR EXISTS (SELECT 1 FROM crm_tags ut WHERE ut.entity = 'person' AND ut.entity_id = p.id)"
+         . " OR EXISTS (SELECT 1 FROM deals ud2 WHERE ud2.org_id = p.org_id))";
+    $n = 0;
+    foreach (q("SELECT p.extra, o.extra AS org_extra FROM persons p LEFT JOIN orgs o ON o.id = p.org_id WHERE p.emails IS NOT NULL AND p.emails <> '' AND p.emails <> '[]' AND NOT $use")->fetchAll() as $p) {
+        $extra = $p['extra'] ? (json_decode((string)$p['extra'], true) ?: []) : [];
+        $oextra = $p['org_extra'] ? (json_decode((string)$p['org_extra'], true) ?: []) : [];
+        $nature = mc_field_value($extra, $fNatP); if ($nature === '') $nature = mc_field_value($oextra, $fNatO);
+        if (mc_is_health(mc_field_value($oextra, $fDom), $nature)) $n++;
+    }
+    return $n;
 }
 
 /* Champs de l'audience Mailchimp, retrouvés par leur nom : pays et nature de l'organisation. */
@@ -184,7 +216,10 @@ function mc_push(bool $dry = false): array {
         $tagsChanged = ($knownTags[$r['id']] ?? '') !== $r['tags'];
         if ($fieldsChanged || $tagsChanged) $todo[] = $r + ['hash' => $h, 'fields_changed' => $fieldsChanged, 'tags_before' => $knownTags[$r['id']] ?? ''];
     }
-    if ($dry) return ['utiles' => count($rows), 'a_envoyer' => count($todo), 'deja' => count($rows) - count($todo)];
+    if ($dry) {
+        $withTag = count(array_filter($rows, fn($r) => str_contains('|' . $r['tags'] . '|', '|' . MC_HEALTH_TAG . '|')));
+        return ['utiles' => count($rows), 'a_envoyer' => count($todo), 'deja' => count($rows) - count($todo), 'certification' => $withTag, 'sante_hors_utiles' => mc_health_outside()];
+    }
     $sent = 0; $batches = [];
     if ($todo) {
         $tags = mc_merge_tags($c['list']);

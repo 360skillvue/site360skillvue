@@ -319,6 +319,7 @@ function viewSettings() {
     <section class="sec" id="mailSec">${mailSecInner()}</section>
     ${admin ? `<section class="sec" id="billSec">${billSecInner()}</section>` : ""}
     ${admin ? `<section class="sec" id="mcSec">${mcSecInner()}</section>` : ""}
+    ${admin ? `<section class="sec" id="calSec">${calSecInner()}</section>` : ""}
     ${admin ? `<section class="sec" id="hookSec">${hookSecInner()}</section>` : ""}
     ${usersSec}
     <section class="sec"><h3>Mon mot de passe</h3>
@@ -354,9 +355,34 @@ async function loadMail() {
     try { S.billing = await api("billing_conf"); } catch { return; }
     const bl = $("#billSec"); if (bl && !editing(bl)) bl.innerHTML = billSecInner();
     try { S.hook = await api("hook_conf"); const hk = $("#hookSec"); if (hk && !editing(hk)) hk.innerHTML = hookSecInner(); } catch {}
+    try { S.cal = await api("cal_conf"); const cs = $("#calSec"); if (cs && !editing(cs)) cs.innerHTML = calSecInner(); } catch {}
     try { S.mc = await api("mc_conf"); } catch { return; }
     const ml = $("#mcSec"); if (ml && !editing(ml)) ml.innerHTML = mcSecInner();
   }
+}
+/* ---------- Calendly : rendez-vous commerciaux ---------- */
+function calSecInner() {
+  const c = S.cal;
+  if (!c) return `<h3>Calendly</h3><p class="note">Chargement…</p>`;
+  const intro = `<h3>Calendly</h3><p class="note">Les rendez-vous commerciaux pris sur Calendly deviennent des activités « Réunion » dans le CRM, toutes les heures. La personne est retrouvée par son adresse e-mail, ou créée avec les réponses du formulaire. Seuls les types cochés ci-dessous sont repris : jamais les classes virtuelles ni les téléconsultations. Rien n'est modifié dans Calendly.</p>`;
+  if (!c.configured) return intro + `<div class="grid2"><label class="f"><span>Clé d'accès Calendly</span><input type="password" id="calTok" autocomplete="new-password" placeholder="collez ici la clé créée dans Calendly"></label></div>
+    <div><button class="btn" data-act="calTokSave">Enregistrer la clé</button></div>`;
+  const names = c.names || [];
+  const all = [...new Map([...(c.types || []), ...names.map(n => ({name: n, who: ""}))].map(t => [t.name, t])).values()].sort((a, b) => a.name.localeCompare(b.name));
+  return intro + (c.error ? `<p class="note" style="color:var(--bad)">${esc(c.error)}</p>` : "") + `
+    <div class="checks" id="calNames">${all.map(t => `<label style="display:flex;gap:8px;align-items:center"><input type="checkbox" value="${esc(t.name)}" ${names.includes(t.name) ? "checked" : ""}> ${esc(t.name)}${t.who ? ` <small style="color:var(--muted)">(${esc(t.who)})</small>` : ""}</label>`).join("")}</div>
+    <div class="grid2"><label class="f"><span>Remplacer la clé d'accès (facultatif)</span><input type="password" id="calTok" autocomplete="new-password"></label></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="calNamesSave">Enregistrer les types suivis</button><button class="btn ghost" data-act="calTokSave">Enregistrer la clé</button><button class="btn primary" data-act="calSync">Lire Calendly maintenant</button></div>
+    ${c.last && c.last.lignes ? `<p class="note">Dernier passage : ${c.last.lignes.map(esc).join(" ; ")}.</p>` : ""}`;
+}
+async function calPost(body, msg) {
+  try { S.cal = await api("cal_conf", {method: "POST", body}); $("#calSec").innerHTML = calSecInner(); if (msg) toast(msg); }
+  catch (e) { failToast(e); }
+}
+async function calSync() {
+  toast("Lecture de Calendly en cours…");
+  try { const r = await api("cal_sync", {method: "POST"}); toast(`${r.crees} activités créées, ${r.annules} annulations`); S.cal = await api("cal_conf"); $("#calSec").innerHTML = calSecInner(); await loadData(); }
+  catch (e) { failToast(e); }
 }
 /* ---------- Porte d'entrée pour les outils externes (ScanUp) ---------- */
 function hookSecInner() {
@@ -494,6 +520,9 @@ function bindView() {
     if (a === "mcAdd") { const mc = $("#mcTag").value, crm = $("#mcCrm").value.trim(); if (!mc || !crm) return toast("Choisissez un tag Mailchimp et indiquez le tag du CRM.", true);
       return mcPost({follow: [...(S.mc.follow || []).filter(f => f.mc !== mc), {mc, crm}]}, "Tag suivi"); }
     if (a === "mcSync") return mcSync();
+    if (a === "calTokSave") { const k = $("#calTok").value.trim(); if (!k) return toast("Collez d'abord la clé d'accès Calendly.", true); return calPost({token: k}, "Clé Calendly enregistrée"); }
+    if (a === "calNamesSave") return calPost({names: [...document.querySelectorAll("#calNames input:checked")].map(i => i.value)}, "Types de rendez-vous enregistrés");
+    if (a === "calSync") return calSync();
     if (a === "hookCopy") return navigator.clipboard.writeText($("#hookKey").value).then(() => toast("Clé copiée"), () => toast("Copie impossible : sélectionnez la clé à la main.", true));
     if (a === "hookNew") return api("hook_conf", {method: "POST"}).then(r => { S.hook = r; $("#hookSec").innerHTML = hookSecInner(); toast("Clé créée"); }, failToast);
     if (t.dataset.mcdel !== undefined) return mcPost({follow: (S.mc.follow || []).filter((_, i) => i !== +t.dataset.mcdel)}, "Tag retiré du suivi");

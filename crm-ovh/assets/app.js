@@ -53,7 +53,15 @@ async function api(r, {method = "GET", params = {}, body} = {}) {
   return j;
 }
 const createE = (e, data) => api("create", {method: "POST", params: {e}, body: {data}});
-const updateE = (e, id, data) => api("update", {method: "POST", params: {e, id}, body: {data}});
+const updateE = async (e, id, data) => {
+  const r = await api("update", {method: "POST", params: {e, id}, body: {data}});
+  if (r && r._billing) {
+    const b = r._billing; delete r._billing;
+    const what = b.kind === "acompte" ? "Facture d'acompte de 50 %" : "Facture de solde";
+    setTimeout(() => toast(`${what} : tâche créée${b.mail ? ", e-mail envoyé à " + b.to : b.to ? ", mais l'e-mail n'a pas pu partir" : ""}`, !b.mail && !!b.to), 1500);
+  }
+  return r;
+};
 const deleteE = (e, id) => api("delete", {method: "POST", params: {e, id}});
 function failToast(e) { toast(e.message || "Enregistrement impossible.", true); }
 
@@ -63,7 +71,7 @@ const S = {
   pipelines: [], fields: {deal: [], org: [], person: []}, importInfo: null, pipedrive: false,
   view: ls.get("crm.view", "deals"), pipelineId: ls.get("crm.pipe", null), dealStatus: "open",
   dealOwner: ls.get("crm.dealOwner", "all"), actMode: "todo", actOwner: ls.get("crm.actOwner", "me"), actType: "all",
-  contactKind: "org", contactQ: "", panel: null, modal: null, panelActs: [], panelEnt: null,
+  contactKind: "org", contactQ: "", contactScope: ls.get("crm.contactScope", "useful"), panel: null, modal: null, panelActs: [], panelEnt: null,
 };
 const team = () => S.users.filter(u => u.active);
 const memberName = id => (S.users.find(u => u.id === id) || {}).name || "";
@@ -73,11 +81,12 @@ const isAdmin = () => S.me && S.me.role === "admin";
 
 async function loadBoot() {
   const b = await api("bootstrap");
-  S.me = b.me; S.users = b.users; S.pipelines = b.pipelines; S.fields = b.fields; S.importInfo = b.importInfo; S.pipedrive = b.pipedrive;
+  S.me = b.me; S.users = b.users; S.pipelines = b.pipelines; S.fields = b.fields; S.cadrage = b.cadrage || {}; S.importInfo = b.importInfo; S.pipedrive = b.pipedrive;
 }
 async function loadData() {
-  const [deals, acts] = await Promise.all([api("deals"), api("activities")]);
+  const [deals, acts, tg] = await Promise.all([api("deals"), api("activities"), api("tags_overview").catch(() => null)]);
   S.deals = new Map(deals.map(d => [d.id, d]));
+  if (tg) { S.dealTags = tg.deals || {}; S.allTags = tg.all || []; }
   S.actsOpen = new Map(); S.actsDone = new Map();
   for (const a of acts) (a.done ? S.actsDone : S.actsOpen).set(a.id, a);
 }
@@ -114,6 +123,7 @@ function render() {
   else if (S.view === "contacts") { main.innerHTML = viewContacts(); loadContacts(); }
   else main.innerHTML = viewSettings();
   bindView();
+  if (S.view !== "deals" && S.view !== "acts" && S.view !== "contacts") loadMail();
 }
 
 /* ---------- Affaires ---------- */
@@ -124,15 +134,21 @@ function viewDeals() {
   if (!pipeline(S.pipelineId)) S.pipelineId = S.pipelines[0].id;
   const p = pipeline(S.pipelineId); const na = nextActs();
   const ownerF = S.dealOwner === "me" ? S.me.id : S.dealOwner;
-  const deals = [...S.deals.values()].filter(d => d.pipeline_id === p.id && (S.dealStatus === "all" || d.status === S.dealStatus) && (S.dealOwner === "all" || d.owner_id === ownerF));
+  const deals = [...S.deals.values()].filter(d => d.pipeline_id === p.id && (S.dealStatus === "all" || d.status === S.dealStatus) && (S.dealOwner === "all" || d.owner_id === ownerF)
+    && (!S.dealTag || ((S.dealTags || {})[d.id] || []).includes(S.dealTag)));
+  const dealTagList = (S.allTags || []).filter(t => t.deal > 0);
+  if (S.dealTag && !dealTagList.some(t => t.tag === S.dealTag)) S.dealTag = "";
   const open = [...S.deals.values()].filter(d => d.pipeline_id === p.id && d.status === "open");
   const ym = today().slice(0, 7);
   const wonM = [...S.deals.values()].filter(d => d.pipeline_id === p.id && d.status === "won" && (localDay(d.won_time) || "").slice(0, 7) === ym);
   const noAct = open.filter(d => !na.get(d.id)).length;
   const sum = xs => xs.reduce((t, d) => t + (Number(d.value) || 0), 0);
-  const cols = p.stages.map(s => {
+  const cols = p.stages.map((s, i) => {
     const ds = deals.filter(d => d.stage_id === s.id).sort((a, b) => ((na.get(a.id)?.k) || "~").localeCompare((na.get(b.id)?.k) || "~"));
-    return `<section class="col" data-stage="${esc(s.id)}"><div class="col-h"><h3>${esc(s.name)}</h3><div class="meta"><span class="num">${eur(sum(ds))}</span><span>${ds.length} affaire${ds.length > 1 ? "s" : ""}</span></div></div>
+    // Couleur de l'étape : du bleu (début du parcours) au vert (proche de la signature).
+    const t = p.stages.length > 1 ? i / (p.stages.length - 1) : 0;
+    const st = `hsl(${Math.round(218 - 58 * t)} 78% ${Math.round(50 - 12 * t)}%)`;
+    return `<section class="col" data-stage="${esc(s.id)}" style="--st:${st}"><div class="col-h"><h3>${esc(s.name)}</h3><div class="meta"><span class="num">${eur(sum(ds))}</span><span>${ds.length} affaire${ds.length > 1 ? "s" : ""}</span></div></div>
       <div class="cards">${ds.map(d => cardHtml(d, na.get(d.id)?.a)).join("")}</div></section>`;
   }).join("");
   const orphan = deals.filter(d => !p.stages.some(s => s.id === d.stage_id));
@@ -141,23 +157,58 @@ function viewDeals() {
       <div class="seg" id="statusSeg">${[["open","En cours"],["won","Gagnées"],["lost","Perdues"],["all","Toutes"]].map(([k, l]) => `<button data-k="${k}" aria-pressed="${S.dealStatus === k}">${l}</button>`).join("")}</div>
       <select id="dealOwner" aria-label="Responsable"><option value="all">Toute l'équipe</option><option value="me" ${S.dealOwner === "me" ? "selected" : ""}>Mes affaires</option>
         ${team().map(u => `<option value="${esc(u.id)}" ${S.dealOwner === u.id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select>
+      ${dealTagList.length ? `<select id="dealTag" aria-label="Tag"><option value="">Tous les tags</option>${dealTagList.map(t => `<option value="${esc(t.tag)}" ${S.dealTag === t.tag ? "selected" : ""}>${esc(t.tag)} (${t.deal})</option>`).join("")}</select>` : ""}
       <span class="grow"></span>
       <button class="btn primary" data-act="newDeal">${ico("plus")}Affaire</button>
     </div>
     <div class="wrap summary" style="padding-bottom:10px">
       <span>En cours <b>${open.length}</b> · <b>${eur(sum(open))}</b></span>
-      <span>Gagnées ce mois-ci <b>${wonM.length}</b> · <b>${eur(sum(wonM))}</b></span>
+      <span>Gagnées ce mois-ci <b>${wonM.length}</b> · <b style="color:var(--mint)">${eur(sum(wonM))}</b></span>
       <span>Sans activité prévue <b style="color:${noAct ? "var(--warn)" : "inherit"}">${noAct}</b></span>
       ${orphan.length ? `<span>Étape inconnue <b>${orphan.length}</b></span>` : ""}
     </div>
     <div class="board-scroll"><div class="board" id="board">${cols}</div></div>
     ${!S.deals.size && S.ready ? `<div class="wrap"><div class="empty"><h3>Aucune affaire</h3><p>Créez une affaire, ou importez celles de Pipedrive depuis les réglages.</p></div></div>` : ""}`;
 }
+/* ---------- Tags ---------- */
+const tagChips = tags => (tags || []).length ? `<span class="tags">${tags.map(t => `<span class="tagchip">${esc(t)}</span>`).join("")}</span>` : "";
+const parseTags = v => String(v || "").split(",").map(x => x.trim()).filter(Boolean);
+function tagField(id, tags) {
+  return `<label class="f"><span>Tags (séparés par des virgules)</span><input type="text" id="${id}" value="${esc((tags || []).join(", "))}" placeholder="par exemple : industrie, salon Préventica"></label>`;
+}
+async function saveTags(entity, id, value) {
+  const r = await api("tags", {method: "POST", params: {e: entity, id}, body: {tags: parseTags(value)}});
+  if (entity === "deal") { S.dealTags = S.dealTags || {}; if (r.tags.length) S.dealTags[id] = r.tags; else delete S.dealTags[id]; }
+  else S.panelTags = r.tags;
+  try { const tg = await api("tags_overview"); S.allTags = tg.all || []; } catch {}
+  toast("Tags enregistrés");
+  return r.tags;
+}
+async function runTagsImport() {
+  if (IMP.running) return;
+  IMP.running = true; IMP.log = []; IMP.pct = 0; render();
+  let state = {};
+  try {
+    do {
+      state = await api("tags_import", {method: "POST", body: {state}});
+      IMP.log = state.log || []; IMP.pct = state.pct || 0;
+      const bar = $("#impBar"), log = $("#impLog");
+      if (bar) bar.style.width = IMP.pct + "%";
+      if (log) { log.hidden = false; log.textContent = IMP.log.join("\n"); log.scrollTop = log.scrollHeight; }
+    } while (state.step !== "done");
+    await loadData(); toast("Tags repris de Pipedrive");
+  } catch (e) {
+    IMP.log.push("Interrompu : " + e.message + " Vous pouvez relancer : les tags déjà repris ne seront pas dupliqués.");
+    toast("Reprise des tags interrompue : " + e.message, true);
+  } finally { IMP.running = false; render(); }
+}
+
 function cardHtml(d, a) {
   const sub = [d.org_name, d.person_name].filter(Boolean).join(" · ");
   const tag = d.status === "won" ? `<span class="won-tag">Gagnée</span>` : d.status === "lost" ? `<span class="lost-tag">Perdue</span>` : "";
   return `<div class="card" role="button" tabindex="0" draggable="true" data-deal="${esc(d.id)}"><span class="t">${esc(d.title || "Sans titre")}</span>
     ${sub ? `<span class="s">${esc(sub)}</span>` : ""}
+    ${tagChips((S.dealTags || {})[d.id])}
     <span class="row"><span class="num" style="font-size:12px">${d.value ? eur(d.value) : ""}</span>${tag}</span>
     <span class="row">${d.status === "open" ? dueChip(a) : `<span></span>`}<span class="av" title="${esc(memberName(d.owner_id))}">${esc(initials(memberName(d.owner_id)))}</span></span></div>`;
 }
@@ -199,18 +250,27 @@ function viewActs() {
 function viewContacts() {
   return `<div class="wrap toolbar">
     <div class="seg" id="kindSeg"><button data-k="org" aria-pressed="${S.contactKind === "org"}">Organisations</button><button data-k="person" aria-pressed="${S.contactKind === "person"}">Personnes</button></div>
+    <div class="seg" id="scopeSeg" title="Utiles : fiches liées à une affaire, une activité, un e-mail ou un tag"><button data-k="useful" aria-pressed="${S.contactScope !== "all"}">Utiles</button><button data-k="all" aria-pressed="${S.contactScope === "all"}">Tous</button></div>
     <input type="search" id="contactQ" placeholder="Rechercher un nom, un e-mail…" value="${esc(S.contactQ)}" style="max-width:320px">
+    ${(() => { const ts = (S.allTags || []).filter(t => t[S.contactKind] > 0); if (S.contactTag && !ts.some(t => t.tag === S.contactTag)) S.contactTag = "";
+      return ts.length ? `<select id="contactTag" aria-label="Tag"><option value="">Tous les tags</option>${ts.map(t => `<option value="${esc(t.tag)}" ${S.contactTag === t.tag ? "selected" : ""}>${esc(t.tag)} (${t[S.contactKind]})</option>`).join("")}</select>` : ""; })()}
     <span class="grow"></span><button class="btn primary" data-act="newContact">${ico("plus")}${S.contactKind === "org" ? "Organisation" : "Personne"}</button></div>
     <div class="wrap list"><div id="contactList"><div class="empty"><p>Chargement…</p></div></div></div>`;
 }
-const searchEntities = (kind, q, n = 40) => api("search", {params: {kind, q: q || "", n}});
+const searchEntities = (kind, q, n = 40, tag = "", useful = false) => { const params = {kind, q: q || "", n}; if (tag) params.tag = tag; if (useful) params.useful = 1; return api("search", {params}); };
 let contactSeq = 0;
 async function loadContacts() {
   const seq = ++contactSeq; if (!$("#contactList")) return;
   try {
-    const xs = await searchEntities(S.contactKind, S.contactQ.trim(), 60);
+    const xs = await searchEntities(S.contactKind, S.contactQ.trim(), 60, S.contactTag || "", S.contactScope !== "all");
     if (seq !== contactSeq || !$("#contactList")) return;
-    if (!xs.length) { $("#contactList").innerHTML = `<div class="empty"><h3>${S.contactQ ? "Aucun résultat" : "Aucune fiche pour l'instant"}</h3><p>${S.contactQ ? "Essayez avec une partie du nom ou de l'e-mail." : "Importez vos contacts depuis Pipedrive dans les réglages, ou créez une fiche."}</p></div>`; return; }
+    if (S.contactTag && xs.length) {
+      $("#contactList").innerHTML = `<p class="note" style="margin-bottom:8px"><b>${xs.length}</b> fiche${xs.length > 1 ? "s" : ""} avec le tag « ${esc(S.contactTag)} »${xs.length >= 500 ? " (liste limitée aux 500 premières)" : ""}.</p><div class="rows">${xs.map(x => {
+        const sub = S.contactKind === "org" ? (x.address || "") : [x.org_name, (x.emails || [])[0]?.value].filter(Boolean).join(" · ");
+        return `<div class="r crow" tabindex="0" data-open="${S.contactKind}:${esc(x.id)}"><span class="main"><b>${esc(x.name || "Sans nom")}</b>${sub ? `<small>${esc(sub)}</small>` : ""}</span><span class="when"></span></div>`; }).join("")}</div>`;
+      return;
+    }
+    if (!xs.length) { $("#contactList").innerHTML = `<div class="empty"><h3>${S.contactQ ? "Aucun résultat" : "Aucune fiche pour l'instant"}</h3><p>${S.contactQ ? (S.contactScope !== "all" ? "Aucun contact utile ne correspond. Cliquez sur « Tous » pour chercher dans toute la base." : "Essayez avec une partie du nom ou de l'e-mail.") :"Importez vos contacts depuis Pipedrive dans les réglages, ou créez une fiche."}</p></div>`; return; }
     $("#contactList").innerHTML = `${S.contactQ ? "" : `<p class="note" style="margin-bottom:8px">Fiches modifiées récemment. Tapez un nom pour chercher dans toute la base.</p>`}<div class="rows">${xs.map(x => {
       const sub = S.contactKind === "org" ? (x.address || "") : [x.org_name, (x.emails || [])[0]?.value].filter(Boolean).join(" · ");
       const nd = [...S.deals.values()].filter(d => d.status === "open" && (S.contactKind === "org" ? d.org_id === x.id : d.person_id === x.id)).length;
@@ -230,6 +290,7 @@ function viewSettings() {
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn primary" data-act="importFull" ${IMP.running || !S.pipedrive ? "disabled" : ""}>Tout importer</button>
         <button class="btn" data-act="importInc" ${IMP.running || !imp || !S.pipedrive ? "disabled" : ""}>Importer les changements depuis le dernier import</button>
+        <button class="btn" data-act="importTags" ${IMP.running || !S.pipedrive ? "disabled" : ""}>Reprendre les tags de Pipedrive</button>
       </div>
       <div class="progress" ${IMP.running || IMP.log.length ? "" : "hidden"}><i id="impBar" style="width:${IMP.pct}%"></i></div>
       <pre class="log" id="impLog" ${IMP.log.length ? "" : "hidden"}>${esc(IMP.log.join("\n"))}</pre>
@@ -254,12 +315,137 @@ function viewSettings() {
         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-sadd="${esc(p.id)}">${ico("plus")}Étape</button>
           ${p.stages.length ? "" : `<button class="btn sm ghost" data-pdel="${esc(p.id)}" style="color:var(--bad)">Supprimer le pipeline</button>`}</div></div>`).join("") || `<p class="note">Aucun pipeline.</p>`}
     </section>` : ""}
+    ${admin ? fieldsSec() : ""}
+    <section class="sec" id="mailSec">${mailSecInner()}</section>
+    ${admin ? `<section class="sec" id="billSec">${billSecInner()}</section>` : ""}
+    ${admin ? `<section class="sec" id="mcSec">${mcSecInner()}</section>` : ""}
     ${usersSec}
     <section class="sec"><h3>Mon mot de passe</h3>
       <div class="grid2"><label class="f"><span>Mot de passe actuel</span><input type="password" id="pwCur" autocomplete="current-password"></label>
       <label class="f"><span>Nouveau mot de passe (10 caractères minimum)</span><input type="password" id="pwNew" autocomplete="new-password"></label></div>
       <div><button class="btn" data-act="changePw">Changer mon mot de passe</button></div>
     </section></div>`;
+}
+/* ---------- E-mails Microsoft ---------- */
+const frDay = iso => { const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleDateString("fr-FR", {day: "numeric", month: "short", year: "numeric"}); };
+function mailSecInner() {
+  const m = S.mail;
+  if (!m) return `<h3>E-mails Microsoft</h3><p class="note">Chargement…</p>`;
+  const admin = S.me.role === "admin";
+  return `<h3>E-mails Microsoft</h3>
+    <p class="note">Les e-mails échangés avec vos contacts s'affichent sur leur fiche et sur leurs affaires. Seuls les messages dont l'expéditeur ou un destinataire est une personne du CRM sont enregistrés (objet, aperçu, date et lien vers Outlook).</p>
+    ${admin ? `<div class="grid2">
+      <label class="f"><span>Identifiant de l'annuaire (tenant)</span><input type="text" id="msTenant" value="${esc(m.tenant || "")}" autocomplete="off"></label>
+      <label class="f"><span>Identifiant de l'application (client)</span><input type="text" id="msClient" value="${esc(m.client_id || "")}" autocomplete="off"></label>
+      <label class="f"><span>Secret de l'application${m.configured ? " (laisser vide pour le conserver)" : ""}</span><input type="password" id="msSecret" autocomplete="new-password"></label>
+      <div class="f"><span>Adresse de redirection à déclarer chez Microsoft</span><span style="padding:7px 0;color:var(--fg);font-weight:500;word-break:break-all">${esc(m.redirect_uri || "")}</span></div></div>
+      <div><button class="btn" data-act="mailSave">Enregistrer la connexion</button></div>` : ""}
+    ${!m.configured ? `<p class="note">${admin ? "Renseignez d'abord les trois informations ci-dessus." : "La connexion Microsoft n'est pas encore configurée par un administrateur."}</p>`
+      : m.mine ? `<p class="note">Votre boîte <b>${esc(m.mine.email)}</b> est connectée${m.mine.last_sync ? ", dernière synchronisation le " + esc(frDay(String(m.mine.last_sync).replace(" ", "T") + "Z")) : ", pas encore synchronisée"}.${m.mine.last_result ? ` Dernier passage : <b>${esc(m.mine.last_result.lus)}</b> e-mails lus, <b>${esc(m.mine.last_result.rattaches)}</b> rattachés. Au total <b>${esc(m.mine.last_result.total)}</b> e-mails rattachés dans le CRM, pour <b>${esc(m.mine.last_result.contacts)}</b> adresses de contacts connues.` : ""}</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-act="mailSync">Synchroniser maintenant</button><button class="btn" data-act="mailSyncFull">Tout relire (60 jours)</button><button class="btn ghost" data-act="mailDisconnect">Déconnecter ma boîte</button></div>`
+      : `<div><a class="btn primary" style="text-decoration:none" href="msauth.php?start=1">Connecter ma boîte Microsoft</a></div>`}
+    ${admin && (m.boxes || []).length ? `<p class="note">Boîtes connectées : ${m.boxes.map(b => esc(b.name + " (" + b.email + ")")).join(", ")}</p>` : ""}`;
+}
+async function loadMail() {
+  try { S.mail = await api("mail_status"); } catch { return; }
+  const el = $("#mailSec"); if (el && !editing(el)) el.innerHTML = mailSecInner();
+  if (S.me && S.me.role === "admin") {
+    try { S.billing = await api("billing_conf"); } catch { return; }
+    const bl = $("#billSec"); if (bl && !editing(bl)) bl.innerHTML = billSecInner();
+    try { S.mc = await api("mc_conf"); } catch { return; }
+    const ml = $("#mcSec"); if (ml && !editing(ml)) ml.innerHTML = mcSecInner();
+  }
+}
+/* ---------- Mailchimp : tags suivis ---------- */
+function mcSecInner() {
+  const c = S.mc;
+  if (!c) return `<h3>Mailchimp</h3><p class="note">Chargement…</p>`;
+  const intro = `<h3>Mailchimp</h3><p class="note">Le CRM ne reprend de Mailchimp que les tags que vous choisissez de suivre, ceux qui servent à une action de vente (par exemple la liste d'appels des inscrits à un webinaire). Leurs contacts sont retrouvés ou créés dans le CRM et reçoivent le tag indiqué. Les clics et les ouvertures restent dans Mailchimp. Rien n'est modifié dans Mailchimp.</p>`;
+  if (!c.configured) return intro + `<div class="grid2"><label class="f"><span>Clé d'API Mailchimp</span><input type="password" id="mcKey" autocomplete="new-password" placeholder="se termine par un tiret et un code, par exemple us21"></label></div>
+    <div><button class="btn" data-act="mcKeySave">Enregistrer la clé</button></div>`;
+  const tags = c.tags || [];
+  return intro + (c.error ? `<p class="note" style="color:var(--bad)">${esc(c.error)}</p>` : "") + `
+    <div class="grid2"><label class="f"><span>Audience Mailchimp</span><select id="mcList"><option value=""></option>${(c.lists || []).map(l => `<option value="${esc(l.id)}" ${l.id === c.list ? "selected" : ""}>${esc(l.name)} (${l.members})</option>`).join("")}</select></label>
+      <label class="f"><span>Remplacer la clé d'API (facultatif)</span><input type="password" id="mcKey" autocomplete="new-password"></label></div>
+    ${(c.follow || []).length ? `<div class="rows">${c.follow.map((f, i) => `<div class="r" style="cursor:default;grid-template-columns:minmax(0,1fr) auto"><span class="main"><b>${esc(f.mc)}</b><small>devient dans le CRM le tag « ${esc(f.crm)} »</small></span><button class="btn sm ghost" data-mcdel="${i}" style="color:var(--bad)">Ne plus suivre</button></div>`).join("")}</div>` : `<p class="note">Aucun tag Mailchimp suivi pour l'instant.</p>`}
+    ${c.list ? `<div class="grid2"><label class="f"><span>Tag Mailchimp à suivre</span><select id="mcTag"><option value=""></option>${tags.map(t => `<option value="${esc(t.name)}">${esc(t.name)} (${t.members})</option>`).join("")}</select></label>
+      <label class="f"><span>Tag à poser dans le CRM</span><input type="text" id="mcCrm" placeholder="par exemple : Inscrit au webinaire du 03/12/26"></label></div>` : ""}
+    <div style="display:flex;gap:8px;flex-wrap:wrap">${c.list ? `<button class="btn" data-act="mcAdd">Suivre ce tag</button>` : ""}<button class="btn ghost" data-act="mcKeySave">Enregistrer la clé</button>${(c.follow || []).length ? `<button class="btn primary" data-act="mcSync">Synchroniser maintenant</button>` : ""}</div>
+    ${c.last && c.last.lignes ? `<p class="note">Dernier passage : ${c.last.lignes.map(esc).join(" ; ")}.</p>` : ""}`;
+}
+async function mcPost(body, msg) {
+  try { S.mc = await api("mc_conf", {method: "POST", body}); $("#mcSec").innerHTML = mcSecInner(); if (msg) toast(msg); }
+  catch (e) { failToast(e); }
+}
+async function mcSync() {
+  toast("Lecture de Mailchimp en cours…");
+  try { const r = await api("mc_sync", {method: "POST"}); toast(`${r.crees} personnes créées, ${r.tagues} tags ajoutés`); S.mc = await api("mc_conf"); $("#mcSec").innerHTML = mcSecInner(); await loadData(); }
+  catch (e) { failToast(e); }
+}
+/* ---------- Rappels de facturation ---------- */
+function billSecInner() {
+  const c = S.billing;
+  if (!c) return `<h3>Rappels de facturation</h3><p class="note">Chargement…</p>`;
+  return `<h3>Rappels de facturation</h3>
+    <p class="note">Quand une affaire arrive à l'étape « Devis signé » (ou « Contrat signé »), le CRM crée une tâche « Facture d'acompte de 50 % à envoyer » pour le responsable de l'affaire et prévient la personne ci-dessous par e-mail. À l'étape « Livrables envoyés », il fait de même pour la facture de solde. Une seule fois par affaire.</p>
+    <div class="grid2"><label class="f"><span>E-mail de la personne chargée de la facturation</span><input type="email" id="billTo" value="${esc(c.to || "")}" placeholder="laisser vide pour ne créer que la tâche"></label>
+      <label style="align-self:end;padding-bottom:8px"><input type="checkbox" id="billOn" ${c.enabled ? "checked" : ""}> Rappels activés</label></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="billSave">Enregistrer</button><button class="btn ghost" data-act="billTest">M'envoyer un e-mail d'essai</button></div>`;
+}
+async function billSave() {
+  try { S.billing = await api("billing_conf", {method: "POST", body: {to: $("#billTo").value.trim(), enabled: $("#billOn").checked}}); $("#billSec").innerHTML = billSecInner(); toast("Rappels de facturation enregistrés"); }
+  catch (e) { failToast(e); }
+}
+async function billTest() {
+  try { const r = await api("billing_test", {method: "POST"}); toast(r.sent ? "E-mail d'essai envoyé à " + r.to : "Le serveur n'a pas pu envoyer l'e-mail d'essai", !r.sent); }
+  catch (e) { failToast(e); }
+}
+async function mailSave() {
+  try { S.mail = await api("mail_conf", {method: "POST", body: {tenant: $("#msTenant").value.trim(), client_id: $("#msClient").value.trim(), secret: $("#msSecret").value}});
+    $("#mailSec").innerHTML = mailSecInner(); toast("Connexion Microsoft enregistrée"); }
+  catch (e) { failToast(e); }
+}
+async function mailSync(full) {
+  toast("Synchronisation en cours…");
+  try { const r = await api("mail_sync", {method: "POST", body: {full: !!full}}); toast(`${r.lus} e-mails lus, ${r.rattaches} rattachés${r.reste ? " ; relancez pour la suite" : ""}`); await loadMail(); }
+  catch (e) { failToast(e); }
+}
+async function mailDisconnect() {
+  try { S.mail = await api("mail_disconnect", {method: "POST"}); $("#mailSec").innerHTML = mailSecInner(); toast("Boîte déconnectée"); }
+  catch (e) { failToast(e); }
+}
+async function loadPanelMails() {
+  if (!S.panel) return; const {kind, id} = S.panel; const key = {deal: "deal_id", org: "org_id", person: "person_id"}[kind];
+  try { const xs = await api("emails", {params: {[key]: id}}); if (S.panel && S.panel.id === id) { S.panelMails = xs; if (xs.length) refreshPanel(); } } catch {}
+}
+function mailsSection() {
+  const xs = S.panelMails || []; if (!xs.length) return "";
+  return `<section class="sec"><h3>E-mails <span class="num">${xs.length}</span></h3><div class="rows">${xs.map(m => `<div class="mail-row">
+    <div class="mh"><span class="chip ${m.direction === "out" ? "ok" : "today"}">${m.direction === "out" ? "Envoyé" : "Reçu"}</span><b>${esc(m.subject || "(sans objet)")}</b><span class="when">${esc(frDay(m.sent_at))}</span></div>
+    <small>${esc(m.direction === "out" ? "À " + (m.to_addrs || "") : "De " + (m.from_addr || ""))}${m.person_name ? " · " + esc(m.person_name) : ""}</small>
+    ${m.preview ? `<p>${esc(m.preview)}</p>` : ""}
+    ${/^https:\/\//.test(m.web_link || "") ? `<a href="${esc(m.web_link)}" target="_blank" rel="noopener">Ouvrir dans Outlook</a>` : ""}</div>`).join("")}</div></section>`;
+}
+
+/* Base Airtable « Cadrage clients ScanUp », table Clients : ouverte quand l'affaire n'a pas encore de lien. */
+const CADRAGE_BASE_URL = "https://airtable.com/appEsqSLTQkhlHchr/tblifqlCs6FPmfz19";
+/* Formulaires Airtable : questionnaire de visio (interne, espaces de Maxime et de Laure) et demande de devis (envoyée au client). */
+const VISIO_FORM_MAXIME = "https://airtable.com/appEsqSLTQkhlHchr/pagoVPXaE0YkTvFaZ";
+const VISIO_FORM_LAURE = "https://airtable.com/appEsqSLTQkhlHchr/pagamtl2RK2DhXtly";
+const DEVIS_FORM_URL = "https://airtable.com/appEsqSLTQkhlHchr/pagw1YuiFE9swas0p/form";
+function fieldsSec() {
+  const kinds = [["deal", "Affaires"], ["org", "Organisations"], ["person", "Personnes"]].filter(([k]) => (S.fields[k] || []).length);
+  if (!kinds.length) return "";
+  return `<section class="sec"><h3>Champs des fiches</h3>
+    <p class="note">Décochez un champ pour le masquer dans les fiches. Rien n'est supprimé : les valeurs déjà saisies sont conservées et réapparaissent si vous recochez la case.</p>
+    ${kinds.map(([k, label]) => `<div class="sec" style="background:var(--surface-2)"><h3>${label}</h3>
+      <div class="grid2">${S.fields[k].map(f => `<label><input type="checkbox" data-fshow="${esc(k)}:${esc(f.key)}" ${f.hidden ? "" : "checked"}> ${esc(f.label)}</label>`).join("")}</div></div>`).join("")}
+  </section>`;
+}
+async function saveHiddenFields() {
+  const hidden = [...document.querySelectorAll("[data-fshow]")].filter(c => !c.checked).map(c => c.dataset.fshow);
+  try { await api("fields", {method: "POST", body: {hidden}}); await loadBoot(); toast("Champs mis à jour"); }
+  catch (e) { failToast(e); await loadBoot(); render(); }
 }
 function userRow(u) {
   const id = esc(u.id || "new");
@@ -289,7 +475,19 @@ function bindView() {
     if (a === "newContact") return newEntity(S.contactKind);
     if (a === "importFull") return runImport("full");
     if (a === "importInc") return runImport("inc");
+    if (a === "importTags") return runTagsImport();
     if (a === "changePw") return changePw();
+    if (a === "mcKeySave") { const k = $("#mcKey").value.trim(); if (!k) return toast("Collez d'abord la clé d'API Mailchimp.", true); return mcPost({key: k}, "Clé Mailchimp enregistrée"); }
+    if (a === "mcAdd") { const mc = $("#mcTag").value, crm = $("#mcCrm").value.trim(); if (!mc || !crm) return toast("Choisissez un tag Mailchimp et indiquez le tag du CRM.", true);
+      return mcPost({follow: [...(S.mc.follow || []).filter(f => f.mc !== mc), {mc, crm}]}, "Tag suivi"); }
+    if (a === "mcSync") return mcSync();
+    if (t.dataset.mcdel !== undefined) return mcPost({follow: (S.mc.follow || []).filter((_, i) => i !== +t.dataset.mcdel)}, "Tag retiré du suivi");
+    if (a === "billSave") return billSave();
+    if (a === "billTest") return billTest();
+    if (a === "mailSave") return mailSave();
+    if (a === "mailSync") return mailSync(false);
+    if (a === "mailSyncFull") return mailSync(true);
+    if (a === "mailDisconnect") return mailDisconnect();
     if (a === "addUser") { S.addingUser = true; return render(); }
     if (a === "addPipe") return editPipes(ps => ps.push({id: "", name: "Nouveau pipeline", stages: [{id: "", name: "Premier contact"}]}));
     if (t.dataset.usave) return saveUser(t.closest("[data-user]"));
@@ -305,6 +503,7 @@ function bindView() {
       if (seg.id === "statusSeg") S.dealStatus = t.dataset.k;
       if (seg.id === "actModeSeg") S.actMode = t.dataset.k;
       if (seg.id === "kindSeg") S.contactKind = t.dataset.k;
+      if (seg.id === "scopeSeg") { S.contactScope = t.dataset.k; ls.set("crm.contactScope", t.dataset.k); }
       render();
     }
   };
@@ -312,9 +511,13 @@ function bindView() {
   m.onchange = e => {
     const t = e.target;
     if (t.id === "pipeSel") { S.pipelineId = t.value; ls.set("crm.pipe", t.value); render(); }
+    if (t.id === "dealTag") { S.dealTag = t.value; render(); }
+    if (t.id === "contactTag") { S.contactTag = t.value; loadContacts(); }
+    if (t.id === "mcList") mcPost({list: t.value}, "Audience enregistrée");
     if (t.id === "dealOwner") { S.dealOwner = t.value; ls.set("crm.dealOwner", t.value); render(); }
     if (t.id === "actOwner") { S.actOwner = t.value; ls.set("crm.actOwner", t.value); render(); }
     if (t.id === "actType") { S.actType = t.value; render(); }
+    if (t.dataset.fshow) saveHiddenFields();
     if (t.dataset.pname) editPipes(ps => { ps.find(p => p.id === t.dataset.pname).name = t.value.trim() || "Sans nom"; });
     if (t.dataset.sname) { const [pid, sid] = t.dataset.sname.split("|"); editPipes(ps => { ps.find(p => p.id === pid).stages.find(s => s.id === sid).name = t.value.trim() || "Sans nom"; }); }
   };
@@ -506,11 +709,18 @@ function bindActsSection(dr, preset) {
   dr.querySelectorAll("[data-actid]").forEach(r => r.addEventListener("click", e => { const t = e.target.closest("[data-toggle]"); if (t) { e.stopPropagation(); return toggleDone(t.dataset.toggle); } openAct(findAct(r.dataset.actid)); }));
 }
 function extraSection(kind, doc) {
-  const defs = S.fields[kind] || []; if (!defs.length) return "";
+  const defs = (S.fields[kind] || []).filter(f => !f.hidden); if (!defs.length) return "";
   const ex = doc.extra || {};
   return `<section class="sec"><h3>Informations complémentaires</h3><div class="grid2">${defs.map(f => {
     const v = ex[f.key] ?? "";
     let input;
+    if (f.type === "set" && f.options?.length) {
+      // Choix multiples : cases à cocher, valeur enregistrée sous la forme « a, b ».
+      const cur = String(v).split(",").map(x => x.trim()).filter(Boolean);
+      const others = cur.filter(x => !f.options.includes(x));
+      return `<div class="f" style="grid-column:1/-1"><span>${esc(f.label)}</span><div class="checks" data-extraset="${esc(f.key)}">${[...f.options, ...others].map(o => `<label><input type="checkbox" value="${esc(o)}" ${cur.includes(o) ? "checked" : ""}> ${esc(o)}</label>`).join("")}</div>
+        ${f.key === "crm_ressources_internes" && cur.length ? `<p class="note" style="margin:0"><b>Accès en autonomie probable</b> : ce client a des ressources internes en santé au travail.</p>` : ""}</div>`;
+    }
     if (f.type === "date") input = `<input type="date" data-extra="${esc(f.key)}" value="${esc(String(v).slice(0, 10))}">`;
     else if (f.type === "enum" && f.options?.length) input = `<select data-extra="${esc(f.key)}"><option value=""></option>${f.options.map(o => `<option ${o === v ? "selected" : ""}>${esc(o)}</option>`).join("")}${v && !f.options.includes(v) ? `<option selected>${esc(v)}</option>` : ""}</select>`;
     else if (f.type === "text") input = `<textarea data-extra="${esc(f.key)}" rows="2">${esc(v)}</textarea>`;
@@ -528,7 +738,7 @@ async function newDeal(preset) {
   } catch (e) { failToast(e); }
 }
 function openDeal(id, focusTitle) {
-  const dr = openPanelShell(); S.panel = {kind: "deal", id}; S.panelActs = []; drawDeal(id, dr); reloadPanelActs();
+  const dr = openPanelShell(); S.panel = {kind: "deal", id}; S.panelActs = []; S.panelMails = []; drawDeal(id, dr); reloadPanelActs(); loadPanelMails();
   if (focusTitle) setTimeout(() => { const t = $("#panel .title"); t?.focus(); t?.select(); }, 40);
 }
 function drawDeal(id, dr = $("#panel .drawer")) {
@@ -553,9 +763,16 @@ function drawDeal(id, dr = $("#panel .drawer")) {
         <label class="f"><span>Responsable</span><select id="dOwner"><option value=""></option>${team().map(u => `<option value="${esc(u.id)}" ${u.id === d.owner_id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select></label>
         <div class="f"><span>Créée le</span><span style="padding:7px 0;color:var(--fg);font-weight:500">${esc(d.add_time ? new Date(d.add_time).toLocaleDateString("fr-FR") : "")}</span></div></div>
         <div class="grid2">${pickerHtml("org", "org", {id: d.org_id, name: d.org_name}, "Organisation")}${pickerHtml("person", "person", {id: d.person_id, name: d.person_name}, "Personne")}</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">${d.org_id ? `<button class="btn sm" data-goorg>Voir l'organisation</button>` : ""}${d.person_id ? `<button class="btn sm" data-goperson>Voir la personne</button>` : ""}</div></section>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">${d.org_id ? `<button class="btn sm" data-goorg>Voir l'organisation</button>` : ""}${d.person_id ? `<button class="btn sm" data-goperson>Voir la personne</button>` : ""}</div>
+        ${tagField("dTags", (S.dealTags || {})[id])}
+        <label class="f"><span>Fiche de cadrage (lien Airtable)</span><input type="url" id="dCadrage" placeholder="Collez ici le lien de la fiche Airtable du client" value="${esc((S.cadrage || {})[id] || "")}"></label>
+        <div class="f"><span>Devis et cadrage</span><div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn sm" data-visio title="À remplir pendant ou juste après la visio">Questionnaire de visio</button>
+          <button class="btn sm" data-formdevis title="Prépare l'e-mail au client avec le lien du formulaire">Envoyer le formulaire de devis</button>
+          <button class="btn sm" data-cadrage>${(S.cadrage || {})[id] ? "Ouvrir la fiche de cadrage" : "Ouvrir la base de cadrage"}</button></div></div></section>
       <section class="sec"><h3>Notes</h3><textarea id="dNotes" rows="5" placeholder="Contexte, besoins, prochaines étapes…">${esc(d.notes || "")}</textarea></section>
       ${actsSection()}
+      ${mailsSection()}
       ${extraSection("deal", d)}
       <div><button class="btn ghost" data-ddel style="color:var(--bad)">Supprimer l'affaire</button></div>
     </div>`;
@@ -576,10 +793,31 @@ function drawDeal(id, dr = $("#panel .drawer")) {
   dr.querySelector("[data-reopen]")?.addEventListener("click", () => up({status: "open", won_time: null, lost_time: null, close_time: null}, true));
   dr.querySelector("[data-goorg]")?.addEventListener("click", () => openEntity("org", d.org_id));
   dr.querySelector("[data-goperson]")?.addEventListener("click", () => openEntity("person", d.person_id));
+  $("#dTags", dr).onchange = async e => { try { await saveTags("deal", id, e.target.value); render(); } catch (err) { failToast(err); } };
+  $("#dCadrage", dr).onchange = async e => {
+    try { const r = await api("cadrage", {method: "POST", body: {deal_id: id, url: e.target.value.trim()}}); S.cadrage = S.cadrage || {}; if (r.url) S.cadrage[id] = r.url; else delete S.cadrage[id]; toast("Enregistré"); drawDeal(id); }
+    catch (err) { failToast(err); }
+  };
+  dr.querySelector("[data-cadrage]").addEventListener("click", () => window.open((S.cadrage || {})[id] || CADRAGE_BASE_URL, "_blank", "noopener"));
+  dr.querySelector("[data-visio]").addEventListener("click", () => {
+    // Entreprises : espace de Maxime ; distributeurs (mutuelles, cabinets, services de santé au travail) : espace de Laure.
+    const base = /distribut/i.test(p.name || "") ? VISIO_FORM_LAURE : VISIO_FORM_MAXIME;
+    window.open(base + (d.org_name ? "?prefill_Client=" + encodeURIComponent(d.org_name) : ""), "_blank", "noopener");
+  });
+  dr.querySelector("[data-formdevis]").addEventListener("click", async () => {
+    const link = DEVIS_FORM_URL + (d.org_name ? "?prefill_Entreprise=" + encodeURIComponent(d.org_name) : "");
+    let to = "";
+    if (d.person_id) { try { const pe = await api("get", {params: {e: "persons", id: d.person_id}}); to = ((pe.emails || [])[0] || {}).value || ""; } catch {} }
+    try { await navigator.clipboard.writeText(link); toast("Lien du formulaire copié"); } catch {}
+    const subject = "ScanUp : quelques questions pour établir votre devis";
+    const body = "Bonjour,\n\nPour vous établir un devis précis, pouvez-vous remplir ce court formulaire ? Comptez cinq minutes.\n\n" + link + "\n\nBien cordialement,";
+    window.location.href = "mailto:" + encodeURIComponent(to) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  });
   bindPicker(dr, "org", v => up({org_id: v?.id || null}, true));
   bindPicker(dr, "person", v => { const patch = {person_id: v?.id || null}; if (v?.raw?.org_id && !d.org_id) patch.org_id = v.raw.org_id; up(patch, true); });
   bindActsSection(dr, {deal_id: id});
   dr.querySelectorAll("[data-extra]").forEach(el => el.addEventListener("change", () => up({extra: {[el.dataset.extra]: el.value}})));
+  dr.querySelectorAll("[data-extraset]").forEach(box => box.addEventListener("change", () => up({extra: {[box.dataset.extraset]: [...box.querySelectorAll("input:checked")].map(c => c.value).join(", ")}}, true)));
   const del = dr.querySelector("[data-ddel]");
   del.onclick = async () => { if (!del.dataset.confirm) { del.dataset.confirm = 1; del.textContent = "Confirmer : supprimer l'affaire et garder ses activités"; return; }
     try { await deleteE("deals", id); S.deals.delete(id); toast("Affaire supprimée"); closePanel(); } catch (e) { failToast(e); } };
@@ -590,12 +828,14 @@ async function newEntity(kind) {
   if (v) openEntity(kind, v.id, true);
 }
 async function openEntity(kind, id, focusTitle) {
-  const dr = openPanelShell(); S.panel = {kind, id}; S.panelEnt = null; S.panelActs = [];
+  const dr = openPanelShell(); S.panel = {kind, id}; S.panelEnt = null; S.panelActs = []; S.panelMails = []; S.panelTags = [];
   dr.innerHTML = `<div class="db"><p class="note">Chargement…</p></div>`;
   try {
     const [ent, acts] = await Promise.all([api("get", {params: {e: kind === "org" ? "orgs" : "persons", id}}), api("activities", {params: {[kind + "_id"]: id}})]);
     if (!S.panel || S.panel.id !== id) return;
-    S.panelEnt = ent; S.panelActs = acts; drawEntity(kind, id);
+    S.panelEnt = ent; S.panelActs = acts;
+    try { S.panelTags = (await api("tags", {params: {e: kind, id}})).tags || []; } catch { S.panelTags = []; }
+    drawEntity(kind, id); loadPanelMails();
     if (focusTitle) setTimeout(() => { const t = $("#panel .title"); t?.focus(); t?.select(); }, 40);
   } catch (e) { dr.innerHTML = `<div class="db"><div class="empty"><h3>${esc(e.message)}</h3><button class="btn" data-pc>Fermer</button></div></div>`; dr.querySelector("[data-pc]").onclick = closePanel; }
 }
@@ -612,12 +852,14 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
       ${kind === "org" ? `<label class="f"><span>Adresse</span><input type="text" id="eAddr" value="${esc(e.address || "")}"></label><label class="f"><span>Site web</span><input type="text" id="eWeb" value="${esc(e.website || "")}"></label>`
         : `<label class="f"><span>E-mails (un par ligne)</span><textarea id="eMails" rows="2">${esc(lines(e.emails))}</textarea></label><label class="f"><span>Téléphones (un par ligne)</span><textarea id="ePhones" rows="2">${esc(lines(e.phones))}</textarea></label>`}
         <label class="f"><span>Responsable</span><select id="eOwner"><option value=""></option>${team().map(u => `<option value="${esc(u.id)}" ${u.id === e.owner_id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select></label></div>
+        ${tagField("eTags", S.panelTags)}
         ${kind === "person" ? pickerHtml("org", "org", {id: e.org_id, name: e.org_name}, "Organisation") + (e.org_id ? `<div><button class="btn sm" data-goorg>Voir l'organisation</button></div>` : "") : ""}
         ${kind === "person" && (e.emails || []).length ? `<p class="note">Écrire à : ${e.emails.map(x => `<a href="mailto:${esc(x.value)}">${esc(x.value)}</a>`).join(", ")}</p>` : ""}
         ${kind === "person" && (e.phones || []).length ? `<p class="note">Appeler : ${e.phones.map(x => `<a href="tel:${esc(String(x.value).replace(/[^+\d]/g, ""))}">${esc(x.value)}</a>`).join(", ")}</p>` : ""}</section>
       ${kind === "org" ? `<section class="sec"><h3>Personnes <button class="btn sm" data-newperson>${ico("plus")}Personne</button></h3>${(e.persons || []).length ? `<div class="rows">${e.persons.map(x => `<div class="r crow" tabindex="0" data-gop="${esc(x.id)}"><span class="main"><b>${esc(x.name)}</b><small>${esc([(x.emails || [])[0]?.value, (x.phones || [])[0]?.value].filter(Boolean).join(" · "))}</small></span><span></span></div>`).join("")}</div>` : `<p class="note">Aucune personne rattachée.</p>`}</section>` : ""}
       <section class="sec"><h3>Affaires <button class="btn sm" data-newdeal>${ico("plus")}Affaire</button></h3>${deals.length ? `<div class="rows">${deals.map(d => `<div class="r crow" tabindex="0" data-god="${esc(d.id)}"><span class="main"><b>${esc(d.title)}</b><small>${esc((stageOf(d.stage_id)?.s.name) || "")}${d.value ? " · " + eur(d.value) : ""}</small></span><span>${d.status === "won" ? `<span class="won-tag">Gagnée</span>` : d.status === "lost" ? `<span class="lost-tag">Perdue</span>` : `<span class="chip ok">En cours</span>`}</span></div>`).join("")}</div>` : `<p class="note">Aucune affaire.</p>`}</section>
       ${actsSection()}
+      ${mailsSection()}
       <section class="sec"><h3>Notes</h3><textarea id="eNotes" rows="4">${esc(e.notes || "")}</textarea></section>
       ${extraSection(kind, e)}
       <div><button class="btn ghost" data-edel style="color:var(--bad)">Supprimer la fiche</button></div>
@@ -628,6 +870,7 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
   $("#eName", dr).onchange = async ev => { const name = ev.target.value.trim() || "Sans nom"; const patch = {name};
     if (kind === "person") { patch.first_name = name.split(" ")[0]; patch.last_name = name.split(" ").slice(1).join(" "); }
     if (await up(patch)) { const deals = await api("deals"); S.deals = new Map(deals.map(d => [d.id, d])); } };
+  $("#eTags", dr).onchange = async ev => { try { await saveTags(kind, id, ev.target.value); } catch (err) { failToast(err); } };
   if ($("#eAddr", dr)) $("#eAddr", dr).onchange = ev => up({address: ev.target.value});
   if ($("#eWeb", dr)) $("#eWeb", dr).onchange = ev => up({website: ev.target.value});
   const toList = v => v.split(/\n+/).map(x => x.trim()).filter(Boolean).map((value, i) => ({value, primary: i === 0}));
@@ -644,6 +887,7 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
     try { const row = await createE("persons", {name: "Nouvelle personne", first_name: "Nouvelle", last_name: "personne", org_id: id, owner_id: S.me.id}); openEntity("person", row.id, true); } catch (err) { failToast(err); } });
   bindActsSection(dr, kind === "org" ? {org_id: id, org_name: e.name} : {person_id: id, person_name: e.name, org_id: e.org_id, org_name: e.org_name});
   dr.querySelectorAll("[data-extra]").forEach(el => el.addEventListener("change", () => up({extra: {[el.dataset.extra]: el.value}})));
+  dr.querySelectorAll("[data-extraset]").forEach(box => box.addEventListener("change", () => up({extra: {[box.dataset.extraset]: [...box.querySelectorAll("input:checked")].map(c => c.value).join(", ")}}, true)));
   const del = dr.querySelector("[data-edel]");
   del.onclick = async () => { if (!del.dataset.confirm) { del.dataset.confirm = 1; del.textContent = "Confirmer la suppression de la fiche"; return; }
     try { await deleteE(colName, id); toast("Fiche supprimée"); const deals = await api("deals"); S.deals = new Map(deals.map(d => [d.id, d])); closePanel(); } catch (err) { failToast(err); } };

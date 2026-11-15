@@ -319,6 +319,7 @@ function viewSettings() {
     <section class="sec" id="mailSec">${mailSecInner()}</section>
     ${admin ? `<section class="sec" id="billSec">${billSecInner()}</section>` : ""}
     ${admin ? `<section class="sec" id="mcSec">${mcSecInner()}</section>` : ""}
+    ${admin ? `<section class="sec" id="hookSec">${hookSecInner()}</section>` : ""}
     ${usersSec}
     <section class="sec"><h3>Mon mot de passe</h3>
       <div class="grid2"><label class="f"><span>Mot de passe actuel</span><input type="password" id="pwCur" autocomplete="current-password"></label>
@@ -352,10 +353,22 @@ async function loadMail() {
   if (S.me && S.me.role === "admin") {
     try { S.billing = await api("billing_conf"); } catch { return; }
     const bl = $("#billSec"); if (bl && !editing(bl)) bl.innerHTML = billSecInner();
+    try { S.hook = await api("hook_conf"); const hk = $("#hookSec"); if (hk && !editing(hk)) hk.innerHTML = hookSecInner(); } catch {}
     try { S.mc = await api("mc_conf"); } catch { return; }
     const ml = $("#mcSec"); if (ml && !editing(ml)) ml.innerHTML = mcSecInner();
   }
 }
+/* ---------- Porte d'entrée pour les outils externes (ScanUp) ---------- */
+function hookSecInner() {
+  const c = S.hook;
+  if (!c) return `<h3>Tâches créées par ScanUp</h3><p class="note">Chargement…</p>`;
+  return `<h3>Tâches créées par ScanUp</h3>
+    <p class="note">Cette adresse et cette clé permettent à l'automatisation des essais ScanUp de créer une tâche dans le CRM, par exemple quand un testeur commence ou termine un module. La tâche est rattachée à l'affaire en cours du client et attribuée à son responsable. La clé ne donne aucun accès en lecture ; gardez-la tout de même confidentielle.</p>
+    <div class="grid2"><label class="f"><span>Adresse à appeler</span><input type="text" readonly value="${esc(c.url)}"></label>
+      <label class="f"><span>Clé (en-tête X-CRM-Key)</span><input type="password" readonly id="hookKey" value="${esc(c.key || "")}" placeholder="aucune clé pour l'instant"></label></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">${c.key ? `<button class="btn" data-act="hookCopy">Copier la clé</button>` : ""}<button class="btn ${c.key ? "ghost" : ""}" data-act="hookNew">${c.key ? "Remplacer la clé" : "Créer la clé"}</button></div>`;
+}
+
 /* ---------- Mailchimp : tags suivis ---------- */
 function mcSecInner() {
   const c = S.mc;
@@ -481,6 +494,8 @@ function bindView() {
     if (a === "mcAdd") { const mc = $("#mcTag").value, crm = $("#mcCrm").value.trim(); if (!mc || !crm) return toast("Choisissez un tag Mailchimp et indiquez le tag du CRM.", true);
       return mcPost({follow: [...(S.mc.follow || []).filter(f => f.mc !== mc), {mc, crm}]}, "Tag suivi"); }
     if (a === "mcSync") return mcSync();
+    if (a === "hookCopy") return navigator.clipboard.writeText($("#hookKey").value).then(() => toast("Clé copiée"), () => toast("Copie impossible : sélectionnez la clé à la main.", true));
+    if (a === "hookNew") return api("hook_conf", {method: "POST"}).then(r => { S.hook = r; $("#hookSec").innerHTML = hookSecInner(); toast("Clé créée"); }, failToast);
     if (t.dataset.mcdel !== undefined) return mcPost({follow: (S.mc.follow || []).filter((_, i) => i !== +t.dataset.mcdel)}, "Tag retiré du suivi");
     if (a === "billSave") return billSave();
     if (a === "billTest") return billTest();
@@ -623,6 +638,32 @@ async function quickCreate(kind, name) {
   catch (e) { failToast(e); return null; }
 }
 
+/* « Où en est-on ? » : rappel des derniers échanges, affiché en haut d'une activité existante.
+   Tout vient des fiches déjà en base (e-mails rattachés, activités, étape de l'affaire) : rien à saisir. */
+async function actContext(a) {
+  const key = a.org_id ? "org_id" : a.deal_id ? "deal_id" : a.person_id ? "person_id" : null;
+  if (!key) return "";
+  const [mails, acts] = await Promise.all([api("emails", {params: {[key]: a[key]}}).catch(() => []), api("activities", {params: {[key]: a[key]}}).catch(() => [])]);
+  const since = String(a.add_time || "").replace(" ", "T").slice(0, 19);
+  const day = s => String(s || "").slice(0, 10);
+  const newer = mails.filter(x => since && String(x.sent_at).slice(0, 19) > since);
+  const received = newer.filter(x => x.direction !== "out").length;
+  const done = acts.filter(x => x.done && x.id !== a.id).sort((x, y) => String(y.done_time || y.due_date || "").localeCompare(String(x.done_time || x.due_date || "")));
+  const todo = acts.filter(x => !x.done && x.id !== a.id);
+  const d = a.deal_id ? S.deals.get(a.deal_id) : null;
+  const st = d ? (pipeline(d.pipeline_id)?.stages || []).find(s => s.id === d.stage_id) : null;
+  let h = "";
+  if (newer.length) h += `<div class="banner" style="margin:0 0 8px">Depuis la création de cette activité : ${newer.length} e-mail${newer.length > 1 ? "s" : ""} échangé${newer.length > 1 ? "s" : ""}, dont ${received} reçu${received > 1 ? "s" : ""}. Vérifiez qu'elle est toujours d'actualité.</div>`;
+  if (d) h += `<p style="margin:0 0 6px"><b>Affaire :</b> ${esc(d.title)}${st ? ", étape « " + esc(st.name) + " »" : ""}</p>`;
+  if (done[0]) h += `<p style="margin:0 0 6px"><b>Dernière action faite</b> (${esc(frDay(done[0].done_time || done[0].due_date))}) : ${esc(done[0].subject || "")}${done[0].note ? "<br><small>" + esc(String(done[0].note).replace(/<[^>]+>/g, " ").slice(0, 400)) + "</small>" : ""}</p>`;
+  if (mails.length) h += `<p style="margin:0 0 2px"><b>Derniers e-mails</b></p><div class="rows">${mails.slice(0, 4).map(x => `<div class="mail-row">
+    <div class="mh"><span class="chip ${x.direction === "out" ? "ok" : "today"}">${x.direction === "out" ? "Envoyé" : "Reçu"}</span><b>${esc(x.subject || "(sans objet)")}</b><span class="when">${esc(frDay(x.sent_at))}</span></div>
+    ${x.preview ? `<p>${esc(x.preview)}</p>` : ""}</div>`).join("")}</div>`;
+  else h += `<p style="margin:0 0 6px"><small>Aucun e-mail rattaché à cette fiche.</small></p>`;
+  if (todo.length) h += `<p style="margin:8px 0 0"><b>Autres activités à faire :</b> ${todo.slice(0, 4).map(x => esc(x.subject || "") + " (" + esc(frDay(x.due_date)) + ")").join(" ; ")}</p>`;
+  return h ? `<section class="sec" style="margin:0 0 12px"><h3>Où en est-on ?</h3><div style="font-size:13px">${h}</div></section>` : "";
+}
+
 function openAct(a, preset = {}) {
   const isNew = !a;
   const d0 = preset.deal_id ? S.deals.get(preset.deal_id) : null;
@@ -630,10 +671,13 @@ function openAct(a, preset = {}) {
     deal_id: preset.deal_id || null, deal_title: d0?.title || null, org_id: preset.org_id || d0?.org_id || null, org_name: preset.org_name || d0?.org_name || null,
     person_id: preset.person_id || d0?.person_id || null, person_name: preset.person_name || d0?.person_name || null};
   S.modal = m;
+  let ctxHtml = "";
+  if (!isNew) actContext(a).then(h => { ctxHtml = h; const box = $("#actCtx"); if (box && S.modal === m) box.innerHTML = h; }).catch(() => {});
   const draw = () => {
     $("#layer").innerHTML = `<div class="scrim" data-close></div><div class="modal" data-close><form class="mbox" id="actForm" role="dialog" aria-modal="true" aria-label="Activité">
       <div class="mh"><h2>${isNew ? "Planifier une activité" : "Activité"}</h2><button type="button" class="btn ghost sm" data-x aria-label="Fermer">${ico("x")}</button></div>
       <div class="mb">${preset._hint ? `<div class="banner" style="margin:0">${esc(preset._hint)}</div>` : ""}
+        <div id="actCtx">${ctxHtml}</div>
         <div class="types" id="types">${TYPES.map(([k, l]) => `<button type="button" data-type="${k}" aria-pressed="${m.type === k}">${ico(k)}${l}</button>`).join("")}</div>
         <label class="f"><span>Objet</span><input type="text" id="aSubj" value="${esc(m.subject)}" placeholder="${esc(typeLabel(m.type))}"></label>
         <div class="grid2"><label class="f"><span>Date</span><input type="date" id="aDate" value="${esc(m.due_date || "")}"></label>

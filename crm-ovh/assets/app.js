@@ -221,7 +221,7 @@ function actRow(a) {
     <button class="check ${a.done ? "on" : ""}" data-toggle="${esc(a.id)}" aria-label="${a.done ? "Marquer à faire" : "Marquer comme faite"}">${a.done ? ico("check") : ""}</button>
     <span class="tico" title="${esc(typeLabel(a.type))}">${ico(a.type)}</span>
     <span class="main"><b>${esc(a.subject || typeLabel(a.type))}</b>${link ? `<small>${esc(link)}</small>` : ""}</span>
-    <span class="when"><span style="color:${late ? "var(--bad)" : "inherit"}">${esc(a.due_date ? fmtDay(a.due_date) : "Sans date")}${a.due_time ? " " + esc(a.due_time) : ""}</span>
+    <span class="when">${!a.done && a.mails_since > 0 ? `<span class="chip today" style="white-space:nowrap;margin-right:8px" title="Des e-mails ont été échangés depuis la création de cette activité : ouvrez-la pour vérifier qu'elle est toujours d'actualité.">À vérifier : ${a.mails_since} e-mail${a.mails_since > 1 ? "s" : ""} depuis</span>` : ""}<span style="color:${late ? "var(--bad)" : "inherit"}">${esc(a.due_date ? fmtDay(a.due_date) : "Sans date")}${a.due_time ? " " + esc(a.due_time) : ""}</span>
       <span class="av" style="margin-left:6px" title="${esc(memberName(a.owner_id))}">${esc(initials(memberName(a.owner_id)))}</span></span></div>`;
 }
 function viewActs() {

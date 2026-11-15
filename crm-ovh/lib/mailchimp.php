@@ -70,10 +70,16 @@ function mc_tags(string $list): array {
    son statut n'est jamais modifié, donc un désabonné reste désabonné. Rien n'est jamais supprimé dans Mailchimp.
    Seuls les contacts nouveaux ou modifiés depuis le dernier envoi partent (empreinte gardée dans crm_mc_push). */
 
+// Tags du CRM transmis à Mailchimp, pour cibler une communication indépendamment de la nature de l'organisation.
+// Le tag peut être posé sur la personne ou sur son organisation : dans ce cas il vaut pour toutes ses personnes.
+const MC_PUSH_TAGS = ['Certification périodique'];
+
 function mc_push_schema(): void {
     static $done = false;
     if ($done) return;
     q('CREATE TABLE IF NOT EXISTS crm_mc_push (person_id BIGINT NOT NULL PRIMARY KEY, hash CHAR(40) NOT NULL, at DATETIME NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+    // Colonne ajoutée après coup : tags déjà transmis pour cette personne.
+    if (!q("SHOW COLUMNS FROM crm_mc_push LIKE 'tags'")->fetch()) q("ALTER TABLE crm_mc_push ADD COLUMN tags VARCHAR(255) NOT NULL DEFAULT ''");
     $done = true;
 }
 
@@ -108,10 +114,20 @@ function mc_push_rows(): array {
     $fNatO = $pick('org', ["nature de l'organisation"]);
     $use = "(EXISTS (SELECT 1 FROM deals ud WHERE ud.person_id = p.id) OR EXISTS (SELECT 1 FROM activities ua WHERE ua.person_id = p.id)"
          . " OR EXISTS (SELECT 1 FROM crm_emails ue WHERE ue.person_id = p.id) OR EXISTS (SELECT 1 FROM crm_tags ut WHERE ut.entity = 'person' AND ut.entity_id = p.id)"
-         . " OR EXISTS (SELECT 1 FROM deals ud2 WHERE ud2.org_id = p.org_id))";
+         . " OR EXISTS (SELECT 1 FROM deals ud2 WHERE ud2.org_id = p.org_id)"
+         // Une organisation portant un tag transmis à Mailchimp rend toutes ses personnes concernées.
+         . " OR EXISTS (SELECT 1 FROM crm_tags uo WHERE uo.entity = 'org' AND uo.entity_id = p.org_id AND uo.tag IN (" . implode(',', array_map(fn($t) => db()->quote($t), MC_PUSH_TAGS)) . ")))";
+    // Personnes et organisations portant l'un des tags transmis à Mailchimp.
+    $want = []; foreach (MC_PUSH_TAGS as $t) $want[mb_strtolower($t)] = $t;
+    $tagP = []; $tagO = [];
+    foreach (q("SELECT entity, entity_id, tag FROM crm_tags WHERE entity IN ('person', 'org')")->fetchAll() as $t) {
+        $name = $want[mb_strtolower(trim((string)$t['tag']))] ?? null;
+        if ($name === null) continue;
+        if ($t['entity'] === 'person') $tagP[(int)$t['entity_id']][$name] = true; else $tagO[(int)$t['entity_id']][$name] = true;
+    }
     $rows = [];
     $seen = [];
-    $sql = "SELECT p.id, p.name, p.first_name, p.last_name, p.emails, p.phones, p.extra, o.extra AS org_extra FROM persons p LEFT JOIN orgs o ON o.id = p.org_id
+    $sql = "SELECT p.id, p.org_id, p.name, p.first_name, p.last_name, p.emails, p.phones, p.extra, o.extra AS org_extra FROM persons p LEFT JOIN orgs o ON o.id = p.org_id
             WHERE p.emails IS NOT NULL AND p.emails <> '' AND p.emails <> '[]' AND $use";
     foreach (q($sql)->fetchAll() as $p) {
         $email = '';
@@ -131,7 +147,10 @@ function mc_push_rows(): array {
         $pays = ''; foreach ($fPays as $f) { $pays = mc_field_value($extra, $f); if ($pays !== '') break; }
         $nature = ''; foreach ($fNatP as $f) { $nature = mc_field_value($extra, $f); if ($nature !== '') break; }
         if ($nature === '') foreach ($fNatO as $f) { $nature = mc_field_value($oextra, $f); if ($nature !== '') break; }
-        $rows[] = ['id' => (int)$p['id'], 'email' => $email, 'first' => mb_substr($first, 0, 100), 'last' => mb_substr($last, 0, 100), 'phone' => mb_substr($phone, 0, 40), 'pays' => $pays, 'nature' => $nature];
+        $tags = array_keys(($tagP[(int)$p['id']] ?? []) + ($p['org_id'] ? ($tagO[(int)$p['org_id']] ?? []) : []));
+        sort($tags);
+        $rows[] = ['id' => (int)$p['id'], 'email' => $email, 'first' => mb_substr($first, 0, 100), 'last' => mb_substr($last, 0, 100), 'phone' => mb_substr($phone, 0, 40), 'pays' => $pays, 'nature' => $nature,
+            'tags' => implode('|', $tags)];
     }
     return $rows;
 }
@@ -155,11 +174,15 @@ function mc_push(bool $dry = false): array {
     $c = mc_conf();
     if ($c['key'] === '' || $c['list'] === '') throw new RuntimeException("Mailchimp n'est pas encore configuré.");
     $rows = mc_push_rows();
-    $known = q('SELECT person_id, hash FROM crm_mc_push')->fetchAll(PDO::FETCH_KEY_PAIR);
+    $known = []; $knownTags = [];
+    foreach (q('SELECT person_id, hash, tags FROM crm_mc_push')->fetchAll() as $k) { $known[(int)$k['person_id']] = (string)$k['hash']; $knownTags[(int)$k['person_id']] = (string)$k['tags']; }
     $todo = [];
     foreach ($rows as $r) {
+        // L'empreinte des champs reste celle d'origine ; les tags sont comparés à part, pour ne renvoyer que ce qui a changé.
         $h = sha1(implode('|', [$r['email'], $r['first'], $r['last'], $r['phone'], $r['pays'], $r['nature']]));
-        if (($known[$r['id']] ?? '') !== $h) $todo[] = $r + ['hash' => $h];
+        $fieldsChanged = ($known[$r['id']] ?? '') !== $h;
+        $tagsChanged = ($knownTags[$r['id']] ?? '') !== $r['tags'];
+        if ($fieldsChanged || $tagsChanged) $todo[] = $r + ['hash' => $h, 'fields_changed' => $fieldsChanged, 'tags_before' => $knownTags[$r['id']] ?? ''];
     }
     if ($dry) return ['utiles' => count($rows), 'a_envoyer' => count($todo), 'deja' => count($rows) - count($todo)];
     $sent = 0; $batches = [];
@@ -180,11 +203,18 @@ function mc_push(bool $dry = false): array {
                 if ($mf) $body['merge_fields'] = $mf;
                 $ops[] = ['method' => 'PUT', 'path' => '/lists/' . $c['list'] . '/members/' . md5($r['email']), 'params' => ['skip_merge_validation' => 'true'],
                     'body' => json_encode($body, JSON_UNESCAPED_UNICODE)];
+                // Tags : on pose ceux qui viennent d'apparaître, on retire seulement ceux que le CRM avait lui-même posés.
+                $now_t = $r['tags'] === '' ? [] : explode('|', $r['tags']);
+                $before_t = $r['tags_before'] === '' ? [] : explode('|', $r['tags_before']);
+                $chg = [];
+                foreach (array_diff($now_t, $before_t) as $t) $chg[] = ['name' => $t, 'status' => 'active'];
+                foreach (array_diff($before_t, $now_t) as $t) $chg[] = ['name' => $t, 'status' => 'inactive'];
+                if ($chg) $ops[] = ['method' => 'POST', 'path' => '/lists/' . $c['list'] . '/members/' . md5($r['email']) . '/tags', 'body' => json_encode(['tags' => $chg], JSON_UNESCAPED_UNICODE)];
             }
             $res = mc_request('/batches', [], ['operations' => $ops]);
             if (empty($res['id'])) throw new RuntimeException('Mailchimp n\'a pas accepté le lot de contacts.');
             $batches[] = (string)$res['id'];
-            foreach ($chunk as $r) q('INSERT INTO crm_mc_push (person_id, hash, at) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE hash = VALUES(hash), at = VALUES(at)', [$r['id'], $r['hash'], $now]);
+            foreach ($chunk as $r) q('INSERT INTO crm_mc_push (person_id, hash, tags, at) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE hash = VALUES(hash), tags = VALUES(tags), at = VALUES(at)', [$r['id'], $r['hash'], $r['tags'], $now]);
             $sent += count($chunk);
         }
     }

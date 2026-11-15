@@ -102,7 +102,18 @@ function route(string $r, string $method, array $b, array $me): void {
     case 'activities':
         foreach (['deal_id', 'org_id', 'person_id'] as $k) if (!empty($_GET[$k])) json_out(array_map('out_row', q(ACT_SQL . " WHERE a.$k = ? ORDER BY a.done, a.due_date, a.due_time", [(int)$_GET[$k]])->fetchAll()));
         $since = gmdate('Y-m-d H:i:s', time() - 45 * 86400);
-        json_out(array_map('out_row', q(ACT_SQL . ' WHERE a.done = 0 OR a.done_time >= ?', [$since])->fetchAll()));
+        // Repère « à vérifier » : nombre d'e-mails échangés avec l'organisation (ou la personne) depuis la création d'une activité encore à faire.
+        $acts = array_map('out_row', q(ACT_SQL . ' WHERE a.done = 0 OR a.done_time >= ?', [$since])->fetchAll());
+        try {
+            require_once __DIR__ . '/lib/mail.php';
+            mail_schema();
+            $cnt = q("SELECT a.id, COUNT(e.id) AS n FROM activities a JOIN crm_emails e ON e.sent_at > a.add_time
+                      AND ((a.org_id IS NOT NULL AND e.org_id = a.org_id) OR (a.org_id IS NULL AND a.person_id IS NOT NULL AND e.person_id = a.person_id))
+                      WHERE a.done = 0 GROUP BY a.id")->fetchAll(PDO::FETCH_KEY_PAIR);
+            foreach ($acts as &$x) $x['mails_since'] = (int)($cnt[(int)$x['id']] ?? 0);
+            unset($x);
+        } catch (Throwable $ex) { error_log('[crm] repère activités ' . $ex->getMessage()); }
+        json_out($acts);
 
     case 'get':
         $e = (string)($_GET['e'] ?? ''); ent($e);

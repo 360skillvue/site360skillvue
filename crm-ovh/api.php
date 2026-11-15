@@ -332,6 +332,38 @@ function route(string $r, string $method, array $b, array $me): void {
         @set_time_limit(180);
         json_out(mc_sync());
 
+    case 'cal_conf':
+        // Réglage Calendly. La clé d'accès est enregistrée mais jamais renvoyée au navigateur.
+        require_admin($me);
+        require_once __DIR__ . '/lib/calendly.php';
+        if ($method === 'POST') {
+            $patch = [];
+            $tok = preg_replace('/\s+/', '', (string)($b['token'] ?? ''));
+            // Clé collée plusieurs fois de suite par mégarde : on n'en garde qu'un exemplaire.
+            for ($n = 8; $n >= 2; $n--) { $len = strlen($tok); if ($len >= 60 && $len % $n === 0 && str_repeat(substr($tok, 0, intdiv($len, $n)), $n) === $tok) { $tok = substr($tok, 0, intdiv($len, $n)); break; } }
+            if ($tok !== '') { if (!preg_match('/^[A-Za-z0-9._\-]{30,3000}$/', $tok)) fail("La clé d'accès Calendly n'a pas le bon format."); $patch['token'] = $tok; }
+            if (array_key_exists('names', $b)) {
+                $names = [];
+                foreach ((array)$b['names'] as $n) { $n = mb_substr(trim((string)$n), 0, 200); if ($n !== '') $names[] = $n; }
+                $patch['names'] = array_values(array_unique($names));
+            }
+            if ($patch) cal_save($patch);
+        }
+        $out = cal_public();
+        if ($out['configured']) {
+            try { $out['types'] = cal_type_names(); }
+            catch (Throwable $ex) { $out['error'] = $ex instanceof RuntimeException ? $ex->getMessage() : 'Lecture de Calendly impossible.'; }
+        }
+        json_out($out);
+
+    case 'cal_sync':
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        require_once __DIR__ . '/lib/calendly.php';
+        @set_time_limit(180);
+        try { json_out(cal_sync()); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'billing_conf':
         // Destinataire des rappels de facturation.
         require_admin($me);

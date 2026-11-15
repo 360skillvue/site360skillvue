@@ -19,3 +19,10 @@ try {
 } catch (Throwable $e) {
     echo 'Mailchimp : ', $e->getMessage(), PHP_EOL;
 }
+// Rendez-vous commerciaux pris sur Calendly
+try {
+    require_once __DIR__ . '/lib/calendly.php';
+    if (cal_conf()['token'] !== '') foreach (cal_sync()['lignes'] as $line) echo 'Calendly : ', $line, PHP_EOL;
+} catch (Throwable $e) {
+    echo 'Calendly : ', $e->getMessage(), PHP_EOL;
+}

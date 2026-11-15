@@ -13,7 +13,7 @@ function mc_conf(): array {
         if (is_array($f) && trim((string)($f['mc'] ?? '')) !== '' && trim((string)($f['crm'] ?? '')) !== '') $follow[] = ['mc' => trim((string)$f['mc']), 'crm' => trim((string)$f['crm'])];
     }
     return ['key' => (string)($c['key'] ?? ''), 'list' => (string)($c['list'] ?? ''), 'follow' => $follow, 'last' => $c['last'] ?? null,
-        'push_on' => !empty($c['push_on']), 'push_last' => $c['push_last'] ?? null];
+        'push_on' => !empty($c['push_on']), 'push_last' => $c['push_last'] ?? null, 'cp_on' => !empty($c['cp_on']), 'cp_last' => $c['cp_last'] ?? null];
 }
 
 /* Ce que le navigateur a le droit de voir : jamais la clé. */
@@ -185,6 +185,158 @@ function mc_health_outside(): int {
         if (mc_is_health(mc_field_value($oextra, $fDom), $nature)) $n++;
     }
     return $n;
+}
+
+/* ---------- Certification périodique : responsables formation des établissements de santé ----------
+   La certification périodique est portée par l'organisme de formation : ces contacts partent donc dans l'audience
+   « Biologie e-learning », avec le tag « Certification périodique ». Règle : organisation de santé (mc_is_health)
+   et poste contenant « formation ». Tous les contacts du CRM sont examinés, pas seulement les contacts utiles.
+   Même prudence que pour l'autre envoi : création comme abonné si absent, simple mise à jour sinon, rien n'est supprimé. */
+const MC_CP_LIST_NAME = 'Biologie e-learning';
+
+function mc_cp_rows(bool $withStats = false): array {
+    require_once __DIR__ . '/mail.php';
+    $internal = array_map('strval', array_keys(mail_internal_domains()));
+    $fields = ['person' => [], 'org' => []];
+    foreach (q("SELECT entity, fkey, label, options FROM fields WHERE entity IN ('person', 'org')")->fetchAll() as $f) $fields[$f['entity']][mb_strtolower(trim((string)$f['label']))] = $f;
+    $fDom = $fields['org']['domaine activité'] ?? null;
+    $fNatO = $fields['org']["nature de l'organisation"] ?? null;
+    $fNatP = $fields['person']['nature organisation (marketing)'] ?? null;
+    $fPoste = null;
+    foreach ($fields['person'] as $label => $f) if ($fPoste === null && (str_starts_with($label, 'poste') || $label === 'fonction')) $fPoste = $f;
+    $rows = []; $seen = [];
+    $stats = ['sante_avec_email' => 0, 'poste_renseigne' => 0, 'organismes_formation' => 0, 'postes_retenus' => [], 'postes_ecartes' => []];
+    $sql = "SELECT p.id, p.name, p.first_name, p.last_name, p.emails, p.extra, o.extra AS org_extra FROM persons p LEFT JOIN orgs o ON o.id = p.org_id
+            WHERE p.emails IS NOT NULL AND p.emails <> '' AND p.emails <> '[]'";
+    foreach (q($sql)->fetchAll() as $p) {
+        $extra = $p['extra'] ? (json_decode((string)$p['extra'], true) ?: []) : [];
+        $oextra = $p['org_extra'] ? (json_decode((string)$p['org_extra'], true) ?: []) : [];
+        $nature = mc_field_value($extra, $fNatP); if ($nature === '') $nature = mc_field_value($oextra, $fNatO);
+        $domaine = mc_field_value($oextra, $fDom);
+        if (!mc_is_health($domaine, $nature)) continue;
+        // Organismes de formation en santé (base issue de l'ANDPC) : fiches sans nom ni poste, toutes retenues.
+        $isOf = mb_strtolower(trim($domaine)) === 'formation santé';
+        $email = '';
+        foreach ((array)json_decode((string)$p['emails'], true) as $e) {
+            $a = strtolower(trim((string)(is_array($e) ? ($e['value'] ?? '') : $e)));
+            if ($a !== '' && filter_var($a, FILTER_VALIDATE_EMAIL)) { $email = $a; if (!is_array($e) || !empty($e['primary'])) break; }
+        }
+        if ($email === '' || isset($seen[$email]) || in_array(substr(strrchr($email, '@'), 1), $internal, true)) continue;
+        $seen[$email] = true;
+        $stats['sante_avec_email']++;
+        $poste = mc_field_value($extra, $fPoste);
+        if ($poste !== '') $stats['poste_renseigne']++;
+        // Le poste est une liste de catégories sans « responsable formation » : dans les établissements de santé,
+        // la formation dépend des ressources humaines, donc la catégorie « DRH / RH » est retenue elle aussi.
+        $keep = $isOf || ($poste !== '' && preg_match('/formation|\bd?rh\b/iu', $poste));
+        if ($isOf) $stats['organismes_formation']++;
+        if ($withStats && $poste !== '' && !$isOf) { $k = mb_strtolower($poste); $bucket = $keep ? 'postes_retenus' : 'postes_ecartes'; $stats[$bucket][$k] = ($stats[$bucket][$k] ?? 0) + 1; }
+        if (!$keep) continue;
+        $first = trim((string)$p['first_name']); $last = trim((string)$p['last_name']);
+        if ($first === '' && $last === '') { $parts = preg_split('/\s+/u', trim((string)$p['name']), 2); $first = $parts[0] ?? ''; $last = $parts[1] ?? ''; }
+        $rows[] = ['id' => (int)$p['id'], 'email' => $email, 'first' => mb_substr($first, 0, 100), 'last' => mb_substr($last, 0, 100)];
+    }
+    if ($withStats) { foreach (['postes_retenus', 'postes_ecartes'] as $b) { arsort($stats[$b]); $stats[$b] = array_slice($stats[$b], 0, 40, true); } }
+    return [$rows, $stats];
+}
+
+function mc_cp_push(bool $dry = false): array {
+    mc_push_schema();
+    q('CREATE TABLE IF NOT EXISTS crm_mc_cp (person_id BIGINT NOT NULL PRIMARY KEY, hash CHAR(40) NOT NULL, at DATETIME NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+    if (mc_conf()['key'] === '') throw new RuntimeException("Mailchimp n'est pas encore configuré.");
+    [$rows, $stats] = mc_cp_rows($dry);
+    $known = q('SELECT person_id, hash FROM crm_mc_cp')->fetchAll(PDO::FETCH_KEY_PAIR);
+    $todo = [];
+    foreach ($rows as $r) { $h = sha1($r['email'] . '|' . $r['first'] . '|' . $r['last']); if (($known[$r['id']] ?? '') !== $h) $todo[] = $r + ['hash' => $h]; }
+    if ($dry) return ['retenus' => count($rows), 'a_envoyer' => count($todo)] + $stats;
+    $list = '';
+    foreach (mc_lists() as $l) if (mb_strtolower($l['name']) === mb_strtolower(MC_CP_LIST_NAME)) $list = $l['id'];
+    if ($list === '') throw new RuntimeException('Audience Mailchimp « ' . MC_CP_LIST_NAME . ' » introuvable.');
+    $sent = 0; $batches = []; $now = now_utc();
+    foreach (array_chunk($todo, 400) as $chunk) {
+        $ops = [];
+        foreach ($chunk as $r) {
+            $mf = [];
+            if ($r['first'] !== '') $mf['FNAME'] = $r['first'];
+            if ($r['last'] !== '') $mf['LNAME'] = $r['last'];
+            $body = ['email_address' => $r['email'], 'status_if_new' => 'subscribed'];
+            if ($mf) $body['merge_fields'] = $mf;
+            $path = '/lists/' . $list . '/members/' . md5($r['email']);
+            $ops[] = ['method' => 'PUT', 'path' => $path, 'params' => ['skip_merge_validation' => 'true'], 'body' => json_encode($body, JSON_UNESCAPED_UNICODE)];
+            $ops[] = ['method' => 'POST', 'path' => $path . '/tags', 'body' => json_encode(['tags' => [['name' => MC_HEALTH_TAG, 'status' => 'active']]], JSON_UNESCAPED_UNICODE)];
+        }
+        $res = mc_request('/batches', [], ['operations' => $ops]);
+        if (empty($res['id'])) throw new RuntimeException('Mailchimp n\'a pas accepté le lot de contacts.');
+        $batches[] = (string)$res['id'];
+        foreach ($chunk as $r) q('INSERT INTO crm_mc_cp (person_id, hash, at) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE hash = VALUES(hash), at = VALUES(at)', [$r['id'], $r['hash'], $now]);
+        $sent += count($chunk);
+    }
+    $res = ['retenus' => count($rows), 'envoyes' => $sent, 'lots' => $batches, 'at' => $now];
+    mc_save(['cp_last' => $res, 'cp_on' => true]);
+    return $res;
+}
+
+/* ---------- Copie ponctuelle des organismes de formation en santé (base ANDPC) ----------
+   Ces contacts ont été importés dans l'audience 360skillvue (groupes « ODPC lot … ») alors qu'ils relèvent de
+   l'organisme de formation. On les copie dans l'audience « Biologie e-learning » avec les tags
+   « organisme-formation-sante » et « Certification périodique ». Seuls les abonnés sont copiés ; rien n'est retiré de la source. */
+function mc_odpc_copy(bool $dry = true): array {
+    $c = mc_conf();
+    if ($c['key'] === '' || $c['list'] === '') throw new RuntimeException("Mailchimp n'est pas encore configuré.");
+    $dest = '';
+    foreach (mc_lists() as $l) if (mb_strtolower($l['name']) === mb_strtolower(MC_CP_LIST_NAME)) $dest = $l['id'];
+    if ($dest === '') throw new RuntimeException('Audience Mailchimp « ' . MC_CP_LIST_NAME . ' » introuvable.');
+    // Membres des groupes ODPC de l'audience source.
+    $src = []; $skipped = 0; $groups = [];
+    foreach (mc_tags($c['list']) as $t) {
+        if (!str_starts_with(mb_strtolower($t['name']), 'odpc lot')) continue;
+        $groups[] = $t['name'];
+        $offset = 0;
+        do {
+            $r = mc_request('/lists/' . rawurlencode($c['list']) . '/segments/' . $t['id'] . '/members',
+                ['count' => 500, 'offset' => $offset, 'fields' => 'members.email_address,members.status,members.merge_fields,total_items']);
+            foreach ($r['members'] ?? [] as $m) {
+                $email = strtolower(trim((string)($m['email_address'] ?? '')));
+                if ($email === '' || isset($src[$email])) continue;
+                if (($m['status'] ?? '') !== 'subscribed') { $skipped++; continue; }
+                $mf = (array)($m['merge_fields'] ?? []);
+                $src[$email] = ['first' => mb_substr(trim((string)($mf['FNAME'] ?? '')), 0, 100), 'last' => mb_substr(trim((string)($mf['LNAME'] ?? '')), 0, 100)];
+            }
+            $offset += 500;
+        } while ($offset < (int)($r['total_items'] ?? 0) && $offset < 5000);
+    }
+    if ($dry) {
+        // Adresses déjà présentes dans l'audience de destination, pour savoir combien seront créées.
+        $have = []; $offset = 0;
+        do {
+            $r = mc_request('/lists/' . rawurlencode($dest) . '/members', ['count' => 1000, 'offset' => $offset, 'fields' => 'members.email_address,total_items']);
+            foreach ($r['members'] ?? [] as $m) $have[strtolower((string)($m['email_address'] ?? ''))] = true;
+            $offset += 1000;
+        } while ($offset < (int)($r['total_items'] ?? 0) && $offset < 30000);
+        $already = count(array_intersect_key($src, $have));
+        return ['groupes' => $groups, 'abonnes_a_copier' => count($src), 'non_abonnes_ignores' => $skipped, 'deja_dans_la_liste' => $already, 'nouveaux' => count($src) - $already, 'taille_liste' => count($have)];
+    }
+    $batches = []; $sent = 0;
+    foreach (array_chunk($src, 400, true) as $chunk) {
+        $ops = [];
+        foreach ($chunk as $email => $m) {
+            $mf = [];
+            if ($m['first'] !== '') $mf['FNAME'] = $m['first'];
+            if ($m['last'] !== '') $mf['LNAME'] = $m['last'];
+            $body = ['email_address' => $email, 'status_if_new' => 'subscribed'];
+            if ($mf) $body['merge_fields'] = $mf;
+            $path = '/lists/' . $dest . '/members/' . md5($email);
+            $ops[] = ['method' => 'PUT', 'path' => $path, 'params' => ['skip_merge_validation' => 'true'], 'body' => json_encode($body, JSON_UNESCAPED_UNICODE)];
+            $ops[] = ['method' => 'POST', 'path' => $path . '/tags', 'body' => json_encode(['tags' => [['name' => 'organisme-formation-sante', 'status' => 'active'], ['name' => MC_HEALTH_TAG, 'status' => 'active']]], JSON_UNESCAPED_UNICODE)];
+        }
+        $res = mc_request('/batches', [], ['operations' => $ops]);
+        if (empty($res['id'])) throw new RuntimeException('Mailchimp n\'a pas accepté le lot de contacts.');
+        $batches[] = (string)$res['id'];
+        $sent += count($chunk);
+    }
+    $res = ['groupes' => $groups, 'envoyes' => $sent, 'lots' => $batches, 'at' => now_utc()];
+    mc_save(['odpc_last' => $res]);
+    return $res;
 }
 
 /* Champs de l'audience Mailchimp, retrouvés par leur nom : pays et nature de l'organisation. */

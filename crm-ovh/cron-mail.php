@@ -16,6 +16,8 @@ try {
     require_once __DIR__ . '/lib/mailchimp.php';
     $mc = mc_conf();
     if ($mc['key'] !== '' && $mc['list'] !== '' && $mc['follow']) foreach (mc_sync()['lignes'] as $line) echo 'Mailchimp : ', $line, PHP_EOL;
+    // Contacts utiles du CRM vers Mailchimp : seulement après un premier envoi lancé à la main depuis les Réglages.
+    if ($mc['key'] !== '' && $mc['list'] !== '' && $mc['push_on']) { $r = mc_push(false); echo 'Mailchimp : ', $r['envoyes'], ' contacts envoyés sur ', $r['utiles'], ' utiles', PHP_EOL; }
 } catch (Throwable $e) {
     echo 'Mailchimp : ', $e->getMessage(), PHP_EOL;
 }

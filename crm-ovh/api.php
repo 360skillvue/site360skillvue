@@ -332,6 +332,17 @@ function route(string $r, string $method, array $b, array $me): void {
         @set_time_limit(180);
         json_out(mc_sync());
 
+    case 'mc_push':
+        // Envoi des contacts utiles du CRM vers Mailchimp. Sans « go », compte seulement, sans rien envoyer.
+        require_admin($me);
+        require_once __DIR__ . '/lib/mailchimp.php';
+        @set_time_limit(180);
+        try {
+            if ($method === 'POST' && !empty($b['go'])) json_out(mc_push(false));
+            if (!empty($_GET['batch'])) json_out(mc_batch_status((string)$_GET['batch']));
+            json_out(mc_push(true));
+        } catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'cal_conf':
         // Réglage Calendly. La clé d'accès est enregistrée mais jamais renvoyée au navigateur.
         require_admin($me);

@@ -255,6 +255,12 @@ function route(string $r, string $method, array $b, array $me): void {
         set_setting('cadrage_links', (object)$links);
         json_out(['ok' => true, 'url' => $url]);
 
+    case 'hook_conf':
+        // Clé de la porte d'entrée hook.php (création de tâches par un outil externe). Visible des seuls administrateurs.
+        require_admin($me);
+        if ($method === 'POST') set_setting('hook_key', bin2hex(random_bytes(24)));
+        json_out(['url' => 'https://' . ($_SERVER['HTTP_HOST'] ?? 'crm.360skillvue.com') . '/hook.php', 'key' => (string)setting('hook_key', '')]);
+
     case 'cleanup_stats':
         // Comptage seul (aucune modification) : fiches sans affaire, sans activité, sans e-mail et sans tag.
         require_admin($me);

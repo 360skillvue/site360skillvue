@@ -1,0 +1,21 @@
+<?php
+// Tâche planifiée OVH (ligne de commande uniquement) : e-mails Microsoft des boîtes connectées, sans toucher à Pipedrive.
+declare(strict_types=1);
+if (PHP_SAPI !== 'cli') { http_response_code(403); exit('Accès refusé.'); }
+require __DIR__ . '/lib/bootstrap.php';
+@set_time_limit(0);
+try {
+    require __DIR__ . '/lib/mail.php';
+    if (!ms_app()) { echo "Connexion Microsoft non configurée.", PHP_EOL; exit; }
+    foreach (mail_sync_all() as $line) echo $line, PHP_EOL;
+} catch (Throwable $e) {
+    echo 'E-mails : ', $e->getMessage(), PHP_EOL;
+}
+// Tags Mailchimp suivis (par exemple les inscrits à un webinaire)
+try {
+    require_once __DIR__ . '/lib/mailchimp.php';
+    $mc = mc_conf();
+    if ($mc['key'] !== '' && $mc['list'] !== '' && $mc['follow']) foreach (mc_sync()['lignes'] as $line) echo 'Mailchimp : ', $line, PHP_EOL;
+} catch (Throwable $e) {
+    echo 'Mailchimp : ', $e->getMessage(), PHP_EOL;
+}

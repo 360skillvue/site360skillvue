@@ -58,6 +58,23 @@ function fetch_one(string $e, int $id): ?array {
     return out_row(q($sql, [$id])->fetch() ?: null);
 }
 
+/* Conditions SQL « fiche utile » : liée à une affaire, à une activité, à un e-mail ou à un tag.
+   Une personne compte aussi si son organisation a une affaire ; une organisation compte aussi si l'un de ses contacts est utile.
+   Alias attendus : p pour persons, o pour orgs. */
+function useful_sql(): array {
+    require_once __DIR__ . '/lib/tags.php';
+    require_once __DIR__ . '/lib/mail.php';
+    tags_schema(); mail_schema();
+    $pUse = "(EXISTS (SELECT 1 FROM deals ud WHERE ud.person_id = p.id) OR EXISTS (SELECT 1 FROM activities ua WHERE ua.person_id = p.id)"
+          . " OR EXISTS (SELECT 1 FROM crm_emails ue WHERE ue.person_id = p.id) OR EXISTS (SELECT 1 FROM crm_tags ut WHERE ut.entity = 'person' AND ut.entity_id = p.id)"
+          . " OR EXISTS (SELECT 1 FROM deals ud2 WHERE ud2.org_id = p.org_id))";
+    $pUseX = str_replace(['p.id', 'p.org_id'], ['px.id', 'px.org_id'], $pUse);
+    $oUse = "(EXISTS (SELECT 1 FROM deals vd WHERE vd.org_id = o.id) OR EXISTS (SELECT 1 FROM activities va WHERE va.org_id = o.id)"
+          . " OR EXISTS (SELECT 1 FROM crm_emails ve WHERE ve.org_id = o.id) OR EXISTS (SELECT 1 FROM crm_tags vt WHERE vt.entity = 'org' AND vt.entity_id = o.id)"
+          . " OR EXISTS (SELECT 1 FROM persons px WHERE px.org_id = o.id AND $pUseX))";
+    return ['person' => $pUse, 'org' => $oUse];
+}
+
 function require_admin(array $me): void { if ($me['role'] !== 'admin') fail('Réservé aux administrateurs.', 403); }
 
 function route(string $r, string $method, array $b, array $me): void {
@@ -68,12 +85,15 @@ function route(string $r, string $method, array $b, array $me): void {
         foreach ($pipes as &$p) { $p['id'] = (string)$p['id']; $p['stages'] = array_values(array_map(fn($s) => ['id' => (string)$s['id'], 'name' => $s['name']], array_filter($stages, fn($s) => (string)$s['pipeline_id'] === $p['id']))); }
         unset($p);
         $fields = ['deal' => [], 'org' => [], 'person' => []];
+        $hidden = array_flip((array)setting('hidden_fields', []));
         foreach (q('SELECT entity, fkey, label, type, options FROM fields ORDER BY position, id')->fetchAll() as $f)
-            $fields[$f['entity']][] = ['key' => $f['fkey'], 'label' => $f['label'], 'type' => $f['type'], 'options' => $f['options'] ? json_decode($f['options'], true) : []];
+            $fields[$f['entity']][] = ['key' => $f['fkey'], 'label' => $f['label'], 'type' => $f['type'], 'options' => $f['options'] ? json_decode($f['options'], true) : [],
+                'hidden' => isset($hidden[$f['entity'] . ':' . $f['fkey']])];
         $users = array_map(fn($u) => ['id' => (string)$u['id'], 'name' => $u['name'], 'email' => $u['email'], 'role' => $u['role'], 'can_login' => (bool)$u['can_login'], 'active' => (bool)$u['active']],
             q('SELECT id, name, email, role, can_login, active FROM users ORDER BY active DESC, name')->fetchAll());
         $c = crm_config();
         json_out(['me' => ['id' => (string)$me['id'], 'name' => $me['name'], 'email' => $me['email'], 'role' => $me['role']], 'users' => $users, 'pipelines' => $pipes, 'fields' => $fields,
+            'cadrage' => (object)(array)setting('cadrage_links', []),
             'importInfo' => setting('last_import'), 'pipedrive' => !empty($c['pipedrive_token']), 'version' => CRM_VERSION]);
 
     case 'deals':
@@ -98,8 +118,19 @@ function route(string $r, string $method, array $b, array $me): void {
         $toks = array_slice(array_filter(preg_split('/\s+/u', $qs)), 0, 5);
         $base = $kind === 'org' ? 'SELECT o.* FROM orgs o' : PERSON_SQL;
         $a = $kind === 'org' ? 'o' : 'p';
-        if (!$toks) json_out(array_map('out_row', q("$base ORDER BY $a.update_time DESC LIMIT $n")->fetchAll()));
         $w = []; $p = [];
+        // Filtre facultatif par tag : seules les fiches portant ce tag.
+        $tag = trim((string)($_GET['tag'] ?? ''));
+        if ($tag !== '') {
+            require_once __DIR__ . '/lib/tags.php';
+            tags_schema();
+            $w[] = "EXISTS (SELECT 1 FROM crm_tags t WHERE t.entity = '$kind' AND t.entity_id = $a.id AND t.tag = ?)";
+            $p[] = $tag;
+            $n = 500;
+        }
+        // Par défaut la liste des contacts ne montre que les fiches utiles ; les autres restent en base.
+        if (!empty($_GET['useful'])) $w[] = useful_sql()[$kind];
+        if (!$toks) json_out(array_map('out_row', q($base . ($w ? ' WHERE ' . implode(' AND ', $w) : '') . ' ORDER BY ' . ($tag !== '' ? "$a.name" : "$a.update_time DESC") . " LIMIT $n", $p)->fetchAll()));
         foreach ($toks as $t) { $like = '%' . addcslashes($t, '%_\\') . '%';
             if ($kind === 'org') { $w[] = '(o.name LIKE ? OR o.address LIKE ?)'; array_push($p, $like, $like); }
             else { $w[] = '(p.name LIKE ? OR p.emails LIKE ? OR o.name LIKE ?)'; array_push($p, $like, $like, $like); } }
@@ -113,6 +144,7 @@ function route(string $r, string $method, array $b, array $me): void {
         $data = (array)($b['data'] ?? []);
         $set = [];
         foreach ($data as $k => $v) if (isset($cols[$k])) $set[$k] = cast_in($cols[$k], $v);
+        $billing = null;
         if ($r === 'update') {
             $id = (int)($_GET['id'] ?? 0);
             $cur = q("SELECT * FROM `$e` WHERE id = ?", [$id])->fetch();
@@ -125,6 +157,14 @@ function route(string $r, string $method, array $b, array $me): void {
             if (isset($set['title']) && $set['title'] === null) unset($set['title']);
             $set['update_time'] = now_utc();
             q("UPDATE `$e` SET " . implode(',', array_map(fn($k) => "`$k` = ?", array_keys($set))) . ' WHERE id = ?', [...array_values($set), $id]);
+            if ($e === 'deals') {
+                // Rappel de facturation si l'affaire vient d'arriver à l'étape de signature ou à celle des livrables.
+                try {
+                    require_once __DIR__ . '/lib/billing.php';
+                    $after = q('SELECT * FROM deals WHERE id = ?', [$id])->fetch();
+                    if ($after) $billing = billing_on_deal_update($cur, $after, $me);
+                } catch (Throwable $ex) { error_log('[crm] facturation ' . $ex->getMessage()); }
+            }
         } else {
             if ($e === 'orgs' || $e === 'persons') $set['name'] = $set['name'] ?? 'Sans nom';
             if ($e === 'deals') { $set['title'] = $set['title'] ?? 'Nouvelle affaire'; $set['notes'] = $set['notes'] ?? ''; }
@@ -132,7 +172,9 @@ function route(string $r, string $method, array $b, array $me): void {
             q("INSERT INTO `$e` (`" . implode('`,`', array_keys($set)) . '`) VALUES (' . implode(',', array_fill(0, count($set), '?')) . ')', array_values($set));
             $id = (int)db()->lastInsertId();
         }
-        json_out(fetch_one($e, $id));
+        $row = fetch_one($e, $id);
+        if ($billing && $row) $row['_billing'] = $billing;
+        json_out($row);
 
     case 'delete':
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);
@@ -144,6 +186,185 @@ function route(string $r, string $method, array $b, array $me): void {
         if ($e === 'orgs') { q('UPDATE persons SET org_id = NULL WHERE org_id = ?', [$id]); q('UPDATE deals SET org_id = NULL WHERE org_id = ?', [$id]); q('UPDATE activities SET org_id = NULL WHERE org_id = ?', [$id]); }
         if ($e === 'persons') { q('UPDATE deals SET person_id = NULL WHERE person_id = ?', [$id]); q('UPDATE activities SET person_id = NULL WHERE person_id = ?', [$id]); }
         db()->commit();
+        json_out(['ok' => true]);
+
+    case 'tags_overview':
+        require __DIR__ . '/lib/tags.php';
+        json_out(tags_overview());
+
+    case 'tags':
+        require __DIR__ . '/lib/tags.php';
+        $te = (string)($_GET['e'] ?? '');
+        if (!array_key_exists($te, TAG_TABLES)) fail('Type de fiche inconnu.');
+        if ($method === 'POST') json_out(['tags' => tags_set($te, (int)($_GET['id'] ?? 0), (array)($b['tags'] ?? []))]);
+        json_out(['tags' => tags_of($te, (int)($_GET['id'] ?? 0))]);
+
+    case 'tags_import':
+        // Reprise ponctuelle des étiquettes Pipedrive : ne touche ni aux fiches, ni aux étapes, ni aux pipelines.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        require __DIR__ . '/lib/pipedrive.php';
+        require __DIR__ . '/lib/tags.php';
+        @set_time_limit(120);
+        json_out(tags_import_step((array)($b['state'] ?? [])));
+
+    case 'mail_status':
+        require __DIR__ . '/lib/mail.php';
+        json_out(mail_status($me));
+
+    case 'mail_conf':
+        // Identifiants de l'application déclarée chez Microsoft. Le secret n'est jamais renvoyé au navigateur.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        require __DIR__ . '/lib/mail.php';
+        $old = setting('ms_app'); $old = is_array($old) ? $old : [];
+        $tenant = trim((string)($b['tenant'] ?? '')); $client = trim((string)($b['client_id'] ?? '')); $secret = trim((string)($b['secret'] ?? ''));
+        if (!preg_match('/^[A-Za-z0-9.\-]{3,100}$/', $tenant)) fail("L'identifiant de l'annuaire n'a pas le bon format.");
+        if (!preg_match('/^[A-Za-z0-9\-]{10,100}$/', $client)) fail("L'identifiant de l'application n'a pas le bon format.");
+        if ($secret === '') $secret = (string)($old['secret'] ?? '');
+        if ($secret === '') fail("Le secret de l'application est obligatoire.");
+        set_setting('ms_app', ['tenant' => $tenant, 'client_id' => $client, 'secret' => $secret]);
+        json_out(mail_status($me));
+
+    case 'mail_sync':
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require __DIR__ . '/lib/mail.php';
+        @set_time_limit(180);
+        json_out(mail_sync_user((int)$me['id'], null, !empty($b['full'])));
+
+    case 'mail_disconnect':
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require __DIR__ . '/lib/mail.php';
+        ms_forget_token((int)$me['id']);
+        json_out(mail_status($me));
+
+    case 'emails':
+        require __DIR__ . '/lib/mail.php';
+        foreach (['deal' => 'deal_id', 'org' => 'org_id', 'person' => 'person_id'] as $kind => $k) if (!empty($_GET[$k])) json_out(mail_list($kind, (int)$_GET[$k]));
+        json_out([]);
+
+    case 'cadrage':
+        // Lien de chaque affaire vers sa fiche de cadrage Airtable. Rangé à part pour ne pas être écrasé par l'import Pipedrive.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        $did = (int)($b['deal_id'] ?? 0);
+        if (!$did || !q('SELECT id FROM deals WHERE id = ?', [$did])->fetchColumn()) fail('Affaire introuvable.', 404);
+        $url = mb_substr(trim((string)($b['url'] ?? '')), 0, 500);
+        if ($url !== '' && !preg_match('~^https://airtable\.com/[A-Za-z0-9/_?=&.%-]+$~', $url)) fail('Le lien doit commencer par https://airtable.com/');
+        $links = (array)setting('cadrage_links', []);
+        if ($url === '') unset($links[(string)$did]); else $links[(string)$did] = $url;
+        set_setting('cadrage_links', (object)$links);
+        json_out(['ok' => true, 'url' => $url]);
+
+    case 'cleanup_stats':
+        // Comptage seul (aucune modification) : fiches sans affaire, sans activité, sans e-mail et sans tag.
+        require_admin($me);
+        require_once __DIR__ . '/lib/tags.php';
+        require_once __DIR__ . '/lib/mail.php';
+        tags_schema(); mail_schema();
+        $one = fn(string $sql) => (int)q($sql)->fetchColumn();
+        $pDeal = 'EXISTS (SELECT 1 FROM deals d WHERE d.person_id = p.id)';
+        $pAct = 'EXISTS (SELECT 1 FROM activities a WHERE a.person_id = p.id)';
+        $pMail = 'EXISTS (SELECT 1 FROM crm_emails e WHERE e.person_id = p.id)';
+        $pTag = "EXISTS (SELECT 1 FROM crm_tags t WHERE t.entity = 'person' AND t.entity_id = p.id)";
+        $pOrgDeal = 'EXISTS (SELECT 1 FROM deals d2 WHERE d2.org_id = p.org_id)';
+        $pUse = "($pDeal OR $pAct OR $pMail OR $pTag OR $pOrgDeal)";
+        $oDeal = 'EXISTS (SELECT 1 FROM deals d WHERE d.org_id = o.id)';
+        $oAct = 'EXISTS (SELECT 1 FROM activities a WHERE a.org_id = o.id)';
+        $oMail = 'EXISTS (SELECT 1 FROM crm_emails e WHERE e.org_id = o.id)';
+        $oTag = "EXISTS (SELECT 1 FROM crm_tags t WHERE t.entity = 'org' AND t.entity_id = o.id)";
+        $oPers = "EXISTS (SELECT 1 FROM persons p WHERE p.org_id = o.id AND $pUse)";
+        $oUse = "($oDeal OR $oAct OR $oMail OR $oTag OR $oPers)";
+        json_out([
+            'personnes' => ['total' => $one('SELECT COUNT(*) FROM persons p'), 'avec_affaire' => $one("SELECT COUNT(*) FROM persons p WHERE $pDeal"),
+                'avec_activite' => $one("SELECT COUNT(*) FROM persons p WHERE $pAct"), 'avec_email' => $one("SELECT COUNT(*) FROM persons p WHERE $pMail"),
+                'avec_tag' => $one("SELECT COUNT(*) FROM persons p WHERE $pTag"), 'organisation_avec_affaire' => $one("SELECT COUNT(*) FROM persons p WHERE $pOrgDeal"),
+                'utiles' => $one("SELECT COUNT(*) FROM persons p WHERE $pUse"), 'sans_rien' => $one("SELECT COUNT(*) FROM persons p WHERE NOT $pUse")],
+            'organisations' => ['total' => $one('SELECT COUNT(*) FROM orgs o'), 'avec_affaire' => $one("SELECT COUNT(*) FROM orgs o WHERE $oDeal"),
+                'avec_activite' => $one("SELECT COUNT(*) FROM orgs o WHERE $oAct"), 'avec_email' => $one("SELECT COUNT(*) FROM orgs o WHERE $oMail"),
+                'avec_tag' => $one("SELECT COUNT(*) FROM orgs o WHERE $oTag"), 'utiles' => $one("SELECT COUNT(*) FROM orgs o WHERE $oUse"),
+                'sans_rien' => $one("SELECT COUNT(*) FROM orgs o WHERE NOT $oUse")],
+        ]);
+
+    case 'mc_conf':
+        // Réglage Mailchimp. La clé est enregistrée mais jamais renvoyée au navigateur.
+        require_admin($me);
+        require_once __DIR__ . '/lib/mailchimp.php';
+        if ($method === 'POST') {
+            $patch = [];
+            $key = trim((string)($b['key'] ?? ''));
+            if ($key !== '') { if (!preg_match('/^[A-Za-z0-9]{20,64}-[a-z]{2,4}\d{1,3}$/', $key)) fail("La clé Mailchimp n'a pas le bon format."); $patch['key'] = $key; }
+            if (array_key_exists('list', $b)) $patch['list'] = preg_replace('/[^A-Za-z0-9]/', '', (string)$b['list']);
+            if (array_key_exists('follow', $b)) {
+                $follow = [];
+                foreach ((array)$b['follow'] as $f) { $mc = mb_substr(trim((string)($f['mc'] ?? '')), 0, 100); $crm = mb_substr(trim((string)($f['crm'] ?? '')), 0, 100); if ($mc !== '' && $crm !== '') $follow[] = ['mc' => $mc, 'crm' => $crm]; }
+                $patch['follow'] = $follow;
+            }
+            if ($patch) mc_save($patch);
+        }
+        $out = mc_public();
+        if ($out['configured']) {
+            try { $out['lists'] = mc_lists(); if ($out['list'] !== '') $out['tags'] = mc_tags($out['list']); }
+            catch (Throwable $ex) { $out['error'] = $ex instanceof RuntimeException ? $ex->getMessage() : 'Lecture de Mailchimp impossible.'; }
+        }
+        json_out($out);
+
+    case 'mc_sync':
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        require_once __DIR__ . '/lib/mailchimp.php';
+        @set_time_limit(180);
+        json_out(mc_sync());
+
+    case 'billing_conf':
+        // Destinataire des rappels de facturation.
+        require_admin($me);
+        require_once __DIR__ . '/lib/billing.php';
+        if ($method === 'POST') {
+            $to = strtolower(trim((string)($b['to'] ?? '')));
+            if ($to !== '' && !filter_var($to, FILTER_VALIDATE_EMAIL)) fail('Adresse e-mail invalide.');
+            set_setting('billing', ['to' => $to, 'enabled' => !empty($b['enabled'])]);
+        }
+        json_out(billing_conf());
+
+    case 'billing_test':
+        // E-mail d'essai envoyé à l'administrateur connecté, pour vérifier que les messages arrivent.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        require_once __DIR__ . '/lib/billing.php';
+        if (empty($me['email'])) fail('Votre compte n\'a pas d\'adresse e-mail.');
+        $ok = billing_mail((string)$me['email'], 'Essai des rappels de facturation du CRM',
+            "Bonjour,\n\nCeci est un message d'essai du CRM 360skillvue. Si vous le recevez, les rappels de facturation arriveront de la même façon.\n\nPensez à regarder aussi dans le courrier indésirable.\n");
+        json_out(['sent' => $ok, 'to' => (string)$me['email']]);
+
+    case 'field_add':
+        // Champ propre au CRM (sans équivalent dans Pipedrive). Types : varchar (texte), enum (liste, un choix), set (cases à cocher).
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        $fe = (string)($b['entity'] ?? '');
+        if (!in_array($fe, ['deal', 'org', 'person'], true)) fail('Type de fiche inconnu.');
+        $flabel = mb_substr(trim((string)($b['label'] ?? '')), 0, 190);
+        if ($flabel === '') fail('Le nom du champ est obligatoire.');
+        $ftype = in_array($b['type'] ?? '', ['varchar', 'enum', 'set'], true) ? (string)$b['type'] : 'varchar';
+        $fopts = [];
+        foreach ((array)($b['options'] ?? []) as $o) { $o = mb_substr(trim((string)$o), 0, 100); if ($o !== '' && !in_array($o, $fopts, true)) $fopts[] = $o; }
+        if ($ftype !== 'varchar' && !$fopts) fail('Indiquez au moins un choix.');
+        $fkey = (string)($b['key'] ?? '');
+        if (!preg_match('/^crm_[a-z0-9_]{2,60}$/', $fkey)) $fkey = 'crm_' . substr(sha1($fe . '|' . mb_strtolower($flabel)), 0, 12);
+        $pos = (int)q('SELECT COALESCE(MAX(position), 0) + 1 FROM fields WHERE entity = ?', [$fe])->fetchColumn();
+        q('INSERT INTO fields (entity, fkey, label, type, options, position) VALUES (?, ?, ?, ?, ?, ?)
+           ON DUPLICATE KEY UPDATE label = VALUES(label), type = VALUES(type), options = VALUES(options)',
+          [$fe, $fkey, $flabel, $ftype, $fopts ? json_encode($fopts, JSON_UNESCAPED_UNICODE) : null, $pos]);
+        json_out(['ok' => true, 'key' => $fkey]);
+
+    case 'fields':
+        // Champs masqués dans les fiches : les valeurs restent en base, seul l'affichage change.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        $known = [];
+        foreach (q('SELECT entity, fkey FROM fields')->fetchAll() as $f) $known[$f['entity'] . ':' . $f['fkey']] = true;
+        $hide = [];
+        foreach ((array)($b['hidden'] ?? []) as $k) if (is_string($k) && isset($known[$k])) $hide[$k] = true;
+        set_setting('hidden_fields', array_keys($hide));
         json_out(['ok' => true]);
 
     case 'pipelines':

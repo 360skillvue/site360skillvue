@@ -156,7 +156,7 @@ function viewDeals() {
       <select id="pipeSel" aria-label="Pipeline">${S.pipelines.map(x => `<option value="${esc(x.id)}" ${x.id === p.id ? "selected" : ""}>${esc(x.name)}</option>`).join("")}</select>
       <div class="seg" id="statusSeg">${[["open","En cours"],["won","Gagnées"],["lost","Perdues"],["all","Toutes"]].map(([k, l]) => `<button data-k="${k}" aria-pressed="${S.dealStatus === k}">${l}</button>`).join("")}</div>
       <select id="dealOwner" aria-label="Responsable"><option value="all">Toute l'équipe</option><option value="me" ${S.dealOwner === "me" ? "selected" : ""}>Mes affaires</option>
-        ${team().map(u => `<option value="${esc(u.id)}" ${S.dealOwner === u.id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select>
+        ${team().filter(u => u.id !== S.me.id).map(u => `<option value="${esc(u.id)}" ${S.dealOwner === u.id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select>
       ${dealTagList.length ? `<select id="dealTag" aria-label="Tag"><option value="">Tous les tags</option>${dealTagList.map(t => `<option value="${esc(t.tag)}" ${S.dealTag === t.tag ? "selected" : ""}>${esc(t.tag)} (${t.deal})</option>`).join("")}</select>` : ""}
       <span class="grow"></span>
       <button class="btn primary" data-act="newDeal">${ico("plus")}Affaire</button>
@@ -230,7 +230,7 @@ function viewActs() {
   const tb = `<div class="wrap toolbar">
     <div class="seg" id="actModeSeg"><button data-k="todo" aria-pressed="${S.actMode === "todo"}">À faire</button><button data-k="done" aria-pressed="${S.actMode === "done"}">Faites (45 j)</button></div>
     <select id="actOwner" aria-label="Responsable"><option value="me" ${S.actOwner === "me" ? "selected" : ""}>Mes activités</option><option value="all" ${S.actOwner === "all" ? "selected" : ""}>Toute l'équipe</option>
-      ${team().map(u => `<option value="${esc(u.id)}" ${S.actOwner === u.id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select>
+      ${team().filter(u => u.id !== S.me.id).map(u => `<option value="${esc(u.id)}" ${S.actOwner === u.id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select>
     <select id="actType" aria-label="Type"><option value="all">Tous les types</option>${TYPES.map(([k, l]) => `<option value="${k}" ${S.actType === k ? "selected" : ""}>${l}</option>`).join("")}</select>
     <span class="grow"></span><button class="btn primary" data-act="newAct">${ico("plus")}Activité</button></div>`;
   if (S.actMode === "done") {
@@ -283,7 +283,8 @@ async function loadContacts() {
 const IMP = {running: false, log: [], pct: 0};
 function viewSettings() {
   const imp = S.importInfo; const admin = isAdmin();
-  const importSec = admin ? `<section class="sec"><h3>Import depuis Pipedrive</h3>
+  // Pipedrive est abandonné : la section d'import n'est plus affichée (un import écraserait les pipelines et les étapes refaits à la main).
+  const importSec = false ? `<section class="sec"><h3>Import depuis Pipedrive</h3>
       ${S.pipedrive ? `<p class="note">Récupère équipe, pipelines, organisations, personnes, affaires et activités. Les fiches venant de Pipedrive sont mises à jour à chaque import ; les notes saisies ici et les fiches créées ici ne sont jamais touchées. Laissez cet onglet ouvert pendant l'import.</p>`
         : `<p class="note">Aucun jeton Pipedrive n'est configuré : ajoutez <b>pipedrive_token</b> dans le fichier config.php du serveur pour activer l'import.</p>`}
       ${imp ? `<p class="note">Dernier import : <b>${esc(new Date(imp.at.replace(" ", "T") + "Z").toLocaleString("fr-FR"))}</b>${imp.counts ? " · " + Object.entries(imp.counts).map(([k, v]) => `${esc({orgs: "organisations", persons: "personnes", deals: "affaires", activities: "activités"}[k] || k)} ${v}`).join(", ") : ""}</p>` : ""}
@@ -410,7 +411,19 @@ function mcSecInner() {
     ${c.list ? `<div class="grid2"><label class="f"><span>Tag Mailchimp à suivre</span><select id="mcTag"><option value=""></option>${tags.map(t => `<option value="${esc(t.name)}">${esc(t.name)} (${t.members})</option>`).join("")}</select></label>
       <label class="f"><span>Tag à poser dans le CRM</span><input type="text" id="mcCrm" placeholder="par exemple : Inscrit au webinaire du 03/12/26"></label></div>` : ""}
     <div style="display:flex;gap:8px;flex-wrap:wrap">${c.list ? `<button class="btn" data-act="mcAdd">Suivre ce tag</button>` : ""}<button class="btn ghost" data-act="mcKeySave">Enregistrer la clé</button>${(c.follow || []).length ? `<button class="btn primary" data-act="mcSync">Synchroniser maintenant</button>` : ""}</div>
-    ${c.last && c.last.lignes ? `<p class="note">Dernier passage : ${c.last.lignes.map(esc).join(" ; ")}.</p>` : ""}`;
+    ${c.last && c.last.lignes ? `<p class="note">Dernier passage : ${c.last.lignes.map(esc).join(" ; ")}.</p>` : ""}
+    ${c.list ? `<h3 style="margin-top:18px">Envoi des contacts vers Mailchimp</h3>
+    <p class="note">Les contacts utiles du CRM (ceux qui ont une affaire, une activité, un e-mail ou un tag) et qui ont une adresse e-mail sont envoyés dans l'audience choisie, avec prénom, nom, téléphone, pays et nature de l'organisation. Un contact absent de Mailchimp y est créé comme abonné ; un contact déjà présent est seulement mis à jour, et un désabonné reste désabonné. Rien n'est jamais supprimé dans Mailchimp. ${c.push_on ? "L'envoi se fait ensuite tout seul chaque heure, pour les contacts nouveaux ou modifiés." : "Après le premier envoi, il se fera tout seul chaque heure."}</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="mcPushCount">Compter les contacts à envoyer</button><button class="btn primary" data-act="mcPushGo">Envoyer vers Mailchimp</button></div>
+    ${c.push_last ? `<p class="note">Dernier envoi : ${esc(String(c.push_last.envoyes))} contacts envoyés sur ${esc(String(c.push_last.utiles))} utiles.</p>` : ""}` : ""}`;
+}
+async function mcPush(go) {
+  try {
+    if (!go) { const r = await api("mc_push"); return toast(`${r.utiles} contacts utiles avec e-mail, dont ${r.a_envoyer} à envoyer`); }
+    toast("Envoi vers Mailchimp en cours…");
+    const r = await api("mc_push", {method: "POST", body: {go: true}});
+    toast(`${r.envoyes} contacts envoyés à Mailchimp`); S.mc = await api("mc_conf"); $("#mcSec").innerHTML = mcSecInner();
+  } catch (e) { failToast(e); }
 }
 async function mcPost(body, msg) {
   try { S.mc = await api("mc_conf", {method: "POST", body}); $("#mcSec").innerHTML = mcSecInner(); if (msg) toast(msg); }
@@ -520,6 +533,8 @@ function bindView() {
     if (a === "mcAdd") { const mc = $("#mcTag").value, crm = $("#mcCrm").value.trim(); if (!mc || !crm) return toast("Choisissez un tag Mailchimp et indiquez le tag du CRM.", true);
       return mcPost({follow: [...(S.mc.follow || []).filter(f => f.mc !== mc), {mc, crm}]}, "Tag suivi"); }
     if (a === "mcSync") return mcSync();
+    if (a === "mcPushCount") return mcPush(false);
+    if (a === "mcPushGo") return mcPush(true);
     if (a === "calTokSave") { const k = $("#calTok").value.trim(); if (!k) return toast("Collez d'abord la clé d'accès Calendly.", true); return calPost({token: k}, "Clé Calendly enregistrée"); }
     if (a === "calNamesSave") return calPost({names: [...document.querySelectorAll("#calNames input:checked")].map(i => i.value)}, "Types de rendez-vous enregistrés");
     if (a === "calSync") return calSync();

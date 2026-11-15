@@ -338,6 +338,10 @@ function route(string $r, string $method, array $b, array $me): void {
         require_once __DIR__ . '/lib/mailchimp.php';
         @set_time_limit(180);
         try {
+            // Variante « cp » : responsables formation des établissements de santé, vers l'audience Biologie e-learning.
+            // Variante « odpc » : copie ponctuelle des organismes de formation en santé vers l'audience Biologie e-learning.
+            if (!empty($_GET['odpc'])) json_out(mc_odpc_copy(!($method === 'POST' && !empty($b['go']))));
+            if (!empty($_GET['cp'])) json_out(mc_cp_push(!($method === 'POST' && !empty($b['go']))));
             if ($method === 'POST' && !empty($b['go'])) json_out(mc_push(false));
             if (!empty($_GET['batch'])) json_out(mc_batch_status((string)$_GET['batch']));
             json_out(mc_push(true));

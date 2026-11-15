@@ -17,6 +17,8 @@ try {
     $mc = mc_conf();
     if ($mc['key'] !== '' && $mc['list'] !== '' && $mc['follow']) foreach (mc_sync()['lignes'] as $line) echo 'Mailchimp : ', $line, PHP_EOL;
     // Contacts utiles du CRM vers Mailchimp : seulement après un premier envoi lancé à la main depuis les Réglages.
+    // Responsables formation des établissements de santé vers l'audience Biologie e-learning : après un premier envoi lancé à la main.
+    if ($mc['key'] !== '' && $mc['cp_on']) { $r = mc_cp_push(false); echo 'Mailchimp certification périodique : ', $r['envoyes'], ' contacts envoyés sur ', $r['retenus'], ' retenus', PHP_EOL; }
     if ($mc['key'] !== '' && $mc['list'] !== '' && $mc['push_on']) { $r = mc_push(false); echo 'Mailchimp : ', $r['envoyes'], ' contacts envoyés sur ', $r['utiles'], ' utiles', PHP_EOL; }
 } catch (Throwable $e) {
     echo 'Mailchimp : ', $e->getMessage(), PHP_EOL;

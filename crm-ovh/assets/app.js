@@ -829,6 +829,28 @@ function openDeal(id, focusTitle) {
   const dr = openPanelShell(); S.panel = {kind: "deal", id}; S.panelActs = []; S.panelMails = []; drawDeal(id, dr); reloadPanelActs(); loadPanelMails();
   if (focusTitle) setTimeout(() => { const t = $("#panel .title"); t?.focus(); t?.select(); }, 40);
 }
+/* « Où en est-on ? » en haut de la fiche d'une affaire : calculé à chaque ouverture à partir des activités
+   et des e-mails déjà chargés pour la fiche, donc toujours à jour, sans rien à saisir. */
+function dealSummary(d) {
+  const acts = S.panelActs || [], mails = S.panelMails || [];
+  const ago = iso => { const n = Math.round((Date.now() - new Date(iso).getTime()) / 864e5); return isNaN(n) ? "" : n <= 0 ? "aujourd'hui" : n === 1 ? "hier" : `il y a ${n} jours`; };
+  const done = acts.filter(a => a.done).sort((x, y) => String(y.done_time || y.due_date || "").localeCompare(String(x.done_time || x.due_date || "")));
+  const todo = acts.filter(a => !a.done).sort((x, y) => String(x.due_date || "9").localeCompare(String(y.due_date || "9")));
+  const last = mails[0], lastIn = mails.find(m => m.direction !== "out"), lastOut = mails.find(m => m.direction === "out");
+  const row = (label, html) => `<p style="margin:0 0 6px"><b>${label} :</b> ${html}</p>`;
+  let h = "";
+  if (last) h += row("Dernier échange", `${esc(ago(last.sent_at))}, e-mail ${last.direction === "out" ? "envoyé" : "reçu"}${last.person_name ? " (" + esc(last.person_name) + ")" : ""} : ${esc(last.subject || "(sans objet)")}`);
+  else h += row("Dernier échange", `<small>aucun e-mail rattaché sur les 60 derniers jours</small>`);
+  if (lastIn && (!lastOut || String(lastIn.sent_at) > String(lastOut.sent_at)) && d.status === "open")
+    h += `<div class="banner" style="margin:0 0 8px">Le client a écrit en dernier (${esc(ago(lastIn.sent_at))}) : une réponse est peut-être attendue.</div>`;
+  if (done[0]) h += row("Dernière action faite", `${esc(done[0].subject || "")} (${esc(frDay(done[0].done_time || done[0].due_date))})${done[0].note ? "<br><small>" + esc(String(done[0].note).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").slice(0, 350)) + "</small>" : ""}`);
+  if (todo[0]) { const late = todo[0].due_date && todo[0].due_date < today();
+    h += row("Prochaine action", `${esc(todo[0].subject || "")} (${esc(todo[0].due_date ? frDay(todo[0].due_date) : "sans date")})${late ? ` <span style="color:var(--bad);font-weight:600">en retard</span>` : ""}${todo.length > 1 ? ` <small>et ${todo.length - 1} autre${todo.length > 2 ? "s" : ""}</small>` : ""}`); }
+  else if (d.status === "open") h += `<div class="banner" style="margin:0 0 8px">Aucune activité prévue pour cette affaire.</div>`;
+  if (mails.length) h += `<p style="margin:0"><small>${mails.length} e-mail${mails.length > 1 ? "s" : ""} rattaché${mails.length > 1 ? "s" : ""}, détail plus bas.</small></p>`;
+  return `<section class="sec"><h3>Où en est-on ?</h3><div style="font-size:13px">${h}</div></section>`;
+}
+
 function drawDeal(id, dr = $("#panel .drawer")) {
   if (!dr) return; const d = S.deals.get(id);
   if (!d) { dr.innerHTML = `<div class="db"><div class="empty"><h3>Affaire introuvable</h3><p>Elle a peut-être été supprimée.</p><button class="btn" data-pc>Fermer</button></div></div>`; dr.querySelector("[data-pc]").onclick = closePanel; return; }
@@ -843,6 +865,7 @@ function drawDeal(id, dr = $("#panel .drawer")) {
     <div class="stage-label">${esc(p.name || "")} · <b>${esc(p.stages[si]?.name || "Étape inconnue")}</b></div></div>
     <div class="db">
       ${d.status === "lost" ? `<section class="sec"><label class="f"><span>Raison de la perte</span><input type="text" id="dLost" value="${esc(d.lost_reason || "")}"></label></section>` : ""}
+      ${dealSummary(d)}
       <section class="sec"><h3>Affaire</h3><div class="grid2">
         <label class="f"><span>Valeur (€)</span><input type="number" id="dValue" min="0" step="100" value="${esc(d.value || 0)}"></label>
         <label class="f"><span>Clôture prévue</span><input type="date" id="dClose" value="${esc(d.expected_close_date || "")}"></label>

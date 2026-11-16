@@ -843,6 +843,38 @@ function openDeal(id, focusTitle) {
   const dr = openPanelShell(); S.panel = {kind: "deal", id}; S.panelActs = []; S.panelMails = []; drawDeal(id, dr); reloadPanelActs(); loadPanelMails();
   if (focusTitle) setTimeout(() => { const t = $("#panel .title"); t?.focus(); t?.select(); }, 40);
 }
+/* Écrire un e-mail depuis le CRM : il part de la boîte Microsoft de la personne connectée, apparaît dans ses éléments
+   envoyés et se rattache aussitôt à la fiche. */
+function openMail({to = "", person_id = null, deal_id = null, name = ""} = {}) {
+  const m = {kind: "mail"}; S.modal = m; histPush();
+  $("#layer").innerHTML = `<div class="scrim" data-close></div><div class="modal" data-close><form class="mbox" id="mailForm" role="dialog" aria-modal="true" aria-label="Écrire un e-mail">
+    <div class="mh"><h2>Écrire un e-mail${name ? " à " + esc(name) : ""}</h2><button type="button" class="btn ghost sm" data-x aria-label="Fermer">${ico("x")}</button></div>
+    <div class="mb">
+      <p class="note" style="margin:0">Le message part de votre boîte Microsoft, comme depuis Outlook, et s'ajoute à l'historique de la fiche. Votre signature Outlook n'est pas ajoutée automatiquement : écrivez-la à la fin du message.</p>
+      <label class="f"><span>Destinataire</span><input type="text" id="mTo" value="${esc(to)}" placeholder="adresse@exemple.fr"></label>
+      <label class="f"><span>Objet</span><input type="text" id="mSubj" maxlength="250"></label>
+      <label class="f"><span>Message</span><textarea id="mBody" rows="11"></textarea></label>
+    </div>
+    <div class="mf"><button type="button" class="btn" data-x>Annuler</button><button type="submit" class="btn primary">Envoyer</button></div></form></div>`;
+  const f = $("#mailForm");
+  $("#layer").onclick = e => { if (e.target.closest("[data-x]")) closeModal(); };
+  f.onsubmit = async e => { e.preventDefault();
+    const body = {to: $("#mTo").value.trim(), subject: $("#mSubj").value.trim(), body: $("#mBody").value.trim(), person_id, deal_id};
+    if (!body.to) return toast("Indiquez le destinataire.", true);
+    if (!body.subject) return toast("Indiquez l'objet.", true);
+    if (!body.body) return toast("Le message est vide.", true);
+    const btn = f.querySelector("[type=submit]"); btn.disabled = true; btn.textContent = "Envoi…";
+    try { await api("mail_send", {method: "POST", body}); toast("E-mail envoyé"); closeModal(); if (S.panel) loadPanelMails(); }
+    catch (err) { btn.disabled = false; btn.textContent = "Envoyer"; failToast(err); }
+  };
+  setTimeout(() => (to ? $("#mSubj") : $("#mTo"))?.focus(), 30);
+}
+async function mailToPerson(personId, dealId) {
+  try { const p = await api("get", {params: {e: "persons", id: personId}});
+    openMail({to: ((p.emails || []).find(x => x.primary) || (p.emails || [])[0] || {}).value || "", person_id: personId, deal_id: dealId || null, name: p.name || ""}); }
+  catch (err) { failToast(err); }
+}
+
 /* « Où en est-on ? » en haut de la fiche d'une affaire : calculé à chaque ouverture à partir des activités
    et des e-mails déjà chargés pour la fiche, donc toujours à jour, sans rien à saisir. */
 function dealSummary(d) {
@@ -888,7 +920,7 @@ function drawDeal(id, dr = $("#panel .drawer")) {
         <label class="f"><span>Responsable</span><select id="dOwner"><option value=""></option>${team().map(u => `<option value="${esc(u.id)}" ${u.id === d.owner_id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select></label>
         <div class="f"><span>Créée le</span><span style="padding:7px 0;color:var(--fg);font-weight:500">${esc(d.add_time ? new Date(d.add_time).toLocaleDateString("fr-FR") : "")}</span></div></div>
         <div class="grid2">${pickerHtml("org", "org", {id: d.org_id, name: d.org_name}, "Organisation")}${pickerHtml("person", "person", {id: d.person_id, name: d.person_name}, "Personne")}</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">${d.org_id ? `<button class="btn sm" data-goorg>Voir l'organisation</button>` : ""}${d.person_id ? `<button class="btn sm" data-goperson>Voir la personne</button>` : ""}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">${d.org_id ? `<button class="btn sm" data-goorg>Voir l'organisation</button>` : ""}${d.person_id ? `<button class="btn sm" data-goperson>Voir la personne</button><button class="btn sm primary" data-mailto>Écrire un e-mail</button>` : ""}</div>
         ${tagField("dTags", (S.dealTags || {})[id])}
         <label class="f"><span>Fiche de cadrage (lien Airtable)</span><input type="url" id="dCadrage" placeholder="Collez ici le lien de la fiche Airtable du client" value="${esc((S.cadrage || {})[id] || "")}"></label>
         <div class="f"><span>Devis et cadrage</span><div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -918,6 +950,7 @@ function drawDeal(id, dr = $("#panel .drawer")) {
   dr.querySelector("[data-reopen]")?.addEventListener("click", () => up({status: "open", won_time: null, lost_time: null, close_time: null}, true));
   dr.querySelector("[data-goorg]")?.addEventListener("click", () => openEntity("org", d.org_id));
   dr.querySelector("[data-goperson]")?.addEventListener("click", () => openEntity("person", d.person_id));
+  dr.querySelector("[data-mailto]")?.addEventListener("click", () => mailToPerson(d.person_id, id));
   $("#dTags", dr).onchange = async e => { try { await saveTags("deal", id, e.target.value); render(); } catch (err) { failToast(err); } };
   $("#dCadrage", dr).onchange = async e => {
     try { const r = await api("cadrage", {method: "POST", body: {deal_id: id, url: e.target.value.trim()}}); S.cadrage = S.cadrage || {}; if (r.url) S.cadrage[id] = r.url; else delete S.cadrage[id]; toast("Enregistré"); drawDeal(id); }
@@ -983,6 +1016,7 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
         ${kind === "person" && (e.phones || []).length ? `<p class="note">Appeler : ${e.phones.map(x => `<a href="tel:${esc(String(x.value).replace(/[^+\d]/g, ""))}">${esc(x.value)}</a>`).join(", ")}</p>` : ""}</section>
       ${kind === "org" ? `<section class="sec"><h3>Personnes <button class="btn sm" data-newperson>${ico("plus")}Personne</button></h3>${(e.persons || []).length ? `<div class="rows">${e.persons.map(x => `<div class="r crow" tabindex="0" data-gop="${esc(x.id)}"><span class="main"><b>${esc(x.name)}</b><small>${esc([(x.emails || [])[0]?.value, (x.phones || [])[0]?.value].filter(Boolean).join(" · "))}</small></span><span></span></div>`).join("")}</div>` : `<p class="note">Aucune personne rattachée.</p>`}</section>` : ""}
       <section class="sec"><h3>Affaires <button class="btn sm" data-newdeal>${ico("plus")}Affaire</button></h3>${deals.length ? `<div class="rows">${deals.map(d => `<div class="r crow" tabindex="0" data-god="${esc(d.id)}"><span class="main"><b>${esc(d.title)}</b><small>${esc((stageOf(d.stage_id)?.s.name) || "")}${d.value ? " · " + eur(d.value) : ""}</small></span><span>${d.status === "won" ? `<span class="won-tag">Gagnée</span>` : d.status === "lost" ? `<span class="lost-tag">Perdue</span>` : `<span class="chip ok">En cours</span>`}</span></div>`).join("")}</div>` : `<p class="note">Aucune affaire.</p>`}</section>
+      ${kind === "person" && (e.emails || []).length ? `<div><button class="btn primary" data-mailto>Écrire un e-mail</button></div>` : ""}
       ${actsSection()}
       ${mailsSection()}
       <section class="sec"><h3>Notes</h3><textarea id="eNotes" rows="4">${esc(e.notes || "")}</textarea></section>
@@ -1005,6 +1039,7 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
   $("#eNotes", dr).onchange = ev => up({notes: ev.target.value});
   bindPicker(dr, "org", v => up({org_id: v?.id || null}, true));
   dr.querySelector("[data-goorg]")?.addEventListener("click", () => openEntity("org", e.org_id));
+  dr.querySelector("[data-mailto]")?.addEventListener("click", () => mailToPerson(id, null));
   dr.querySelectorAll("[data-gop]").forEach(r => r.onclick = () => openEntity("person", r.dataset.gop));
   dr.querySelectorAll("[data-god]").forEach(r => r.onclick = () => openDeal(r.dataset.god));
   dr.querySelector("[data-newdeal]").onclick = () => newDeal(kind === "org" ? {org_id: id, org_name: e.name} : {person_id: id, person_name: e.name, org_id: e.org_id, org_name: e.org_name});

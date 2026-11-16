@@ -64,10 +64,15 @@ function ms_http(string $method, string $url, array $headers = [], ?string $body
     return [$code, is_array($j) ? $j : []];
 }
 
-function ms_token_request(array $fields): array {
+// Autorisation demandée à la connexion d'une boîte : lecture et envoi. La lecture seule (MS_SCOPE) reste utilisée pour la
+// synchronisation, afin que les boîtes connectées avant l'ajout de l'envoi continuent d'être lues sans reconnexion.
+const MS_SCOPE_CONNECT = 'offline_access User.Read Mail.Read Mail.Send';
+const MS_SCOPE_SEND = 'offline_access Mail.Send';
+
+function ms_token_request(array $fields, string $scope = MS_SCOPE): array {
     $app = ms_app();
     if (!$app) throw new RuntimeException("La connexion Microsoft n'est pas encore configurée.");
-    $post = http_build_query($fields + ['client_id' => $app['client_id'], 'client_secret' => $app['secret'], 'scope' => MS_SCOPE]);
+    $post = http_build_query($fields + ['client_id' => $app['client_id'], 'client_secret' => $app['secret'], 'scope' => $scope]);
     [$code, $j] = ms_http('POST', 'https://login.microsoftonline.com/' . rawurlencode((string)$app['tenant']) . '/oauth2/v2.0/token',
         ['Content-Type: application/x-www-form-urlencoded'], $post);
     if ($code !== 200 || empty($j['access_token'])) {
@@ -83,7 +88,45 @@ function ms_authorize_url(string $state): string {
     if (!$app) throw new RuntimeException("La connexion Microsoft n'est pas encore configurée.");
     return 'https://login.microsoftonline.com/' . rawurlencode((string)$app['tenant']) . '/oauth2/v2.0/authorize?' . http_build_query([
         'client_id' => $app['client_id'], 'response_type' => 'code', 'redirect_uri' => ms_redirect_uri(), 'response_mode' => 'query',
-        'scope' => MS_SCOPE, 'state' => $state, 'prompt' => 'select_account']);
+        'scope' => MS_SCOPE_CONNECT, 'state' => $state, 'prompt' => 'select_account']);
+}
+
+/* Envoi d'un e-mail depuis la boîte Microsoft de l'utilisateur, avec rattachement immédiat à la fiche.
+   Le message est créé comme brouillon puis envoyé : on connaît ainsi son identifiant, le même que celui que la
+   synchronisation retrouvera dans les éléments envoyés, ce qui évite tout doublon dans l'historique. */
+function mail_send(int $uid, array $to, string $subject, string $text, ?int $personId, ?int $dealId): array {
+    mail_schema();
+    $t = ms_tokens()[(string)$uid] ?? null;
+    if (!is_array($t) || empty($t['refresh'])) throw new RuntimeException("Votre boîte n'est pas connectée : connectez-la dans les Réglages, rubrique E-mails.");
+    try { $j = ms_token_request(['grant_type' => 'refresh_token', 'refresh_token' => $t['refresh']], MS_SCOPE_SEND); }
+    catch (RuntimeException $e) { throw new RuntimeException("Votre boîte n'autorise pas encore l'envoi depuis le CRM : dans les Réglages, rubrique E-mails, déconnectez-la puis reconnectez-la."); }
+    if (!empty($j['refresh_token'])) ms_save_token($uid, ['refresh' => $j['refresh_token']]);
+    $auth = ['Authorization: Bearer ' . $j['access_token'], 'Content-Type: application/json'];
+    $html = '<div style="font-family:Calibri,Arial,sans-serif;font-size:11pt">' . nl2br(htmlspecialchars($text, ENT_QUOTES, 'UTF-8')) . '</div>';
+    $msg = ['subject' => $subject, 'body' => ['contentType' => 'HTML', 'content' => $html],
+        'toRecipients' => array_map(fn($a) => ['emailAddress' => ['address' => $a]], $to)];
+    [$c, $draft] = ms_http('POST', 'https://graph.microsoft.com/v1.0/me/messages', $auth, json_encode($msg, JSON_UNESCAPED_UNICODE));
+    if ($c === 403) throw new RuntimeException("Microsoft refuse l'envoi depuis le CRM : l'autorisation d'envoyer n'a pas été accordée à votre boîte. Reconnectez-la dans les Réglages.");
+    if ($c !== 201 || empty($draft['id'])) throw new RuntimeException("Préparation de l'e-mail impossible (code $c) : " . mb_substr((string)($draft['error']['message'] ?? ''), 0, 200));
+    [$c2, $r2] = ms_http('POST', 'https://graph.microsoft.com/v1.0/me/messages/' . rawurlencode((string)$draft['id']) . '/send', $auth + [9 => 'Content-Length: 0'], '');
+    if ($c2 !== 202) {
+        // L'envoi a échoué : on ne laisse pas traîner le brouillon dans la boîte.
+        try { ms_http('DELETE', 'https://graph.microsoft.com/v1.0/me/messages/' . rawurlencode((string)$draft['id']), $auth); } catch (Throwable $e) {}
+        throw new RuntimeException("Envoi de l'e-mail impossible (code $c2) : " . mb_substr((string)($r2['error']['message'] ?? ''), 0, 200));
+    }
+    // Rattachement : la personne indiquée, sinon la première adresse connue du CRM ; son affaire en cours si aucune n'est indiquée.
+    $pid = $personId; $oid = null;
+    if ($pid) $oid = q('SELECT org_id FROM persons WHERE id = ?', [$pid])->fetchColumn() ?: null;
+    else { $map = mail_person_map(); foreach ($to as $a) if (isset($map[$a])) { [$pid, $oid] = $map[$a]; break; } }
+    if (!$dealId && $pid) {
+        $dealId = (int)(q("SELECT id FROM deals WHERE status = 'open' AND (person_id = ?" . ($oid ? ' OR org_id = ' . (int)$oid : '') . ') ORDER BY update_time DESC LIMIT 1', [$pid])->fetchColumn() ?: 0) ?: null;
+    }
+    $key = sha1((string)(($draft['internetMessageId'] ?? '') ?: $draft['id']));
+    q('INSERT IGNORE INTO crm_emails (msg_key, user_id, direction, from_addr, to_addrs, subject, preview, sent_at, person_id, org_id, deal_id, web_link)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [$key, $uid, 'out', mb_substr(strtolower((string)($t['email'] ?? '')), 0, 255), mb_substr(implode(', ', $to), 0, 2000), mb_substr($subject, 0, 500),
+         mb_substr(preg_replace('/\s+/u', ' ', $text), 0, 1000), now_utc(), $pid ?: null, $oid ? (int)$oid : null, $dealId ?: null, mb_substr((string)($draft['webLink'] ?? ''), 0, 2000)]);
+    return ['ok' => true, 'from' => (string)($t['email'] ?? ''), 'to' => $to, 'rattache' => (bool)$pid];
 }
 
 /* Fin de l'autorisation : échange le code contre un jeton et retient la boîte de l'utilisateur. */

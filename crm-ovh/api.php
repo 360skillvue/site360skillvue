@@ -256,8 +256,27 @@ function route(string $r, string $method, array $b, array $me): void {
         $text = mb_substr(trim((string)($b['body'] ?? '')), 0, 20000);
         if ($subject === '') fail("L'objet est obligatoire.");
         if ($text === '') fail('Le message est vide.');
-        try { json_out(mail_send((int)$me['id'], $to, $subject, $text, !empty($b['person_id']) ? (int)$b['person_id'] : null, !empty($b['deal_id']) ? (int)$b['deal_id'] : null)); }
+        // Pièces jointes : nom, type et contenu en base64. Trois mégaoctets au total, limite d'un envoi direct chez Microsoft.
+        $files = []; $total = 0;
+        foreach ((array)($b['attachments'] ?? []) as $f) {
+            if (!is_array($f)) continue;
+            $name = mb_substr(trim(str_replace(['/', '\\', "\0"], '_', (string)($f['name'] ?? ''))), 0, 150);
+            $data = preg_replace('/\s+/', '', (string)($f['data'] ?? ''));
+            if ($name === '' || $data === '' || base64_decode($data, true) === false) fail('Une pièce jointe est illisible.');
+            $total += (int)(strlen($data) * 3 / 4);
+            $type = preg_match('/^[\w.+-]+\/[\w.+-]+$/', (string)($f['type'] ?? '')) ? (string)$f['type'] : 'application/octet-stream';
+            $files[] = ['name' => $name, 'type' => $type, 'data' => $data];
+        }
+        if (count($files) > 10) fail('Dix pièces jointes au maximum.');
+        if ($total > 3 * 1024 * 1024) fail('Les pièces jointes dépassent 3 Mo au total.');
+        try { json_out(mail_send((int)$me['id'], $to, $subject, $text, !empty($b['person_id']) ? (int)$b['person_id'] : null, !empty($b['deal_id']) ? (int)$b['deal_id'] : null, $files, !empty($b['track']))); }
         catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
+    case 'mail_sig':
+        // Signature de l'utilisateur connecté, ajoutée à la fin des e-mails envoyés depuis le CRM.
+        require __DIR__ . '/lib/mail.php';
+        if ($method === 'POST') mail_signature_save((int)$me['id'], (string)($b['signature'] ?? ''));
+        json_out(['signature' => mail_signature((int)$me['id'])]);
 
     case 'mail_disconnect':
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);

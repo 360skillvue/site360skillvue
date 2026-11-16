@@ -490,13 +490,33 @@ async function loadPanelMails() {
   if (!S.panel) return; const {kind, id} = S.panel; const key = {deal: "deal_id", org: "org_id", person: "person_id"}[kind];
   try { const xs = await api("emails", {params: {[key]: id}}); if (S.panel && S.panel.id === id) { S.panelMails = xs; if (xs.length) refreshPanel(); } } catch {}
 }
+/* Texte d'un e-mail : l'aperçu (trois lignes), avec un bouton pour lire le message en entier.
+   Le texte complet est lu dans la boîte Microsoft à la demande, puis gardé pour la suite. */
+const MAILFULL = new Map();
+function mailBodyHtml(m) {
+  if (MAILFULL.has(m.id)) return `<p class="full">${esc(MAILFULL.get(m.id))}</p>`;
+  return `${m.preview ? `<p>${esc(m.preview)}</p>` : ""}<div><button type="button" class="btn sm" data-mailfull="${esc(m.id)}">Lire en entier</button></div>`;
+}
+document.addEventListener("click", async ev => {
+  const b = ev.target.closest?.("[data-mailfull]"); if (!b) return;
+  ev.preventDefault(); ev.stopPropagation();
+  const id = b.dataset.mailfull, row = b.closest(".mail-row");
+  b.disabled = true; b.textContent = "Lecture…";
+  try {
+    const r = await api("email_body", {params: {id}});
+    MAILFULL.set(id, r.body || "(message sans texte)");
+    row.querySelector("p")?.remove();
+    const p = document.createElement("p"); p.className = "full"; p.textContent = MAILFULL.get(id);
+    b.parentElement.replaceWith(p);
+  } catch (err) { b.disabled = false; b.textContent = "Lire en entier"; failToast(err); }
+});
 function mailsSection() {
   const xs = S.panelMails || []; if (!xs.length) return "";
   return `<section class="sec"><h3>E-mails <span class="num">${xs.length}</span></h3><div class="rows">${xs.map(m => `<div class="mail-row">
     <div class="mh"><span class="chip ${m.direction === "out" ? "ok" : "today"}">${m.direction === "out" ? "Envoyé" : "Reçu"}</span><b>${esc(m.subject || "(sans objet)")}</b><span class="when">${esc(frDay(m.sent_at))}</span></div>
     <small>${esc(m.direction === "out" ? "À " + (m.to_addrs || "") : "De " + (m.from_addr || ""))}${m.person_name ? " · " + esc(m.person_name) : ""}</small>
     ${m.opens === null || m.opens === undefined ? "" : m.opens > 0 ? `<small><span class="chip ok">Ouvert</span> la première fois le ${esc(new Date(m.first_open).toLocaleString("fr-FR", {day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"}))}${m.opens > 1 ? `, ${m.opens} fois en tout` : ""}</small>` : `<small><span class="chip">Pas encore ouvert</span></small>`}
-    ${m.preview ? `<p>${esc(m.preview)}</p>` : ""}
+    ${mailBodyHtml(m)}
     ${/^https:\/\//.test(m.web_link || "") ? `<a href="${esc(m.web_link)}" target="_blank" rel="noopener">Ouvrir dans Outlook</a>` : ""}</div>`).join("")}</div></section>`;
 }
 
@@ -725,7 +745,7 @@ async function actContext(a) {
   if (done[0]) h += `<p style="margin:0 0 6px"><b>Dernière action faite</b> (${esc(frDay(done[0].done_time || done[0].due_date))}) : ${esc(done[0].subject || "")}${done[0].note ? "<br><small>" + esc(String(done[0].note).replace(/<[^>]+>/g, " ").slice(0, 400)) + "</small>" : ""}</p>`;
   if (mails.length) h += `<p style="margin:0 0 2px"><b>Derniers e-mails</b></p><div class="rows">${mails.slice(0, 4).map(x => `<div class="mail-row">
     <div class="mh"><span class="chip ${x.direction === "out" ? "ok" : "today"}">${x.direction === "out" ? "Envoyé" : "Reçu"}</span><b>${esc(x.subject || "(sans objet)")}</b><span class="when">${esc(frDay(x.sent_at))}</span></div>
-    ${x.preview ? `<p>${esc(x.preview)}</p>` : ""}</div>`).join("")}</div>`;
+    ${mailBodyHtml(x)}</div>`).join("")}</div>`;
   else h += `<p style="margin:0 0 6px"><small>Aucun e-mail rattaché à cette fiche.</small></p>`;
   if (todo.length) h += `<p style="margin:8px 0 0"><b>Autres activités à faire :</b> ${todo.slice(0, 4).map(x => esc(x.subject || "") + " (" + esc(frDay(x.due_date)) + ")").join(" ; ")}</p>`;
   return h ? `<section class="sec" style="margin:0 0 12px"><h3>Où en est-on ?</h3><div style="font-size:13px">${h}</div></section>` : "";

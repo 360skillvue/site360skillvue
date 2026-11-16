@@ -1119,7 +1119,7 @@ function openRpAccess(d) {
         <div class="ct-row"><span>Adresse : ${esc(r.url)}</span><button type="button" class="btn sm ghost" data-copy="${esc(r.url)}">Copier</button></div>
         <div class="ct-row"><span>Identifiant : ${esc(r.email)}</span><button type="button" class="btn sm ghost" data-copy="${esc(r.email)}">Copier</button></div>
         <div class="ct-row"><span>Mot de passe initial : <b>${esc(r.password)}</b></span><button type="button" class="btn sm ghost" data-copy="${esc(r.password)}">Copier</button></div>
-        <span>Notez ce mot de passe maintenant : il n'est pas gardé dans le CRM. Transmettez-le à part (téléphone ou SMS), pas dans le même e-mail que l'identifiant, et invitez la personne à le changer à la première connexion.</span></div>`;
+        <span>C'est le mot de passe initial habituel des comptes ScanUp ; il sera changé à la première connexion.</span></div>`;
       btn.textContent = "Créé"; toast("Accès responsable de projet créé");
       try { await loadData(); } catch {}
     } catch (err) { btn.disabled = false; btn.textContent = "Créer l'accès"; failToast(err); }

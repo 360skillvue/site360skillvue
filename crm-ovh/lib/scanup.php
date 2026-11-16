@@ -113,7 +113,7 @@ function scanup_trial_create(array $me, array $in): array {
 }
 
 /* Accès responsable de projet donné au client, s'il le demande : compte à l'e-mail de son contact, dans son organisation
-   ScanUp. Le mot de passe initial est renvoyé une seule fois pour être transmis à part ; il n'est pas gardé dans le CRM. */
+   ScanUp, avec le mot de passe initial habituel des comptes (changé à la première connexion). */
 function scanup_rp_access(array $me, array $in): array {
     $deal = q('SELECT id, person_id, org_id, extra FROM deals WHERE id = ?', [(int)($in['deal_id'] ?? 0)])->fetch();
     if (!$deal) throw new RuntimeException('Affaire introuvable.');
@@ -124,14 +124,15 @@ function scanup_rp_access(array $me, array $in): array {
     if ($first === '' || $last === '') throw new RuntimeException('Indiquez le prénom et le nom de la personne.');
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || preg_match('/@operator\.local$|^(lauredellamonica|maximebailloud)\+/', $email))
         throw new RuntimeException("Indiquez l'adresse e-mail professionnelle de la personne chez le client.");
-    $pass = 'Su-' . substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(9))), 0, 10) . '7!';
+    $pass = scanup_conf()['op_password'];
+    if ($pass === '') throw new RuntimeException("Le mot de passe initial des comptes n'est pas réglé (Réglages, ScanUp).");
     [$code, $j] = scanup_call($cab, "/api/admin/organisations/$org/users", ['firstName' => $first, 'lastName' => $last, 'email' => $email, 'password' => $pass, 'role' => 'hse']);
     if ($code === 409) throw new RuntimeException("Cette adresse e-mail a déjà un compte dans ScanUp.");
     if ($code !== 201) throw new RuntimeException(scanup_fail('Création du compte responsable de projet', $code, $j));
     $now = now_utc();
     q('INSERT INTO activities (type, subject, due_date, done, done_time, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?)',
       ['note', mb_substr("ScanUp responsable de projet : accès donné au client ($email)", 0, 500), substr($now, 0, 10), $now, (int)$me['id'], $deal['id'], $deal['person_id'], $deal['org_id'],
-       "Compte responsable de projet créé pour $first $last ($email) dans l'organisation ScanUp n° $org (cabinet n° $cab), à la demande du client. Mot de passe initial transmis à part, non gardé dans le CRM.", $now, $now]);
+       "Compte responsable de projet créé pour $first $last ($email) dans l'organisation ScanUp n° $org (cabinet n° $cab), à la demande du client, avec le mot de passe initial habituel (à changer à la première connexion).", $now, $now]);
     $extra = $deal['extra'] ? (json_decode((string)$deal['extra'], true) ?: []) : [];
     $extra['su_rp_client'] = substr($now, 0, 10);
     q('UPDATE deals SET extra = ?, update_time = ? WHERE id = ?', [json_encode($extra, JSON_UNESCAPED_UNICODE), $now, $deal['id']]);

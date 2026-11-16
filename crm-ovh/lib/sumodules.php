@@ -14,7 +14,13 @@ const SU_AUTRICE = 36;             // Julie Sallamand, auteure des modules modè
 // Modules modèles par type et modalité de retour (rcat : résultat et conduite à tenir ; perso : retour personnalisé).
 // Une version courte peut être ajoutée par la clé « TYPE|retour|court » dans le réglage scanup_models.
 const SU_MODELES = ['TMS|rcat' => 341, 'TMS|perso' => 338, 'RPS|rcat' => 342, 'RPS|perso' => 339];
-const SU_RETOURS = ['rcat' => 'résultat et conduite à tenir', 'perso' => 'retour personnalisé'];
+// Retour au salarié : aucun (résultats masqués aux opérateurs), par e-mail avec la conduite à tenir, ou accompagnement
+// en cas de dépistage positif (coaching vidéo pour TMS, téléconsultation d'orientation pour RPS).
+const SU_RETOURS = ['none' => 'sans retour au salarié', 'rcat' => 'résultat et conduite à tenir', 'perso' => 'retour personnalisé'];
+function su_retour_label(string $type, string $r): string {
+    if ($r === 'perso') return $type === 'RPS' ? "téléconsultation d'orientation" : 'coaching vidéo';
+    return SU_RETOURS[$r] ?? $r;
+}
 // Version suisse : mêmes questions, vocabulaire adapté dans les textes.
 const SU_SUISSE = ['rapport Gollac (INRS)' => 'référentiel du SECO', 'INRS' => 'SUVA', 'CARSAT' => 'SUVA', 'CSE' => 'commission du personnel',
                    'Code du travail' => 'loi sur le travail', 'service de santé au travail' => 'service de santé au travail', 'euros' => 'francs'];
@@ -36,7 +42,7 @@ function su_textes(array $model, array $s, array $mod): array {
     // Nom du client du modèle (entre la virgule et la parenthèse), remplacé par celui du nouveau client.
     $ancien = preg_match('/,\s*(.+?)\s*\(/u', $titre, $m) ? trim($m[1]) : '';
     $court = trim(preg_replace('/\s*\(.*$/u', '', $s['client']));
-    $titreN = mb_substr("$base, $court (" . SU_RETOURS[$mod['retour']] . ')', 0, 250);
+    $titreN = mb_substr("$base, $court (" . su_retour_label($mod['type'], $mod['retour']) . ')', 0, 250);
     if ($ancien !== '') { $desc = str_replace($ancien, $court, $desc); $cons = str_replace($ancien, $court, $cons); }
     if ($s['jobs'] !== '') $desc = rtrim($desc) . ' Métiers concernés : ' . rtrim($s['jobs'], ' .') . '.';
     if ($s['country'] === 'CH') { $titreN = su_suisse($titreN); $desc = su_suisse($desc); $cons = su_suisse($cons); }
@@ -52,17 +58,18 @@ function su_modules_init(array $me, array $in): array {
     if ($org < 1) throw new RuntimeException("Indiquez le numéro de l'organisation cliente dans ScanUp.");
     $types = array_values(array_intersect(['TMS', 'RPS'], (array)($in['types'] ?? [])));
     if (!$types) throw new RuntimeException('Choisissez TMS, RPS ou les deux.');
-    $retour = (string)($in['retour'] ?? 'rcat'); if (!in_array($retour, ['rcat', 'perso', 'both'], true)) throw new RuntimeException('Modalité de retour inconnue.');
+    $retour = (string)($in['retour'] ?? 'rcat'); if (!in_array($retour, ['none', 'rcat', 'perso', 'both'], true)) throw new RuntimeException('Modalité de retour inconnue.');
     $country = ($in['country'] ?? 'FR') === 'CH' ? 'CH' : 'FR';
     $length = ($in['length'] ?? 'standard') === 'court' ? 'court' : 'standard';
     $end = (string)($in['end_date'] ?? '');
     if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $end) || $end <= gmdate('Y-m-d')) throw new RuntimeException('Choisissez une date de fin de session à venir.');
     $models = su_models(); $mods = []; $log = [];
     foreach ($types as $t) foreach ($retour === 'both' ? ['rcat', 'perso'] : [$retour] as $r) {
-        $key = "$t|$r";
+        // Sans retour : même modèle que le retour par e-mail, résultats masqués aux opérateurs ensuite.
+        $key = "$t|" . ($r === 'none' && empty($models["$t|none"]) ? 'rcat' : $r);
         $model = $length === 'court' && !empty($models["$key|court"]) ? $models["$key|court"] : ($models[$key] ?? 0);
-        if ($length === 'court' && empty($models["$key|court"])) $log[] = "Pas de modèle court réglé pour $t (" . SU_RETOURS[$r] . ') : version standard utilisée.';
-        if (!$model) throw new RuntimeException("Aucun module modèle réglé pour $t (" . SU_RETOURS[$r] . ').');
+        if ($length === 'court' && empty($models["$key|court"])) $log[] = "Pas de modèle court réglé pour $t (" . su_retour_label($t, $r) . ') : version standard utilisée.';
+        if (!$model) throw new RuntimeException("Aucun module modèle réglé pour $t (" . su_retour_label($t, $r) . ').');
         $mods[] = ['type' => $t, 'retour' => $r, 'model' => $model, 'id' => null, 'session' => null, 'evaluator' => null];
     }
     return ['deal_id' => (int)$deal['id'], 'cabinet' => $cab, 'org_id' => $org, 'client' => mb_substr(trim((string)($in['client'] ?? '')), 0, 120) ?: $deal['title'],
@@ -77,7 +84,7 @@ function su_modules_step(array $me, array $s): array {
     if ($cab !== SU_CABINET_MODELES || $org < 1 || empty($s['mods'])) throw new RuntimeException('Demande incomplète : relancez la création des modules.');
     $nMods = count($s['mods']);
     $i = (int)$s['i']; $mod = &$s['mods'][$i];
-    $lab = fn($m) => $m['type'] . ' (' . SU_RETOURS[$m['retour']] . ')';
+    $lab = fn($m) => $m['type'] . ' (' . su_retour_label($m['type'], $m['retour']) . ')';
     switch ($s['step']) {
     case 'dup':
         [$c, $j] = scanup_call($cab, '/api/modules/' . (int)$mod['model'], null, 'GET');
@@ -97,9 +104,11 @@ function su_modules_step(array $me, array $s): array {
         $s['log'][] = 'Module ' . $lab($mod) . " copié du modèle n° {$mod['model']} : module n° $id.";
         $s['step'] = 'texts'; break;
     case 'texts':
-        [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'], ['titre' => $mod['titre'], 'description' => $mod['desc'], 'organisationClienteId' => $org], 'PATCH', SU_AUTRICE);
+        $patch = ['titre' => $mod['titre'], 'description' => $mod['desc'], 'organisationClienteId' => $org];
+        if ($mod['retour'] === 'none') $patch['resultatsVisiblesOperateurs'] = false;
+        [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'], $patch, 'PATCH', SU_AUTRICE);
         su_ok($c, $j, 'Adaptation du titre et de la description');
-        $s['log'][] = "Titre : « {$mod['titre']} ».";
+        $s['log'][] = "Titre : « {$mod['titre']} »." . ($mod['retour'] === 'none' ? ' Résultats masqués aux opérateurs.' : '');
         $s['step'] = 'image'; break;
     case 'image':
         $url = suimg_publish(suimg_render($mod['type'], $s['jobs'], trim(preg_replace('/\s*\(.*$/u', '', $s['client'])), $s['country']));

@@ -1112,9 +1112,9 @@ function openTrial(d) {
           <div class="f"><span>Longueur</span>${radios("length", [["standard", "Standard"], ["court", "Court"]], "standard")}</div>
         </div>
         <label class="f"><span>Métiers ou postes concernés</span><input type="text" id="tJobs" maxlength="200" placeholder="Par exemple : opérateurs de production, caristes, préparateurs de commandes"></label>
-        <div class="f"><span>Retour au salarié</span>${radios("retour", [["rcat", "Résultat et conduite à tenir"], ["perso", "Retour personnalisé"], ["both", "Les deux, pour comparer"]], "rcat")}</div>
+        <div class="f"><span>Retour au salarié</span>${radios("retour", [["none", "Pas de retour"], ["rcat", "Par e-mail, avec la conduite à tenir"], ["perso", "Accompagnement si dépistage positif"], ["both", "Comparer e-mail et accompagnement"]], "rcat")}</div>
         <label class="f"><span>Fin de la session</span><input type="date" id="tEnd" value="${end}"></label>
-        <p class="note" style="margin:0">« Les deux, pour comparer » : la moitié des opérateurs reçoit le résultat et la conduite à tenir, l'autre moitié le retour personnalisé. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
+        <p class="note" style="margin:0">Pas de retour : les résultats ne sont pas affichés aux opérateurs. Accompagnement : coaching vidéo pour les TMS, téléconsultation d'orientation pour les RPS, en cas de dépistage positif. Comparer : la moitié des opérateurs reçoit le résultat par e-mail avec la conduite à tenir, l'autre moitié l'accompagnement. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
       </div>
       ${final ? "" : `<p class="note" style="margin:0">Distributeur : le cabinet test doit déjà exister dans ScanUp et figurer dans la table Make des cabinets en essai, avec son compte administrateur. Les modules automatiques ne concernent que le cabinet 360skillvue (n° 10).</p>`}
       <div class="progress" id="tProg" hidden><i style="width:0%"></i></div>

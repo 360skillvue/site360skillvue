@@ -251,3 +251,5 @@ a.ct:hover span{text-decoration:underline}
 
 /* Un élément masqué le reste, même s'il a une mise en page en grille */
 [hidden]{display:none!important}
+.seg[data-radio="retour"]{display:grid;grid-template-columns:1fr 1fr}
+.seg[data-radio="retour"] button{text-align:left}

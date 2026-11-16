@@ -2,7 +2,7 @@
 // Chargement commun : configuration, base de données, session, utilitaires.
 declare(strict_types=1);
 
-const CRM_VERSION = '1.0.28';
+const CRM_VERSION = '1.0.29';
 define('CRM_ROOT', dirname(__DIR__));
 
 function crm_config(): ?array {
@@ -61,14 +61,57 @@ function start_session(): void {
     if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(32));
 }
 
+/* Connexion gardée 30 jours sur l'appareil : un jeton tiré au hasard est posé dans un cookie, et seule son empreinte
+   est gardée en base. Il sert à rouvrir la session quand celle du serveur a expiré. La déconnexion le supprime. */
+const REMEMBER_COOKIE = 'crm360r';
+const REMEMBER_DAYS = 30;
+
+function remember_schema(): void {
+    q('CREATE TABLE IF NOT EXISTS crm_remember (selector CHAR(24) NOT NULL PRIMARY KEY, token_hash CHAR(64) NOT NULL, user_id BIGINT NOT NULL, expires DATETIME NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
+}
+function remember_cookie(string $value, int $expires): void {
+    setcookie(REMEMBER_COOKIE, $value, ['expires' => $expires, 'path' => '/', 'secure' => is_https(), 'httponly' => true, 'samesite' => 'Lax']);
+}
+function remember_issue(int $uid): void {
+    remember_schema();
+    q('DELETE FROM crm_remember WHERE expires < ?', [now_utc()]);
+    $sel = bin2hex(random_bytes(12)); $tok = bin2hex(random_bytes(32));
+    $exp = time() + REMEMBER_DAYS * 86400;
+    q('INSERT INTO crm_remember (selector, token_hash, user_id, expires) VALUES (?, ?, ?, ?)', [$sel, hash('sha256', $tok), $uid, gmdate('Y-m-d H:i:s', $exp)]);
+    remember_cookie($sel . ':' . $tok, $exp);
+    // Jeton de formulaire lié au cookie : il reste le même quand la session du serveur est rouverte, les pages ouvertes continuent de marcher.
+    $_SESSION['csrf'] = hash_hmac('sha256', 'csrf', $tok);
+}
+function remember_forget(): void {
+    $c = (string)($_COOKIE[REMEMBER_COOKIE] ?? '');
+    if ($c === '') return;
+    try { remember_schema(); q('DELETE FROM crm_remember WHERE selector = ?', [substr($c, 0, 24)]); } catch (Throwable $e) {}
+    remember_cookie('', time() - 3600);
+}
+/* Rouvre la session à partir du cookie. Renvoie l'identifiant de l'utilisateur, ou 0. */
+function remember_restore(): int {
+    $c = (string)($_COOKIE[REMEMBER_COOKIE] ?? '');
+    if (!preg_match('/^([0-9a-f]{24}):([0-9a-f]{64})$/', $c, $m)) return 0;
+    try {
+        remember_schema();
+        $r = q('SELECT token_hash, user_id FROM crm_remember WHERE selector = ? AND expires > ?', [$m[1], now_utc()])->fetch();
+    } catch (Throwable $e) { return 0; }
+    if (!$r || !hash_equals((string)$r['token_hash'], hash('sha256', $m[2]))) return 0;
+    $_SESSION['uid'] = (int)$r['user_id']; $_SESSION['seen'] = time();
+    $_SESSION['csrf'] = hash_hmac('sha256', 'csrf', $m[2]);
+    return (int)$r['user_id'];
+}
+
 function current_user(): ?array {
     start_session();
-    if (empty($_SESSION['uid'])) return null;
     static $u = null;
     if ($u === null) {
-        $u = q('SELECT id, name, email, role FROM users WHERE id = ? AND can_login = 1', [$_SESSION['uid']])->fetch() ?: false;
-        // Expiration après 12 h d'inactivité
-        if ($u && (time() - ($_SESSION['seen'] ?? 0)) > 43200) { $u = false; }
+        // Session du serveur absente ou restée inactive plus de 12 h : on la rouvre si l'appareil a gardé sa connexion.
+        if (empty($_SESSION['uid']) || (time() - ($_SESSION['seen'] ?? 0)) > 43200) {
+            unset($_SESSION['uid']);
+            if (!remember_restore()) { $u = false; return null; }
+        }
+        $u = q('SELECT id, name, email, role FROM users WHERE id = ? AND can_login = 1 AND active = 1', [$_SESSION['uid']])->fetch() ?: false;
         if (!$u) { $_SESSION = []; }
         else $_SESSION['seen'] = time();
     }

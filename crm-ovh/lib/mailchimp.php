@@ -136,9 +136,18 @@ function mc_push_rows(): array {
     }
     $rows = [];
     $seen = [];
-    $sql = "SELECT p.id, p.org_id, p.name, p.first_name, p.last_name, p.emails, p.phones, p.extra, o.extra AS org_extra FROM persons p LEFT JOIN orgs o ON o.id = p.org_id
-            WHERE p.emails IS NOT NULL AND p.emails <> '' AND p.emails <> '[]' AND $use";
+    // Les contacts des établissements de santé partent aussi, même sans affaire ni échange : tous sont concernés par la certification périodique.
+    $sql = "SELECT p.id, p.org_id, p.name, p.first_name, p.last_name, p.emails, p.phones, p.extra, o.extra AS org_extra, ($use) AS useful FROM persons p LEFT JOIN orgs o ON o.id = p.org_id
+            WHERE p.emails IS NOT NULL AND p.emails <> '' AND p.emails <> '[]' ORDER BY useful DESC, p.id";
     foreach (q($sql)->fetchAll() as $p) {
+        if (!$p['useful']) {
+            $x = $p['extra'] ? (json_decode((string)$p['extra'], true) ?: []) : [];
+            $ox = $p['org_extra'] ? (json_decode((string)$p['org_extra'], true) ?: []) : [];
+            $nat = ''; foreach ($fNatP as $f) { $nat = mc_field_value($x, $f); if ($nat !== '') break; }
+            if ($nat === '') foreach ($fNatO as $f) { $nat = mc_field_value($ox, $f); if ($nat !== '') break; }
+            $dom = ''; foreach ($fDom as $f) { $dom = mc_field_value($ox, $f); if ($dom !== '') break; }
+            if (!mc_is_health($dom, $nat)) continue;
+        }
         $email = '';
         foreach ((array)json_decode((string)$p['emails'], true) as $e) {
             $a = strtolower(trim((string)(is_array($e) ? ($e['value'] ?? '') : $e)));

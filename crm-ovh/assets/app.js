@@ -1115,6 +1115,7 @@ function openTrial(d) {
         <div class="f"><span>Retour au salarié</span>${radios("retour", [["none", "Pas de retour"], ["rcat", "Par e-mail, avec la conduite à tenir"], ["perso", "Accompagnement si dépistage positif"], ["both", "Comparer e-mail et accompagnement"]], "rcat")}</div>
         <div class="f"><span>Livrables prévus</span><div id="tLiv" class="note" style="margin:0;color:var(--fg)"></div></div>
         <label id="tNomBox" style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tNom"> Ajouter le rapport individuel nominatif</label>
+        <p class="note" style="margin:0">Pendant le test, les livrables sont envoyés par e-mail. Un accès observateur ne se donne qu'à un client qui a un professionnel de santé (infirmière de santé au travail, service de santé autonome) et qui veut récupérer les rapports individuels.</p>
         <label class="f"><span>Fin de la session</span><input type="date" id="tEnd" value="${end}"></label>
         <p class="note" style="margin:0">Pas de retour : les résultats ne sont pas affichés aux opérateurs. Accompagnement : coaching vidéo pour les TMS, téléconsultation d'orientation pour les RPS, en cas de dépistage positif. Comparer : la moitié des opérateurs reçoit le résultat par e-mail avec la conduite à tenir, l'autre moitié l'accompagnement. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
       </div>

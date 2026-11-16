@@ -219,6 +219,16 @@ function route(string $r, string $method, array $b, array $me): void {
         @set_time_limit(120);
         json_out(tags_import_step((array)($b['state'] ?? [])));
 
+    case 'notes_import':
+        // Reprise ponctuelle des notes Pipedrive, par pages : ne touche ni aux fiches, ni aux étapes, ni aux pipelines.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        require __DIR__ . '/lib/pipedrive.php';
+        require __DIR__ . '/lib/pdnotes.php';
+        @set_time_limit(120);
+        try { json_out(pd_notes_step((array)($b['state'] ?? []))); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'mail_status':
         require __DIR__ . '/lib/mail.php';
         json_out(mail_status($me));

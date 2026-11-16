@@ -253,3 +253,11 @@ a.ct:hover span{text-decoration:underline}
 [hidden]{display:none!important}
 .seg[data-radio="retour"]{display:grid;grid-template-columns:1fr 1fr}
 .seg[data-radio="retour"] button{text-align:left}
+
+/* Bandeau de fin de création (client test ScanUp) */
+.done-banner{padding:12px 14px;border-radius:10px;font-weight:600;font-size:15px;animation:donePop .35s ease}
+.done-banner.ok{background:#e3f6ea;color:#14633a;border:1px solid #9fd9b5}
+.done-banner.ko{background:#fdecec;color:#9b1c1c;border:1px solid #f2b3b3}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .done-banner.ok{background:#123a24;color:#bdf0d0;border-color:#2d7a4d}:root:not([data-theme="light"]) .done-banner.ko{background:#3d1717;color:#f8c4c4;border-color:#8a3333}}
+:root[data-theme="dark"] .done-banner.ok{background:#123a24;color:#bdf0d0;border-color:#2d7a4d}:root[data-theme="dark"] .done-banner.ko{background:#3d1717;color:#f8c4c4;border-color:#8a3333}
+@keyframes donePop{from{transform:scale(.97);opacity:0}to{transform:none;opacity:1}}

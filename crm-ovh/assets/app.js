@@ -1174,6 +1174,7 @@ function openTrial(d) {
       <p class="note" style="margin:0">Comptez 5 à 10 minutes avec les modules : ScanUp limite les connexions à 10 par minute, le CRM espace donc ses demandes. Laissez cette fenêtre ouverte.</p>
       <div class="progress" id="tProg" hidden><i style="width:0%"></i></div>
       <div id="tOut" class="note" style="margin:0;white-space:pre-line"></div>
+      <div id="tDone" class="done-banner" role="status" hidden></div>
     </div>
     <div class="mf"><button type="button" class="btn" data-x>Fermer</button><button type="submit" class="btn primary">${exists ? "Créer les modules" : "Créer dans ScanUp"}</button></div></form></div>`;
   $("#layer").onclick = e => { if (e.target.closest("[data-x]")) closeModal(); };
@@ -1209,6 +1210,31 @@ function openTrial(d) {
   const out = $("#tOut"), prog = $("#tProg");
   const show = (lines, err) => { out.innerHTML = lines.map(x => "✓ " + esc(x)).join("<br>") + (err ? `<br><b style="color:var(--bad)">${esc(err)}</b>` : ""); };
   let state = null, doneLines = [];
+  // Signal de fin : bandeau dans la fenêtre, petit son, titre de l'onglet et notification du système si autorisée.
+  let audio = null;
+  const armSignal = () => {
+    try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); audio.resume(); } catch {}
+    try { if (window.Notification && Notification.permission === "default") Notification.requestPermission(); } catch {}
+  };
+  const signal = (ok, msg) => {
+    const ban = $("#tDone"); ban.hidden = false; ban.className = "done-banner " + (ok ? "ok" : "ko"); ban.textContent = msg;
+    ban.scrollIntoView({behavior: "smooth", block: "nearest"});
+    if (ok) { const x = f.querySelector("[data-x]"); x.classList.add("primary"); x.textContent = "Fermer la fenêtre"; }
+    try {
+      if (audio) (ok ? [[660, 0], [880, .18], [1175, .36]] : [[330, 0], [247, .25]]).forEach(([hz, t]) => {
+        const o = audio.createOscillator(), g = audio.createGain(), t0 = audio.currentTime + t;
+        o.frequency.value = hz; o.type = "sine"; o.connect(g); g.connect(audio.destination);
+        g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.25, t0 + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.4);
+        o.start(t0); o.stop(t0 + 0.45); });
+    } catch {}
+    try { if (window.Notification && Notification.permission === "granted" && document.hidden) new Notification("CRM 360skillvue", {body: msg}); } catch {}
+    if (document.hidden) {
+      const base = document.title, mark = (ok ? "✓ Terminé · " : "⚠ Arrêt · ") + base;
+      let on = true; const blink = setInterval(() => { document.title = (on = !on) ? mark : base; }, 1000);
+      document.title = mark;
+      window.addEventListener("focus", () => { clearInterval(blink); document.title = base; }, {once: true});
+    }
+  };
   async function runModules(btn) {
     prog.hidden = false;
     try {
@@ -1218,16 +1244,20 @@ function openTrial(d) {
         show([...doneLines, ...(state.log || [])]);
       } while (state.step !== "done");
       btn.textContent = "Terminé"; toast("Modules créés et opérateurs inscrits");
+      signal(true, "C'est terminé : modules créés et opérateurs inscrits. Vous pouvez fermer la fenêtre.");
     } catch (err) {
       show([...doneLines, ...((state && state.log) || [])], err.message);
       btn.disabled = false; btn.textContent = "Reprendre là où ça s'est arrêté"; btn.dataset.resume = "1";
       toast("Création des modules interrompue", true);
+      signal(false, "La création s'est arrêtée : cliquez sur « Reprendre là où ça s'est arrêté ».");
     }
     try { await loadData(); } catch {}
     if (S.panel) refreshPanel();
   }
   f.onsubmit = async e => { e.preventDefault();
     const btn = f.querySelector("[type=submit]");
+    armSignal();
+    $("#tDone").hidden = true;
     if (btn.dataset.resume) { btn.disabled = true; btn.textContent = "Reprise…"; return runModules(btn); }
     const name = $("#tName").value.trim(), cabinet = Number($("#tCab").value), wantMods = $("#tMods").checked;
     let org = Number($("#tOrg").value) || 0;
@@ -1245,11 +1275,11 @@ function openTrial(d) {
       try {
         const r = await api("scanup_trial", {method: "POST", body: {deal_id: d.id, name, cabinet, n: Number($("#tN").value), prefix: $("#tPrefix").value.trim().toLowerCase(), rp_email: $("#tRp").value.trim().toLowerCase()}});
         doneLines = r.done || [];
-        if (!r.ok) { show(doneLines, r.error); btn.textContent = "Arrêté"; toast("Création incomplète", true); return; }
+        if (!r.ok) { show(doneLines, r.error); btn.textContent = "Arrêté"; toast("Création incomplète", true); signal(false, "La création du client s'est arrêtée : voyez le message ci-dessus."); return; }
         org = r.org_id; $("#tOrg").value = org;
       } catch (err) { btn.disabled = false; btn.textContent = "Créer dans ScanUp"; out.textContent = ""; return failToast(err); }
     }
-    if (!wantMods) { show(doneLines); btn.textContent = "Créé"; toast("Client test créé dans ScanUp"); try { await loadData(); } catch {} return; }
+    if (!wantMods) { show(doneLines); btn.textContent = "Créé"; toast("Client test créé dans ScanUp"); signal(true, "C'est terminé : client test créé. Vous pouvez fermer la fenêtre."); try { await loadData(); } catch {} return; }
     state = {...modIn, org_id: org};
     return runModules(btn);
   };

@@ -1,0 +1,66 @@
+# Mise en ligne automatique du CRM : à chaque modification du dossier crm-ovh/ sur cette branche,
+# son contenu est envoyé dans le dossier du CRM sur l'hébergement OVH.
+# Seuls les fichiers modifiés partent. Rien n'est touché en dehors du dossier du CRM.
+name: Mise en ligne du CRM sur OVH
+
+on:
+  push:
+    branches:
+      - claude/funny-galileo-2ug4k0
+    paths:
+      - 'crm-ovh/**'
+      - '.github/workflows/deploy-crm.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-crm
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Envoi vers OVH
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      # Garde-fou : on n'envoie que dans le dossier du CRM, jamais dans celui du site WordPress.
+      - name: Vérifier le dossier de destination
+        env:
+          OVH_FTP_DIR: ${{ secrets.OVH_FTP_DIR }}
+          OVH_FTP_SERVER: ${{ secrets.OVH_FTP_SERVER }}
+          OVH_FTP_USER: ${{ secrets.OVH_FTP_USER }}
+          OVH_FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
+        run: |
+          if [ -z "$OVH_FTP_SERVER" ] || [ -z "$OVH_FTP_USER" ] || [ -z "$OVH_FTP_PASSWORD" ]; then
+            echo "Un des secrets OVH_FTP_SERVER, OVH_FTP_USER ou OVH_FTP_PASSWORD est vide."; exit 1
+          fi
+          case "$OVH_FTP_DIR" in
+            crm/|./crm/|/crm/) echo "Dossier de destination correct." ;;
+            *) echo "Le secret OVH_FTP_DIR doit valoir crm/ : envoi annulé."; exit 1 ;;
+          esac
+
+      - name: Envoyer le dossier crm-ovh
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.OVH_FTP_SERVER }}
+          username: ${{ secrets.OVH_FTP_USER }}
+          password: ${{ secrets.OVH_FTP_PASSWORD }}
+          # L'hébergement OVH Perso refuse le FTPS : envoi en FTP simple.
+          protocol: ftp
+          port: 21
+          local-dir: ./crm-ovh/
+          server-dir: ${{ secrets.OVH_FTP_DIR }}
+          # Jamais envoyés, donc jamais remplacés ni supprimés sur le serveur.
+          exclude: |
+            config.php
+            install.php
+            config.sample.php
+            LISEZMOI-INSTALLATION.md
+            .gitignore
+            **/.git*
+            **/.git*/**
+            **/node_modules/**

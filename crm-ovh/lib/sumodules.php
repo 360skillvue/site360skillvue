@@ -15,7 +15,7 @@ const SU_CORRECTRICE = 188;        // Laura Gasqueres, évaluatrice des modules 
 // Modules modèles par type et modalité de retour (rcat : résultat et conduite à tenir ; perso : retour personnalisé).
 // Une version courte peut être ajoutée par la clé « TYPE|retour|court » dans le réglage scanup_models.
 const SU_MODELES = ['TMS|rcat' => 341, 'TMS|perso' => 338, 'RPS|rcat' => 342, 'RPS|perso' => 339];
-// Retour au salarié : aucun (résultats masqués aux opérateurs), par e-mail avec la conduite à tenir, ou accompagnement
+// Retour au salarié : aucun (résultats masqués aux opérateurs), résultat avec la conduite à tenir, ou accompagnement
 // en cas de dépistage positif (coaching vidéo pour TMS, téléconsultation d'orientation pour RPS).
 const SU_RETOURS = ['none' => 'sans retour au salarié', 'rcat' => 'résultat et conduite à tenir', 'perso' => 'retour personnalisé'];
 function su_retour_label(string $type, string $r): string {
@@ -89,7 +89,7 @@ function su_modules_init(array $me, array $in): array {
     if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $end) || $end <= gmdate('Y-m-d')) throw new RuntimeException('Choisissez une date de fin de session à venir.');
     $models = su_models(); $mods = []; $log = [];
     foreach ($types as $t) foreach ($retour === 'both' ? ['rcat', 'perso'] : [$retour] as $r) {
-        // Sans retour : même modèle que le retour par e-mail, résultats masqués aux opérateurs ensuite.
+        // Sans retour : même modèle que le retour avec la conduite à tenir, résultats masqués aux opérateurs ensuite.
         $key = "$t|" . ($r === 'none' && empty($models["$t|none"]) ? 'rcat' : $r);
         $model = $length === 'court' && !empty($models["$key|court"]) ? $models["$key|court"] : ($models[$key] ?? 0);
         if ($length === 'court' && empty($models["$key|court"])) $log[] = "Pas de modèle court réglé pour $t (" . su_retour_label($t, $r) . ') : version standard utilisée.';

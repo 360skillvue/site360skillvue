@@ -141,7 +141,7 @@ function viewDeals() {
     <button class="btn primary" data-act="goSettings">Ouvrir les réglages</button></div></div>`;
   if (!pipeline(S.pipelineId)) S.pipelineId = S.pipelines[0].id;
   const p = pipeline(S.pipelineId); const na = nextActs();
-  const ownerF = S.dealOwner === "me" ? S.me.id : S.dealOwner;
+  const ownerF = S.dealOwner === "me" ? S.me?.id : S.dealOwner;
   const deals = [...S.deals.values()].filter(d => d.pipeline_id === p.id && (S.dealStatus === "all" || d.status === S.dealStatus) && (S.dealOwner === "all" || d.owner_id === ownerF)
     && (!S.dealTag || ((S.dealTags || {})[d.id] || []).includes(S.dealTag)));
   const dealTagList = (S.allTags || []).filter(t => t.deal > 0);
@@ -164,7 +164,7 @@ function viewDeals() {
       <select id="pipeSel" aria-label="Pipeline">${S.pipelines.map(x => `<option value="${esc(x.id)}" ${x.id === p.id ? "selected" : ""}>${esc(x.name)}</option>`).join("")}</select>
       <div class="seg" id="statusSeg">${[["open","En cours"],["won","Gagnées"],["lost","Perdues"],["all","Toutes"]].map(([k, l]) => `<button data-k="${k}" aria-pressed="${S.dealStatus === k}">${l}</button>`).join("")}</div>
       <select id="dealOwner" aria-label="Responsable"><option value="all">Toute l'équipe</option><option value="me" ${S.dealOwner === "me" ? "selected" : ""}>Mes affaires</option>
-        ${team().filter(u => u.id !== S.me.id).map(u => `<option value="${esc(u.id)}" ${S.dealOwner === u.id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select>
+        ${team().filter(u => u.id !== S.me?.id).map(u => `<option value="${esc(u.id)}" ${S.dealOwner === u.id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select>
       ${dealTagList.length ? `<select id="dealTag" aria-label="Tag"><option value="">Tous les tags</option>${dealTagList.map(t => `<option value="${esc(t.tag)}" ${S.dealTag === t.tag ? "selected" : ""}>${esc(t.tag)} (${t.deal})</option>`).join("")}</select>` : ""}
       <span class="grow"></span>
       <button class="btn primary" data-act="newDeal">${ico("plus")}Affaire</button>
@@ -233,6 +233,9 @@ function actRow(a) {
       <span class="av" style="margin-left:6px" title="${esc(memberName(a.owner_id))}">${esc(initials(memberName(a.owner_id)))}</span></span></div>`;
 }
 function viewActs() {
+  // Avant la fin du chargement, S.me n'existe pas encore : sans cette attente, la page restait blanche
+  // quand la dernière vue ouverte était « Activités » avec le filtre « Mes activités ».
+  if (!S.me) return `<div class="wrap"><div class="empty"><h3>Chargement du CRM…</h3></div></div>`;
   const owner = S.actOwner === "me" ? S.me.id : S.actOwner;
   const flt = a => (S.actOwner === "all" || a.owner_id === owner) && (S.actType === "all" || a.type === S.actType);
   const tb = `<div class="wrap toolbar">
@@ -1221,7 +1224,8 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
 
 /* ---------- démarrage et actualisation ---------- */
 $("#nav").onclick = e => { const b = e.target.closest("button[data-v]"); if (b) go(b.dataset.v); };
-render();
+// Premier affichage avant l'arrivée des données : une erreur ici ne doit jamais empêcher le chargement qui suit.
+try { render(); } catch (e) { console.error(e); }
 (async () => {
   // Si le chargement dure, on dit ce qui est attendu au lieu de laisser « Chargement du CRM… » sans explication.
   const t0 = Date.now();

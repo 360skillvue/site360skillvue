@@ -1004,9 +1004,53 @@ function scanupBlock(d, acts) {
     return `<button type="button" class="su-step${on ? " on" : ""}" data-su="${k}" data-sudeal="${esc(d.id)}" data-suman="${man ? 1 : 0}" ${locked ? "disabled" : ""} title="${locked ? "Repéré automatiquement" : man ? "Cliquer pour décocher" : "Cliquer pour cocher"}"><span>${on ? "✓ " : ""}${label}</span><small>${when}</small></button>`;
   }).join("");
   const next = steps.find(([k]) => !(ex[k] || auto[k]));
-  return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}</section>`;
+  const canCreate = !(ex.su_client || auto.su_client);
+  return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}${canCreate ? `<div style="margin-top:8px"><button type="button" class="btn sm" data-sutrial="${esc(d.id)}">Créer le client test dans ScanUp</button></div>` : ""}</section>`;
+}
+/* Création du client test dans ScanUp : organisation « … (test) », responsable de projet à l'alias Gmail de la personne
+   connectée (jamais remis au client) et opérateurs sans e-mail. Passe par Make, qui détient l'accès au cabinet. */
+function openTrial(d) {
+  const m = {kind: "trial"}; S.modal = m; histPush();
+  const final = /clients? finaux/i.test(suPipe(d));
+  const base = (d.org_name || d.title || "client").replace(/\s*\(.*$/, "").trim();
+  const slug = norm(base).replace(/[^a-z0-9]/g, "").slice(0, 12) || "client";
+  const who = /maxime/i.test(S.me?.email || "") ? "maximebailloud" : "lauredellamonica";
+  $("#layer").innerHTML = `<div class="scrim" data-close></div><div class="modal" data-close><form class="mbox" id="trialForm" role="dialog" aria-modal="true" aria-label="Créer le client test dans ScanUp">
+    <div class="mh"><h2>Créer le client test dans ScanUp</h2><button type="button" class="btn ghost sm" data-x aria-label="Fermer">${ico("x")}</button></div>
+    <div class="mb">
+      <p class="note" style="margin:0">Crée dans ScanUp l'organisation cliente, son responsable de projet (votre alias, jamais remis au client) et les opérateurs sans e-mail. Les modules, la session, les crédits et les vignettes restent à faire ensuite.</p>
+      <label class="f"><span>Nom du client test (doit contenir « test »)</span><input type="text" id="tName" maxlength="120" value="${esc(base + " (test)")}"></label>
+      <div class="grid2">
+        <label class="f"><span>N° du cabinet ScanUp</span><input type="number" id="tCab" min="1" value="${final ? 10 : ""}" placeholder="${final ? "" : "cabinet test du distributeur"}"></label>
+        <label class="f"><span>Nombre de testeurs</span><input type="number" id="tN" min="1" max="20" value="5"></label>
+      </div>
+      <label class="f"><span>Identifiant des opérateurs (suivi de 1, 2, 3…)</span><input type="text" id="tPrefix" maxlength="20" value="${esc(slug)}"></label>
+      <label class="f"><span>Responsable de projet (alias Gmail)</span><input type="text" id="tRp" value="${esc(who + "+" + slug + "rp@gmail.com")}"></label>
+      ${final ? "" : `<p class="note" style="margin:0">Distributeur : le cabinet test doit déjà exister dans ScanUp et figurer dans la table Make des cabinets en essai, avec son compte administrateur.</p>`}
+      <div id="tOut" class="note" style="margin:0"></div>
+    </div>
+    <div class="mf"><button type="button" class="btn" data-x>Fermer</button><button type="submit" class="btn primary">Créer dans ScanUp</button></div></form></div>`;
+  $("#layer").onclick = e => { if (e.target.closest("[data-x]")) closeModal(); };
+  const f = $("#trialForm");
+  f.onsubmit = async e => { e.preventDefault();
+    const body = {deal_id: d.id, name: $("#tName").value.trim(), cabinet: Number($("#tCab").value), n: Number($("#tN").value), prefix: $("#tPrefix").value.trim().toLowerCase(), rp_email: $("#tRp").value.trim().toLowerCase()};
+    if (!/test/i.test(body.name)) return toast("Le nom doit contenir « test ».", true);
+    if (!body.cabinet) return toast("Indiquez le numéro du cabinet.", true);
+    const btn = f.querySelector("[type=submit]"); btn.disabled = true; btn.textContent = "Création en cours…";
+    $("#tOut").textContent = "Création dans ScanUp : cela prend quelques secondes par compte.";
+    try {
+      const r = await api("scanup_trial", {method: "POST", body});
+      $("#tOut").innerHTML = (r.done || []).map(x => "✓ " + esc(x)).join("<br>") + (r.error ? `<br><b style="color:var(--bad)">${esc(r.error)}</b>` : "<br>Une tâche « préparer les modules et envoyer les vignettes » a été créée.");
+      btn.textContent = r.ok ? "Créé" : "Arrêté";
+      toast(r.ok ? "Client test créé dans ScanUp" : "Création incomplète", !r.ok);
+      try { await loadData(); } catch {}
+      if (S.panel) refreshPanel();
+    } catch (err) { btn.disabled = false; btn.textContent = "Créer dans ScanUp"; $("#tOut").textContent = ""; failToast(err); }
+  };
 }
 document.addEventListener("click", async ev => {
+  const t = ev.target.closest?.("[data-sutrial]");
+  if (t) { ev.preventDefault(); const d = S.deals.get(t.dataset.sutrial); if (d) openTrial(d); return; }
   const b = ev.target.closest?.("[data-su]"); if (!b || b.disabled) return;
   ev.preventDefault();
   const id = b.dataset.sudeal, k = b.dataset.su;

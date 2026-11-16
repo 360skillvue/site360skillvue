@@ -25,6 +25,13 @@ function su_retour_label(string $type, string $r): string {
 const SU_SUISSE = ['rapport Gollac (INRS)' => 'référentiel du SECO', 'INRS' => 'SUVA', 'CARSAT' => 'SUVA', 'CSE' => 'commission du personnel',
                    'Code du travail' => 'loi sur le travail', 'service de santé au travail' => 'service de santé au travail', 'euros' => 'francs'];
 
+/* Livrables d'un module : cartographie des risques pour un RPS sans téléconsultation ; sinon (TMS quel que soit le retour,
+   RPS avec téléconsultation) plan d'action de prévention collectif, et rapport individuel nominatif s'il est demandé. */
+function su_livrables(string $type, string $retour, bool $nominatif): array {
+    if ($type === 'RPS' && $retour !== 'perso') return ['Cartographie des risques psychosociaux'];
+    return array_merge(['Plan d\'action de prévention collectif'], $nominatif ? ['Rapport individuel nominatif'] : []);
+}
+
 function su_models(): array {
     $m = setting('scanup_models', []);
     return array_merge(SU_MODELES, is_array($m) ? array_map('intval', $m) : []);
@@ -74,7 +81,7 @@ function su_modules_init(array $me, array $in): array {
     }
     return ['deal_id' => (int)$deal['id'], 'cabinet' => $cab, 'org_id' => $org, 'client' => mb_substr(trim((string)($in['client'] ?? '')), 0, 120) ?: $deal['title'],
         'jobs' => mb_substr(trim((string)($in['jobs'] ?? '')), 0, 200), 'country' => $country, 'length' => $length, 'retour' => $retour, 'end_date' => $end,
-        'mods' => $mods, 'i' => 0, 'step' => 'dup', 'queue' => [], 'assigned' => [], 'log' => $log, 'pct' => 0];
+        'mods' => $mods, 'i' => 0, 'step' => 'dup', 'queue' => [], 'assigned' => [], 'log' => $log, 'pct' => 0, 'nominatif' => !empty($in['nominatif'])];
 }
 
 /* Une étape. Renvoie l'état mis à jour ; terminé quand step = done. */
@@ -190,18 +197,28 @@ function su_modules_trace(array $me, array $s): void {
     if (!$deal) return;
     $now = now_utc();
     $lines = array_map(fn($m) => "Module n° {$m['id']} : {$m['titre']} (session n° {$m['session']}, modèle n° {$m['model']})", $s['mods']);
+    // Livrables à remettre à la fin de la session, par module
+    $liv = [];
+    foreach ($s['mods'] as $m) $liv[] = "Module n° {$m['id']} ({$m['type']}, " . su_retour_label($m['type'], $m['retour']) . ') : ' . implode(', ', su_livrables($m['type'], $m['retour'], !empty($s['nominatif'])));
+    $lines[] = "Livrables prévus :\n- " . implode("\n- ", $liv);
     $note = implode("\n", $lines) . "\nInscriptions : " . implode(', ', $s['assigned']) . "\nPays : " . ($s['country'] === 'CH' ? 'Suisse' : 'France')
           . ($s['jobs'] !== '' ? "\nMétiers : {$s['jobs']}" : '') . "\nFin de session : " . date('d/m/Y', strtotime($s['end_date']));
     q('INSERT INTO activities (type, subject, due_date, done, done_time, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?)',
       ['note', mb_substr('ScanUp cabinet : modules du client test créés (' . count($s['mods']) . ')', 0, 500), substr($now, 0, 10), $now, (int)$me['id'], $deal['id'], $deal['person_id'], $deal['org_id'], $note, $now, $now]);
     $extra = $deal['extra'] ? (json_decode((string)$deal['extra'], true) ?: []) : [];
     $extra['su_modules'] = substr($now, 0, 10);
+    $extra['su_livrables'] = implode(' ; ', $liv);
     q('UPDATE deals SET extra = ?, update_time = ? WHERE id = ?', [json_encode($extra, JSON_UNESCAPED_UNICODE), $now, $deal['id']]);
     // Illustrations dessinées : faites par Claude avec Canva, sur demande (« fais les illustrations du client … »).
     $ids = implode(', ', array_map(fn($m) => 'n° ' . $m['id'] . ' (' . $m['type'] . ')', $s['mods']));
     q('INSERT INTO activities (type, subject, due_date, done, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?)',
       ['task', mb_substr('ScanUp : demander à Claude les illustrations Canva des modules (' . trim(preg_replace('/\s*\(.*$/u', '', $s['client'])) . ')', 0, 500), substr($now, 0, 10), (int)$me['id'],
        $deal['id'], $deal['person_id'], $deal['org_id'], "Modules : $ids.\nMétiers : " . ($s['jobs'] ?: 'non précisés') . "\nDemander à Claude : « fais les illustrations Canva des modules $ids ». L'image provisoire du CRM reste en place en attendant.", $now, $now]);
+    // Rappel des livrables à la fin de la session
+    q('INSERT INTO activities (type, subject, due_date, done, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?)',
+      ['task', mb_substr('ScanUp : préparer et envoyer les livrables (' . trim(preg_replace('/\s*\(.*$/u', '', $s['client'])) . ')', 0, 500), $s['end_date'], (int)$me['id'],
+       $deal['id'], $deal['person_id'], $deal['org_id'], "Fin de session le " . date('d/m/Y', strtotime($s['end_date'])) . ".\n- " . implode("\n- ", $liv), $now, $now]);
     // La tâche « préparer les modules et envoyer les vignettes » devient « envoyer les vignettes ».
-    q("UPDATE activities SET subject = REPLACE(subject, 'préparer les modules et envoyer les vignettes', 'envoyer les vignettes'), update_time = ? WHERE deal_id = ? AND done = 0 AND subject LIKE 'ScanUp : préparer les modules%'", [$now, $deal['id']]);
+    q("UPDATE activities SET subject = REPLACE(subject, 'préparer les modules et envoyer les vignettes', 'envoyer les vignettes'),
+       note = REPLACE(note, 'Mettre les modules à disposition avec une session et des crédits, inscrire les opérateurs, puis envoyer', 'Modules prêts et opérateurs inscrits : envoyer'), update_time = ? WHERE deal_id = ? AND done = 0 AND subject LIKE 'ScanUp : préparer les modules%'", [$now, $deal['id']]);
 }

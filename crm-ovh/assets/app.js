@@ -1113,6 +1113,8 @@ function openTrial(d) {
         </div>
         <label class="f"><span>Métiers ou postes concernés</span><input type="text" id="tJobs" maxlength="200" placeholder="Par exemple : opérateurs de production, caristes, préparateurs de commandes"></label>
         <div class="f"><span>Retour au salarié</span>${radios("retour", [["none", "Pas de retour"], ["rcat", "Par e-mail, avec la conduite à tenir"], ["perso", "Accompagnement si dépistage positif"], ["both", "Comparer e-mail et accompagnement"]], "rcat")}</div>
+        <div class="f"><span>Livrables prévus</span><div id="tLiv" class="note" style="margin:0;color:var(--fg)"></div></div>
+        <label id="tNomBox" style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tNom"> Ajouter le rapport individuel nominatif</label>
         <label class="f"><span>Fin de la session</span><input type="date" id="tEnd" value="${end}"></label>
         <p class="note" style="margin:0">Pas de retour : les résultats ne sont pas affichés aux opérateurs. Accompagnement : coaching vidéo pour les TMS, téléconsultation d'orientation pour les RPS, en cas de dépistage positif. Comparer : la moitié des opérateurs reçoit le résultat par e-mail avec la conduite à tenir, l'autre moitié l'accompagnement. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
       </div>
@@ -1126,6 +1128,20 @@ function openTrial(d) {
   f.querySelectorAll("[data-radio]").forEach(g => g.addEventListener("click", e => { const b = e.target.closest("[data-k]"); if (!b) return;
     g.querySelectorAll("[data-k]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); }));
   const radio = n => f.querySelector(`[data-radio="${n}"] [aria-pressed="true"]`)?.dataset.k;
+  // Livrables : cartographie des risques pour un RPS sans téléconsultation ; sinon plan d'action collectif (+ rapport nominatif en option).
+  const livFor = (type, r, nom) => type === "RPS" && r !== "perso" ? ["cartographie des risques psychosociaux"] : ["plan d'action de prévention collectif", ...(nom ? ["rapport individuel nominatif"] : [])];
+  const showLiv = () => {
+    const t = radio("types"), r = radio("retour"), nom = $("#tNom").checked;
+    const types = t === "both" ? ["TMS", "RPS"] : [t], rets = r === "both" ? ["rcat", "perso"] : [r];
+    const lines = [], eligible = types.some(ty => rets.some(x => ty === "TMS" || x === "perso"));
+    for (const ty of types) { const set = new Set(); rets.forEach(x => livFor(ty, x, nom).forEach(l => set.add(l)));
+      lines.push(`<b>${ty}</b> : ${[...set].join(", ")}${r === "both" && ty === "RPS" ? " (selon le groupe d'opérateurs)" : ""}`); }
+    $("#tLiv").innerHTML = lines.join("<br>");
+    $("#tNomBox").hidden = !eligible; if (!eligible) $("#tNom").checked = false;
+  };
+  f.querySelectorAll('[data-radio="types"], [data-radio="retour"]').forEach(g => g.addEventListener("click", () => setTimeout(showLiv, 0)));
+  $("#tNom").onchange = showLiv;
+  showLiv();
   $("#tMods").onchange = e => { $("#tModsBox").hidden = !e.target.checked; };
   $("#tOrg").oninput = e => { $("#tNew").hidden = !!e.target.value; };
   const out = $("#tOut"), prog = $("#tProg");
@@ -1157,7 +1173,7 @@ function openTrial(d) {
     if (!cabinet) return toast("Indiquez le numéro du cabinet.", true);
     const t = radio("types");
     const modIn = {deal_id: d.id, cabinet, client: name, types: t === "both" ? ["TMS", "RPS"] : [t], country: radio("country"), length: radio("length"),
-      retour: radio("retour"), jobs: $("#tJobs").value.trim(), end_date: $("#tEnd").value};
+      retour: radio("retour"), jobs: $("#tJobs").value.trim(), end_date: $("#tEnd").value, nominatif: $("#tNom").checked};
     if (wantMods && !modIn.jobs) return toast("Indiquez les métiers ou postes concernés : ils servent à adapter les modules.", true);
     if (wantMods && cabinet !== 10) return toast("Les modules automatiques ne concernent que le cabinet 360skillvue (n° 10).", true);
     btn.disabled = true; btn.textContent = "Création en cours…";

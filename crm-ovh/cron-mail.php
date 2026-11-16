@@ -23,6 +23,13 @@ try {
 } catch (Throwable $e) {
     echo 'Mailchimp : ', $e->getMessage(), PHP_EOL;
 }
+// Sauvegarde quotidienne de la base (la tâche passe chaque heure : on ne sauvegarde que si la dernière a plus de vingt heures)
+try {
+    require_once __DIR__ . '/lib/backup.php';
+    if (backup_due()) { $r = backup_run(); echo 'Sauvegarde : ', $r['name'], ', ', $r['lignes'], ' lignes, ', round($r['size'] / 1024), ' Ko', PHP_EOL; }
+} catch (Throwable $e) {
+    echo 'Sauvegarde : ', $e->getMessage(), PHP_EOL;
+}
 // Rendez-vous commerciaux pris sur Calendly
 try {
     require_once __DIR__ . '/lib/calendly.php';

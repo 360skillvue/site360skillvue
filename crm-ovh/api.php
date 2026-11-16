@@ -219,6 +219,25 @@ function route(string $r, string $method, array $b, array $me): void {
         @set_time_limit(120);
         json_out(tags_import_step((array)($b['state'] ?? [])));
 
+    case 'backup':
+        // Sauvegardes de la base : liste, lancement à la demande, téléchargement. Réservé aux administrateurs.
+        require_admin($me);
+        require __DIR__ . '/lib/backup.php';
+        try {
+            if ($method === 'POST') { $r = backup_run(); json_out(['fait' => $r, 'liste' => backup_list()]); }
+            if (!empty($_GET['file'])) {
+                $name = basename((string)$_GET['file']);
+                if (!preg_match('/^crm-[0-9-]+\.sql\.gz$/', $name) || !is_file(backup_dir() . '/' . $name)) fail('Sauvegarde introuvable.', 404);
+                header('Content-Type: application/gzip');
+                header('Content-Disposition: attachment; filename="' . $name . '"');
+                header('Content-Length: ' . filesize(backup_dir() . '/' . $name));
+                header('Cache-Control: no-store');
+                readfile(backup_dir() . '/' . $name);
+                exit;
+            }
+            json_out(['liste' => backup_list()]);
+        } catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'notes_import':
         // Reprise ponctuelle des notes Pipedrive, par pages : ne touche ni aux fiches, ni aux étapes, ni aux pipelines.
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);
@@ -226,7 +245,7 @@ function route(string $r, string $method, array $b, array $me): void {
         require __DIR__ . '/lib/pipedrive.php';
         require __DIR__ . '/lib/pdnotes.php';
         @set_time_limit(120);
-        try { json_out(pd_notes_step((array)($b['state'] ?? []))); }
+        try { json_out(!empty($_GET['leads']) ? pd_leads_step((array)($b['state'] ?? [])) : pd_notes_step((array)($b['state'] ?? []))); }
         catch (RuntimeException $ex) { fail($ex->getMessage()); }
 
     case 'mail_status':

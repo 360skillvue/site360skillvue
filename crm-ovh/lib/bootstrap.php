@@ -2,7 +2,7 @@
 // Chargement commun : configuration, base de données, session, utilitaires.
 declare(strict_types=1);
 
-const CRM_VERSION = '1.0.49';
+const CRM_VERSION = '1.0.50';
 define('CRM_ROOT', dirname(__DIR__));
 
 function crm_config(): ?array {

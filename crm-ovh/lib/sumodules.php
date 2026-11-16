@@ -32,6 +32,22 @@ function su_livrables(string $type, string $retour, bool $nominatif): array {
     return array_merge(['Plan d\'action de prévention collectif'], $nominatif ? ['Rapport individuel nominatif'] : []);
 }
 
+/* Conduite à tenir en cas de dépistage positif, réglée pour le client sur chaque module (sauf « pas de retour »).
+   Ce sont des textes de départ : le responsable de projet du client ou l'équipe peut les personnaliser dans ScanUp. */
+const SU_CALENDLY_RPS = 'https://calendly.com/isabelle-auray09/teleconsultation-d-orientation-scanup';
+function su_conduite(string $type, string $retour): ?string {
+    if ($retour === 'none') return null;
+    if ($type === 'TMS' && $retour === 'perso')
+        return "Votre étude ergonomique a mis en évidence des points de vigilance sur votre poste.\n\nL'ergonome qui a analysé vos vidéos vous répond par une vidéo de conseils, dans votre espace ScanUp, pour corriger vos gestes et vos postures. Reconnectez-vous dans les prochains jours pour la regarder.\n\nSi une douleur persiste, parlez-en à votre médecin du travail.";
+    if ($type === 'RPS' && $retour === 'perso') {
+        $cal = (string)(setting('scanup_calendly_rps', '') ?: SU_CALENDLY_RPS);
+        return "Votre témoignage fait apparaître des points qui méritent attention.\n\nUne psychologue clinicienne vous propose une téléconsultation d'orientation confidentielle de 30 minutes, pour faire le point et vous orienter si besoin. Votre employeur n'est pas informé de ce rendez-vous. Prenez rendez-vous ici : $cal\n\nVous pouvez aussi en parler à votre médecin du travail.";
+    }
+    if ($type === 'TMS')
+        return "Votre étude ergonomique a mis en évidence des points de vigilance sur votre poste.\n\nParlez-en à votre médecin du travail ou au référent santé et sécurité de votre site, qui pourront vous conseiller sur les aménagements possibles.\n\nSi une douleur persiste, consultez votre médecin traitant.";
+    return "Votre témoignage fait apparaître des points qui méritent attention. N'hésitez pas à en parler à votre médecin du travail ou au référent santé et sécurité de votre site, qui pourront vous écouter et vous orienter vers un accompagnement adapté.\n\nEn cas de difficulté importante, vous pouvez aussi consulter votre médecin traitant.";
+}
+
 function su_models(): array {
     $m = setting('scanup_models', []);
     return array_merge(SU_MODELES, is_array($m) ? array_map('intval', $m) : []);
@@ -140,6 +156,11 @@ function su_modules_step(array $me, array $s): array {
     case 'client':
         [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/clients', ['clientOrgId' => $org]);
         su_ok($c, $j, 'Mise à disposition du client');
+        if (($cond = su_conduite($mod['type'], $mod['retour'])) !== null) {
+            [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . "/clients/$org/conduite-positive", ['conduitePositive' => $cond], 'PUT');
+            su_ok($c, $j, 'Réglage de la conduite à tenir');
+            $s['log'][] = 'Conduite à tenir réglée (texte de départ, personnalisable dans ScanUp).';
+        }
         [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/sessions', ['dateDebut' => gmdate('c'), 'dateFinPrevue' => $s['end_date'] . 'T21:59:00.000Z']);
         $sid = (int)(su_ok($c, $j, 'Création de la session')['data']['id'] ?? ($j['id'] ?? 0));
         if (!$sid) throw new RuntimeException("ScanUp n'a pas renvoyé le numéro de la session.");
@@ -201,6 +222,7 @@ function su_modules_trace(array $me, array $s): void {
     $liv = [];
     foreach ($s['mods'] as $m) $liv[] = "Module n° {$m['id']} ({$m['type']}, " . su_retour_label($m['type'], $m['retour']) . ') : ' . implode(', ', su_livrables($m['type'], $m['retour'], !empty($s['nominatif'])));
     $lines[] = "Livrables prévus :\n- " . implode("\n- ", $liv);
+    if ($s['retour'] !== 'none') $lines[] = "Conduite à tenir : textes de départ réglés sur chaque module, personnalisables dans ScanUp (menu du module, par le responsable de projet du client ou par l'équipe).";
     $note = implode("\n", $lines) . "\nInscriptions : " . implode(', ', $s['assigned']) . "\nPays : " . ($s['country'] === 'CH' ? 'Suisse' : 'France')
           . ($s['jobs'] !== '' ? "\nMétiers : {$s['jobs']}" : '') . "\nFin de session : " . date('d/m/Y', strtotime($s['end_date']));
     q('INSERT INTO activities (type, subject, due_date, done, done_time, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?)',

@@ -1162,6 +1162,8 @@ function openTrial(d) {
         </div>
         <label class="f"><span>Métiers ou postes concernés</span><input type="text" id="tJobs" maxlength="200" placeholder="Par exemple : opérateurs de production, caristes, préparateurs de commandes"></label>
         <div class="f"><span>Retour au salarié</span>${radios("retour", [["none", "Pas de retour"], ["rcat", "Par e-mail, avec la conduite à tenir"], ["perso", "Accompagnement si dépistage positif"], ["both", "Comparer e-mail et accompagnement"]], "rcat")}</div>
+        <details id="tCond" style="font-size:13px"><summary style="cursor:pointer;font-weight:600">Voir les textes de conduite à tenir réglés sur les modules</summary>
+          <div class="note" style="margin:6px 0 0;white-space:pre-line" id="tCondTxt"></div></details>
         <div class="f"><span>Livrables prévus</span><div id="tLiv" class="note" style="margin:0;color:var(--fg)"></div></div>
         <label id="tNomBox" style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tNom"> Ajouter le rapport individuel nominatif</label>
         <p class="note" style="margin:0">Pendant le test, les livrables sont envoyés par e-mail. Un accès observateur ne se donne qu'à un client qui a un professionnel de santé (infirmière de santé au travail, service de santé autonome) et qui veut récupérer les rapports individuels.</p>
@@ -1187,6 +1189,15 @@ function openTrial(d) {
     for (const ty of types) { const set = new Set(); rets.forEach(x => livFor(ty, x, nom).forEach(l => set.add(l)));
       lines.push(`<b>${ty}</b> : ${[...set].join(", ")}${r === "both" && ty === "RPS" ? " (selon le groupe d'opérateurs)" : ""}`); }
     $("#tLiv").innerHTML = lines.join("<br>");
+    // Conduite à tenir : mêmes textes que ceux posés par le serveur (lib/sumodules.php).
+    const COND = {
+      "TMS|rcat": "Votre étude ergonomique a mis en évidence des points de vigilance sur votre poste. Parlez-en à votre médecin du travail ou au référent santé et sécurité de votre site, qui pourront vous conseiller sur les aménagements possibles. Si une douleur persiste, consultez votre médecin traitant.",
+      "TMS|perso": "Votre étude ergonomique a mis en évidence des points de vigilance sur votre poste. L'ergonome qui a analysé vos vidéos vous répond par une vidéo de conseils, dans votre espace ScanUp, pour corriger vos gestes et vos postures. Reconnectez-vous dans les prochains jours pour la regarder. Si une douleur persiste, parlez-en à votre médecin du travail.",
+      "RPS|rcat": "Votre témoignage fait apparaître des points qui méritent attention. N'hésitez pas à en parler à votre médecin du travail ou au référent santé et sécurité de votre site, qui pourront vous écouter et vous orienter vers un accompagnement adapté. En cas de difficulté importante, vous pouvez aussi consulter votre médecin traitant.",
+      "RPS|perso": "Votre témoignage fait apparaître des points qui méritent attention. Une psychologue clinicienne vous propose une téléconsultation d'orientation confidentielle de 30 minutes, pour faire le point et vous orienter si besoin. Votre employeur n'est pas informé de ce rendez-vous. Prenez rendez-vous ici : https://calendly.com/isabelle-auray09/teleconsultation-d-orientation-scanup. Vous pouvez aussi en parler à votre médecin du travail."};
+    const conds = []; for (const ty of types) for (const x of rets) if (x !== "none") conds.push(`<b>${ty}, ${x === "perso" ? (ty === "RPS" ? "téléconsultation d'orientation" : "coaching vidéo") : "retour par e-mail"}</b> : ${esc(COND[ty + "|" + x])}`);
+    $("#tCond").hidden = !conds.length;
+    $("#tCondTxt").innerHTML = conds.join("<br><br>") + (conds.length ? "<br><br><i>Ces textes sont des textes de départ, personnalisables ensuite dans ScanUp (menu du module) par le responsable de projet du client ou par l'équipe : numéro d'aide, RH référent, infirmière de santé au travail…</i>" : "");
     $("#tNomBox").hidden = !eligible; if (!eligible) $("#tNom").checked = false;
   };
   f.querySelectorAll('[data-radio="types"], [data-radio="retour"]').forEach(g => g.addEventListener("click", () => setTimeout(showLiv, 0)));

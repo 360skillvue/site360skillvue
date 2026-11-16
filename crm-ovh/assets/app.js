@@ -347,10 +347,13 @@ function mailSecInner() {
       : m.mine ? `<p class="note">Votre boîte <b>${esc(m.mine.email)}</b> est connectée${m.mine.last_sync ? ", dernière synchronisation le " + esc(frDay(String(m.mine.last_sync).replace(" ", "T") + "Z")) : ", pas encore synchronisée"}.${m.mine.last_result ? ` Dernier passage : <b>${esc(m.mine.last_result.lus)}</b> e-mails lus, <b>${esc(m.mine.last_result.rattaches)}</b> rattachés. Au total <b>${esc(m.mine.last_result.total)}</b> e-mails rattachés dans le CRM, pour <b>${esc(m.mine.last_result.contacts)}</b> adresses de contacts connues.` : ""}</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-act="mailSync">Synchroniser maintenant</button><button class="btn" data-act="mailSyncFull">Tout relire (60 jours)</button><button class="btn ghost" data-act="mailDisconnect">Déconnecter ma boîte</button></div>`
       : `<div><a class="btn primary" style="text-decoration:none" href="msauth.php?start=1">Connecter ma boîte Microsoft</a></div>`}
-    ${admin && (m.boxes || []).length ? `<p class="note">Boîtes connectées : ${m.boxes.map(b => esc(b.name + " (" + b.email + ")")).join(", ")}</p>` : ""}`;
+    ${admin && (m.boxes || []).length ? `<p class="note">Boîtes connectées : ${m.boxes.map(b => esc(b.name + " (" + b.email + ")")).join(", ")}</p>` : ""}
+    ${m.mine ? `<label class="f"><span>Ma signature, ajoutée à la fin des e-mails envoyés depuis le CRM</span><textarea id="mailSig" rows="5" placeholder="Prénom Nom&#10;Fonction, 360SkillVue&#10;Téléphone">${esc(S.mailSig || "")}</textarea></label>
+      <div><button class="btn" data-act="mailSigSave">Enregistrer ma signature</button></div>` : ""}`;
 }
 async function loadMail() {
   try { S.mail = await api("mail_status"); } catch { return; }
+  try { S.mailSig = (await api("mail_sig")).signature || ""; } catch {}
   const el = $("#mailSec"); if (el && !editing(el)) el.innerHTML = mailSecInner();
   if (S.me && S.me.role === "admin") {
     try { S.billing = await api("billing_conf"); } catch { return; }
@@ -475,6 +478,7 @@ function mailsSection() {
   return `<section class="sec"><h3>E-mails <span class="num">${xs.length}</span></h3><div class="rows">${xs.map(m => `<div class="mail-row">
     <div class="mh"><span class="chip ${m.direction === "out" ? "ok" : "today"}">${m.direction === "out" ? "Envoyé" : "Reçu"}</span><b>${esc(m.subject || "(sans objet)")}</b><span class="when">${esc(frDay(m.sent_at))}</span></div>
     <small>${esc(m.direction === "out" ? "À " + (m.to_addrs || "") : "De " + (m.from_addr || ""))}${m.person_name ? " · " + esc(m.person_name) : ""}</small>
+    ${m.opens === null || m.opens === undefined ? "" : m.opens > 0 ? `<small><span class="chip ok">Ouvert</span> la première fois le ${esc(new Date(m.first_open).toLocaleString("fr-FR", {day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"}))}${m.opens > 1 ? `, ${m.opens} fois en tout` : ""}</small>` : `<small><span class="chip">Pas encore ouvert</span></small>`}
     ${m.preview ? `<p>${esc(m.preview)}</p>` : ""}
     ${/^https:\/\//.test(m.web_link || "") ? `<a href="${esc(m.web_link)}" target="_blank" rel="noopener">Ouvrir dans Outlook</a>` : ""}</div>`).join("")}</div></section>`;
 }
@@ -544,6 +548,7 @@ function bindView() {
     if (a === "billSave") return billSave();
     if (a === "billTest") return billTest();
     if (a === "mailSave") return mailSave();
+    if (a === "mailSigSave") return api("mail_sig", {method: "POST", body: {signature: $("#mailSig").value}}).then(r => { S.mailSig = r.signature || ""; toast("Signature enregistrée"); }, failToast);
     if (a === "mailSync") return mailSync(false);
     if (a === "mailSyncFull") return mailSync(true);
     if (a === "mailDisconnect") return mailDisconnect();
@@ -850,21 +855,32 @@ function openMail({to = "", person_id = null, deal_id = null, name = ""} = {}) {
   $("#layer").innerHTML = `<div class="scrim" data-close></div><div class="modal" data-close><form class="mbox" id="mailForm" role="dialog" aria-modal="true" aria-label="Écrire un e-mail">
     <div class="mh"><h2>Écrire un e-mail${name ? " à " + esc(name) : ""}</h2><button type="button" class="btn ghost sm" data-x aria-label="Fermer">${ico("x")}</button></div>
     <div class="mb">
-      <p class="note" style="margin:0">Le message part de votre boîte Microsoft, comme depuis Outlook, et s'ajoute à l'historique de la fiche. Votre signature Outlook n'est pas ajoutée automatiquement : écrivez-la à la fin du message.</p>
+      <p class="note" style="margin:0">Le message part de votre boîte Microsoft, comme depuis Outlook, et s'ajoute à l'historique de la fiche. Votre signature, enregistrée dans les Réglages, est ajoutée à la fin.</p>
       <label class="f"><span>Destinataire</span><input type="text" id="mTo" value="${esc(to)}" placeholder="adresse@exemple.fr"></label>
       <label class="f"><span>Objet</span><input type="text" id="mSubj" maxlength="250"></label>
-      <label class="f"><span>Message</span><textarea id="mBody" rows="11"></textarea></label>
+      <label class="f"><span>Message</span><textarea id="mBody" rows="10"></textarea></label>
+      <label class="f"><span>Pièces jointes (3 Mo au total)</span><input type="file" id="mFiles" multiple></label>
+      <div id="mFilesList" class="note" style="margin:0"></div>
+      <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="mTrack" checked> Savoir si le destinataire a ouvert l'e-mail</label>
     </div>
     <div class="mf"><button type="button" class="btn" data-x>Annuler</button><button type="submit" class="btn primary">Envoyer</button></div></form></div>`;
   const f = $("#mailForm");
   $("#layer").onclick = e => { if (e.target.closest("[data-x]")) closeModal(); };
+  const MAX_FILES = 3 * 1024 * 1024;
+  const sizeOf = () => [...$("#mFiles").files].reduce((n, x) => n + x.size, 0);
+  const mo = n => (n / 1048576).toFixed(1).replace(".", ",") + " Mo";
+  $("#mFiles").onchange = () => { const fs = [...$("#mFiles").files], n = sizeOf();
+    $("#mFilesList").innerHTML = fs.length ? fs.map(x => esc(x.name) + " (" + mo(x.size) + ")").join(" ; ") + (n > MAX_FILES ? ` <b style="color:var(--bad)">Total ${mo(n)} : trop lourd, 3 Mo au maximum.</b>` : "") : ""; };
+  const readFile = file => new Promise((ok, ko) => { const r = new FileReader(); r.onload = () => ok({name: file.name, type: file.type || "application/octet-stream", data: String(r.result).split(",")[1] || ""}); r.onerror = () => ko(new Error("Lecture du fichier impossible : " + file.name)); r.readAsDataURL(file); });
   f.onsubmit = async e => { e.preventDefault();
-    const body = {to: $("#mTo").value.trim(), subject: $("#mSubj").value.trim(), body: $("#mBody").value.trim(), person_id, deal_id};
+    const body = {to: $("#mTo").value.trim(), subject: $("#mSubj").value.trim(), body: $("#mBody").value.trim(), person_id, deal_id, track: $("#mTrack").checked};
     if (!body.to) return toast("Indiquez le destinataire.", true);
     if (!body.subject) return toast("Indiquez l'objet.", true);
     if (!body.body) return toast("Le message est vide.", true);
+    if (sizeOf() > MAX_FILES) return toast("Les pièces jointes dépassent 3 Mo au total.", true);
     const btn = f.querySelector("[type=submit]"); btn.disabled = true; btn.textContent = "Envoi…";
-    try { await api("mail_send", {method: "POST", body}); toast("E-mail envoyé"); closeModal(); if (S.panel) loadPanelMails(); }
+    try { body.attachments = await Promise.all([...$("#mFiles").files].map(readFile));
+      await api("mail_send", {method: "POST", body}); toast("E-mail envoyé"); closeModal(); if (S.panel) loadPanelMails(); }
     catch (err) { btn.disabled = false; btn.textContent = "Envoyer"; failToast(err); }
   };
   setTimeout(() => (to ? $("#mSubj") : $("#mTo"))?.focus(), 30);

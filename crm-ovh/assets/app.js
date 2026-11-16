@@ -967,12 +967,13 @@ function dealSummary(d) {
 /* Deux parcours selon le pipeline.
    Clients finaux : le prospect est inscrit comme opérateur sur un module de l'espace démo, puis on lui crée un client test
    dans le cabinet 360skillvue avec ses modules, on inscrit ses opérateurs et on lui envoie les vignettes par e-mail.
-   Distributeurs (et autres affaires ScanUp) : démo, test salarié, test cabinet, test responsable de projet. */
+   Distributeurs : même parcours, mais le client test est créé dans un cabinet test à son nom (marque blanche), puis on lui
+   ouvre peu à peu l'accès responsable de projet et l'accès administrateur du cabinet (les comptes sont d'abord à l'alias de Laure). */
 const SU_FINAL = [["su_demo_op", "Démo opérateur (espace démo)"], ["su_demo", "Visio"], ["su_client", "Client test et modules créés"], ["su_ops", "Opérateurs inscrits"], ["su_vignettes", "Vignettes envoyées"]];
-const SU_STEPS = [["su_demo", "Démo"], ["su_salarie", "Test salarié"], ["su_cabinet", "Test cabinet"], ["su_rp", "Test responsable de projet"]];
+const SU_STEPS = [["su_demo_op", "Démo opérateur (espace démo)"], ["su_demo", "Visio"], ["su_cabinet", "Cabinet test créé (marque blanche)"], ["su_client", "Client test et modules créés"], ["su_ops", "Opérateurs inscrits"], ["su_vignettes", "Vignettes envoyées"], ["su_rp", "Accès responsable de projet donné"], ["su_admin", "Accès administrateur donné"]];
 const SU_ACTS = new Map();
 const suPipe = d => pipeline(d.pipeline_id)?.name || "";
-const suApplies = d => !!d && /clients? finaux|distributeur|scan\s?up/i.test(suPipe(d) + " " + (d.title || ""));
+const suApplies = d => !!d && /clients? finaux|distributeur/i.test(suPipe(d));
 function scanupBlock(d, acts) {
   if (!suApplies(d)) return "";
   acts = acts || []; SU_ACTS.set(d.id, acts);
@@ -986,17 +987,15 @@ function scanupBlock(d, acts) {
   const bilanAt = stages.findIndex(s => /bilan/i.test(s.name || "")), bilan = bilanAt >= 0 && si >= bilanAt;
   const visio = first(a => a.done && a.type !== "note" && (a.type === "meeting" || /visio/i.test(a.subject || ""))) || (cur(/visio/i) ? "étape" : "");
   const essai = first(a => /^ScanUp essai/i.test(a.subject || ""));
-  const auto = final ? {
+  const auto = {
     su_demo_op: first(a => a.done && a.type !== "note" && /d[ée]mo.*op[ée]rateur|espace d[ée]mo/i.test(a.subject || "")) || (cur(/d[ée]mo.*op[ée]rateur/i) ? "étape" : ""),
     su_demo: visio,
     su_client: first(a => /^ScanUp cabinet : client/i.test(a.subject || "")) || (bilan ? "étape" : ""),
     su_ops: essai || (bilan ? "étape" : ""),
     su_vignettes: first(a => a.done && /vignette/i.test(a.subject || "")) || (bilan ? "étape" : ""),
-  } : {
-    su_demo: visio || first(a => a.done && a.type !== "note" && /d[ée]mo/i.test(a.subject || "")),
-    su_salarie: essai || (cur(/d[ée]mo.*op[ée]rateur/i) || bilan ? "étape" : ""),
-    su_cabinet: first(a => /^ScanUp cabinet/i.test(a.subject || "")) || (cur(/cabinet/i) || bilan ? "étape" : ""),
-    su_rp: first(a => /^ScanUp responsable de projet/i.test(a.subject || "")) || (cur(/essai.*responsable/i) || bilan ? "étape" : ""),
+    // Distributeurs seulement : cabinet en marque blanche, puis accès ouverts peu à peu (l'accès administrateur se coche à la main).
+    su_cabinet: first(a => /^ScanUp cabinet : cabinet/i.test(a.subject || "")) || (cur(/cabinet/i) || bilan ? "étape" : ""),
+    su_rp: first(a => /^ScanUp responsable de projet/i.test(a.subject || "")) || (cur(/essai.*responsable/i) ? "étape" : ""),
   };
   const ex = d.extra || {};
   const items = steps.map(([k, label]) => {

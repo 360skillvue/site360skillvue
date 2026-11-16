@@ -243,6 +243,22 @@ function route(string $r, string $method, array $b, array $me): void {
         @set_time_limit(180);
         json_out(mail_sync_user((int)$me['id'], null, !empty($b['full'])));
 
+    case 'mail_send':
+        // Envoi d'un e-mail depuis la boîte Microsoft de l'utilisateur connecté, rattaché à la fiche.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require __DIR__ . '/lib/mail.php';
+        $to = [];
+        foreach (preg_split('/[\s,;]+/', strtolower(trim((string)($b['to'] ?? '')))) as $a) { if ($a === '') continue; if (!filter_var($a, FILTER_VALIDATE_EMAIL)) fail('Adresse e-mail invalide : ' . mb_substr($a, 0, 80)); $to[$a] = true; }
+        $to = array_keys($to);
+        if (!$to) fail('Indiquez au moins un destinataire.');
+        if (count($to) > 10) fail('Dix destinataires au maximum.');
+        $subject = mb_substr(trim((string)($b['subject'] ?? '')), 0, 250);
+        $text = mb_substr(trim((string)($b['body'] ?? '')), 0, 20000);
+        if ($subject === '') fail("L'objet est obligatoire.");
+        if ($text === '') fail('Le message est vide.');
+        try { json_out(mail_send((int)$me['id'], $to, $subject, $text, !empty($b['person_id']) ? (int)$b['person_id'] : null, !empty($b['deal_id']) ? (int)$b['deal_id'] : null)); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'mail_disconnect':
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);
         require __DIR__ . '/lib/mail.php';

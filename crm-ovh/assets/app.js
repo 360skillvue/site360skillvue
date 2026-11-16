@@ -40,14 +40,22 @@ const typeLabel = t => (TYPES.find(x => x[0] === t) || [t, t || "Activité"])[1]
 
 /* ---------- API ---------- */
 const BOOT = JSON.parse($("#boot").textContent);
+const PENDING = new Set(); // demandes au serveur en cours, pour dire ce qui bloque si le chargement s'éternise
 async function api(r, {method = "GET", params = {}, body} = {}) {
   const qs = new URLSearchParams({r, ...params});
   let res;
+  const tag = r + " " + Date.now(); PENDING.add(tag);
   try {
     res = await fetch("api.php?" + qs, {method, credentials: "same-origin",
       headers: method === "POST" ? {"Content-Type": "application/json", "X-CSRF": BOOT.csrf} : {}, body: body ? JSON.stringify(body) : undefined});
   } catch { throw new Error("Connexion au serveur impossible : vérifiez votre réseau."); }
-  if (res.status === 401) { location.reload(); throw new Error("Session expirée."); }
+  finally { PENDING.delete(tag); }
+  if (res.status === 401) {
+    // Session refusée : on recharge pour revenir à la page de connexion, mais jamais en boucle.
+    let n = 0; try { const s = JSON.parse(sessionStorage.getItem("crm401") || "[]").filter(t => Date.now() - t < 60000); n = s.length; s.push(Date.now()); sessionStorage.setItem("crm401", JSON.stringify(s)); } catch {}
+    if (n < 2) location.reload();
+    throw new Error("Le serveur ne reconnaît pas votre session (demande « " + r + " »). Déconnectez-vous puis reconnectez-vous.");
+  }
   let j = null; try { j = await res.json(); } catch {}
   if (!res.ok) throw new Error((j && j.error) || "Erreur serveur (" + res.status + ").");
   return j;
@@ -749,7 +757,7 @@ async function actContext(a) {
   else h += `<p style="margin:0 0 6px"><small>Aucun e-mail rattaché à cette fiche.</small></p>`;
   if (todo.length) h += `<p style="margin:8px 0 0"><b>Autres activités à faire :</b> ${todo.slice(0, 4).map(x => esc(x.subject || "") + " (" + esc(frDay(x.due_date)) + ")").join(" ; ")}</p>`;
   // Parcours ScanUp de l'affaire de l'activité, ou à défaut de l'affaire en cours de son organisation.
-  const sd = d || (a.org_id ? [...S.deals.values()].find(x => x.org_id === a.org_id && x.status === "open" && /scan\s?up/i.test((pipeline(x.pipeline_id)?.name || "") + " " + (x.title || ""))) : null);
+  const sd = d || (a.org_id ? [...S.deals.values()].find(x => x.org_id === a.org_id && x.status === "open" && suApplies(x)) : null);
   return scanupBlock(sd, acts) + (h ? `<section class="sec" style="margin:0 0 12px"><h3>Où en est-on ?</h3><div style="font-size:13px">${h}</div></section>` : "");
 }
 
@@ -956,25 +964,47 @@ function dealSummary(d) {
 /* « Parcours ScanUp » : ce que le client a déjà fait (démo, test salarié, test cabinet, test responsable de projet).
    Une étape se coche toute seule quand l'historique le montre (visio faite, trace « ScanUp essai » envoyée par ScanUp),
    sinon d'un clic. Les étapes cochées à la main sont gardées sur l'affaire. Affiché pour les affaires ScanUp seulement. */
+/* Deux parcours selon le pipeline.
+   Clients finaux : le prospect est inscrit comme opérateur sur un module de l'espace démo, puis on lui crée un client test
+   dans le cabinet 360skillvue avec ses modules, on inscrit ses opérateurs et on lui envoie les vignettes par e-mail.
+   Distributeurs (et autres affaires ScanUp) : démo, test salarié, test cabinet, test responsable de projet. */
+const SU_FINAL = [["su_demo_op", "Démo opérateur (espace démo)"], ["su_demo", "Visio"], ["su_client", "Client test et modules créés"], ["su_ops", "Opérateurs inscrits"], ["su_vignettes", "Vignettes envoyées"]];
 const SU_STEPS = [["su_demo", "Démo"], ["su_salarie", "Test salarié"], ["su_cabinet", "Test cabinet"], ["su_rp", "Test responsable de projet"]];
 const SU_ACTS = new Map();
+const suPipe = d => pipeline(d.pipeline_id)?.name || "";
+const suApplies = d => !!d && /clients? finaux|distributeur|scan\s?up/i.test(suPipe(d) + " " + (d.title || ""));
 function scanupBlock(d, acts) {
-  if (!d) return "";
-  if (!/scan\s?up/i.test((pipeline(d.pipeline_id)?.name || "") + " " + (d.title || ""))) return "";
+  if (!suApplies(d)) return "";
   acts = acts || []; SU_ACTS.set(d.id, acts);
+  const final = /clients? finaux/i.test(suPipe(d));
+  const steps = final ? SU_FINAL : SU_STEPS;
+  // Date de la première activité qui prouve l'étape.
   const first = f => acts.filter(f).map(a => String(a.done_time || a.due_date || "").slice(0, 10)).filter(Boolean).sort()[0] || "";
-  const auto = {
-    su_demo: first(a => a.done && a.type !== "note" && (a.type === "meeting" || /d[ée]mo/i.test(a.subject || ""))),
-    su_salarie: first(a => /^ScanUp essai/i.test(a.subject || "")),
-    su_cabinet: first(a => /^ScanUp cabinet/i.test(a.subject || "")),
-    su_rp: first(a => /^ScanUp responsable de projet/i.test(a.subject || "")),
+  // Étape du pipeline : l'étape en cours prouve ce qu'elle nomme, et à partir du bilan d'essai tout l'essai est fait.
+  const stages = pipeline(d.pipeline_id)?.stages || [], si = stages.findIndex(s => s.id === d.stage_id);
+  const cur = re => si >= 0 && re.test(stages[si].name || "");
+  const bilanAt = stages.findIndex(s => /bilan/i.test(s.name || "")), bilan = bilanAt >= 0 && si >= bilanAt;
+  const visio = first(a => a.done && a.type !== "note" && (a.type === "meeting" || /visio/i.test(a.subject || ""))) || (cur(/visio/i) ? "étape" : "");
+  const essai = first(a => /^ScanUp essai/i.test(a.subject || ""));
+  const auto = final ? {
+    su_demo_op: first(a => a.done && a.type !== "note" && /d[ée]mo.*op[ée]rateur|espace d[ée]mo/i.test(a.subject || "")) || (cur(/d[ée]mo.*op[ée]rateur/i) ? "étape" : ""),
+    su_demo: visio,
+    su_client: first(a => /^ScanUp cabinet : client/i.test(a.subject || "")) || (bilan ? "étape" : ""),
+    su_ops: essai || (bilan ? "étape" : ""),
+    su_vignettes: first(a => a.done && /vignette/i.test(a.subject || "")) || (bilan ? "étape" : ""),
+  } : {
+    su_demo: visio || first(a => a.done && a.type !== "note" && /d[ée]mo/i.test(a.subject || "")),
+    su_salarie: essai || (cur(/d[ée]mo.*op[ée]rateur/i) || bilan ? "étape" : ""),
+    su_cabinet: first(a => /^ScanUp cabinet/i.test(a.subject || "")) || (cur(/cabinet/i) || bilan ? "étape" : ""),
+    su_rp: first(a => /^ScanUp responsable de projet/i.test(a.subject || "")) || (cur(/essai.*responsable/i) || bilan ? "étape" : ""),
   };
   const ex = d.extra || {};
-  const items = SU_STEPS.map(([k, label]) => {
-    const man = ex[k] || "", au = auto[k] || "", date = man || au, locked = !man && !!au;
-    return `<button type="button" class="su-step${date ? " on" : ""}" data-su="${k}" data-sudeal="${esc(d.id)}" data-suman="${man ? 1 : 0}" ${locked ? "disabled" : ""} title="${locked ? "Repéré automatiquement dans l'historique" : man ? "Cliquer pour décocher" : "Cliquer pour cocher"}"><span>${date ? "✓ " : ""}${label}</span><small>${date ? esc(frDay(date)) + (locked ? " · auto" : "") : "pas encore"}</small></button>`;
+  const items = steps.map(([k, label]) => {
+    const man = ex[k] || "", au = auto[k] || "", on = !!(man || au), locked = !man && !!au;
+    const when = man ? esc(frDay(man)) : au === "étape" ? "d'après l'étape" : au ? esc(frDay(au)) + " · auto" : "pas encore";
+    return `<button type="button" class="su-step${on ? " on" : ""}" data-su="${k}" data-sudeal="${esc(d.id)}" data-suman="${man ? 1 : 0}" ${locked ? "disabled" : ""} title="${locked ? "Repéré automatiquement" : man ? "Cliquer pour décocher" : "Cliquer pour cocher"}"><span>${on ? "✓ " : ""}${label}</span><small>${when}</small></button>`;
   }).join("");
-  const next = SU_STEPS.find(([k]) => !(ex[k] || auto[k]));
+  const next = steps.find(([k]) => !(ex[k] || auto[k]));
   return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}</section>`;
 }
 document.addEventListener("click", async ev => {
@@ -1150,6 +1180,15 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
 $("#nav").onclick = e => { const b = e.target.closest("button[data-v]"); if (b) go(b.dataset.v); };
 render();
 (async () => {
+  // Si le chargement dure, on dit ce qui est attendu au lieu de laisser « Chargement du CRM… » sans explication.
+  const t0 = Date.now();
+  const slow = setInterval(() => {
+    if (S.ready) return clearInterval(slow);
+    const sec = Math.round((Date.now() - t0) / 1000); if (sec < 6) return;
+    const what = [...PENDING].map(x => x.split(" ")[0] + " depuis " + Math.round((Date.now() - Number(x.split(" ")[1])) / 1000) + " s").join(", ") || "aucune demande en cours";
+    $("#main").innerHTML = `<div class="wrap"><div class="empty"><h3>Le chargement est long (${sec} s)</h3><p>En attente du serveur : ${esc(what)}.</p><p><small>Version ${esc((document.querySelector('script[src*="app.js"]')?.src || "").split("v=")[1] || "")} · ${navigator.onLine ? "connexion internet active" : "pas de connexion internet"}</small></p><button class="btn primary" id="slowReload">Recharger</button></div></div>`;
+    $("#slowReload").onclick = () => location.reload();
+  }, 2000);
   try { await loadBoot(); await loadData(); S.ready = true; render(); }
   catch (e) { $("#main").innerHTML = `<div class="wrap"><div class="empty"><h3>Chargement impossible</h3><p>${esc(e.message)}</p></div></div>`; return; }
   // Actualisation toutes les 30 secondes pour voir les changements des collègues

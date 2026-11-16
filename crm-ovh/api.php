@@ -337,6 +337,13 @@ function route(string $r, string $method, array $b, array $me): void {
         if ($method === 'POST') { require_admin($me); try { scanup_save($b); } catch (RuntimeException $ex) { fail($ex->getMessage()); } }
         json_out(scanup_public());
 
+    case 'scanup_rp':
+        // Accès responsable de projet pour le client, à sa demande.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require __DIR__ . '/lib/scanup.php';
+        try { json_out(scanup_rp_access($me, $b)); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'scanup_trial':
         // Création d'un client test ScanUp (organisation, responsable de projet, opérateurs) depuis une affaire.
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);

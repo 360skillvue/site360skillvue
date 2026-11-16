@@ -1074,7 +1074,56 @@ function scanupBlock(d, acts) {
   const canCreate = !(ex.su_client || auto.su_client);
   // Client déjà créé mais modules pas encore faits : le même bouton propose d'ajouter les modules.
   const canMods = !canCreate && !ex.su_modules && !acts.some(a => /^ScanUp cabinet : modules du client test/i.test(a.subject || ""));
-  return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}${canCreate || canMods ? `<div style="margin-top:8px"><button type="button" class="btn sm" data-sutrial="${esc(d.id)}">${canCreate ? "Créer le client test dans ScanUp" : "Ajouter les modules au client test"}</button></div>` : ""}</section>`;
+  // Client final dont le client test existe : accès responsable de projet sur demande du client.
+  const canRp = final && !canCreate && !ex.su_rp_client && !acts.some(a => /^ScanUp responsable de projet : accès donné au client/i.test(a.subject || ""));
+  const btns = [canCreate || canMods ? `<button type="button" class="btn sm" data-sutrial="${esc(d.id)}">${canCreate ? "Créer le client test dans ScanUp" : "Ajouter les modules au client test"}</button>` : "",
+    canRp ? `<button type="button" class="btn sm ghost" data-surp="${esc(d.id)}" title="Seulement si le client le demande : par défaut, il n'a accès qu'aux comptes opérateurs">Donner un accès responsable de projet</button>` : ""].filter(Boolean).join("");
+  return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}${btns ? `<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">${btns}</div>` : ""}</section>`;
+}
+/* Numéro de l'organisation et du cabinet ScanUp du client test : gardés sur l'affaire, ou lus dans la trace de création. */
+function suOrgOf(d) {
+  let org = String((d.extra || {}).su_org || ""), cab = String((d.extra || {}).su_cab || "");
+  if (!org) for (const a of SU_ACTS.get(d.id) || []) { const mm = /créée \(n° (\d+)\) dans le cabinet n° (\d+)/.exec(a.note || ""); if (mm) { org = mm[1]; cab = mm[2]; break; } }
+  return {org, cab};
+}
+/* Accès responsable de projet pour le client, à sa demande : compte à l'e-mail de son contact. */
+function openRpAccess(d) {
+  const m = {kind: "rp"}; S.modal = m; histPush();
+  const {org, cab} = suOrgOf(d);
+  const nm = String(d.contact_name || "").trim().split(/\s+/);
+  const mail = ((d.contact_emails || []).find(x => x.primary) || (d.contact_emails || [])[0] || {}).value || "";
+  $("#layer").innerHTML = `<div class="scrim" data-close></div><div class="modal" data-close><form class="mbox" id="rpForm" role="dialog" aria-modal="true" aria-label="Accès responsable de projet">
+    <div class="mh"><h2>Accès responsable de projet</h2><button type="button" class="btn ghost sm" data-x aria-label="Fermer">${ico("x")}</button></div>
+    <div class="mb">
+      <p class="note" style="margin:0">Seulement si le client le demande : par défaut, un client final n'a accès qu'aux comptes opérateurs. Le compte responsable de projet lui permet de suivre l'avancement de ses salariés et les résultats collectifs.</p>
+      <div class="grid2">
+        <label class="f"><span>Prénom</span><input type="text" id="rpFirst" maxlength="60" value="${esc(nm.length > 1 ? nm[0] : "")}"></label>
+        <label class="f"><span>Nom</span><input type="text" id="rpLast" maxlength="60" value="${esc(nm.length > 1 ? nm.slice(1).join(" ") : nm[0] || "")}"></label>
+      </div>
+      <label class="f"><span>E-mail professionnel (identifiant)</span><input type="email" id="rpMail" value="${esc(mail)}"></label>
+      <div class="grid2">
+        <label class="f"><span>N° de l'organisation ScanUp</span><input type="number" id="rpOrg" value="${esc(org)}"></label>
+        <label class="f"><span>N° du cabinet</span><input type="number" id="rpCab" value="${esc(cab || "10")}"></label>
+      </div>
+      <div id="rpOut" class="note" style="margin:0"></div>
+    </div>
+    <div class="mf"><button type="button" class="btn" data-x>Fermer</button><button type="submit" class="btn primary">Créer l'accès</button></div></form></div>`;
+  $("#layer").onclick = e => { if (e.target.closest("[data-x]")) closeModal(); };
+  const f = $("#rpForm");
+  f.onsubmit = async e => { e.preventDefault();
+    const btn = f.querySelector("[type=submit]"); btn.disabled = true; btn.textContent = "Création…";
+    try {
+      const r = await api("scanup_rp", {method: "POST", body: {deal_id: d.id, org_id: Number($("#rpOrg").value), cabinet: Number($("#rpCab").value),
+        first_name: $("#rpFirst").value, last_name: $("#rpLast").value, email: $("#rpMail").value}});
+      $("#rpOut").innerHTML = `<div class="ct-block"><b>Accès créé.</b>
+        <div class="ct-row"><span>Adresse : ${esc(r.url)}</span><button type="button" class="btn sm ghost" data-copy="${esc(r.url)}">Copier</button></div>
+        <div class="ct-row"><span>Identifiant : ${esc(r.email)}</span><button type="button" class="btn sm ghost" data-copy="${esc(r.email)}">Copier</button></div>
+        <div class="ct-row"><span>Mot de passe initial : <b>${esc(r.password)}</b></span><button type="button" class="btn sm ghost" data-copy="${esc(r.password)}">Copier</button></div>
+        <span>Notez ce mot de passe maintenant : il n'est pas gardé dans le CRM. Transmettez-le à part (téléphone ou SMS), pas dans le même e-mail que l'identifiant, et invitez la personne à le changer à la première connexion.</span></div>`;
+      btn.textContent = "Créé"; toast("Accès responsable de projet créé");
+      try { await loadData(); } catch {}
+    } catch (err) { btn.disabled = false; btn.textContent = "Créer l'accès"; failToast(err); }
+  };
 }
 /* Création du client test dans ScanUp : organisation « … (test) », responsable de projet à l'alias Gmail de la personne
    connectée (jamais remis au client) et opérateurs sans e-mail. Passe par Make, qui détient l'accès au cabinet. */
@@ -1196,6 +1245,8 @@ function openTrial(d) {
 document.addEventListener("click", async ev => {
   const t = ev.target.closest?.("[data-sutrial]");
   if (t) { ev.preventDefault(); const d = S.deals.get(t.dataset.sutrial); if (d) openTrial(d); return; }
+  const rp = ev.target.closest?.("[data-surp]");
+  if (rp) { ev.preventDefault(); const d = S.deals.get(rp.dataset.surp); if (d) openRpAccess(d); return; }
   const b = ev.target.closest?.("[data-su]"); if (!b || b.disabled) return;
   ev.preventDefault();
   const id = b.dataset.sudeal, k = b.dataset.su;

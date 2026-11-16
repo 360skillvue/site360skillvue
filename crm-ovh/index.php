@@ -8,6 +8,7 @@ start_session();
 
 $err = '';
 if (isset($_GET['logout']) && $_SERVER['REQUEST_METHOD'] === 'POST' && hash_equals($_SESSION['csrf'], (string)($_POST['csrf'] ?? ''))) {
+    remember_forget();
     $_SESSION = []; session_regenerate_id(true); header('Location: ./'); exit;
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
@@ -19,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
         if ($u && $u['password_hash'] && password_verify((string)($_POST['password'] ?? ''), $u['password_hash'])) {
             session_regenerate_id(true);
             $_SESSION['uid'] = (int)$u['id']; $_SESSION['seen'] = time();
+            try { remember_issue((int)$u['id']); } catch (Throwable $e) { error_log('[crm] connexion gardée ' . $e->getMessage()); }
             if (password_needs_rehash($u['password_hash'], PASSWORD_DEFAULT)) q('UPDATE users SET password_hash = ? WHERE id = ?', [password_hash((string)$_POST['password'], PASSWORD_DEFAULT), $u['id']]);
             header('Location: ./'); exit;
         }

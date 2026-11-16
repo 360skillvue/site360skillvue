@@ -1,59 +1,68 @@
-# CRM 360skillvue : installation sur l'hébergement OVH
+# CRM 360skillvue : mode d'emploi
 
-Le CRM fonctionne sur l'hébergement web Perso « 360skillvue » (PHP 8.3 et MySQL), sans rien acheter de plus.
-Comptez environ 30 minutes.
+Le CRM interne de 360skillvue remplace Pipedrive. Il est en ligne à l'adresse `https://crm.360skillvue.com`.
+Il fonctionne sur l'hébergement web OVH Perso « 360skillvue » (PHP 8.3 et MySQL), dans le dossier `crm`.
+Le code est dans ce dépôt, dossier `crm-ovh`. Le numéro de version est dans `lib/bootstrap.php`.
 
-## 1. Préparer la base de données
+## 1. Ce que fait le CRM
 
-1. Espace client OVH : **Web Cloud > Hébergements > 360skillvue > Bases de données**.
-2. Si une base est libre (par exemple celle de l'option Extra SQL Perso), utilisez-la ; sinon cliquez sur **Créer une base de données** (MySQL).
-3. Notez quatre informations : le **serveur** (du type `xxxxx.mysql.db`), le **nom de la base**, l'**utilisateur** et son **mot de passe**.
+| Rubrique | Contenu |
+|---|---|
+| Affaires | Les pipelines et leurs étapes, avec un bloc « Où en est-on ? » sur chaque affaire |
+| Activités | Tâches, appels, rendez-vous et notes ; une pastille signale les activités à vérifier quand des e-mails ont été échangés depuis |
+| Contacts | Personnes et organisations. Par défaut seuls les contacts utiles sont affichés |
+| E-mails | Lecture des échanges des boîtes Microsoft connectées, envoi depuis le CRM avec signature, pièces jointes et suivi d'ouverture |
+| Réglages | Équipe et accès, connexions, sauvegardes |
 
-Ne réutilisez pas la base du site WordPress.
+Un contact est « utile » s'il est lié à une affaire, une activité (une note compte), un e-mail ou un tag.
 
-## 2. Créer le sous-domaine
+## 2. Se connecter
 
-1. **Web Cloud > Hébergements > 360skillvue > Multisite > Ajouter un domaine ou un sous-domaine**.
-2. Choisissez le domaine 360skillvue.com et saisissez le sous-domaine `crm`.
-3. Dossier racine : `crm`.
-4. Cochez **SSL** (certificat HTTPS gratuit). Laissez le CDN désactivé.
-5. Si le domaine n'est pas géré chez OVH, ajoutez l'enregistrement DNS indiqué par OVH chez votre registraire.
-
-Le certificat HTTPS peut mettre jusqu'à quelques heures à s'activer.
-
-## 3. Envoyer les fichiers
-
-1. Identifiants FTP : **Hébergements > 360skillvue > FTP-SSH**.
-2. Avec un logiciel FTP (par exemple FileZilla), ouvrez le dossier `crm` à la racine de l'hébergement (créez-le s'il n'existe pas).
-3. Envoyez-y **tout le contenu** du dossier `crm-ovh` : `index.php`, `api.php`, `install.php`, `cron.php`, `.htaccess`, et les dossiers `assets` et `lib`.
-
-Les fichiers commençant par un point (`.htaccess`) sont parfois masqués : affichez les fichiers cachés dans votre logiciel FTP pour bien les envoyer. Ils protègent les fichiers sensibles.
-
-## 4. Lancer l'installation
-
-1. Ouvrez `https://crm.360skillvue.com/install.php`.
-2. Saisissez les informations de la base (étape 1), puis le nom, l'e-mail et le mot de passe du premier administrateur (10 caractères minimum).
-3. Facultatif : collez votre **jeton d'API Pipedrive** (Pipedrive : photo de profil > Paramètres personnels > API). Utilisez de préférence l'adresse e-mail de votre compte Pipedrive pour l'administrateur : le CRM reliera alors votre compte à vos affaires.
-4. Cliquez sur **Installer**, puis **supprimez le fichier `install.php`** du serveur par FTP.
-
-L'installation crée le fichier `config.php`. Ne le partagez pas : il contient les accès à la base et le jeton Pipedrive.
-
-## 5. Importer Pipedrive et ouvrir l'accès à l'équipe
-
-1. Connectez-vous sur `https://crm.360skillvue.com`.
-2. **Réglages > Tout importer** : l'import récupère équipe, pipelines, organisations, personnes, affaires et activités. Laissez l'onglet ouvert jusqu'au message « Import terminé ».
-3. **Réglages > Équipe et accès** : pour chaque personne, saisissez son e-mail, cochez **Accès**, choisissez un mot de passe, puis **Enregistrer**. Cochez **Admin** pour les personnes qui doivent gérer l'import, les pipelines et les accès.
-
-Pendant la période où Pipedrive est encore utilisé, le bouton « Importer les changements depuis le dernier import » met le CRM à jour. Les notes et les fiches créées dans le CRM ne sont jamais écrasées.
-
-## 6. Facultatif : mise à jour automatique depuis Pipedrive
-
-**Hébergements > 360skillvue > Tâches planifiées (Cron) > Ajouter une planification** :
-commande `crm/cron.php`, langage **PHP 8.3**, fréquence **quotidienne** (la nuit).
-À supprimer quand Pipedrive est résilié.
-
-## Sauvegardes et mises à jour
-
-1. OVH sauvegarde automatiquement les bases de données de l'hébergement. Vous pouvez aussi télécharger des exports CSV dans **Réglages > Sauvegarde**.
-2. Pour installer une nouvelle version : renvoyez les fichiers par FTP **sauf `config.php`**, qui doit rester en place.
+1. Ouvrir `https://crm.360skillvue.com` et saisir son e-mail et son mot de passe.
+2. La connexion est gardée 30 jours sur chaque appareil. Le bouton **Déconnexion** la ferme.
 3. Mot de passe oublié : un administrateur en définit un nouveau dans **Réglages > Équipe et accès**.
+4. Changer son mot de passe ferme les connexions gardées sur les autres appareils.
+
+## 3. Ce qui est relié au CRM
+
+| Outil | Ce qui se passe | Fréquence |
+|---|---|---|
+| Microsoft 365 | Les e-mails échangés avec les contacts apparaissent sur les fiches ; l'envoi se fait depuis le CRM. Chaque personne connecte sa propre boîte dans les Réglages | Toutes les heures |
+| Calendly | Les rendez-vous commerciaux deviennent des activités ; une annulation est reportée | Toutes les heures |
+| Mailchimp, audience 360skillvue | Les contacts utiles et les contacts des établissements de santé y sont envoyés. Les établissements de santé portent le tag « Certification périodique ». Un désabonné reste désabonné, rien n'est supprimé | Toutes les heures |
+| Mailchimp, audience Biologie e-learning | Les responsables formation des établissements de santé y sont envoyés avec le tag « Certification périodique » | Toutes les heures |
+| ScanUp | Quand un testeur commence ou termine un module d'essai, une trace ou une tâche est créée (adresse `hook.php`, protégée par une clé) | Une fois par jour, par Make |
+
+Les clés d'accès (Microsoft, Calendly, Mailchimp, ScanUp) se saisissent dans les Réglages. Elles ne sont jamais affichées ensuite et ne doivent jamais être écrites dans ce dépôt.
+
+## 4. Tâche planifiée
+
+Une seule tâche planifiée OVH fait tourner les synchronisations : **Hébergements > 360skillvue > Tâches planifiées (Cron)**, commande `crm/cron-mail.php`, langage PHP 8.3, toutes les heures.
+Elle lit les e-mails, met à jour Mailchimp et Calendly, et lance la sauvegarde quotidienne.
+
+## 5. Sauvegardes
+
+1. La base est sauvegardée automatiquement une fois par jour. Les 14 dernières sauvegardes sont gardées dans le dossier `sauvegardes-crm`, à côté du dossier `crm` et hors de portée du web.
+2. **Réglages > Sauvegardes** permet d'en lancer une tout de suite et de télécharger les fichiers.
+3. OVH sauvegarde aussi les bases de l'hébergement de son côté.
+
+## 6. Installer une nouvelle version
+
+1. Envoyer les fichiers modifiés dans le dossier `crm` par SFTP (serveur `ftp.cluster130.hosting.ovh.net`, port 22). Les identifiants sont dans **Hébergements > 360skillvue > FTP-SSH**.
+2. Ne jamais remplacer `config.php` : il contient les accès à la base.
+3. Ne toucher ni au site WordPress ni à ses bases (dossiers `www`, `blog`, `test360`).
+4. Vérifier le numéro de version affiché dans le CRM, puis reporter les mêmes fichiers dans ce dépôt.
+
+Les nouvelles tables de la base se créent toutes seules au premier usage : aucune manipulation de base n'est nécessaire.
+
+## 7. Pipedrive
+
+Les données de Pipedrive ont été reprises : équipe, pipelines, organisations, personnes, affaires, activités et notes. L'import est terminé et ses boutons ont été retirés. Une archive Excel de Pipedrive est conservée à part.
+
+## 8. Réinstaller depuis zéro (rarement utile)
+
+1. Créer une base MySQL dans l'espace client OVH et noter le serveur, le nom, l'utilisateur et le mot de passe. Ne pas réutiliser une base de WordPress.
+2. Créer le sous-domaine `crm` (Multisite), dossier racine `crm`, avec SSL.
+3. Envoyer tout le contenu de `crm-ovh` dans le dossier `crm`, y compris le fichier `.htaccess`.
+4. Ouvrir `https://crm.360skillvue.com/install.php`, saisir les informations de la base et le premier administrateur, cliquer sur **Installer**, puis supprimer `install.php` du serveur.
+5. Restaurer la dernière sauvegarde de la base, puis ressaisir les clés d'accès dans les Réglages.

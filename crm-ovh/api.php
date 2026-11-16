@@ -545,6 +545,8 @@ function route(string $r, string $method, array $b, array $me): void {
             if ($canLogin && !$has && $pass === '') fail('Choisissez un mot de passe pour ouvrir l\'accès.');
             q('UPDATE users SET name = ?, email = ?, role = ?, can_login = ?, active = ? WHERE id = ?', [$name, $email, $role, $canLogin, $active, $id]);
             if ($pass !== '') q('UPDATE users SET password_hash = ? WHERE id = ?', [password_hash($pass, PASSWORD_DEFAULT), $id]);
+            // Accès retiré ou mot de passe changé par l'administrateur : les connexions gardées de cette personne sont fermées.
+            if (($pass !== '' || !$canLogin || !$active) && $id !== (int)$me['id']) { try { remember_schema(); q('DELETE FROM crm_remember WHERE user_id = ?', [$id]); } catch (Throwable $ex) {} }
         } else {
             if ($canLogin && $pass === '') fail('Choisissez un mot de passe pour ouvrir l\'accès.');
             q('INSERT INTO users (name, email, password_hash, role, can_login, active, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
@@ -559,6 +561,8 @@ function route(string $r, string $method, array $b, array $me): void {
         $new = (string)($b['new'] ?? '');
         if (strlen($new) < 10) fail('Le nouveau mot de passe doit faire au moins 10 caractères.');
         q('UPDATE users SET password_hash = ? WHERE id = ?', [password_hash($new, PASSWORD_DEFAULT), $me['id']]);
+        // Mot de passe changé : les connexions gardées sur les autres appareils sont fermées.
+        try { remember_schema(); q('DELETE FROM crm_remember WHERE user_id = ? AND selector <> ?', [$me['id'], substr((string)($_COOKIE[REMEMBER_COOKIE] ?? ''), 0, 24)]); } catch (Throwable $ex) {}
         json_out(['ok' => true]);
 
     case 'import':

@@ -92,7 +92,39 @@ function ms_authorize_url(string $state): string {
 }
 
 /* Envoi d'un e-mail depuis la boîte Microsoft de l'utilisateur, puis rattachement à la fiche par relecture de la boîte. */
-function mail_send(int $uid, array $to, string $subject, string $text, ?int $personId, ?int $dealId): array {
+/* Suivi d'ouverture : une image invisible d'un pixel, propre à chaque e-mail envoyé depuis le CRM. Quand le logiciel
+   de messagerie du destinataire l'affiche, t.php note l'ouverture. Indicatif seulement : certaines messageries bloquent
+   les images (ouverture non vue), d'autres les chargent d'avance (ouverture comptée à tort). */
+function mail_track_schema(): void {
+    static $done = false;
+    if ($done) return;
+    q("CREATE TABLE IF NOT EXISTS crm_mail_track (
+      token CHAR(32) NOT NULL PRIMARY KEY,
+      user_id INT UNSIGNED NULL,
+      to_addrs TEXT NULL,
+      subject VARCHAR(500) NULL,
+      sent_at DATETIME NOT NULL,
+      opens INT UNSIGNED NOT NULL DEFAULT 0,
+      first_open DATETIME NULL,
+      last_open DATETIME NULL,
+      KEY k_user (user_id, sent_at)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    $done = true;
+}
+
+/* Signature de chaque utilisateur, ajoutée à la fin des e-mails envoyés depuis le CRM. */
+function mail_signature(int $uid): string {
+    $s = setting('mail_signatures', []);
+    return is_array($s) ? (string)($s[(string)$uid] ?? '') : '';
+}
+function mail_signature_save(int $uid, string $text): void {
+    $s = setting('mail_signatures', []);
+    $s = is_array($s) ? $s : [];
+    $s[(string)$uid] = mb_substr($text, 0, 2000);
+    set_setting('mail_signatures', (object)$s);
+}
+
+function mail_send(int $uid, array $to, string $subject, string $text, ?int $personId, ?int $dealId, array $attachments = [], bool $track = false): array {
     mail_schema();
     $t = ms_tokens()[(string)$uid] ?? null;
     if (!is_array($t) || empty($t['refresh'])) throw new RuntimeException("Votre boîte n'est pas connectée : connectez-la dans les Réglages, rubrique E-mails.");
@@ -100,12 +132,29 @@ function mail_send(int $uid, array $to, string $subject, string $text, ?int $per
     catch (RuntimeException $e) { throw new RuntimeException("Votre boîte n'autorise pas encore l'envoi depuis le CRM : dans les Réglages, rubrique E-mails, déconnectez-la puis reconnectez-la."); }
     if (!empty($j['refresh_token'])) ms_save_token($uid, ['refresh' => $j['refresh_token']]);
     $auth = ['Authorization: Bearer ' . $j['access_token'], 'Content-Type: application/json'];
-    $html = '<div style="font-family:Calibri,Arial,sans-serif;font-size:11pt">' . nl2br(htmlspecialchars($text, ENT_QUOTES, 'UTF-8')) . '</div>';
+    $esc = fn(string $s) => nl2br(htmlspecialchars($s, ENT_QUOTES, 'UTF-8'));
+    $html = '<div style="font-family:Calibri,Arial,sans-serif;font-size:11pt">' . $esc($text);
+    $sig = trim(mail_signature($uid));
+    if ($sig !== '') $html .= '<br><br><div style="color:#444">' . $esc($sig) . '</div>';
+    $html .= '</div>';
+    $token = null;
+    if ($track) {
+        mail_track_schema();
+        $token = bin2hex(random_bytes(16));
+        q('INSERT INTO crm_mail_track (token, user_id, to_addrs, subject, sent_at) VALUES (?, ?, ?, ?, ?)',
+            [$token, $uid, mb_substr(implode(', ', $to), 0, 2000), mb_substr($subject, 0, 500), now_utc()]);
+        $html .= '<img src="https://' . ($_SERVER['HTTP_HOST'] ?? 'crm.360skillvue.com') . '/t.php?k=' . $token . '" width="1" height="1" alt="">';
+    }
     $msg = ['subject' => $subject, 'body' => ['contentType' => 'HTML', 'content' => $html],
         'toRecipients' => array_map(fn($a) => ['emailAddress' => ['address' => $a]], $to)];
+    if ($attachments) $msg['attachments'] = array_map(fn($f) => ['@odata.type' => '#microsoft.graph.fileAttachment', 'name' => $f['name'],
+        'contentType' => $f['type'], 'contentBytes' => $f['data']], $attachments);
     // Envoi direct (sendMail) : c'est la seule opération permise par l'autorisation « envoyer », sans droit de modifier la boîte.
     [$c, $r] = ms_http('POST', 'https://graph.microsoft.com/v1.0/me/sendMail', $auth, json_encode(['message' => $msg, 'saveToSentItems' => true], JSON_UNESCAPED_UNICODE));
+    // L'e-mail n'est pas parti : on retire la trace de suivi préparée pour lui.
+    if ($c !== 202 && $token) q('DELETE FROM crm_mail_track WHERE token = ?', [$token]);
     if ($c === 403) throw new RuntimeException("Microsoft refuse l'envoi depuis le CRM : l'autorisation d'envoyer n'a pas été accordée à votre boîte. Reconnectez-la dans les Réglages.");
+    if ($c === 413) throw new RuntimeException('Les pièces jointes sont trop lourdes pour Microsoft : restez sous 3 Mo au total.');
     if ($c !== 202) throw new RuntimeException("Envoi de l'e-mail impossible (code $c) : " . mb_substr((string)($r['error']['message'] ?? ''), 0, 200));
     // Rattachement à la fiche : on relit aussitôt la boîte, ce qui retrouve le message dans les éléments envoyés avec son
     // identifiant définitif (donc sans doublon). S'il n'y est pas encore, le passage horaire s'en chargera.
@@ -233,8 +282,12 @@ function mail_sync_all(): array {
 /* E-mails d'une fiche. Pour une affaire : ceux rattachés à l'affaire et ceux de sa personne. */
 function mail_list(string $kind, int $id): array {
     mail_schema();
-    $sql = 'SELECT e.id, e.direction, e.from_addr, e.to_addrs, e.subject, e.preview, e.sent_at, e.web_link, p.name AS person_name
-            FROM crm_emails e LEFT JOIN persons p ON p.id = e.person_id WHERE ';
+    mail_track_schema();
+    // Suivi d'ouverture : l'e-mail envoyé est rapproché de sa trace par l'expéditeur, l'objet et l'heure d'envoi (à 15 minutes près).
+    $tr = "FROM crm_mail_track t WHERE e.direction = 'out' AND t.user_id = e.user_id AND t.subject = e.subject AND ABS(TIMESTAMPDIFF(SECOND, t.sent_at, e.sent_at)) < 900 ORDER BY t.sent_at DESC LIMIT 1";
+    $sql = "SELECT e.id, e.direction, e.from_addr, e.to_addrs, e.subject, e.preview, e.sent_at, e.web_link, p.name AS person_name,
+            (SELECT t.opens $tr) AS opens, (SELECT t.first_open $tr) AS first_open, (SELECT t.last_open $tr) AS last_open
+            FROM crm_emails e LEFT JOIN persons p ON p.id = e.person_id WHERE ";
     if ($kind === 'deal') {
         $pid = q('SELECT person_id FROM deals WHERE id = ?', [$id])->fetchColumn();
         if ($pid) { $sql .= '(e.deal_id = ? OR e.person_id = ?)'; $args = [$id, (int)$pid]; }
@@ -242,7 +295,12 @@ function mail_list(string $kind, int $id): array {
     } elseif ($kind === 'org') { $sql .= 'e.org_id = ?'; $args = [$id]; }
     else { $sql .= 'e.person_id = ?'; $args = [$id]; }
     $rows = q($sql . ' ORDER BY e.sent_at DESC LIMIT 200', $args)->fetchAll();
-    foreach ($rows as &$r) { $r['id'] = (string)$r['id']; $r['sent_at'] = str_replace(' ', 'T', (string)$r['sent_at']) . 'Z'; }
+    foreach ($rows as &$r) {
+        $r['id'] = (string)$r['id']; $r['sent_at'] = str_replace(' ', 'T', (string)$r['sent_at']) . 'Z';
+        // opens absent : e-mail non suivi ; 0 : suivi, pas encore ouvert.
+        $r['opens'] = $r['opens'] === null ? null : (int)$r['opens'];
+        foreach (['first_open', 'last_open'] as $k) $r[$k] = $r[$k] ? str_replace(' ', 'T', (string)$r[$k]) . 'Z' : null;
+    }
     unset($r);
     return $rows;
 }

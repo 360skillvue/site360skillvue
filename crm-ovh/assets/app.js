@@ -334,6 +334,7 @@ function viewSettings() {
     ${admin ? `<section class="sec" id="bakSec">${bakSecInner()}</section>` : ""}
     ${admin ? `<section class="sec" id="calSec">${calSecInner()}</section>` : ""}
     ${admin ? `<section class="sec" id="hookSec">${hookSecInner()}</section>` : ""}
+    <section class="sec" id="claudeSec">${claudeSecInner()}</section>
     ${usersSec}
     <section class="sec"><h3>Mon mot de passe</h3>
       <div class="grid2"><label class="f"><span>Mot de passe actuel</span><input type="password" id="pwCur" autocomplete="current-password"></label>
@@ -341,6 +342,25 @@ function viewSettings() {
       <div><button class="btn" data-act="changePw">Changer mon mot de passe</button></div>
     </section></div>`;
 }
+/* ---------- Connexion à Claude ---------- */
+function claudeSecInner() {
+  if (!S.claude) { if (!S.claudeLoading) { S.claudeLoading = true; loadClaude(); } return `<h3>Claude</h3><p class="note">Chargement…</p>`; }
+  const c = S.claude;
+  return `<h3>Claude</h3>
+    <p class="note">Pour que Claude consulte et mette à jour le CRM, ajoutez-le une fois dans Claude : <b>Réglages, Connecteurs, Ajouter un connecteur personnalisé</b>, avec l'adresse ci-dessous. La page de connexion du CRM s'ouvrira : connectez-vous avec votre compte et cliquez sur Autoriser. Claude agit alors en votre nom et ne peut rien supprimer.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><input type="text" readonly id="claudeUrl" value="${esc(c.url)}" style="max-width:420px" aria-label="Adresse du connecteur"><button class="btn sm" data-act="claudeCopy">Copier l'adresse</button></div>
+    ${c.conns.length ? `<div class="rows">${c.conns.map(x => `<div class="r crow"><span class="main"><b>${esc(x.client || "Client MCP")}</b><small>${esc(x.user)} · autorisé le ${esc(frDay(x.since))}</small></span>
+      <button class="btn sm ghost" style="color:var(--bad)" data-act="claudeRevoke" data-cid="${esc(x.client_id)}" data-uid="${esc(x.user_id)}">Retirer l'accès</button></div>`).join("")}</div>`
+      : `<p class="note">Aucune connexion active pour l'instant.</p>`}`;
+}
+async function loadClaude() {
+  try { S.claude = await api("claude_conns"); } catch (e) { S.claude = {url: location.origin + location.pathname.replace(/[^/]*$/, "") + "mcp.php", conns: []}; }
+  S.claudeLoading = false; const el = $("#claudeSec"); if (el) el.innerHTML = claudeSecInner();
+}
+async function claudeRevoke(cid, uid) {
+  try { await api("claude_revoke", {method: "POST", body: {client_id: cid, user_id: uid}}); toast("Accès retiré"); await loadClaude(); } catch (e) { failToast(e); }
+}
+
 /* ---------- E-mails Microsoft ---------- */
 const frDay = iso => { const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleDateString("fr-FR", {day: "numeric", month: "short", year: "numeric"}); };
 function mailSecInner() {
@@ -581,6 +601,8 @@ function bindView() {
     if (a === "importInc") return runImport("inc");
     if (a === "importTags") return runTagsImport();
     if (a === "changePw") return changePw();
+    if (a === "claudeRevoke") return claudeRevoke(t.dataset.cid, t.dataset.uid);
+    if (a === "claudeCopy") { const v = $("#claudeUrl").value; navigator.clipboard?.writeText(v).then(() => toast("Adresse copiée"), () => { $("#claudeUrl").select(); }); return; }
     if (a === "mcKeySave") { const k = $("#mcKey").value.trim(); if (!k) return toast("Collez d'abord la clé d'API Mailchimp.", true); return mcPost({key: k}, "Clé Mailchimp enregistrée"); }
     if (a === "mcAdd") { const mc = $("#mcTag").value, crm = $("#mcCrm").value.trim(); if (!mc || !crm) return toast("Choisissez un tag Mailchimp et indiquez le tag du CRM.", true);
       return mcPost({follow: [...(S.mc.follow || []).filter(f => f.mc !== mc), {mc, crm}]}, "Tag suivi"); }

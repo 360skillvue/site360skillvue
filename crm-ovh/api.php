@@ -576,6 +576,20 @@ function route(string $r, string $method, array $b, array $me): void {
         }
         json_out(['ok' => true]);
 
+    case 'claude_conns':
+        require_once __DIR__ . '/lib/oauth.php';
+        $admin = $me['role'] === 'admin';
+        json_out(['url' => crm_base_url() . '/mcp.php', 'conns' => array_map(fn($c) => ['client_id' => $c['client_id'], 'client' => $c['client'], 'user_id' => (string)$c['user_id'], 'user' => $c['user'],
+            'since' => str_replace(' ', 'T', $c['since']) . 'Z'], oauth_connections($admin ? null : (int)$me['id']))]);
+
+    case 'claude_revoke':
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_once __DIR__ . '/lib/oauth.php';
+        $uid = (int)($b['user_id'] ?? 0);
+        if ($uid !== (int)$me['id'] && $me['role'] !== 'admin') fail('Réservé aux administrateurs.', 403);
+        oauth_revoke($uid, (string)($b['client_id'] ?? ''));
+        json_out(['ok' => true]);
+
     case 'password':
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);
         $hash = q('SELECT password_hash FROM users WHERE id = ?', [$me['id']])->fetchColumn();

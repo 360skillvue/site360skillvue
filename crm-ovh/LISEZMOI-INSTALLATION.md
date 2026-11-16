@@ -66,3 +66,13 @@ Les données de Pipedrive ont été reprises : équipe, pipelines, organisations
 3. Envoyer tout le contenu de `crm-ovh` dans le dossier `crm`, y compris le fichier `.htaccess`.
 4. Ouvrir `https://crm.360skillvue.com/install.php`, saisir les informations de la base et le premier administrateur, cliquer sur **Installer**, puis supprimer `install.php` du serveur.
 5. Restaurer la dernière sauvegarde de la base, puis ressaisir les clés d'accès dans les Réglages.
+
+## Connecter le CRM à Claude
+
+Le CRM comprend un serveur MCP : Claude peut consulter les affaires, activités, organisations et personnes, en créer et les modifier, au nom de la personne connectée. Il ne peut rien supprimer.
+
+1. Dans Claude : **Réglages > Connecteurs > Ajouter un connecteur personnalisé**.
+2. Nom : `CRM 360skillvue` ; adresse : `https://crm.360skillvue.com/mcp.php`.
+3. Cliquez sur **Se connecter** : la page du CRM s'ouvre. Connectez-vous avec votre compte du CRM, puis cliquez sur **Autoriser**.
+
+Chaque personne de l'équipe fait cette connexion avec son propre compte. Les accès donnés se voient et se retirent dans **Réglages > Claude** du CRM.

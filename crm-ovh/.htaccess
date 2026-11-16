@@ -8,6 +8,13 @@ RewriteCond %{HTTPS} off
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Connexion de Claude (OAuth) : adresses standard de découverte
+RewriteRule ^\.well-known/oauth-protected-resource(/.*)?$ oauth.php?meta=protected-resource [L,QSA]
+RewriteRule ^\.well-known/(oauth-authorization-server|openid-configuration)(/.*)?$ oauth.php?meta=authorization-server [L,QSA]
+# Le jeton de Claude doit arriver jusqu'à PHP
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 # Fichiers jamais accessibles depuis le web
 RewriteRule ^(lib|tests)(/|$) - [F,L]
 <FilesMatch "^(config\.php|config\.sample\.php|cron\.php|.*\.md|\.htaccess|\.gitignore)$">

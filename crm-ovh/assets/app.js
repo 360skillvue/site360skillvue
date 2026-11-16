@@ -320,6 +320,7 @@ function viewSettings() {
     <section class="sec" id="mailSec">${mailSecInner()}</section>
     ${admin ? `<section class="sec" id="billSec">${billSecInner()}</section>` : ""}
     ${admin ? `<section class="sec" id="mcSec">${mcSecInner()}</section>` : ""}
+    ${admin ? `<section class="sec" id="bakSec">${bakSecInner()}</section>` : ""}
     ${admin ? `<section class="sec" id="calSec">${calSecInner()}</section>` : ""}
     ${admin ? `<section class="sec" id="hookSec">${hookSecInner()}</section>` : ""}
     ${usersSec}
@@ -359,10 +360,26 @@ async function loadMail() {
     try { S.billing = await api("billing_conf"); } catch { return; }
     const bl = $("#billSec"); if (bl && !editing(bl)) bl.innerHTML = billSecInner();
     try { S.hook = await api("hook_conf"); const hk = $("#hookSec"); if (hk && !editing(hk)) hk.innerHTML = hookSecInner(); } catch {}
+    try { S.bak = (await api("backup")).liste; const bs = $("#bakSec"); if (bs) bs.innerHTML = bakSecInner(); } catch {}
     try { S.cal = await api("cal_conf"); const cs = $("#calSec"); if (cs && !editing(cs)) cs.innerHTML = calSecInner(); } catch {}
     try { S.mc = await api("mc_conf"); } catch { return; }
     const ml = $("#mcSec"); if (ml && !editing(ml)) ml.innerHTML = mcSecInner();
   }
+}
+/* ---------- Sauvegardes de la base ---------- */
+function bakSecInner() {
+  const l = S.bak;
+  const intro = `<h3>Sauvegardes</h3><p class="note">Une copie complète de la base du CRM est faite chaque jour, automatiquement, et rangée sur l'hébergement, hors de portée du web. Les quatorze dernières sont gardées. Pour avoir aussi une copie ailleurs, téléchargez de temps en temps la dernière et rangez-la en lieu sûr : le fichier contient toutes vos données et les clés de vos connexions.</p>`;
+  if (!l) return intro + `<p class="note">Chargement…</p>`;
+  const ko = n => n > 1048576 ? (n / 1048576).toFixed(1).replace(".", ",") + " Mo" : Math.round(n / 1024) + " Ko";
+  const last = l[0];
+  return intro + (last ? `<p class="note">Dernière sauvegarde : <b>${esc(new Date(last.at).toLocaleString("fr-FR", {day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit"}))}</b>, ${esc(ko(last.size))}. ${l.length} sauvegarde${l.length > 1 ? "s" : ""} gardée${l.length > 1 ? "s" : ""}.</p>` : `<p class="note" style="color:var(--bad)">Aucune sauvegarde pour l'instant.</p>`) +
+    `<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="bakRun">Sauvegarder maintenant</button>${last ? `<a class="btn" style="text-decoration:none" href="api.php?r=backup&file=${encodeURIComponent(last.name)}">Télécharger la dernière</a>` : ""}</div>`;
+}
+async function bakRun() {
+  toast("Sauvegarde en cours…");
+  try { const r = await api("backup", {method: "POST"}); S.bak = r.liste; $("#bakSec").innerHTML = bakSecInner(); toast("Sauvegarde faite"); }
+  catch (e) { failToast(e); }
 }
 /* ---------- Calendly : rendez-vous commerciaux ---------- */
 function calSecInner() {
@@ -537,6 +554,7 @@ function bindView() {
     if (a === "mcAdd") { const mc = $("#mcTag").value, crm = $("#mcCrm").value.trim(); if (!mc || !crm) return toast("Choisissez un tag Mailchimp et indiquez le tag du CRM.", true);
       return mcPost({follow: [...(S.mc.follow || []).filter(f => f.mc !== mc), {mc, crm}]}, "Tag suivi"); }
     if (a === "mcSync") return mcSync();
+    if (a === "bakRun") return bakRun();
     if (a === "mcPushCount") return mcPush(false);
     if (a === "mcPushGo") return mcPush(true);
     if (a === "calTokSave") { const k = $("#calTok").value.trim(); if (!k) return toast("Collez d'abord la clé d'accès Calendly.", true); return calPost({token: k}, "Clé Calendly enregistrée"); }

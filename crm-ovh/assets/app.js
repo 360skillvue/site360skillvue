@@ -1165,8 +1165,8 @@ function openTrial(d) {
         <details id="tCond" style="font-size:13px"><summary style="cursor:pointer;font-weight:600">Voir les textes de conduite à tenir réglés sur les modules</summary>
           <div class="note" style="margin:6px 0 0;white-space:pre-line" id="tCondTxt"></div></details>
         <div class="f"><span>Livrables prévus</span><div id="tLiv" class="note" style="margin:0;color:var(--fg)"></div></div>
-        <label id="tNomBox" style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tNom"> Ajouter le rapport individuel nominatif</label>
-        <p class="note" style="margin:0">Pendant le test, les livrables sont envoyés par e-mail. Un accès observateur ne se donne qu'à un client qui a un professionnel de santé (infirmière de santé au travail, service de santé autonome) et qui veut récupérer les rapports individuels.</p>
+        <label id="tNomBox" style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tNom"> Ajouter le rapport individuel nominatif (pour le professionnel de santé du client)</label>
+        <p class="note" style="margin:0">Pendant le test, les livrables sont envoyés par e-mail, sans accès observateur : le plan d'action ou la cartographie au contact du client ; le rapport individuel nominatif seulement à son professionnel de santé (infirmière de santé au travail, service de santé autonome), jamais aux RH ni aux managers. Hors test, ce professionnel reçoit les rapports individuels par un accès observateur.</p>
         <label class="f"><span>Fin de la session</span><input type="date" id="tEnd" value="${end}"></label>
         <p class="note" style="margin:0">Pas de retour : les résultats ne sont pas affichés aux opérateurs. Accompagnement : coaching vidéo pour les TMS, téléconsultation d'orientation pour les RPS, en cas de dépistage positif. Comparer : la moitié des opérateurs voit son résultat avec la conduite à tenir, l'autre moitié l'accompagnement. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
       </div>

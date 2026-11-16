@@ -241,7 +241,7 @@ function su_modules_trace(array $me, array $s): void {
     // Rappel des livrables à la fin de la session
     q('INSERT INTO activities (type, subject, due_date, done, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?)',
       ['task', mb_substr('ScanUp : préparer et envoyer les livrables (' . trim(preg_replace('/\s*\(.*$/u', '', $s['client'])) . ')', 0, 500), $s['end_date'], (int)$me['id'],
-       $deal['id'], $deal['person_id'], $deal['org_id'], "Fin de session le " . date('d/m/Y', strtotime($s['end_date'])) . ".\n- " . implode("\n- ", $liv) . "\nTest : livrables envoyés par e-mail au contact, sans accès observateur.", $now, $now]);
+       $deal['id'], $deal['person_id'], $deal['org_id'], "Fin de session le " . date('d/m/Y', strtotime($s['end_date'])) . ".\n- " . implode("\n- ", $liv) . "\nTest : livrables envoyés par e-mail, sans accès observateur. Plan d'action ou cartographie au contact du client ; rapport individuel nominatif seulement au professionnel de santé du client (infirmière de santé au travail), jamais aux RH ni aux managers.", $now, $now]);
     // La tâche « préparer les modules et envoyer les vignettes » devient « envoyer les vignettes ».
     q("UPDATE activities SET subject = REPLACE(subject, 'préparer les modules et envoyer les vignettes', 'envoyer les vignettes'),
        note = REPLACE(note, 'Mettre les modules à disposition avec une session et des crédits, inscrire les opérateurs, puis envoyer', 'Modules prêts et opérateurs inscrits : envoyer'), update_time = ? WHERE deal_id = ? AND done = 0 AND subject LIKE 'ScanUp : préparer les modules%'", [$now, $deal['id']]);

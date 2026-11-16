@@ -748,7 +748,9 @@ async function actContext(a) {
     ${mailBodyHtml(x)}</div>`).join("")}</div>`;
   else h += `<p style="margin:0 0 6px"><small>Aucun e-mail rattaché à cette fiche.</small></p>`;
   if (todo.length) h += `<p style="margin:8px 0 0"><b>Autres activités à faire :</b> ${todo.slice(0, 4).map(x => esc(x.subject || "") + " (" + esc(frDay(x.due_date)) + ")").join(" ; ")}</p>`;
-  return h ? `<section class="sec" style="margin:0 0 12px"><h3>Où en est-on ?</h3><div style="font-size:13px">${h}</div></section>` : "";
+  // Parcours ScanUp de l'affaire de l'activité, ou à défaut de l'affaire en cours de son organisation.
+  const sd = d || (a.org_id ? [...S.deals.values()].find(x => x.org_id === a.org_id && x.status === "open" && /scan\s?up/i.test((pipeline(x.pipeline_id)?.name || "") + " " + (x.title || ""))) : null);
+  return scanupBlock(sd, acts) + (h ? `<section class="sec" style="margin:0 0 12px"><h3>Où en est-on ?</h3><div style="font-size:13px">${h}</div></section>` : "");
 }
 
 function openAct(a, preset = {}) {
@@ -951,6 +953,42 @@ function dealSummary(d) {
   return `<section class="sec"><h3>Où en est-on ?</h3><div style="font-size:13px">${h}</div></section>`;
 }
 
+/* « Parcours ScanUp » : ce que le client a déjà fait (démo, test salarié, test cabinet, test responsable de projet).
+   Une étape se coche toute seule quand l'historique le montre (visio faite, trace « ScanUp essai » envoyée par ScanUp),
+   sinon d'un clic. Les étapes cochées à la main sont gardées sur l'affaire. Affiché pour les affaires ScanUp seulement. */
+const SU_STEPS = [["su_demo", "Démo"], ["su_salarie", "Test salarié"], ["su_cabinet", "Test cabinet"], ["su_rp", "Test responsable de projet"]];
+const SU_ACTS = new Map();
+function scanupBlock(d, acts) {
+  if (!d) return "";
+  if (!/scan\s?up/i.test((pipeline(d.pipeline_id)?.name || "") + " " + (d.title || ""))) return "";
+  acts = acts || []; SU_ACTS.set(d.id, acts);
+  const first = f => acts.filter(f).map(a => String(a.done_time || a.due_date || "").slice(0, 10)).filter(Boolean).sort()[0] || "";
+  const auto = {
+    su_demo: first(a => a.done && a.type !== "note" && (a.type === "meeting" || /d[ée]mo/i.test(a.subject || ""))),
+    su_salarie: first(a => /^ScanUp essai/i.test(a.subject || "")),
+    su_cabinet: first(a => /^ScanUp cabinet/i.test(a.subject || "")),
+    su_rp: first(a => /^ScanUp responsable de projet/i.test(a.subject || "")),
+  };
+  const ex = d.extra || {};
+  const items = SU_STEPS.map(([k, label]) => {
+    const man = ex[k] || "", au = auto[k] || "", date = man || au, locked = !man && !!au;
+    return `<button type="button" class="su-step${date ? " on" : ""}" data-su="${k}" data-sudeal="${esc(d.id)}" data-suman="${man ? 1 : 0}" ${locked ? "disabled" : ""} title="${locked ? "Repéré automatiquement dans l'historique" : man ? "Cliquer pour décocher" : "Cliquer pour cocher"}"><span>${date ? "✓ " : ""}${label}</span><small>${date ? esc(frDay(date)) + (locked ? " · auto" : "") : "pas encore"}</small></button>`;
+  }).join("");
+  const next = SU_STEPS.find(([k]) => !(ex[k] || auto[k]));
+  return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}</section>`;
+}
+document.addEventListener("click", async ev => {
+  const b = ev.target.closest?.("[data-su]"); if (!b || b.disabled) return;
+  ev.preventDefault();
+  const id = b.dataset.sudeal, k = b.dataset.su;
+  try {
+    const row = await updateE("deals", id, {extra: {[k]: b.dataset.suman === "1" ? "" : today()}});
+    S.deals.set(row.id, row); toast("Enregistré");
+    const tmp = document.createElement("div"); tmp.innerHTML = scanupBlock(row, SU_ACTS.get(id) || []);
+    if (tmp.firstElementChild) b.closest("section")?.replaceWith(tmp.firstElementChild);
+  } catch (err) { failToast(err); }
+});
+
 function drawDeal(id, dr = $("#panel .drawer")) {
   if (!dr) return; const d = S.deals.get(id);
   if (!d) { dr.innerHTML = `<div class="db"><div class="empty"><h3>Affaire introuvable</h3><p>Elle a peut-être été supprimée.</p><button class="btn" data-pc>Fermer</button></div></div>`; dr.querySelector("[data-pc]").onclick = closePanel; return; }
@@ -966,6 +1004,7 @@ function drawDeal(id, dr = $("#panel .drawer")) {
     <div class="db">
       ${d.status === "lost" ? `<section class="sec"><label class="f"><span>Raison de la perte</span><input type="text" id="dLost" value="${esc(d.lost_reason || "")}"></label></section>` : ""}
       ${dealSummary(d)}
+      ${scanupBlock(d, S.panelActs || [])}
       <section class="sec"><h3>Affaire</h3><div class="grid2">
         <label class="f"><span>Valeur (€)</span><input type="number" id="dValue" min="0" step="100" value="${esc(d.value || 0)}"></label>
         <label class="f"><span>Clôture prévue</span><input type="date" id="dClose" value="${esc(d.expected_close_date || "")}"></label>

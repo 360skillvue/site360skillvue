@@ -229,6 +229,11 @@ header :focus-visible{outline-color:#fff}
 .mail-row .when{font-size:12px;color:var(--muted);white-space:nowrap}
 .mail-row small{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mail-row p{margin:0;font-size:12px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.su-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.su-step{display:grid;gap:2px;justify-items:start;text-align:left;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--muted);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.su-step.on{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.su-step small{font-weight:500;font-size:11px;color:inherit;opacity:.85}
+.su-step:disabled{cursor:default}
 .mail-row p.full{display:block;overflow:visible;white-space:pre-wrap;overflow-wrap:anywhere;color:inherit;font-size:13px;line-height:1.45;padding:6px 0}
 .mail-row a{font-size:12px;font-weight:600;color:var(--accent)}
 @media (prefers-color-scheme:light){:root:not([data-theme="dark"]) body{background:linear-gradient(180deg,#e6efff 0,var(--bg) 340px) fixed,var(--bg)}}

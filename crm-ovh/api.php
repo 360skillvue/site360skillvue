@@ -103,7 +103,9 @@ function route(string $r, string $method, array $b, array $me): void {
         foreach (['deal_id', 'org_id', 'person_id'] as $k) if (!empty($_GET[$k])) json_out(array_map('out_row', q(ACT_SQL . " WHERE a.$k = ? ORDER BY a.done, a.due_date, a.due_time", [(int)$_GET[$k]])->fetchAll()));
         $since = gmdate('Y-m-d H:i:s', time() - 45 * 86400);
         // Repère « à vérifier » : nombre d'e-mails échangés avec l'organisation (ou la personne) depuis la création d'une activité encore à faire.
-        $acts = array_map('out_row', q(ACT_SQL . ' WHERE a.done = 0 OR a.done_time >= ?', [$since])->fetchAll());
+        // Les notes (dont celles reprises de Pipedrive) restent visibles sur les fiches : elles ne sont pas chargées ici,
+        // sinon la liste pèse près d'un mégaoctet à chaque actualisation.
+        $acts = array_map('out_row', q(ACT_SQL . " WHERE a.done = 0 OR (a.done_time >= ? AND a.type <> 'note')", [$since])->fetchAll());
         try {
             require_once __DIR__ . '/lib/mail.php';
             mail_schema();

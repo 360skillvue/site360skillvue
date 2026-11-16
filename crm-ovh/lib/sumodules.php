@@ -188,6 +188,11 @@ function su_modules_trace(array $me, array $s): void {
     $extra = $deal['extra'] ? (json_decode((string)$deal['extra'], true) ?: []) : [];
     $extra['su_modules'] = substr($now, 0, 10);
     q('UPDATE deals SET extra = ?, update_time = ? WHERE id = ?', [json_encode($extra, JSON_UNESCAPED_UNICODE), $now, $deal['id']]);
+    // Illustrations dessinées : faites par Claude avec Canva, sur demande (« fais les illustrations du client … »).
+    $ids = implode(', ', array_map(fn($m) => 'n° ' . $m['id'] . ' (' . $m['type'] . ')', $s['mods']));
+    q('INSERT INTO activities (type, subject, due_date, done, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?)',
+      ['task', mb_substr('ScanUp : demander à Claude les illustrations Canva des modules (' . trim(preg_replace('/\s*\(.*$/u', '', $s['client'])) . ')', 0, 500), substr($now, 0, 10), (int)$me['id'],
+       $deal['id'], $deal['person_id'], $deal['org_id'], "Modules : $ids.\nMétiers : " . ($s['jobs'] ?: 'non précisés') . "\nDemander à Claude : « fais les illustrations Canva des modules $ids ». L'image provisoire du CRM reste en place en attendant.", $now, $now]);
     // La tâche « préparer les modules et envoyer les vignettes » devient « envoyer les vignettes ».
     q("UPDATE activities SET subject = REPLACE(subject, 'préparer les modules et envoyer les vignettes', 'envoyer les vignettes'), update_time = ? WHERE deal_id = ? AND done = 0 AND subject LIKE 'ScanUp : préparer les modules%'", [$now, $deal['id']]);
 }

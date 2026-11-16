@@ -279,6 +279,33 @@ function mail_sync_all(): array {
     return $out;
 }
 
+/* Texte complet d'un e-mail. Le CRM ne garde d'abord qu'un aperçu ; le texte entier est lu dans la boîte Microsoft
+   de la personne qui a reçu ou envoyé le message, la première fois qu'on le demande, puis gardé en base. */
+function mail_body(int $id): array {
+    mail_schema();
+    if (!q("SHOW COLUMNS FROM crm_emails LIKE 'body'")->fetch()) q('ALTER TABLE crm_emails ADD COLUMN body MEDIUMTEXT NULL');
+    $e = q('SELECT user_id, web_link, body FROM crm_emails WHERE id = ?', [$id])->fetch();
+    if (!$e) throw new RuntimeException('E-mail introuvable.');
+    if ($e['body'] !== null && $e['body'] !== '') return ['body' => (string)$e['body']];
+    if (!preg_match('/[?&]ItemID=([^&]+)/', (string)$e['web_link'], $m)) throw new RuntimeException("Ce message ne peut pas être relu : ouvrez-le dans Outlook.");
+    // L'identifiant du lien Outlook devient celui de Microsoft Graph en remplaçant « + » par « _ » et « / » par « - ».
+    $item = strtr(rawurldecode($m[1]), '+/', '_-');
+    $uid = (int)$e['user_id'];
+    $t = ms_tokens()[(string)$uid] ?? null;
+    if (!is_array($t) || empty($t['refresh'])) throw new RuntimeException("La boîte qui contient ce message n'est plus connectée : ouvrez-le dans Outlook.");
+    $j = ms_token_request(['grant_type' => 'refresh_token', 'refresh_token' => $t['refresh']]);
+    if (!empty($j['refresh_token'])) ms_save_token($uid, ['refresh' => $j['refresh_token']]);
+    [$code, $r] = ms_http('GET', 'https://graph.microsoft.com/v1.0/me/messages/' . rawurlencode($item) . '?%24select=body',
+        ['Authorization: Bearer ' . $j['access_token'], 'Prefer: outlook.body-content-type="text"']);
+    if ($code !== 200) throw new RuntimeException('Lecture du message impossible (code ' . $code . ') : ouvrez-le dans Outlook.');
+    $text = (string)($r['body']['content'] ?? '');
+    if (strtolower((string)($r['body']['contentType'] ?? 'text')) === 'html') $text = html_entity_decode(strip_tags(preg_replace('/<(br|\/p|\/div)[^>]*>/i', "\n", $text)), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $text = trim((string)preg_replace("/\n{3,}/", "\n\n", (string)preg_replace("/[ \t]+\n/", "\n", str_replace(["\r\n", "\r"], "\n", $text))));
+    $text = mb_substr($text, 0, 100000);
+    if ($text !== '') q('UPDATE crm_emails SET body = ? WHERE id = ?', [$text, $id]);
+    return ['body' => $text];
+}
+
 /* E-mails d'une fiche. Pour une affaire : ceux rattachés à l'affaire et ceux de sa personne. */
 function mail_list(string $kind, int $id): array {
     mail_schema();

@@ -11,6 +11,7 @@ require_once __DIR__ . '/oauth.php'; // crm_base_url()
 
 const SU_CABINET_MODELES = 10;     // cabinet 360skillvue : les modules modèles sont dans son espace évaluateurs
 const SU_AUTRICE = 36;             // Julie Sallamand, auteure des modules modèles
+const SU_CORRECTRICE = 188;        // Laura Gasqueres, évaluatrice des modules TMS et RPS des clients test
 // Modules modèles par type et modalité de retour (rcat : résultat et conduite à tenir ; perso : retour personnalisé).
 // Une version courte peut être ajoutée par la clé « TYPE|retour|court » dans le réglage scanup_models.
 const SU_MODELES = ['TMS|rcat' => 341, 'TMS|perso' => 338, 'RPS|rcat' => 342, 'RPS|perso' => 339];
@@ -143,10 +144,11 @@ function su_modules_step(array $me, array $s): array {
         $s['log'][] = 'Image du module fabriquée et posée.';
         $s['step'] = 'eval'; break;
     case 'eval':
+        $mod['evaluator'] = (int)(setting('scanup_correctrice', 0) ?: SU_CORRECTRICE);
         if ($mod['evaluator']) {
             [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/evaluators', ['evaluateurId' => $mod['evaluator']]);
             su_ok($c, $j, 'Désignation du correcteur');
-            $s['log'][] = 'Correcteur repris du modèle.';
+            $s['log'][] = 'Évaluatrice désignée : Laura Gasqueres.';
         } else $s['log'][] = 'Attention : le modèle n\'a pas de correcteur ; à désigner dans ScanUp.';
         $s['step'] = 'publish'; break;
     case 'publish':

@@ -1072,7 +1072,9 @@ function scanupBlock(d, acts) {
   }).join("");
   const next = steps.find(([k]) => !(ex[k] || auto[k]));
   const canCreate = !(ex.su_client || auto.su_client);
-  return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}${canCreate ? `<div style="margin-top:8px"><button type="button" class="btn sm" data-sutrial="${esc(d.id)}">Créer le client test dans ScanUp</button></div>` : ""}</section>`;
+  // Client déjà créé mais modules pas encore faits : le même bouton propose d'ajouter les modules.
+  const canMods = !canCreate && !ex.su_modules && !acts.some(a => /^ScanUp cabinet : modules du client test/i.test(a.subject || ""));
+  return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}${canCreate || canMods ? `<div style="margin-top:8px"><button type="button" class="btn sm" data-sutrial="${esc(d.id)}">${canCreate ? "Créer le client test dans ScanUp" : "Ajouter les modules au client test"}</button></div>` : ""}</section>`;
 }
 /* Création du client test dans ScanUp : organisation « … (test) », responsable de projet à l'alias Gmail de la personne
    connectée (jamais remis au client) et opérateurs sans e-mail. Passe par Make, qui détient l'accès au cabinet. */
@@ -1082,37 +1084,96 @@ function openTrial(d) {
   const base = (d.org_name || d.title || "client").replace(/\s*\(.*$/, "").trim();
   const slug = norm(base).replace(/[^a-z0-9]/g, "").slice(0, 12) || "client";
   const who = /maxime/i.test(S.me?.email || "") ? "maximebailloud" : "lauredellamonica";
-  $("#layer").innerHTML = `<div class="scrim" data-close></div><div class="modal" data-close><form class="mbox" id="trialForm" role="dialog" aria-modal="true" aria-label="Créer le client test dans ScanUp">
-    <div class="mh"><h2>Créer le client test dans ScanUp</h2><button type="button" class="btn ghost sm" data-x aria-label="Fermer">${ico("x")}</button></div>
+  // Client déjà créé ? Numéro gardé sur l'affaire, ou lu dans la trace de création.
+  let orgId = String((d.extra || {}).su_org || ""), cabId = String((d.extra || {}).su_cab || "");
+  if (!orgId) for (const a of SU_ACTS.get(d.id) || []) { const mm = /créée \(n° (\d+)\) dans le cabinet n° (\d+)/.exec(a.note || ""); if (mm) { orgId = mm[1]; cabId = mm[2]; break; } }
+  const exists = !!orgId;
+  const end = (() => { const x = new Date(); x.setDate(x.getDate() + 30); return isoDay(x); })();
+  const radios = (name, opts, val) => `<div class="seg" role="radiogroup" data-radio="${name}">${opts.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${k === val}">${l}</button>`).join("")}</div>`;
+  $("#layer").innerHTML = `<div class="scrim" data-close></div><div class="modal" data-close><form class="mbox" id="trialForm" role="dialog" aria-modal="true" aria-label="Client test ScanUp">
+    <div class="mh"><h2>${exists ? "Ajouter les modules au client test" : "Créer le client test dans ScanUp"}</h2><button type="button" class="btn ghost sm" data-x aria-label="Fermer">${ico("x")}</button></div>
     <div class="mb">
-      <p class="note" style="margin:0">Crée dans ScanUp l'organisation cliente, son responsable de projet (votre alias, jamais remis au client) et les opérateurs sans e-mail. Les modules, la session, les crédits et les vignettes restent à faire ensuite.</p>
+      <p class="note" style="margin:0">${exists ? "Le client existe déjà dans ScanUp : seuls les modules sont créés." : "Crée l'organisation cliente, son responsable de projet (votre alias, jamais remis au client) et les opérateurs sans e-mail."} Les modules sont copiés du modèle le plus proche, adaptés au client et à ses métiers, illustrés, publiés, mis à disposition avec une session et des crédits, puis les opérateurs y sont inscrits.</p>
       <label class="f"><span>Nom du client test (doit contenir « test »)</span><input type="text" id="tName" maxlength="120" value="${esc(base + " (test)")}"></label>
       <div class="grid2">
-        <label class="f"><span>N° du cabinet ScanUp</span><input type="number" id="tCab" min="1" value="${final ? 10 : ""}" placeholder="${final ? "" : "cabinet test du distributeur"}"></label>
-        <label class="f"><span>Nombre de testeurs</span><input type="number" id="tN" min="1" max="20" value="5"></label>
+        <label class="f"><span>N° du cabinet ScanUp</span><input type="number" id="tCab" min="1" value="${esc(cabId || (final ? "10" : ""))}" placeholder="${final ? "" : "cabinet test du distributeur"}"></label>
+        <label class="f"><span>N° de l'organisation, si déjà créée</span><input type="number" id="tOrg" min="1" value="${esc(orgId)}" placeholder="vide : elle sera créée"></label>
       </div>
-      <label class="f"><span>Identifiant des opérateurs (suivi de 1, 2, 3…)</span><input type="text" id="tPrefix" maxlength="20" value="${esc(slug)}"></label>
-      <label class="f"><span>Responsable de projet (alias Gmail)</span><input type="text" id="tRp" value="${esc(who + "+" + slug + "rp@gmail.com")}"></label>
-      ${final ? "" : `<p class="note" style="margin:0">Distributeur : le cabinet test doit déjà exister dans ScanUp et figurer dans la table Make des cabinets en essai, avec son compte administrateur.</p>`}
-      <div id="tOut" class="note" style="margin:0"></div>
+      <div id="tNew" ${exists ? "hidden" : ""} class="grid2">
+        <label class="f"><span>Nombre de testeurs</span><input type="number" id="tN" min="1" max="20" value="5"></label>
+        <label class="f"><span>Identifiant des opérateurs (suivi de 1, 2, 3…)</span><input type="text" id="tPrefix" maxlength="20" value="${esc(slug)}"></label>
+        <label class="f" style="grid-column:1/-1"><span>Responsable de projet (alias Gmail)</span><input type="text" id="tRp" value="${esc(who + "+" + slug + "rp@gmail.com")}"></label>
+      </div>
+      <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tMods" ${final ? "checked" : ""}> Créer aussi les modules</label>
+      <div id="tModsBox" class="stack" ${final ? "" : "hidden"}>
+        <div class="f"><span>Questionnaire</span>${radios("types", [["TMS", "TMS"], ["RPS", "RPS"], ["both", "Les deux"]], "both")}</div>
+        <div class="grid2">
+          <div class="f"><span>Pays</span>${radios("country", [["FR", "France"], ["CH", "Suisse"]], "FR")}</div>
+          <div class="f"><span>Longueur</span>${radios("length", [["standard", "Standard"], ["court", "Court"]], "standard")}</div>
+        </div>
+        <label class="f"><span>Métiers ou postes concernés</span><input type="text" id="tJobs" maxlength="200" placeholder="Par exemple : opérateurs de production, caristes, préparateurs de commandes"></label>
+        <div class="f"><span>Retour au salarié</span>${radios("retour", [["rcat", "Résultat et conduite à tenir"], ["perso", "Retour personnalisé"], ["both", "Les deux, pour comparer"]], "rcat")}</div>
+        <label class="f"><span>Fin de la session</span><input type="date" id="tEnd" value="${end}"></label>
+        <p class="note" style="margin:0">« Les deux, pour comparer » : la moitié des opérateurs reçoit le résultat et la conduite à tenir, l'autre moitié le retour personnalisé. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
+      </div>
+      ${final ? "" : `<p class="note" style="margin:0">Distributeur : le cabinet test doit déjà exister dans ScanUp et figurer dans la table Make des cabinets en essai, avec son compte administrateur. Les modules automatiques ne concernent que le cabinet 360skillvue (n° 10).</p>`}
+      <div class="progress" id="tProg" hidden><i style="width:0%"></i></div>
+      <div id="tOut" class="note" style="margin:0;white-space:pre-line"></div>
     </div>
-    <div class="mf"><button type="button" class="btn" data-x>Fermer</button><button type="submit" class="btn primary">Créer dans ScanUp</button></div></form></div>`;
+    <div class="mf"><button type="button" class="btn" data-x>Fermer</button><button type="submit" class="btn primary">${exists ? "Créer les modules" : "Créer dans ScanUp"}</button></div></form></div>`;
   $("#layer").onclick = e => { if (e.target.closest("[data-x]")) closeModal(); };
   const f = $("#trialForm");
-  f.onsubmit = async e => { e.preventDefault();
-    const body = {deal_id: d.id, name: $("#tName").value.trim(), cabinet: Number($("#tCab").value), n: Number($("#tN").value), prefix: $("#tPrefix").value.trim().toLowerCase(), rp_email: $("#tRp").value.trim().toLowerCase()};
-    if (!/test/i.test(body.name)) return toast("Le nom doit contenir « test ».", true);
-    if (!body.cabinet) return toast("Indiquez le numéro du cabinet.", true);
-    const btn = f.querySelector("[type=submit]"); btn.disabled = true; btn.textContent = "Création en cours…";
-    $("#tOut").textContent = "Création dans ScanUp : cela prend quelques secondes par compte.";
+  f.querySelectorAll("[data-radio]").forEach(g => g.addEventListener("click", e => { const b = e.target.closest("[data-k]"); if (!b) return;
+    g.querySelectorAll("[data-k]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); }));
+  const radio = n => f.querySelector(`[data-radio="${n}"] [aria-pressed="true"]`)?.dataset.k;
+  $("#tMods").onchange = e => { $("#tModsBox").hidden = !e.target.checked; };
+  $("#tOrg").oninput = e => { $("#tNew").hidden = !!e.target.value; };
+  const out = $("#tOut"), prog = $("#tProg");
+  const show = (lines, err) => { out.innerHTML = lines.map(x => "✓ " + esc(x)).join("<br>") + (err ? `<br><b style="color:var(--bad)">${esc(err)}</b>` : ""); };
+  let state = null, doneLines = [];
+  async function runModules(btn) {
+    prog.hidden = false;
     try {
-      const r = await api("scanup_trial", {method: "POST", body});
-      $("#tOut").innerHTML = (r.done || []).map(x => "✓ " + esc(x)).join("<br>") + (r.error ? `<br><b style="color:var(--bad)">${esc(r.error)}</b>` : "<br>Une tâche « préparer les modules et envoyer les vignettes » a été créée.");
-      btn.textContent = r.ok ? "Créé" : "Arrêté";
-      toast(r.ok ? "Client test créé dans ScanUp" : "Création incomplète", !r.ok);
-      try { await loadData(); } catch {}
-      if (S.panel) refreshPanel();
-    } catch (err) { btn.disabled = false; btn.textContent = "Créer dans ScanUp"; $("#tOut").textContent = ""; failToast(err); }
+      do {
+        state = await api("scanup_modules", {method: "POST", body: {state}});
+        prog.firstElementChild.style.width = (state.pct || 0) + "%";
+        show([...doneLines, ...(state.log || [])]);
+      } while (state.step !== "done");
+      btn.textContent = "Terminé"; toast("Modules créés et opérateurs inscrits");
+    } catch (err) {
+      show([...doneLines, ...((state && state.log) || [])], err.message);
+      btn.disabled = false; btn.textContent = "Reprendre là où ça s'est arrêté"; btn.dataset.resume = "1";
+      toast("Création des modules interrompue", true);
+    }
+    try { await loadData(); } catch {}
+    if (S.panel) refreshPanel();
+  }
+  f.onsubmit = async e => { e.preventDefault();
+    const btn = f.querySelector("[type=submit]");
+    if (btn.dataset.resume) { btn.disabled = true; btn.textContent = "Reprise…"; return runModules(btn); }
+    const name = $("#tName").value.trim(), cabinet = Number($("#tCab").value), wantMods = $("#tMods").checked;
+    let org = Number($("#tOrg").value) || 0;
+    if (!/test/i.test(name)) return toast("Le nom doit contenir « test ».", true);
+    if (!cabinet) return toast("Indiquez le numéro du cabinet.", true);
+    const t = radio("types");
+    const modIn = {deal_id: d.id, cabinet, client: name, types: t === "both" ? ["TMS", "RPS"] : [t], country: radio("country"), length: radio("length"),
+      retour: radio("retour"), jobs: $("#tJobs").value.trim(), end_date: $("#tEnd").value};
+    if (wantMods && !modIn.jobs) return toast("Indiquez les métiers ou postes concernés : ils servent à adapter les modules.", true);
+    if (wantMods && cabinet !== 10) return toast("Les modules automatiques ne concernent que le cabinet 360skillvue (n° 10).", true);
+    btn.disabled = true; btn.textContent = "Création en cours…";
+    doneLines = [];
+    if (!org) {
+      out.textContent = "Création du client dans ScanUp : cela prend quelques secondes par compte.";
+      try {
+        const r = await api("scanup_trial", {method: "POST", body: {deal_id: d.id, name, cabinet, n: Number($("#tN").value), prefix: $("#tPrefix").value.trim().toLowerCase(), rp_email: $("#tRp").value.trim().toLowerCase()}});
+        doneLines = r.done || [];
+        if (!r.ok) { show(doneLines, r.error); btn.textContent = "Arrêté"; toast("Création incomplète", true); return; }
+        org = r.org_id; $("#tOrg").value = org;
+      } catch (err) { btn.disabled = false; btn.textContent = "Créer dans ScanUp"; out.textContent = ""; return failToast(err); }
+    }
+    if (!wantMods) { show(doneLines); btn.textContent = "Créé"; toast("Client test créé dans ScanUp"); try { await loadData(); } catch {} return; }
+    state = {...modIn, org_id: org};
+    return runModules(btn);
   };
 }
 document.addEventListener("click", async ev => {

@@ -345,6 +345,14 @@ function route(string $r, string $method, array $b, array $me): void {
         try { json_out(scanup_trial_create($me, $b)); }
         catch (RuntimeException $ex) { fail($ex->getMessage()); }
 
+    case 'scanup_modules':
+        // Modules du client test : une étape par appel, le navigateur enchaîne jusqu'à « done ».
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require __DIR__ . '/lib/sumodules.php';
+        @set_time_limit(180);
+        try { json_out(su_modules_step($me, (array)($b['state'] ?? []))); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'cadrage':
         // Lien de chaque affaire vers sa fiche de cadrage Airtable. Rangé à part pour ne pas être écrasé par l'import Pipedrive.
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);

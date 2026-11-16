@@ -23,18 +23,24 @@ function scanup_save(array $in): void {
 }
 
 /* Un appel de création dans ScanUp, par Make. Renvoie [code, réponse décodée]. */
-function scanup_call(int $cabinet, string $path, array $body): array {
+/* $method : POST, GET ou PATCH (Make refuse tout le reste, et toute suppression). $asUser : identifiant ScanUp de l'auteure des
+   modules, que le compte administrateur du cabinet incarne pour agir dans l'espace évaluateurs. $fileUrl : image du CRM
+   (media/su/…) que Make télécharge puis envoie à ScanUp en pièce jointe. */
+function scanup_call(int $cabinet, string $path, ?array $body, string $method = 'POST', ?int $asUser = null, ?string $fileUrl = null): array {
     $c = scanup_conf();
     if ($c['url'] === '' || $c['key'] === '') throw new RuntimeException("La liaison avec ScanUp n'est pas encore réglée.");
+    $payload = ['key' => $c['key'], 'cabinetId' => (string)$cabinet, 'method' => $method, 'path' => $path,
+                'body' => $body === null ? '' : json_encode($body, JSON_UNESCAPED_UNICODE), 'asUserId' => $asUser ? (string)$asUser : ''];
+    if ($fileUrl) { $payload['fileUrl'] = $fileUrl; $payload['fileName'] = 'module.jpg'; }
     $ch = curl_init($c['url']);
-    curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 60, CURLOPT_POST => true, CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
-        CURLOPT_POSTFIELDS => json_encode(['key' => $c['key'], 'cabinetId' => (string)$cabinet, 'method' => 'POST', 'path' => $path, 'body' => json_encode($body, JSON_UNESCAPED_UNICODE)], JSON_UNESCAPED_UNICODE)]);
+    curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 90, CURLOPT_POST => true, CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+        CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_UNICODE)]);
     $raw = curl_exec($ch);
     $err = curl_error($ch);
     curl_close($ch);
     if ($raw === false) throw new RuntimeException('Make ne répond pas : ' . $err);
     // Make répond « code | réponse de ScanUp ». Autre chose : la demande a été refusée (clé, cabinet absent de la table).
-    if (!preg_match('/^\s*(\d{3}) \| (.*)$/s', (string)$raw, $m)) throw new RuntimeException("Make a refusé la demande : le cabinet n° $cabinet est-il bien dans la table des cabinets en essai, avec son mot de passe ?");
+    if (!preg_match('/^\s*(\d{3}) \| (.*)$/s', (string)$raw, $m)) throw new RuntimeException("Make a refusé la demande ($method $path) : le cabinet n° $cabinet est-il bien dans la table des cabinets en essai, avec son mot de passe, et le scénario Make est-il à jour ?");
     $j = json_decode($m[2], true);
     return [(int)$m[1], is_array($j) ? $j : []];
 }
@@ -95,6 +101,7 @@ function scanup_trial_create(array $me, array $in): array {
         ['note', mb_substr("ScanUp cabinet : client test « $name » créé", 0, 500), substr($now, 0, 10), $now, (int)$me['id'], $dealId, $deal['person_id'], $deal['org_id'], $note, $now, $now]);
     $extra = $deal['extra'] ? (json_decode((string)$deal['extra'], true) ?: []) : [];
     $extra['su_client'] = substr($now, 0, 10);
+    $extra['su_org'] = (string)$orgId; $extra['su_cab'] = (string)$cabinet;
     if (!$error) $extra['su_ops'] = substr($now, 0, 10);
     q('UPDATE deals SET extra = ?, update_time = ? WHERE id = ?', [json_encode($extra, JSON_UNESCAPED_UNICODE), $now, $dealId]);
     if (!$error) {

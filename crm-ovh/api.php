@@ -326,6 +326,20 @@ function route(string $r, string $method, array $b, array $me): void {
         try { json_out(mail_body((int)($_GET['id'] ?? 0))); }
         catch (RuntimeException $ex) { fail($ex->getMessage()); }
 
+    case 'scanup_conf':
+        // Liaison avec ScanUp par Make. L'adresse, la clé et le mot de passe initial sont enregistrés mais jamais renvoyés.
+        require __DIR__ . '/lib/scanup.php';
+        if ($method === 'POST') { require_admin($me); try { scanup_save($b); } catch (RuntimeException $ex) { fail($ex->getMessage()); } }
+        json_out(scanup_public());
+
+    case 'scanup_trial':
+        // Création d'un client test ScanUp (organisation, responsable de projet, opérateurs) depuis une affaire.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require __DIR__ . '/lib/scanup.php';
+        @set_time_limit(300);
+        try { json_out(scanup_trial_create($me, $b)); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'cadrage':
         // Lien de chaque affaire vers sa fiche de cadrage Airtable. Rangé à part pour ne pas être écrasé par l'import Pipedrive.
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);

@@ -211,11 +211,46 @@ async function runTagsImport() {
   } finally { IMP.running = false; render(); }
 }
 
+/* ---------- Coordonnées du contact ---------- */
+const firstVal = xs => ((xs || []).find(x => x.primary) || (xs || [])[0] || {}).value || "";
+const telHref = v => "tel:" + String(v).replace(/[^+\d]/g, "");
+/* Ligne compacte : téléphone (appel) et e-mail (fenêtre d'envoi du CRM) du contact, pour les listes et les cartes. */
+function contactLine(x, opts = {}) {
+  const ph = firstVal(x.contact_phones), em = firstVal(x.contact_emails);
+  if (!x.contact_id || (!ph && !em)) return "";
+  const who = x.contact_name && x.contact_name !== x.person_name ? `<span class="ct-who">${esc(x.contact_name)}</span>` : "";
+  return `<span class="ct-line">${who}${ph ? `<a class="ct" href="${esc(telHref(ph))}" draggable="false" title="Appeler ${esc(x.contact_name || "")}">${ico("call")}<span>${esc(ph)}</span></a>` : ""}${em ? `<a class="ct" href="mailto:${esc(em)}" draggable="false" data-mailp="${esc(x.contact_id)}" data-mailto-addr="${esc(em)}" data-mdeal="${esc(opts.dealId || x.deal_id || "")}" title="Écrire à ${esc(x.contact_name || "")}">${ico("email")}<span>${esc(em)}</span></a>` : ""}</span>`;
+}
+/* Bloc détaillé : toutes les adresses et tous les numéros, avec copie, pour la fiche affaire et la fenêtre activité. */
+function contactBlock(x, opts = {}) {
+  if (!x.contact_id) return opts.empty ? `<p class="note">Aucun contact lié : choisissez une personne pour voir ses coordonnées.</p>` : "";
+  const phones = (x.contact_phones || []).map(p => p.value).filter(Boolean), emails = (x.contact_emails || []).map(p => p.value).filter(Boolean);
+  const copy = v => `<button type="button" class="btn sm ghost" data-copy="${esc(v)}" title="Copier" aria-label="Copier ${esc(v)}">Copier</button>`;
+  return `<div class="ct-block"><div class="ct-head"><b>${esc(x.contact_name || "Contact")}</b>${x.contact_name !== x.person_name && !x.person_id ? `<span class="note">premier contact de l'organisation</span>` : ""}
+      <button type="button" class="btn sm ghost" data-goct="${esc(x.contact_id)}">Voir la fiche</button></div>
+    ${phones.map(v => `<div class="ct-row"><a class="ct" href="${esc(telHref(v))}">${ico("call")}<span>${esc(v)}</span></a>${copy(v)}</div>`).join("")}
+    ${emails.map(v => `<div class="ct-row"><a class="ct" href="mailto:${esc(v)}" data-mailp="${esc(x.contact_id)}" data-mailto-addr="${esc(v)}" data-mdeal="${esc(opts.dealId || x.deal_id || "")}">${ico("email")}<span>${esc(v)}</span></a>${copy(v)}</div>`).join("")}
+    ${!phones.length && !emails.length ? `<p class="note">Ni téléphone ni e-mail sur la fiche de ce contact.</p>` : ""}</div>`;
+}
+/* Clics sur les coordonnées : ils ne doivent pas ouvrir la ligne ou la carte autour. */
+document.addEventListener("click", e => {
+  const cp = e.target.closest("[data-copy]");
+  if (cp) { e.preventDefault(); e.stopPropagation(); const v = cp.dataset.copy;
+    navigator.clipboard?.writeText(v).then(() => toast("Copié : " + v), () => toast(v)); return; }
+  const go = e.target.closest("[data-goct]");
+  if (go) { e.preventDefault(); e.stopPropagation(); if (S.modal) closeModal(); openEntity("person", go.dataset.goct); return; }
+  const a = e.target.closest("a.ct");
+  if (!a) return;
+  e.stopPropagation();
+  if (a.dataset.mailp) { e.preventDefault(); openMail({to: a.dataset.mailtoAddr, person_id: a.dataset.mailp, deal_id: a.dataset.mdeal || null, name: ""}); }
+}, true);
+
 function cardHtml(d, a) {
   const sub = [d.org_name, d.person_name].filter(Boolean).join(" · ");
   const tag = d.status === "won" ? `<span class="won-tag">Gagnée</span>` : d.status === "lost" ? `<span class="lost-tag">Perdue</span>` : "";
   return `<div class="card" role="button" tabindex="0" draggable="true" data-deal="${esc(d.id)}"><span class="t">${esc(d.title || "Sans titre")}</span>
     ${sub ? `<span class="s">${esc(sub)}</span>` : ""}
+    ${contactLine(d, {dealId: d.id})}
     ${tagChips((S.dealTags || {})[d.id])}
     <span class="row"><span class="num" style="font-size:12px">${d.value ? eur(d.value) : ""}</span>${tag}</span>
     <span class="row">${d.status === "open" ? dueChip(a) : `<span></span>`}<span class="av" title="${esc(memberName(d.owner_id))}">${esc(initials(memberName(d.owner_id)))}</span></span></div>`;
@@ -228,7 +263,7 @@ function actRow(a) {
   return `<div class="r ${a.done ? "done" : ""}" tabindex="0" data-actid="${esc(a.id)}">
     <button class="check ${a.done ? "on" : ""}" data-toggle="${esc(a.id)}" aria-label="${a.done ? "Marquer à faire" : "Marquer comme faite"}">${a.done ? ico("check") : ""}</button>
     <span class="tico" title="${esc(typeLabel(a.type))}">${ico(a.type)}</span>
-    <span class="main"><b>${esc(a.subject || typeLabel(a.type))}</b>${link ? `<small>${esc(link)}</small>` : ""}</span>
+    <span class="main"><b>${esc(a.subject || typeLabel(a.type))}</b>${link ? `<small>${esc(link)}</small>` : ""}${contactLine(a)}</span>
     <span class="when">${!a.done && a.mails_since > 0 ? `<span class="chip today" style="white-space:nowrap;margin-right:8px" title="Des e-mails ont été échangés depuis la création de cette activité : ouvrez-la pour vérifier qu'elle est toujours d'actualité.">À vérifier : ${a.mails_since} e-mail${a.mails_since > 1 ? "s" : ""} depuis</span>` : ""}<span style="color:${late ? "var(--bad)" : "inherit"}">${esc(a.due_date ? fmtDay(a.due_date) : "Sans date")}${a.due_time ? " " + esc(a.due_time) : ""}</span>
       <span class="av" style="margin-left:6px" title="${esc(memberName(a.owner_id))}">${esc(initials(memberName(a.owner_id)))}</span></span></div>`;
 }
@@ -791,7 +826,10 @@ function openAct(a, preset = {}) {
   const d0 = preset.deal_id ? S.deals.get(preset.deal_id) : null;
   const m = a ? {...a} : {type: "call", subject: "", due_date: today(), due_time: "", duration: "", owner_id: S.me.id, done: false, note: "",
     deal_id: preset.deal_id || null, deal_title: d0?.title || null, org_id: preset.org_id || d0?.org_id || null, org_name: preset.org_name || d0?.org_name || null,
-    person_id: preset.person_id || d0?.person_id || null, person_name: preset.person_name || d0?.person_name || null};
+    person_id: preset.person_id || d0?.person_id || null, person_name: preset.person_name || d0?.person_name || null,
+    contact_id: d0?.contact_id || null, contact_name: d0?.contact_name || null, contact_emails: d0?.contact_emails || [], contact_phones: d0?.contact_phones || []};
+  if (isNew && preset.person_id && preset.person_id !== m.contact_id) { m.contact_id = null; m.contact_emails = []; m.contact_phones = [];
+    api("get", {params: {e: "persons", id: preset.person_id}}).then(p => { if (S.modal !== m) return; m.contact_id = p.id; m.contact_name = p.name; m.contact_emails = p.emails || []; m.contact_phones = p.phones || []; const b = $("#actCt"); if (b) b.innerHTML = contactBlock(m); }).catch(() => {}); }
   S.modal = m;
   histPush();
   let ctxHtml = "";
@@ -809,6 +847,7 @@ function openAct(a, preset = {}) {
           <label class="f"><span>Responsable</span><select id="aOwner">${team().map(u => `<option value="${esc(u.id)}" ${u.id === m.owner_id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select></label></div>
         ${pickerHtml("deal", "deal", {id: m.deal_id, name: m.deal_title}, "Affaire")}
         <div class="grid2">${pickerHtml("person", "person", {id: m.person_id, name: m.person_name}, "Personne")}${pickerHtml("org", "org", {id: m.org_id, name: m.org_name}, "Organisation")}</div>
+        <div id="actCt">${contactBlock(m)}</div>
         <label class="f"><span>Note</span><textarea id="aNote" rows="4">${esc(m.note || "")}</textarea></label>
         <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="aDone" ${m.done ? "checked" : ""}> Faite</label>
       </div>
@@ -818,8 +857,11 @@ function openAct(a, preset = {}) {
     const sync = () => { m.subject = $("#aSubj").value; m.due_date = $("#aDate").value; m.due_time = $("#aTime").value; m.duration = $("#aDur").value; m.owner_id = $("#aOwner").value; m.note = $("#aNote").value; m.done = $("#aDone").checked; };
     $("#types").onclick = e => { const b = e.target.closest("[data-type]"); if (!b) return; sync(); m.type = b.dataset.type; draw(); };
     bindPicker(f, "deal", v => { sync(); m.deal_id = v?.id || null; m.deal_title = v?.name || null;
-      if (v?.raw) { if (!m.org_id && v.raw.org_id) { m.org_id = v.raw.org_id; m.org_name = v.raw.org_name; } if (!m.person_id && v.raw.person_id) { m.person_id = v.raw.person_id; m.person_name = v.raw.person_name; } } draw(); });
-    bindPicker(f, "person", v => { sync(); m.person_id = v?.id || null; m.person_name = v?.name || null; if (v?.raw?.org_id && !m.org_id) { m.org_id = v.raw.org_id; m.org_name = v.raw.org_name; } draw(); });
+      if (v?.raw) { if (!m.org_id && v.raw.org_id) { m.org_id = v.raw.org_id; m.org_name = v.raw.org_name; } if (!m.person_id && v.raw.person_id) { m.person_id = v.raw.person_id; m.person_name = v.raw.person_name; }
+        if (!m.contact_id && v.raw.contact_id) { m.contact_id = v.raw.contact_id; m.contact_name = v.raw.contact_name; m.contact_emails = v.raw.contact_emails || []; m.contact_phones = v.raw.contact_phones || []; } } draw(); });
+    bindPicker(f, "person", v => { sync(); m.person_id = v?.id || null; m.person_name = v?.name || null;
+      if (v?.raw) { m.contact_id = v.id; m.contact_name = v.name; m.contact_emails = v.raw.emails || []; m.contact_phones = v.raw.phones || []; }
+      else if (!v) { m.contact_id = null; m.contact_emails = []; m.contact_phones = []; } if (v?.raw?.org_id && !m.org_id) { m.org_id = v.raw.org_id; m.org_name = v.raw.org_name; } draw(); });
     bindPicker(f, "org", v => { sync(); m.org_id = v?.id || null; m.org_name = v?.name || null; draw(); });
     $("#layer").onclick = e => { if (e.target.matches("[data-close]") || e.target.closest("[data-x]")) closeModal(); };
     const del = f.querySelector("[data-del]");
@@ -1102,6 +1144,7 @@ function drawDeal(id, dr = $("#panel .drawer")) {
     <div class="db">
       ${d.status === "lost" ? `<section class="sec"><label class="f"><span>Raison de la perte</span><input type="text" id="dLost" value="${esc(d.lost_reason || "")}"></label></section>` : ""}
       ${dealSummary(d)}
+      ${d.contact_id ? `<section class="sec"><h3>Coordonnées</h3>${contactBlock(d, {dealId: d.id})}</section>` : ""}
       ${scanupBlock(d, S.panelActs || [])}
       <section class="sec"><h3>Affaire</h3><div class="grid2">
         <label class="f"><span>Valeur (€)</span><input type="number" id="dValue" min="0" step="100" value="${esc(d.value || 0)}"></label>

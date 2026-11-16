@@ -237,3 +237,14 @@ header :focus-visible{outline-color:#fff}
 .mail-row p.full{display:block;overflow:visible;white-space:pre-wrap;overflow-wrap:anywhere;color:inherit;font-size:13px;line-height:1.45;padding:6px 0}
 .mail-row a{font-size:12px;font-weight:600;color:var(--accent)}
 @media (prefers-color-scheme:light){:root:not([data-theme="dark"]) body{background:linear-gradient(180deg,#e6efff 0,var(--bg) 340px) fixed,var(--bg)}}
+
+/* Coordonnées du contact (listes, cartes, fiches) */
+.ct-line{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;margin-top:3px;font-size:12px;min-width:0}
+.ct-who{color:var(--muted);font-weight:600}
+a.ct{display:inline-flex;align-items:center;gap:5px;color:var(--accent);text-decoration:none;font-weight:600;min-width:0;max-width:100%}
+a.ct span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+a.ct:hover span{text-decoration:underline}
+.card .ct-line{font-size:11px}
+.ct-block{display:grid;gap:6px}
+.ct-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ct-row{display:flex;gap:8px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:8px;padding:5px 6px 5px 10px;min-width:0}

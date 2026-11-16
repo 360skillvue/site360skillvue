@@ -34,14 +34,14 @@ function cast_in(string $type, $v) {
     }
     return null;
 }
-const ID_COLS = ['id', 'owner_id', 'org_id', 'person_id', 'deal_id', 'pipeline_id', 'stage_id'];
+const ID_COLS = ['id', 'owner_id', 'org_id', 'person_id', 'deal_id', 'pipeline_id', 'stage_id', 'contact_id'];
 function out_row(?array $r): ?array {
     if (!$r) return null;
     foreach ($r as $k => $v) {
         if (in_array($k, ID_COLS, true)) $r[$k] = $v === null ? null : (string)$v;
         elseif (in_array($k, ['add_time', 'update_time', 'won_time', 'lost_time', 'close_time', 'stage_change_time', 'done_time'], true)) $r[$k] = $v ? str_replace(' ', 'T', $v) . 'Z' : null;
         elseif (in_array($k, ['extra'], true)) $r[$k] = $v ? (json_decode($v, true) ?: new stdClass) : new stdClass;
-        elseif (in_array($k, ['emails', 'phones'], true)) $r[$k] = $v ? (json_decode($v, true) ?: []) : [];
+        elseif (in_array($k, ['emails', 'phones', 'contact_emails', 'contact_phones'], true)) $r[$k] = $v ? (json_decode($v, true) ?: []) : [];
         elseif ($k === 'done') $r[$k] = (bool)$v;
         elseif ($k === 'value') $r[$k] = (float)$v;
         elseif (in_array($k, ['duration', 'pd_id'], true)) $r[$k] = $v === null ? null : (int)$v;
@@ -49,8 +49,13 @@ function out_row(?array $r): ?array {
     if (array_key_exists('done_time', $r)) $r['done_date'] = $r['done_time'] ? substr($r['done_time'], 0, 10) : null;
     return $r;
 }
-const DEAL_SQL = 'SELECT d.*, o.name AS org_name, p.name AS person_name FROM deals d LEFT JOIN orgs o ON o.id = d.org_id LEFT JOIN persons p ON p.id = d.person_id';
-const ACT_SQL = 'SELECT a.*, d.title AS deal_title, o.name AS org_name, p.name AS person_name FROM activities a LEFT JOIN deals d ON d.id = a.deal_id LEFT JOIN orgs o ON o.id = a.org_id LEFT JOIN persons p ON p.id = a.person_id';
+// Contact affiché avec l'affaire ou l'activité : la personne liée, sinon celle de l'affaire, sinon la première personne de l'organisation.
+const DEAL_SQL = 'SELECT d.*, o.name AS org_name, p.name AS person_name, pc.id AS contact_id, pc.name AS contact_name, pc.emails AS contact_emails, pc.phones AS contact_phones
+  FROM deals d LEFT JOIN orgs o ON o.id = d.org_id LEFT JOIN persons p ON p.id = d.person_id
+  LEFT JOIN persons pc ON pc.id = COALESCE(d.person_id, (SELECT MIN(px.id) FROM persons px WHERE px.org_id = d.org_id))';
+const ACT_SQL = 'SELECT a.*, d.title AS deal_title, o.name AS org_name, p.name AS person_name, pc.id AS contact_id, pc.name AS contact_name, pc.emails AS contact_emails, pc.phones AS contact_phones
+  FROM activities a LEFT JOIN deals d ON d.id = a.deal_id LEFT JOIN orgs o ON o.id = a.org_id LEFT JOIN persons p ON p.id = a.person_id
+  LEFT JOIN persons pc ON pc.id = COALESCE(a.person_id, d.person_id, (SELECT MIN(px.id) FROM persons px WHERE px.org_id = COALESCE(a.org_id, d.org_id)))';
 const PERSON_SQL = 'SELECT p.*, o.name AS org_name FROM persons p LEFT JOIN orgs o ON o.id = p.org_id';
 
 function fetch_one(string $e, int $id): ?array {

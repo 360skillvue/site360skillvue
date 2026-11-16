@@ -981,20 +981,20 @@ function scanupBlock(d, acts) {
   const steps = final ? SU_FINAL : SU_STEPS;
   // Date de la première activité qui prouve l'étape.
   const first = f => acts.filter(f).map(a => String(a.done_time || a.due_date || "").slice(0, 10)).filter(Boolean).sort()[0] || "";
-  // Étape du pipeline : l'étape en cours prouve ce qu'elle nomme, et à partir du bilan d'essai tout l'essai est fait.
+  // Étape du pipeline : seule l'étape en cours prouve quelque chose, et seulement ce qu'elle nomme.
   const stages = pipeline(d.pipeline_id)?.stages || [], si = stages.findIndex(s => s.id === d.stage_id);
   const cur = re => si >= 0 && re.test(stages[si].name || "");
-  const bilanAt = stages.findIndex(s => /bilan/i.test(s.name || "")), bilan = bilanAt >= 0 && si >= bilanAt;
   const visio = first(a => a.done && a.type !== "note" && (a.type === "meeting" || /visio/i.test(a.subject || ""))) || (cur(/visio/i) ? "étape" : "");
   const essai = first(a => /^ScanUp essai/i.test(a.subject || ""));
   const auto = {
     su_demo_op: first(a => a.done && a.type !== "note" && /d[ée]mo.*op[ée]rateur|espace d[ée]mo/i.test(a.subject || "")) || (cur(/d[ée]mo.*op[ée]rateur/i) ? "étape" : ""),
     su_demo: visio,
-    su_client: first(a => /^ScanUp cabinet : client/i.test(a.subject || "")) || (bilan ? "étape" : ""),
-    su_ops: essai || (bilan ? "étape" : ""),
-    su_vignettes: first(a => a.done && /vignette/i.test(a.subject || "")) || (bilan ? "étape" : ""),
+    // Rien n'est déduit de l'avancement dans le pipeline : une affaire peut être en négociation sans avoir fait d'essai.
+    su_client: first(a => /^ScanUp cabinet : client/i.test(a.subject || "")),
+    su_ops: essai,
+    su_vignettes: first(a => a.done && /vignette/i.test(a.subject || "")),
     // Distributeurs seulement : cabinet en marque blanche, puis accès ouverts peu à peu (l'accès administrateur se coche à la main).
-    su_cabinet: first(a => /^ScanUp cabinet : cabinet/i.test(a.subject || "")) || (cur(/cabinet/i) || bilan ? "étape" : ""),
+    su_cabinet: first(a => /^ScanUp cabinet : cabinet/i.test(a.subject || "")) || (cur(/cabinet/i) ? "étape" : ""),
     su_rp: first(a => /^ScanUp responsable de projet/i.test(a.subject || "")) || (cur(/essai.*responsable/i) ? "étape" : ""),
   };
   const ex = d.extra || {};

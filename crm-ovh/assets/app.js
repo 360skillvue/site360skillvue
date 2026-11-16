@@ -1171,6 +1171,7 @@ function openTrial(d) {
         <p class="note" style="margin:0">Pas de retour : les résultats ne sont pas affichés aux opérateurs. Accompagnement : coaching vidéo pour les TMS, téléconsultation d'orientation pour les RPS, en cas de dépistage positif. Comparer : la moitié des opérateurs reçoit le résultat par e-mail avec la conduite à tenir, l'autre moitié l'accompagnement. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
       </div>
       ${final ? "" : `<p class="note" style="margin:0">Distributeur : le cabinet test doit déjà exister dans ScanUp et figurer dans la table Make des cabinets en essai, avec son compte administrateur. Les modules automatiques ne concernent que le cabinet 360skillvue (n° 10).</p>`}
+      <p class="note" style="margin:0">Comptez 5 à 10 minutes avec les modules : ScanUp limite les connexions à 10 par minute, le CRM espace donc ses demandes. Laissez cette fenêtre ouverte.</p>
       <div class="progress" id="tProg" hidden><i style="width:0%"></i></div>
       <div id="tOut" class="note" style="margin:0;white-space:pre-line"></div>
     </div>

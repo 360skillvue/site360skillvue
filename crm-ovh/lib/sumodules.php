@@ -186,7 +186,7 @@ function su_modules_step(array $me, array $s): array {
         $s['log'][] = count($queue) . ' crédits attribués au client (' . count($ops) . ' opérateurs).';
         $s['step'] = 'assign'; break;
     case 'assign':
-        for ($n = 0; $n < 4 && $s['queue']; $n++) {
+        for ($n = 0; $n < 3 && $s['queue']; $n++) {
             $a = $s['queue'][0]; $m = $s['mods'][$a['k']];
             [$c, $j] = scanup_call($cab, '/api/modules/' . $m['id'] . '/operators', ['operatorId' => $a['op'], 'organisationId' => $org, 'creditsToConsume' => 1, 'sessionId' => $m['session']]);
             su_ok($c, $j, 'Inscription de ' . ($a['login'] ?: 'l\'opérateur n° ' . $a['op']) . ' au module n° ' . $m['id']);

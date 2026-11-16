@@ -27,6 +27,21 @@ function scanup_save(array $in): void {
    modules, que le compte administrateur du cabinet incarne pour agir dans l'espace évaluateurs. $fileUrl : image du CRM
    (media/su/…) que Make télécharge puis envoie à ScanUp en pièce jointe. */
 function scanup_call(int $cabinet, string $path, ?array $body, string $method = 'POST', ?int $asUser = null, ?string $fileUrl = null): array {
+    // ScanUp n'accepte que 10 connexions par minute, et Make se connecte à chaque appel : on espace les appels
+    // (au moins 6,7 s entre deux), et un refus de connexion (401 ou 429 : l'opération n'a pas été exécutée) est réessayé.
+    for ($try = 0; ; $try++) {
+        $wait = 6.7 - (microtime(true) - (float)setting('scanup_last_call', 0));
+        if ($wait > 0) usleep((int)($wait * 1e6));
+        set_setting('scanup_last_call', microtime(true));
+        [$code, $j] = scanup_call_once($cabinet, $path, $body, $method, $asUser, $fileUrl);
+        if (($code !== 401 && $code !== 429) || $try >= 3) {
+            if ($code === 401 || $code === 429) throw new RuntimeException("ScanUp refuse la connexion de Make (limite de 10 connexions par minute, ou mot de passe du cabinet n° $cabinet changé). Attendez une minute puis cliquez sur « Reprendre ».");
+            return [$code, $j];
+        }
+        sleep(20);
+    }
+}
+function scanup_call_once(int $cabinet, string $path, ?array $body, string $method, ?int $asUser, ?string $fileUrl): array {
     $c = scanup_conf();
     if ($c['url'] === '' || $c['key'] === '') throw new RuntimeException("La liaison avec ScanUp n'est pas encore réglée.");
     $payload = ['key' => $c['key'], 'cabinetId' => (string)$cabinet, 'method' => $method, 'path' => $path,

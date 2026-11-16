@@ -318,6 +318,12 @@ function route(string $r, string $method, array $b, array $me): void {
         foreach (['deal' => 'deal_id', 'org' => 'org_id', 'person' => 'person_id'] as $kind => $k) if (!empty($_GET[$k])) json_out(mail_list($kind, (int)$_GET[$k]));
         json_out([]);
 
+    case 'email_body':
+        // Texte complet d'un e-mail, lu à la demande dans la boîte Microsoft puis gardé en base.
+        require __DIR__ . '/lib/mail.php';
+        try { json_out(mail_body((int)($_GET['id'] ?? 0))); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'cadrage':
         // Lien de chaque affaire vers sa fiche de cadrage Airtable. Rangé à part pour ne pas être écrasé par l'import Pipedrive.
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);

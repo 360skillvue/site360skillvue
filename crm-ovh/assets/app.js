@@ -35,7 +35,7 @@ const ICONS = {
   up: '<path d="m18 15-6-6-6 6"/>', down: '<path d="m6 9 6 6 6-6"/>', warn: '<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>'
 };
 const ico = n => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ICONS.task}</svg>`;
-const TYPES = [["call","Appel"],["meeting","Réunion"],["task","Tâche"],["email","E-mail"],["deadline","Échéance"],["lunch","Déjeuner"]];
+const TYPES = [["call","Appel"],["meeting","Réunion"],["task","Tâche"],["email","E-mail"],["deadline","Échéance"],["lunch","Déjeuner"],["note","Note"]];
 const typeLabel = t => (TYPES.find(x => x[0] === t) || [t, t || "Activité"])[1];
 
 /* ---------- API ---------- */

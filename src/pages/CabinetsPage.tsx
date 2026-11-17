@@ -204,10 +204,6 @@ const TEXTS: Record<Lang, Texts> = {
         q: 'Et si nous n\'avons pas le temps d\'analyser nous-mêmes ?',
         a: "Les ergonomes et les psychologues de 360SkillVue peuvent prendre en charge l'analyse de tout ou partie des réponses, pour absorber un pic d'activité ou répondre à un appel d'offres.",
       },
-      {
-        q: 'Peut-on signer un accord de confidentialité avant l\'essai ?',
-        a: "Oui. Nous pouvons signer un accord de confidentialité avant que vous ne testiez l'outil avec un client.",
-      },
     ],
     ctaTitle: 'Voir la plateforme avec vos cas',
     ctaText:

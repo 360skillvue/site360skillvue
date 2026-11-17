@@ -821,6 +821,16 @@ async function actContext(a) {
   return scanupBlock(sd, acts) + (h ? `<section class="sec" style="margin:0 0 12px"><h3>Où en est-on ?</h3><div style="font-size:13px">${h}</div></section>` : "");
 }
 
+const SHIFTS = [["1d", "Demain"], ["2d", "Dans 2 jours"], ["mon", "Lundi prochain"], ["1w", "Dans 1 semaine"], ["2w", "Dans 2 semaines"], ["1m", "Dans 1 mois"]];
+function shiftDate(base, k) {
+  const d = new Date(base + "T12:00:00");
+  if (k === "1d") d.setDate(d.getDate() + 1); else if (k === "2d") d.setDate(d.getDate() + 2);
+  else if (k === "1w") d.setDate(d.getDate() + 7); else if (k === "2w") d.setDate(d.getDate() + 14);
+  else if (k === "1m") d.setMonth(d.getMonth() + 1);
+  else if (k === "mon") d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7));
+  if (d.getDay() === 6) d.setDate(d.getDate() + 2); else if (d.getDay() === 0) d.setDate(d.getDate() + 1); // pas le week-end
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
 function openAct(a, preset = {}) {
   const isNew = !a;
   const d0 = preset.deal_id ? S.deals.get(preset.deal_id) : null;
@@ -845,6 +855,7 @@ function openAct(a, preset = {}) {
           <label class="f"><span>Heure</span><input type="time" id="aTime" value="${esc(m.due_time || "")}"></label>
           <label class="f"><span>Durée (min)</span><input type="number" id="aDur" min="0" step="5" value="${esc(m.duration || "")}"></label>
           <label class="f"><span>Responsable</span><select id="aOwner">${team().map(u => `<option value="${esc(u.id)}" ${u.id === m.owner_id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select></label></div>
+        <div class="shift" id="aShift"><span>${isNew ? "Date rapide" : "Décaler"} :</span>${SHIFTS.map(([k, l]) => `<button type="button" class="btn sm" data-shift="${k}">${l}</button>`).join("")}</div>
         ${pickerHtml("deal", "deal", {id: m.deal_id, name: m.deal_title}, "Affaire")}
         <div class="grid2">${pickerHtml("person", "person", {id: m.person_id, name: m.person_name}, "Personne")}${pickerHtml("org", "org", {id: m.org_id, name: m.org_name}, "Organisation")}</div>
         <div id="actCt">${contactBlock(m)}</div>
@@ -855,6 +866,12 @@ function openAct(a, preset = {}) {
         <button type="button" class="btn" data-x>Annuler</button><button type="submit" class="btn primary">Enregistrer</button></div></form></div>`;
     const f = $("#actForm");
     const sync = () => { m.subject = $("#aSubj").value; m.due_date = $("#aDate").value; m.due_time = $("#aTime").value; m.duration = $("#aDur").value; m.owner_id = $("#aOwner").value; m.note = $("#aNote").value; m.done = $("#aDone").checked; };
+    // Décaler en un clic : la nouvelle date part d'aujourd'hui (ou de la date prévue si elle est plus tard), sans tomber
+    // un week-end ; pour une activité existante, elle est enregistrée tout de suite.
+    $("#aShift").onclick = e => { const b = e.target.closest("[data-shift]"); if (!b) return;
+      const cur = $("#aDate").value, base = cur && cur > today() ? cur : today();
+      $("#aDate").value = shiftDate(base, b.dataset.shift);
+      if (!isNew) { m._shifted = true; f.requestSubmit(); } };
     $("#types").onclick = e => { const b = e.target.closest("[data-type]"); if (!b) return; sync(); m.type = b.dataset.type; draw(); };
     bindPicker(f, "deal", v => { sync(); m.deal_id = v?.id || null; m.deal_title = v?.name || null;
       if (v?.raw) { if (!m.org_id && v.raw.org_id) { m.org_id = v.raw.org_id; m.org_name = v.raw.org_name; } if (!m.person_id && v.raw.person_id) { m.person_id = v.raw.person_id; m.person_name = v.raw.person_name; }
@@ -874,7 +891,7 @@ function openAct(a, preset = {}) {
         done_time: m.done ? (was ? m.done_time || nowIso() : nowIso()) : null};
       const btn = f.querySelector("[type=submit]"); btn.disabled = true;
       try { const row = isNew ? await createE("activities", data) : await updateE("activities", m.id, data); putAct(row);
-        toast(isNew ? "Activité planifiée" : "Activité enregistrée"); closeModal(); }
+        toast(isNew ? "Activité planifiée" : m._shifted ? "Activité décalée au " + new Date(data.due_date + "T12:00:00").toLocaleDateString("fr-FR", {weekday: "long", day: "numeric", month: "long"}) : "Activité enregistrée"); closeModal(); }
       catch (err) { btn.disabled = false; failToast(err); }
     };
     if (isNew) setTimeout(() => $("#aSubj")?.focus(), 30);

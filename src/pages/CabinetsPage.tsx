@@ -130,7 +130,7 @@ const TEXTS: Record<Lang, Texts> = {
       },
       {
         title: 'Les salariés participent à distance',
-        text: "Quelques minutes par personne, en asynchrone, depuis un téléphone et sans application à installer. Aucune adresse e-mail n'est nécessaire, un identifiant sous pseudonyme suffit. ScanUp se connecte aussi au logiciel RH Lucca.",
+        text: "Quelques minutes par personne, en asynchrone, depuis un téléphone et sans application à installer. Aucune adresse e-mail n'est nécessaire, un identifiant sous pseudonyme suffit. ScanUp est connecté au logiciel RH Lucca.",
       },
       {
         title: 'Vos experts évaluent',
@@ -247,7 +247,7 @@ const TEXTS: Record<Lang, Texts> = {
     etapesTitle: "You stay in control at every step",
     etapes: [
       { title: "You create the client's module", text: "Your ergonomists and psychologists start from a template or their own tools to build the module suited to each company: movements and postures, psychosocial risks, questionnaires, filming instructions." },
-      { title: "Employees take part remotely", text: "A few minutes per person, asynchronously, from a phone and with no app to install. No email address needed, a pseudonymous login is enough. ScanUp also connects to the Lucca HR software." },
+      { title: "Employees take part remotely", text: "A few minutes per person, asynchronously, from a phone and with no app to install. No email address needed, a pseudonymous login is enough. ScanUp is connected to the Lucca HR software." },
       { title: "Your experts assess", text: "Your assessors analyse the situations and write their conclusions in the platform, with a review step before release." },
       { title: "You step in where it matters", text: "Training, individual interview, workstation redesign, action plan included in the risk assessment: your added value goes to the situations that justify it." },
     ],
@@ -315,7 +315,7 @@ const TEXTS: Record<Lang, Texts> = {
     etapesTitle: "Sie behalten jeden Schritt in der Hand",
     etapes: [
       { title: "Sie erstellen das Modul des Kunden", text: "Ihre Fachleute starten mit einer Vorlage oder ihren eigenen Werkzeugen und bauen das passende Modul für jedes Unternehmen: Bewegungen und Haltungen, psychosoziale Risiken, Fragebögen, Filmanleitungen." },
-      { title: "Die Mitarbeitenden nehmen aus der Ferne teil", text: "Wenige Minuten pro Person, asynchron, über das Smartphone und ohne App-Installation. Keine E-Mail-Adresse nötig, eine pseudonyme Kennung genügt. ScanUp lässt sich auch mit der HR-Software Lucca verbinden." },
+      { title: "Die Mitarbeitenden nehmen aus der Ferne teil", text: "Wenige Minuten pro Person, asynchron, über das Smartphone und ohne App-Installation. Keine E-Mail-Adresse nötig, eine pseudonyme Kennung genügt. ScanUp ist mit der HR-Software Lucca verbunden." },
       { title: "Ihre Fachleute beurteilen", text: "Ihre Fachleute analysieren die Situationen und verfassen ihre Schlussfolgerungen in der Plattform, mit einem Prüfschritt vor der Freigabe." },
       { title: "Sie greifen dort ein, wo es nötig ist", text: "Schulung, Einzelgespräch, Arbeitsplatzanpassung, Massnahmenplan in der Gefährdungsbeurteilung: Ihr Mehrwert konzentriert sich auf die Situationen, die ihn rechtfertigen." },
     ],
@@ -383,7 +383,7 @@ const TEXTS: Record<Lang, Texts> = {
     etapesTitle: "Mantenete il controllo a ogni passo",
     etapes: [
       { title: "Create il modulo del cliente", text: "I vostri ergonomi e psicologi partono da un modello o dai loro strumenti per costruire il modulo adatto a ogni azienda: gesti e posture, rischi psicosociali, questionari, istruzioni per le riprese." },
-      { title: "I dipendenti partecipano a distanza", text: "Pochi minuti a persona, in modo asincrono, dal telefono e senza app da installare. Non serve un indirizzo e-mail, basta un identificativo con pseudonimo. ScanUp si collega anche al software HR Lucca." },
+      { title: "I dipendenti partecipano a distanza", text: "Pochi minuti a persona, in modo asincrono, dal telefono e senza app da installare. Non serve un indirizzo e-mail, basta un identificativo con pseudonimo. ScanUp è collegato al software HR Lucca." },
       { title: "I vostri esperti valutano", text: "I vostri valutatori analizzano le situazioni e redigono le conclusioni nella piattaforma, con un circuito di revisione prima della diffusione." },
       { title: "Intervenite dove serve", text: "Formazione, colloquio individuale, adattamento della postazione, piano d'azione integrato nella valutazione dei rischi: il vostro valore aggiunto si concentra sulle situazioni che lo giustificano." },
     ],
@@ -451,7 +451,7 @@ const TEXTS: Record<Lang, Texts> = {
     etapesTitle: "Usted mantiene el control en cada etapa",
     etapes: [
       { title: "Usted crea el módulo del cliente", text: "Sus ergónomos y psicólogos parten de un modelo o de sus propias herramientas para construir el módulo adaptado a cada empresa: gestos y posturas, riesgos psicosociales, cuestionarios, instrucciones de grabación." },
-      { title: "Los empleados participan a distancia", text: "Unos minutos por persona, de forma asíncrona, desde un móvil y sin aplicación que instalar. No se necesita correo electrónico, basta con un identificador con seudónimo. ScanUp también se conecta con el software de RR. HH. Lucca." },
+      { title: "Los empleados participan a distancia", text: "Unos minutos por persona, de forma asíncrona, desde un móvil y sin aplicación que instalar. No se necesita correo electrónico, basta con un identificador con seudónimo. ScanUp está conectado al software de RR. HH. Lucca." },
       { title: "Sus expertos evalúan", text: "Sus evaluadores analizan las situaciones y redactan sus conclusiones en la plataforma, con un circuito de revisión antes de la difusión." },
       { title: "Usted interviene donde hace falta", text: "Formación, entrevista individual, adaptación del puesto, plan de acción integrado en la evaluación de riesgos: su valor añadido se concentra en las situaciones que lo justifican." },
     ],
@@ -519,7 +519,7 @@ const TEXTS: Record<Lang, Texts> = {
     etapesTitle: "Mantém o controlo em cada etapa",
     etapes: [
       { title: "Cria o módulo do cliente", text: "Os seus ergonomistas e psicólogos partem de um modelo ou das suas próprias ferramentas para construir o módulo adaptado a cada empresa: gestos e posturas, riscos psicossociais, questionários, instruções de filmagem." },
-      { title: "Os colaboradores participam à distância", text: "Alguns minutos por pessoa, de forma assíncrona, a partir de um telemóvel e sem aplicação para instalar. Não é preciso endereço de e-mail, basta um identificador com pseudónimo. O ScanUp também se liga ao software de RH Lucca." },
+      { title: "Os colaboradores participam à distância", text: "Alguns minutos por pessoa, de forma assíncrona, a partir de um telemóvel e sem aplicação para instalar. Não é preciso endereço de e-mail, basta um identificador com pseudónimo. O ScanUp está ligado ao software de RH Lucca." },
       { title: "Os seus especialistas avaliam", text: "Os seus avaliadores analisam as situações e redigem as suas conclusões na plataforma, com um circuito de revisão antes da divulgação." },
       { title: "Intervém onde é preciso", text: "Formação, entrevista individual, adaptação do posto, plano de ação integrado na avaliação de riscos: o seu valor acrescentado concentra-se nas situações que o justificam." },
     ],

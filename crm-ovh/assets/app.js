@@ -835,7 +835,7 @@ function openAct(a, preset = {}) {
   let ctxHtml = "";
   if (!isNew) actContext(a).then(h => { ctxHtml = h; const box = $("#actCtx"); if (box && S.modal === m) box.innerHTML = h; }).catch(() => {});
   const draw = () => {
-    $("#layer").innerHTML = `<div class="scrim" data-close></div><div class="modal" data-close><form class="mbox" id="actForm" role="dialog" aria-modal="true" aria-label="Activité">
+    $("#layer").innerHTML = `<div class="scrim" data-close></div><div class="modal" data-close><form class="mbox wide" id="actForm" role="dialog" aria-modal="true" aria-label="Activité">
       <div class="mh"><h2>${isNew ? "Planifier une activité" : "Activité"}</h2><button type="button" class="btn ghost sm" data-x aria-label="Fermer">${ico("x")}</button></div>
       <div class="mb">${preset._hint ? `<div class="banner" style="margin:0">${esc(preset._hint)}</div>` : ""}
         <div id="actCtx">${ctxHtml}</div>

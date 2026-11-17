@@ -547,6 +547,18 @@ export const fr = {
       { n: '03', title: 'Anonymisation et agrégation', body: 'Les données sont anonymisées et agrégées dans un tableau de bord sécurisé. Vous obtenez une cartographie claire des risques sans jamais compromettre la vie privée des salariés.' },
       { n: '04', title: 'Pilotage et actions ciblées', body: 'Grâce au taux de dépistage positif, identifiez les zones à risque, priorisez vos actions de prévention et mesurez leur impact dans le temps.' },
     ],
+    // ── Déploiement et adoption ──────────────────────────────────
+    adoptionLabel: 'Déploiement',
+    adoptionTitle: 'Un outil que les salariés utilisent vraiment',
+    adoptionSubtitle: "Financer un service de prévention que personne n'utilise : c'est la crainte de tout assureur. ScanUp a été pensé dès le départ pour atteindre les salariés là où ils sont, avec le moins d'efforts possible pour eux et pour l'entreprise.",
+    adoptionItems: [
+      { title: 'Rien à installer', body: "Un QR code ou un lien, un identifiant, et le salarié fait son dépistage depuis son téléphone en une dizaine de minutes. Pas d'application à télécharger, pas d'adresse e-mail obligatoire." },
+      { title: 'Une campagne courte, suivie en temps réel', body: "Le dépistage est proposé sur une période définie, par la RH ou le service de prévention de l'entreprise. L'avancement se suit en temps réel, pour relancer au bon moment." },
+      { title: 'Ou proposé sur le terrain', body: "Lors de vos actions de prévention en présentiel, l'intervenant remet au salarié une carte avec QR code et identifiant : il réalise son dépistage sur place, sans compte à créer." },
+      { title: 'Une confidentialité qui fait adhérer', body: "Identifiant sous pseudonyme possible, données hébergées en HDS, analyse par des ergonomes et psychologues indépendants : l'employeur ne reçoit que des données agrégées. Salariés et CSE adhèrent plus facilement." },
+      { title: 'Un déploiement préparé pour vous', body: "Modules adaptés aux métiers de chaque entreprise, identifiants et cartes prêts à distribuer, accompagnement par téléphone : nous préparons la campagne avec l'entreprise." },
+      { title: "Vous ne payez que l'usage réel", body: "Facturation au nombre de salariés effectivement dépistés, sans abonnement : un service qui n'est pas utilisé ne vous coûte rien." },
+    ],
     // ── Bénéfices ────────────────────────────────────────────────
     impactLabel: "L'impact",
     impactTitle: "Même méthode, mêmes professionnels.",

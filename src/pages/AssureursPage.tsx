@@ -147,6 +147,30 @@ export default function AssureursPage() {
         </div>
       </section>
 
+      {/* ── Déploiement et adoption ────────────────────────────────── */}
+      {ta.adoptionTitle && (
+        <section className="py-24 bg-white border-b border-black/[0.05]">
+          <div className="max-w-5xl mx-auto px-6">
+            <FadeIn className="mb-12">
+              <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-3">{ta.adoptionLabel}</p>
+              <h2 className="text-[26px] md:text-[38px] font-bold mb-3 tracking-tight">{ta.adoptionTitle}</h2>
+              <p className="text-[15px] text-scanup-graytext max-w-2xl leading-relaxed">{ta.adoptionSubtitle}</p>
+            </FadeIn>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(ta.adoptionItems || []).map((it: any, i: number) => (
+                <FadeIn key={i} delay={i * 0.06}>
+                  <div className="h-full rounded-2xl border border-black/[0.07] bg-[#f7f9fc] p-7">
+                    <div className="text-[11px] text-scanup-blue font-semibold uppercase tracking-widest mb-3">{String(i + 1).padStart(2, '0')}</div>
+                    <h3 className="text-[17px] font-semibold mb-2 text-scanup-navy">{it.title}</h3>
+                    <p className="text-[14px] text-scanup-graytext leading-relaxed">{it.body}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── Impact ─────────────────────────────────────────────────── */}
       <section className="py-24 bg-white">
         <div className="max-w-5xl mx-auto px-6">

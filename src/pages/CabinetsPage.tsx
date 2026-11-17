@@ -171,6 +171,7 @@ const TEXTS: Record<Lang, Texts> = {
       'Hébergement chez OVH, certifié hébergeur de données de santé (HDS)',
       "Floutage de la vidéo et anonymisation de la voix activés par défaut",
       'Accès aux données de santé réservé aux évaluateurs, avec double authentification',
+      "Connexion SSO avec le compte de l'entreprise cliente, en plus des identifiants sous pseudonyme",
       "Vidéos, audio et réponses supprimés au bout de 30 jours ; la direction ne reçoit que des données agrégées",
     ],
     faqLabel: 'Questions fréquentes',
@@ -262,7 +263,7 @@ const TEXTS: Record<Lang, Texts> = {
     securiteLabel: "Health data",
     securiteTitle: "A confidentiality framework you can show your clients",
     securiteText: "The question of health data always comes up, from management and from employee representatives alike. The framework is built into the platform.",
-    securite: ["Hosted by OVH, certified health data host (HDS)", "Video blurring and voice anonymisation enabled by default", "Access to health data restricted to assessors, with two-factor authentication", "Videos, audio and answers deleted after 30 days; management only receives aggregated data"],
+    securite: ["Hosted by OVH, certified health data host (HDS)", "Video blurring and voice anonymisation enabled by default", "Access to health data restricted to assessors, with two-factor authentication", "Videos, audio and answers deleted after 30 days; management only receives aggregated data", "SSO sign-in with the client company's account, in addition to pseudonymous logins"],
     faqLabel: "Frequently asked questions",
     faqTitle: "The questions consultancies ask",
     faq: [
@@ -330,7 +331,7 @@ const TEXTS: Record<Lang, Texts> = {
     securiteLabel: "Gesundheitsdaten",
     securiteTitle: "Ein Vertraulichkeitsrahmen, den Sie Ihren Kunden zeigen können",
     securiteText: "Die Frage nach den Gesundheitsdaten kommt immer, von der Geschäftsleitung wie von der Personalvertretung. Der Rahmen ist in die Plattform integriert.",
-    securite: ["Hosting bei OVH, zertifizierter Hoster für Gesundheitsdaten (HDS)", "Verpixelung der Videos und Anonymisierung der Stimme standardmässig aktiv", "Zugang zu Gesundheitsdaten nur für die beurteilenden Fachleute, mit Zwei-Faktor-Authentifizierung", "Videos, Audio und Antworten werden nach 30 Tagen gelöscht; die Geschäftsleitung erhält nur aggregierte Daten"],
+    securite: ["Hosting bei OVH, zertifizierter Hoster für Gesundheitsdaten (HDS)", "Verpixelung der Videos und Anonymisierung der Stimme standardmässig aktiv", "Zugang zu Gesundheitsdaten nur für die beurteilenden Fachleute, mit Zwei-Faktor-Authentifizierung", "Videos, Audio und Antworten werden nach 30 Tagen gelöscht; die Geschäftsleitung erhält nur aggregierte Daten", "SSO-Anmeldung mit dem Konto des Kundenunternehmens, zusätzlich zu pseudonymen Kennungen"],
     faqLabel: "Häufige Fragen",
     faqTitle: "Die Fragen der Beratungsbüros",
     faq: [
@@ -398,7 +399,7 @@ const TEXTS: Record<Lang, Texts> = {
     securiteLabel: "Dati sanitari",
     securiteTitle: "Un quadro di riservatezza da mostrare ai vostri clienti",
     securiteText: "La questione dei dati sanitari arriva sempre, sia dalla direzione sia dalle rappresentanze del personale. Il dispositivo è integrato nella piattaforma.",
-    securite: ["Hosting presso OVH, certificato per i dati sanitari (HDS)", "Sfocatura del video e anonimizzazione della voce attive per impostazione predefinita", "Accesso ai dati sanitari riservato ai valutatori, con doppia autenticazione", "Video, audio e risposte cancellati dopo 30 giorni; la direzione riceve solo dati aggregati"],
+    securite: ["Hosting presso OVH, certificato per i dati sanitari (HDS)", "Sfocatura del video e anonimizzazione della voce attive per impostazione predefinita", "Accesso ai dati sanitari riservato ai valutatori, con doppia autenticazione", "Video, audio e risposte cancellati dopo 30 giorni; la direzione riceve solo dati aggregati", "Accesso SSO con l'account dell'azienda cliente, oltre agli identificativi con pseudonimo"],
     faqLabel: "Domande frequenti",
     faqTitle: "Le domande che pongono gli studi",
     faq: [
@@ -466,7 +467,7 @@ const TEXTS: Record<Lang, Texts> = {
     securiteLabel: "Datos de salud",
     securiteTitle: "Un marco de confidencialidad que puede mostrar a sus clientes",
     securiteText: "La cuestión de los datos de salud siempre aparece, tanto en la dirección como entre los representantes del personal. El dispositivo está integrado en la plataforma.",
-    securite: ["Alojamiento en OVH, certificado como alojamiento de datos de salud (HDS)", "Desenfoque del vídeo y anonimización de la voz activados por defecto", "Acceso a los datos de salud reservado a los evaluadores, con doble autenticación", "Vídeos, audio y respuestas eliminados a los 30 días; la dirección solo recibe datos agregados"],
+    securite: ["Alojamiento en OVH, certificado como alojamiento de datos de salud (HDS)", "Desenfoque del vídeo y anonimización de la voz activados por defecto", "Acceso a los datos de salud reservado a los evaluadores, con doble autenticación", "Vídeos, audio y respuestas eliminados a los 30 días; la dirección solo recibe datos agregados", "Acceso SSO con la cuenta de la empresa cliente, además de los identificadores con seudónimo"],
     faqLabel: "Preguntas frecuentes",
     faqTitle: "Las preguntas que hacen los gabinetes",
     faq: [
@@ -534,7 +535,7 @@ const TEXTS: Record<Lang, Texts> = {
     securiteLabel: "Dados de saúde",
     securiteTitle: "Um quadro de confidencialidade que pode mostrar aos seus clientes",
     securiteText: "A questão dos dados de saúde surge sempre, tanto na direção como entre os representantes dos trabalhadores. O dispositivo está integrado na plataforma.",
-    securite: ["Alojamento na OVH, certificado para dados de saúde (HDS)", "Desfocagem do vídeo e anonimização da voz ativadas por defeito", "Acesso aos dados de saúde reservado aos avaliadores, com dupla autenticação", "Vídeos, áudio e respostas apagados ao fim de 30 dias; a direção só recebe dados agregados"],
+    securite: ["Alojamento na OVH, certificado para dados de saúde (HDS)", "Desfocagem do vídeo e anonimização da voz ativadas por defeito", "Acesso aos dados de saúde reservado aos avaliadores, com dupla autenticação", "Vídeos, áudio e respostas apagados ao fim de 30 dias; a direção só recebe dados agregados", "Acesso SSO com a conta da empresa cliente, além dos identificadores com pseudónimo"],
     faqLabel: "Perguntas frequentes",
     faqTitle: "As perguntas que os gabinetes fazem",
     faq: [

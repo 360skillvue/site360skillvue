@@ -451,7 +451,7 @@ export const fr = {
     features: [
       { label: 'Dépistage', title: 'Campagnes RPS & TMS en continu', body: 'Identifiez les situations à risque grâce aux taux de dépistage positif par équipe — pas une fois par an, en permanence.' },
       { label: 'Expertise', title: 'Ergonomes & psys du travail', body: 'Modules sur-mesure construits après entretien exploratoire. Des humains analysent vos données terrain.' },
-      { label: 'Conformité', title: 'DUERP en un clic', body: 'Générez et mettez à jour vos attestations directement depuis le tableau de bord. Toujours prêts pour un audit.' },
+      { label: 'Conformité', title: 'Évaluation des risques en un clic', body: 'Générez et mettez à jour vos attestations directement depuis le tableau de bord. Toujours prêts pour un audit.' },
       { label: 'Analytics', title: 'Tableaux de bord temps réel', body: 'Des données fiables pour de bonnes décisions. Export facile vers vos outils RH existants.' },
       { label: 'Inclusion', title: 'Accessible à tous', body: 'Application web sans téléchargement, QR code, email facultatif, multilangue. Fonctionne sur tout navigateur récent. Connexion SSO avec le compte de l\'entreprise.' },
     ],
@@ -505,7 +505,7 @@ export const fr = {
       { q: 'Qu\'est-ce que ScanUp RPS et TMS ?', a: 'Des modules d\'évaluation scientifiquement validés pour dépister les Risques Psycho-Sociaux et les Troubles Musculo-Squelettiques au sein de vos équipes. Résultats en 48 h.' },
       { q: 'Les données des salariés sont-elles confidentielles ?', a: 'Absolument. Les données individuelles sont strictement confidentielles. Les RH n\'accèdent qu\'à des données agrégées et anonymisées. L\'email est facultatif.' },
       { q: 'Combien coûte ScanUp ?', a: 'Essai gratuit avec 5 dépistages. Ensuite, dépistage RPS dès 20 € HT et dépistage TMS dès 20 € HT par collaborateur, analyse par nos experts incluse. Le détail des offres est sur la page Tarifs.' },
-      { q: 'Cela remplace-t-il le Document Unique (DUERP) ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre DUERP et justifier vos plans d\'action.' },
+      { q: 'Cela remplace-t-il l\'évaluation réglementaire des risques ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre évaluation des risques (Document unique, ou DUERP, en France ; démarche MSST en Suisse) et justifier vos plans d\'action.' },
       { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Vos collaborateurs accèdent aux questionnaires par QR code ou email, sans téléchargement, depuis n\'importe quel appareil. Les équipes qui ont un compte d\'entreprise peuvent aussi se connecter en SSO. ScanUp est connecté au logiciel RH Lucca.' },
     ],
     ctaTitle: 'Prêt à prendre soin',

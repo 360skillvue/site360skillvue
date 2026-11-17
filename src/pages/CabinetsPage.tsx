@@ -138,7 +138,7 @@ const TEXTS: Record<Lang, Texts> = {
       },
       {
         title: 'Vous intervenez là où il faut',
-        text: "Formation, entretien individuel, aménagement de poste, plan d'action intégré au DUERP : votre valeur ajoutée se concentre sur les situations qui le justifient.",
+        text: "Formation, entretien individuel, aménagement de poste, plan d'action intégré à l'évaluation des risques (DUERP en France, démarche MSST en Suisse) : votre valeur ajoutée se concentre sur les situations qui le justifient.",
       },
     ],
     essaiLabel: 'Essai gratuit',
@@ -317,7 +317,7 @@ const TEXTS: Record<Lang, Texts> = {
       { title: "Sie erstellen das Modul des Kunden", text: "Ihre Fachleute starten mit einer Vorlage oder ihren eigenen Werkzeugen und bauen das passende Modul für jedes Unternehmen: Bewegungen und Haltungen, psychosoziale Risiken, Fragebögen, Filmanleitungen." },
       { title: "Die Mitarbeitenden nehmen aus der Ferne teil", text: "Wenige Minuten pro Person, asynchron, über das Smartphone und ohne App-Installation. Keine E-Mail-Adresse nötig, eine pseudonyme Kennung genügt. ScanUp ist mit der HR-Software Lucca verbunden." },
       { title: "Ihre Fachleute beurteilen", text: "Ihre Fachleute analysieren die Situationen und verfassen ihre Schlussfolgerungen in der Plattform, mit einem Prüfschritt vor der Freigabe." },
-      { title: "Sie greifen dort ein, wo es nötig ist", text: "Schulung, Einzelgespräch, Arbeitsplatzanpassung, Massnahmenplan in der Gefährdungsbeurteilung: Ihr Mehrwert konzentriert sich auf die Situationen, die ihn rechtfertigen." },
+      { title: "Sie greifen dort ein, wo es nötig ist", text: "Schulung, Einzelgespräch, Arbeitsplatzanpassung, Massnahmenplan für die Risikobeurteilung (MSST in der Schweiz, DUERP in Frankreich): Ihr Mehrwert konzentriert sich auf die Situationen, die ihn rechtfertigen." },
     ],
     essaiLabel: "Kostenloser Test",
     essaiTitle: "Vierzehn Tage zum Testen an einem echten Fall",

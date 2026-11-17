@@ -461,6 +461,18 @@ export const de = {
       { n: '03', title: 'Anonymisierung und Aggregation', body: 'Die Daten werden anonymisiert und in einem sicheren Dashboard aggregiert. Sie erhalten eine klare Risikokartierung, ohne jemals die Privatsphäre der Mitarbeitenden zu gefährden.' },
       { n: '04', title: 'Steuerung und gezielte Massnahmen', body: 'Dank der positiven Screening-Rate identifizieren Sie Risikozonen, priorisieren Ihre Präventionsmassnahmen und messen deren Wirkung im Zeitverlauf.' },
     ],
+    // ── Déploiement et adoption ──────────────────────────────────
+    adoptionLabel: "Einführung",
+    adoptionTitle: "Ein Werkzeug, das die Mitarbeitenden wirklich nutzen",
+    adoptionSubtitle: "Einen Präventionsdienst zu finanzieren, den niemand nutzt: Das ist die Sorge jedes Versicherers. ScanUp wurde von Anfang an so konzipiert, dass es die Mitarbeitenden dort erreicht, wo sie sind, mit möglichst wenig Aufwand für sie und für das Unternehmen.",
+    adoptionItems: [
+      { title: "Nichts zu installieren", body: "Ein QR-Code oder ein Link, eine Kennung, und die Person macht ihr Screening in rund zehn Minuten auf dem Smartphone. Keine App zum Herunterladen, keine E-Mail-Adresse nötig." },
+      { title: "Eine kurze Kampagne, in Echtzeit verfolgt", body: "Das Screening wird während eines festgelegten Zeitraums von der HR-Abteilung oder dem Präventionsdienst des Unternehmens angeboten. Der Fortschritt lässt sich in Echtzeit verfolgen, um im richtigen Moment zu erinnern." },
+      { title: "Oder direkt vor Ort angeboten", body: "Bei Ihren Präventionsaktionen vor Ort übergibt die Fachperson eine Karte mit QR-Code und Kennung: Das Screening erfolgt gleich vor Ort, ohne ein Konto zu erstellen." },
+      { title: "Vertraulichkeit, die überzeugt", body: "Pseudonyme Kennungen möglich, Hosting auf zertifizierten Servern für Gesundheitsdaten (HDS), Analyse durch unabhängige Fachleute für Ergonomie und Psychologie: Der Arbeitgeber erhält nur aggregierte Daten. Mitarbeitende und Personalvertretung machen leichter mit." },
+      { title: "Eine für Sie vorbereitete Einführung", body: "An die Berufe jedes Unternehmens angepasste Module, Kennungen und Karten bereit zum Verteilen, telefonische Begleitung: Wir bereiten die Kampagne gemeinsam mit dem Unternehmen vor." },
+      { title: "Sie zahlen nur die tatsächliche Nutzung", body: "Abrechnung nach der Zahl der tatsächlich gescreenten Mitarbeitenden, ohne Abonnement: Ein Dienst, der nicht genutzt wird, kostet Sie nichts." },
+    ],
     impactLabel: "Wirkung",
     impactTitle: "Gleiche Methode, gleiche Fachleute.",
     impactSubtitle: "Die Analyse der Arbeitssituation wird von qualifizierten Ergonom:innen und Psycholog:innen durchgeführt, mit denselben Referenzrahmen wie vor Ort. Nur die Art der Erfassung ändert sich: per Video, aus der Ferne.",

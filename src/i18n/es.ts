@@ -461,6 +461,18 @@ export const es = {
       { n: '03', title: 'Anonimización y agregación', body: 'Los datos se anonimizan y se agregan en un cuadro de mando seguro. Obtiene un mapa de riesgos claro sin comprometer nunca la privacidad de los empleados.' },
       { n: '04', title: 'Pilotaje y acciones específicas', body: 'Gracias a la tasa de cribado positivo, identifique las zonas de riesgo, priorice sus acciones de prevención y mida su impacto a lo largo del tiempo.' },
     ],
+    // ── Déploiement et adoption ──────────────────────────────────
+    adoptionLabel: "Despliegue",
+    adoptionTitle: "Una herramienta que los empleados usan de verdad",
+    adoptionSubtitle: "Financiar un servicio de prevención que nadie utiliza: es el temor de toda aseguradora. ScanUp se diseñó desde el principio para llegar a los empleados allí donde están, con el menor esfuerzo posible para ellos y para la empresa.",
+    adoptionItems: [
+      { title: "Nada que instalar", body: "Un código QR o un enlace, un identificador, y el empleado realiza su cribado desde el móvil en unos diez minutos. Sin aplicación que descargar, sin correo electrónico obligatorio." },
+      { title: "Una campaña corta, seguida en tiempo real", body: "El cribado se propone durante un periodo definido, por RR. HH. o por el servicio de prevención de la empresa. El avance se sigue en tiempo real, para recordar en el momento oportuno." },
+      { title: "O propuesto sobre el terreno", body: "En sus acciones de prevención presenciales, el profesional entrega al empleado una tarjeta con código QR e identificador: realiza su cribado allí mismo, sin crear una cuenta." },
+      { title: "Una confidencialidad que genera adhesión", body: "Identificador con seudónimo posible, datos alojados en servidores certificados para datos de salud (HDS), análisis por ergónomos y psicólogos independientes: el empleador solo recibe datos agregados. Empleados y representantes del personal se adhieren con más facilidad." },
+      { title: "Un despliegue preparado para usted", body: "Módulos adaptados a los oficios de cada empresa, identificadores y tarjetas listos para distribuir, acompañamiento telefónico: preparamos la campaña con la empresa." },
+      { title: "Solo paga el uso real", body: "Facturación según el número de empleados realmente cribados, sin suscripción: un servicio que no se utiliza no le cuesta nada." },
+    ],
     impactLabel: "El impacto",
     impactTitle: "Mismo método, mismos profesionales.",
     impactSubtitle: "El estudio de la situación de trabajo lo realizan ergónomos y psicólogos cualificados, con los mismos referenciales que sobre el terreno. Solo cambia el modo de recogida: el vídeo, a distancia.",

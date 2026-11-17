@@ -461,6 +461,18 @@ export const pt = {
       { n: '03', title: 'Anonimização e agregação', body: 'Os dados são anonimizados e agregados num painel seguro. Obtém um mapa de risco claro sem nunca comprometer a privacidade dos colaboradores.' },
       { n: '04', title: 'Pilotagem e ações direcionadas', body: 'Graças à taxa de rastreio positivo, identifique as zonas de risco, priorize as suas ações de prevenção e meça o seu impacto ao longo do tempo.' },
     ],
+    // ── Déploiement et adoption ──────────────────────────────────
+    adoptionLabel: "Implementação",
+    adoptionTitle: "Uma ferramenta que os colaboradores usam de verdade",
+    adoptionSubtitle: "Financiar um serviço de prevenção que ninguém utiliza: é o receio de qualquer seguradora. O ScanUp foi pensado desde o início para chegar aos colaboradores onde eles estão, com o mínimo de esforço para eles e para a empresa.",
+    adoptionItems: [
+      { title: "Nada para instalar", body: "Um código QR ou um link, um identificador, e o colaborador faz o rastreio no telemóvel em cerca de dez minutos. Sem aplicação para descarregar, sem endereço de e-mail obrigatório." },
+      { title: "Uma campanha curta, acompanhada em tempo real", body: "O rastreio é proposto durante um período definido, pelos recursos humanos ou pelo serviço de prevenção da empresa. O progresso acompanha-se em tempo real, para relembrar no momento certo." },
+      { title: "Ou proposto no terreno", body: "Nas suas ações de prevenção presenciais, o profissional entrega ao colaborador um cartão com código QR e identificador: o rastreio faz-se ali mesmo, sem criar conta." },
+      { title: "Uma confidencialidade que gera adesão", body: "Identificador com pseudónimo possível, dados alojados em servidores certificados para dados de saúde (HDS), análise por ergonomistas e psicólogos independentes: o empregador só recebe dados agregados. Colaboradores e representantes dos trabalhadores aderem mais facilmente." },
+      { title: "Uma implementação preparada para si", body: "Módulos adaptados às profissões de cada empresa, identificadores e cartões prontos a distribuir, acompanhamento por telefone: preparamos a campanha com a empresa." },
+      { title: "Só paga a utilização real", body: "Faturação pelo número de colaboradores efetivamente rastreados, sem assinatura: um serviço que não é utilizado não lhe custa nada." },
+    ],
     impactLabel: "O impacto",
     impactTitle: "Mesmo método, mesmos profissionais.",
     impactSubtitle: "O estudo da situação de trabalho é realizado por ergonomistas e psicólogos qualificados, com os mesmos referenciais usados no terreno. Só muda o modo de recolha: o vídeo, à distância.",

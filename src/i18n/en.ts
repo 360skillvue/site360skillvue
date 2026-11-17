@@ -461,6 +461,18 @@ export const en = {
       { n: '03', title: 'Anonymisation and aggregation', body: 'Data is anonymised and aggregated into a secure dashboard. You get a clear risk map without ever compromising employee privacy.' },
       { n: '04', title: 'Steering and targeted actions', body: 'Thanks to the positive screening rate, identify risk zones, prioritise your prevention actions and measure their impact over time.' },
     ],
+    // ── Déploiement et adoption ──────────────────────────────────
+    adoptionLabel: "Deployment",
+    adoptionTitle: "A tool employees actually use",
+    adoptionSubtitle: "Funding a prevention service that nobody uses: that is every insurer's fear. ScanUp was designed from the start to reach employees where they are, with as little effort as possible for them and for the company.",
+    adoptionItems: [
+      { title: "Nothing to install", body: "A QR code or a link, a login, and the employee completes their screening from their phone in about ten minutes. No app to download, no email address required." },
+      { title: "A short campaign, tracked in real time", body: "Screening is offered over a set period, by the company's HR or prevention service. Progress is tracked in real time, so reminders go out at the right moment." },
+      { title: "Or offered in the field", body: "During your on-site prevention actions, the facilitator hands the employee a card with a QR code and login: they complete their screening on the spot, with no account to create." },
+      { title: "Confidentiality that wins buy-in", body: "Pseudonymous logins available, data hosted on certified health data servers (HDS), analysis by independent ergonomists and psychologists: the employer only receives aggregated data. Employees and works councils buy in more easily." },
+      { title: "A deployment prepared for you", body: "Modules adapted to each company's jobs, logins and cards ready to hand out, phone support: we prepare the campaign with the company." },
+      { title: "You only pay for actual use", body: "Billing based on the number of employees actually screened, with no subscription: a service that is not used costs you nothing." },
+    ],
     impactLabel: "Impact",
     impactTitle: "Same method, same professionals.",
     impactSubtitle: "The work situation study is carried out by qualified ergonomists and psychologists, using the same frameworks as on site. Only the way data is collected changes: video, remotely.",

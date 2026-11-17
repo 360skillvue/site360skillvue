@@ -461,6 +461,18 @@ export const it = {
       { n: '03', title: 'Anonimizzazione e aggregazione', body: 'I dati sono anonimizzati e aggregati in una dashboard sicura. Ottenete una mappatura chiara dei rischi senza mai compromettere la privacy dei collaboratori.' },
       { n: '04', title: 'Pilotaggio e azioni mirate', body: 'Grazie al tasso di screening positivo, identificate le zone a rischio, prioritizzate le vostre azioni di prevenzione e ne misurate l\'impatto nel tempo.' },
     ],
+    // ── Déploiement et adoption ──────────────────────────────────
+    adoptionLabel: "Diffusione",
+    adoptionTitle: "Uno strumento che i dipendenti usano davvero",
+    adoptionSubtitle: "Finanziare un servizio di prevenzione che nessuno utilizza: è il timore di ogni assicuratore. ScanUp è stato pensato fin dall'inizio per raggiungere i dipendenti dove si trovano, con il minimo sforzo per loro e per l'azienda.",
+    adoptionItems: [
+      { title: "Niente da installare", body: "Un codice QR o un link, un identificativo, e il dipendente svolge lo screening dal telefono in una decina di minuti. Nessuna app da scaricare, nessun indirizzo e-mail obbligatorio." },
+      { title: "Una campagna breve, seguita in tempo reale", body: "Lo screening viene proposto in un periodo definito, dalle risorse umane o dal servizio di prevenzione dell'azienda. L'avanzamento si segue in tempo reale, per sollecitare al momento giusto." },
+      { title: "Oppure proposto sul campo", body: "Durante le vostre azioni di prevenzione in presenza, l'operatore consegna al dipendente una scheda con codice QR e identificativo: lo screening si fa sul posto, senza creare un account." },
+      { title: "Una riservatezza che fa aderire", body: "Identificativo con pseudonimo possibile, dati ospitati su server certificati per i dati sanitari (HDS), analisi da parte di ergonomi e psicologi indipendenti: il datore di lavoro riceve solo dati aggregati. Dipendenti e rappresentanze del personale aderiscono più facilmente." },
+      { title: "Una diffusione preparata per voi", body: "Moduli adattati ai mestieri di ogni azienda, identificativi e schede pronti da distribuire, assistenza telefonica: prepariamo la campagna con l'azienda." },
+      { title: "Pagate solo l'uso reale", body: "Fatturazione in base al numero di dipendenti effettivamente sottoposti a screening, senza abbonamento: un servizio non utilizzato non vi costa nulla." },
+    ],
     impactLabel: "L'impatto",
     impactTitle: "Stesso metodo, stessi professionisti.",
     impactSubtitle: "Lo studio della situazione di lavoro è svolto da ergonomi e psicologi qualificati, con gli stessi riferimenti utilizzati sul campo. Cambia solo il modo di raccolta: il video, a distanza.",

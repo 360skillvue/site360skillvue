@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Briefcase, ArrowRight, Check, ScanLine, ShieldCheck, Users, Settings2 } from 'lucide-react';
+import { Briefcase, ArrowRight, Check, ScanLine, ShieldCheck, Users, Settings2, UserCheck, MapPin, Palette, ChevronDown } from 'lucide-react';
 import { useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -38,34 +38,87 @@ type Texts = {
   ctaTitle: string;
   ctaText: string;
   ctaButton: string;
+  // Sections ajoutées d'après les échanges avec les cabinets (affichées seulement si le texte existe dans la langue)
+  expertLabel?: string;
+  expertTitle?: string;
+  expertText?: string;
+  expert?: { title: string; text: string }[];
+  casLabel?: string;
+  casTitle?: string;
+  cas?: { title: string; text: string }[];
+  essaiLabel?: string;
+  essaiTitle?: string;
+  essaiText?: string;
+  essai?: { title: string; text: string }[];
+  faqLabel?: string;
+  faqTitle?: string;
+  faq?: { q: string; a: string }[];
 };
 
 const TEXTS: Record<Lang, Texts> = {
   fr: {
     metaTitle: 'Cabinets de santé au travail',
     metaDescription:
-      "ScanUp, outil métier des cabinets de conseil en ergonomie et en RPS : vos ergonomes et psychologues créent leurs modules, mènent les évaluations à distance et recueillent les données terrain sur un hébergement certifié HDS.",
+      "ScanUp, outil métier des cabinets d'ergonomie et de prévention des RPS : vos ergonomes et psychologues repèrent à distance les situations à risque et les signaux faibles, en complément de leurs interventions, sur un hébergement certifié HDS.",
     heroBadge: 'Cabinets, ergonomes et psychologues du travail',
-    heroTitle: 'Votre outil métier pour le terrain, ',
-    heroTitleHighlight: 'en toute autonomie',
+    heroTitle: 'Repérez à distance, intervenez ',
+    heroTitleHighlight: 'là où vous êtes utiles',
     heroSubtitle:
-      "ScanUp est la plateforme que vos ergonomes et vos psychologues du travail utilisent comme ils l'entendent : ils créent leurs propres modules pour chaque client, mènent les évaluations à distance et gardent la main sur l'analyse. Le présentiel reste le vôtre, là où il crée le plus de valeur.",
+      "ScanUp est l'outil que vos ergonomes et vos psychologues du travail utilisent pour atteindre tous les salariés d'un client, y compris ceux que le présentiel ne touche jamais. Ils créent leurs modules, analysent eux-mêmes les situations et repèrent les signaux faibles. Vous gardez l'expertise et le terrain ; ScanUp vous dit où aller.",
     heroCta: 'Demander une démonstration',
-    heroNote: "Essai gratuit de 14 jours, sans engagement.",
+    heroNote: "Essai gratuit de 14 jours dans votre propre espace, avec des modules modèles prêts à l'emploi.",
     usagesLabel: 'Trois usages',
     usagesTitle: 'Ce que vos experts en font',
     usages: [
       {
         title: 'Cibler vos interventions en présentiel',
-        text: "Le dépistage à distance couvre l'ensemble des salariés et fait ressortir les situations à traiter. Vous vous déplacez là où le besoin est établi, avec un diagnostic déjà posé.",
+        text: "Le repérage à distance couvre l'ensemble des salariés et fait ressortir les postes, les équipes et les personnes à voir en priorité. Vous vous déplacez là où le besoin est établi, avec un premier diagnostic déjà posé.",
       },
       {
         title: 'Recueillir les données terrain en sécurité',
-        text: "Vidéos de situations de travail, questionnaires, verbatims : tout est collecté dans un cadre unique, hébergé chez un hébergeur certifié HDS, plutôt que sur des téléphones et des boîtes mail.",
+        text: "Vidéos de situations de travail, questionnaires, témoignages audio : tout est collecté dans un cadre unique, chez un hébergeur certifié HDS, plutôt que sur des téléphones et des boîtes mail.",
       },
       {
         title: 'Élargir votre offre sans recruter',
-        text: "Vous couvrez des effectifs entiers, plusieurs sites et plusieurs langues avec la même équipe, et vous facturez une prestation complète plutôt qu'un échantillon.",
+        text: "Vous couvrez des effectifs entiers, plusieurs sites, le travail de nuit et plusieurs langues avec la même équipe, et vous proposez à vos clients un état des lieux complet plutôt qu'un échantillon.",
+      },
+    ],
+    expertLabel: 'Vous restez l\'expert',
+    expertTitle: 'Un complément du terrain, pas un remplaçant',
+    expertText:
+      "C'est la première question que posent les ergonomes et les psychologues, et elle est légitime. ScanUp ne remplace ni votre regard ni votre présence : il trie, il priorise, et il vous apporte les situations qui ont besoin de vous.",
+    expert: [
+      {
+        title: 'Votre analyse, pas celle d\'un algorithme',
+        text: "Ce sont vos évaluateurs qui regardent les vidéos, écoutent les témoignages et qualifient chaque situation. La plateforme collecte et organise ; l'analyse reste humaine et vous appartient.",
+      },
+      {
+        title: 'Aussi pendant vos interventions sur site',
+        text: "Lors d'une formation ou d'une visite, remettez aux salariés une carte avec un QR code et un identifiant : ils répondent sur place, depuis leur téléphone, et vous repartez avec des données exploitables.",
+      },
+      {
+        title: 'Vos modules, votre marque',
+        text: "Vous adaptez nos modèles ou vous créez vos propres questionnaires et consignes, métier par métier. L'espace est à votre nom et à votre logo : vos clients voient votre cabinet.",
+      },
+    ],
+    casLabel: 'Cas concrets',
+    casTitle: 'Ce que les cabinets nous demandent le plus',
+    cas: [
+      {
+        title: 'Faire un état des lieux avant d\'intervenir, et mesurer l\'impact après',
+        text: "Un premier passage avant une formation ou un plan d'action, un second quelques mois plus tard : le taux de situations à risque devient un indicateur que votre client comprend.",
+      },
+      {
+        title: 'Répondre à une situation RPS sensible',
+        text: "Tension dans une équipe, suite d'une inspection, signalement de harcèlement : la confidentialité libère la parole, et vous obtenez une vision d'ensemble avant de rencontrer les personnes.",
+      },
+      {
+        title: 'Savoir qui voir en entretien individuel',
+        text: "Le repérage fait ressortir les salariés qui ont besoin d'un échange, sans attendre l'entretien annuel ou l'arrêt de travail. Vous orientez votre temps vers eux.",
+      },
+      {
+        title: 'Atteindre ceux que le présentiel ne touche pas',
+        text: "Télétravailleurs, équipes de nuit, petits sites éloignés, salariés qui parlent une autre langue : chacun participe depuis son téléphone, au moment qui lui convient.",
       },
     ],
     etapesLabel: 'Comment ça marche',
@@ -73,34 +126,92 @@ const TEXTS: Record<Lang, Texts> = {
     etapes: [
       {
         title: 'Vous créez le module du client',
-        text: "Vos ergonomes et vos psychologues construisent le module d'évaluation adapté à chaque entreprise cliente : gestes et postures, RPS, questionnaires, consignes de tournage.",
+        text: "Vos ergonomes et vos psychologues partent d'un modèle ou de leurs propres outils pour construire le module adapté à chaque entreprise : gestes et postures, RPS, questionnaires, consignes de tournage.",
       },
       {
         title: 'Les salariés participent à distance',
-        text: "Quelques minutes par personne, en asynchrone, depuis un téléphone. Aucune adresse e-mail n'est nécessaire, un pseudonyme suffit.",
+        text: "Quelques minutes par personne, en asynchrone, depuis un téléphone et sans application à installer. Aucune adresse e-mail n'est nécessaire, un identifiant sous pseudonyme suffit.",
       },
       {
         title: 'Vos experts évaluent',
-        text: "Vos évaluateurs analysent les situations et rédigent les rapports dans la plateforme, avec un circuit de relecture avant diffusion.",
+        text: "Vos évaluateurs analysent les situations et rédigent leurs conclusions dans la plateforme, avec un circuit de relecture avant diffusion.",
       },
       {
         title: 'Vous intervenez là où il faut',
-        text: "Formation, accompagnement individuel, aménagement de poste : votre valeur ajoutée se concentre sur les situations qui le justifient.",
+        text: "Formation, entretien individuel, aménagement de poste, plan d'action intégré au DUERP : votre valeur ajoutée se concentre sur les situations qui le justifient.",
+      },
+    ],
+    essaiLabel: 'Essai gratuit',
+    essaiTitle: 'Quatorze jours pour l\'essayer sur un vrai cas',
+    essaiText:
+      "L'essai démarre à votre première connexion. Pour qu'il serve vraiment, nous le préparons avec vous lors d'un court échange, puis nous restons disponibles pendant toute sa durée.",
+    essai: [
+      {
+        title: 'Votre espace prêt au premier jour',
+        text: "Un espace à votre nom, avec des modules modèles TMS et RPS que vous pouvez utiliser tels quels ou adapter, et des crédits offerts.",
+      },
+      {
+        title: 'Un test avec quelques salariés',
+        text: "Chez un client volontaire ou dans votre propre équipe : quelques salariés participent, et vos évaluateurs traitent leurs réponses comme dans une vraie mission.",
+      },
+      {
+        title: 'Un point à mi-parcours',
+        text: "Nous faisons le point avec vous à la moitié de l'essai : ce qui fonctionne, ce qu'il faut ajuster, comment le présenter à vos clients.",
+      },
+      {
+        title: 'Un bilan pour décider',
+        text: "À la fin, vous savez ce que l'outil apporte à votre cabinet et comment l'intégrer à vos offres. Sans engagement.",
       },
     ],
     securiteLabel: 'Données de santé',
     securiteTitle: 'Un cadre de confidentialité que vous pouvez montrer à vos clients',
     securiteText:
-      "La question des données de santé arrive toujours, côté direction comme côté CSE. Le dispositif est intégré à la plateforme.",
+      "La question des données de santé arrive toujours, côté direction comme côté représentants du personnel. Le dispositif est intégré à la plateforme.",
     securite: [
       'Hébergement chez OVH, certifié hébergeur de données de santé (HDS)',
       "Floutage de la vidéo et anonymisation de la voix activés par défaut",
       'Accès aux données de santé réservé aux évaluateurs, avec double authentification',
       "Vidéos, audio et réponses supprimés au bout de 30 jours ; la direction ne reçoit que des données agrégées",
     ],
+    faqLabel: 'Questions fréquentes',
+    faqTitle: 'Les questions que posent les cabinets',
+    faq: [
+      {
+        q: 'Est-ce que ScanUp remplace l\'ergonome ou le psychologue ?',
+        a: "Non. La plateforme recueille et organise les données ; ce sont vos évaluateurs qui analysent et concluent. ScanUp sert à repérer et à prioriser, pour que votre temps de terrain aille aux situations qui en ont besoin.",
+      },
+      {
+        q: 'Doit-on parler de dépistage à nos clients ?',
+        a: "Vous choisissez vos mots. Beaucoup de psychologues préfèrent parler de repérage des signaux faibles ou d'état des lieux. Les titres, textes et consignes des modules sont entièrement modifiables.",
+      },
+      {
+        q: 'Peut-on utiliser nos propres questionnaires ?',
+        a: "Oui. Vous partez de nos modèles ou vous saisissez vos propres questions, échelles et consignes, et vous les réutilisez d'un client à l'autre.",
+      },
+      {
+        q: 'Qui voit les résultats ?',
+        a: "Les données de santé ne sont accessibles qu'à vos évaluateurs. Vous décidez si le salarié voit son propre résultat et le conseil associé ; l'employeur ne reçoit que des données agrégées.",
+      },
+      {
+        q: 'Dans quelles langues les salariés peuvent-ils répondre ?',
+        a: "La plateforme est disponible en français, anglais, allemand, italien, espagnol et portugais, et vos modules peuvent être proposés dans chacune de ces langues : pratique pour les équipes multilingues et les interventions en Suisse.",
+      },
+      {
+        q: 'Combien de temps faut-il prévoir ?',
+        a: "Partir d'un modèle permet de créer un premier module rapidement. Chaque salarié répond en quelques minutes ; reste le temps d'analyse de vos évaluateurs, que vous facturez comme une prestation.",
+      },
+      {
+        q: 'Et si nous n\'avons pas le temps d\'analyser nous-mêmes ?',
+        a: "Les ergonomes et les psychologues de 360SkillVue peuvent prendre en charge l'analyse de tout ou partie des réponses, pour absorber un pic d'activité ou répondre à un appel d'offres.",
+      },
+      {
+        q: 'Peut-on signer un accord de confidentialité avant l\'essai ?',
+        a: "Oui. Nous pouvons signer un accord de confidentialité avant que vous ne testiez l'outil avec un client.",
+      },
+    ],
     ctaTitle: 'Voir la plateforme avec vos cas',
     ctaText:
-      "Nous vous montrons la création d'un module, le parcours du salarié et la production d'un rapport, à partir d'une situation que vous rencontrez.",
+      "Nous vous montrons la création d'un module, le parcours du salarié et l'analyse d'une situation, à partir d'un cas que vous rencontrez. Puis nous préparons ensemble votre essai.",
     ctaButton: 'Nous contacter',
   },
   en: {
@@ -430,6 +541,7 @@ const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 );
 
 const USAGE_ICONS = [ScanLine, ShieldCheck, Users];
+const EXPERT_ICONS = [UserCheck, MapPin, Palette];
 
 export default function CabinetsPage() {
   const { lang } = useLanguage();
@@ -493,6 +605,56 @@ export default function CabinetsPage() {
         </div>
       </section>
 
+      {/* ─── VOUS RESTEZ L'EXPERT ──────────────────────────────── */}
+      {t.expert && (
+        <section className="px-6 py-20 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <FadeIn className="text-center mb-14 max-w-3xl mx-auto">
+              <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.expertLabel}</p>
+              <h2 className="text-[28px] md:text-[38px] font-bold tracking-tight mb-4">{t.expertTitle}</h2>
+              <p className="text-[16px] text-scanup-graytext leading-relaxed">{t.expertText}</p>
+            </FadeIn>
+            <div className="grid md:grid-cols-3 gap-6">
+              {t.expert.map((u, i) => {
+                const Icon = EXPERT_ICONS[i] ?? UserCheck;
+                return (
+                  <FadeIn key={i} delay={i * 0.08}>
+                    <div className="h-full bg-scanup-lightblue/40 border border-scanup-graylight rounded-[16px] p-7">
+                      <Icon size={28} className="text-scanup-blue mb-5" />
+                      <h3 className="text-[19px] font-semibold mb-3 leading-snug">{u.title}</h3>
+                      <p className="text-[15px] text-scanup-graytext leading-relaxed">{u.text}</p>
+                    </div>
+                  </FadeIn>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ─── CAS CONCRETS ──────────────────────────────────────── */}
+      {t.cas && (
+        <section className="px-6 py-20 bg-scanup-graylight/50">
+          <div className="max-w-5xl mx-auto">
+            <FadeIn className="text-center mb-14">
+              <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.casLabel}</p>
+              <h2 className="text-[28px] md:text-[38px] font-bold tracking-tight">{t.casTitle}</h2>
+            </FadeIn>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {t.cas.map((c, i) => (
+                <FadeIn key={i} delay={i * 0.06}>
+                  <div className="h-full bg-white border border-scanup-graylight rounded-[16px] p-7">
+                    <div className="text-[11px] text-scanup-blue font-semibold uppercase tracking-widest mb-3">{String(i + 1).padStart(2, '0')}</div>
+                    <h3 className="text-[18px] font-semibold mb-2 leading-snug">{c.title}</h3>
+                    <p className="text-[15px] text-scanup-graytext leading-relaxed">{c.text}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ─── ETAPES ────────────────────────────────────────────── */}
       <section className="px-6 py-20 bg-white">
         <div className="max-w-4xl mx-auto">
@@ -518,6 +680,30 @@ export default function CabinetsPage() {
         </div>
       </section>
 
+      {/* ─── ESSAI ─────────────────────────────────────────────── */}
+      {t.essai && (
+        <section className="px-6 py-20 bg-scanup-graylight/50">
+          <div className="max-w-5xl mx-auto">
+            <FadeIn className="text-center mb-14 max-w-3xl mx-auto">
+              <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.essaiLabel}</p>
+              <h2 className="text-[28px] md:text-[38px] font-bold tracking-tight mb-4">{t.essaiTitle}</h2>
+              <p className="text-[16px] text-scanup-graytext leading-relaxed">{t.essaiText}</p>
+            </FadeIn>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {t.essai.map((e, i) => (
+                <FadeIn key={i} delay={i * 0.06}>
+                  <div className="h-full bg-white border border-scanup-graylight rounded-[16px] p-6">
+                    <span className="inline-flex w-9 h-9 rounded-full bg-scanup-blue text-white font-semibold items-center justify-center mb-4">{i + 1}</span>
+                    <h3 className="text-[17px] font-semibold mb-2 leading-snug">{e.title}</h3>
+                    <p className="text-[14px] text-scanup-graytext leading-relaxed">{e.text}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ─── DONNEES DE SANTE ──────────────────────────────────── */}
       <section className="px-6 py-20 bg-scanup-navy text-white">
         <div className="max-w-4xl mx-auto">
@@ -539,6 +725,29 @@ export default function CabinetsPage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* ─── FAQ ───────────────────────────────────────────────── */}
+      {t.faq && (
+        <section className="px-6 py-20 bg-white">
+          <div className="max-w-3xl mx-auto">
+            <FadeIn className="text-center mb-12">
+              <p className="text-[13px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.faqLabel}</p>
+              <h2 className="text-[28px] md:text-[38px] font-bold tracking-tight">{t.faqTitle}</h2>
+            </FadeIn>
+            <div className="space-y-3">
+              {t.faq.map((f, i) => (
+                <details key={i} className="group bg-white border border-scanup-graylight rounded-[14px] px-6 py-4">
+                  <summary className="flex justify-between items-center gap-4 cursor-pointer list-none text-[16px] font-semibold">
+                    {f.q}
+                    <ChevronDown size={18} className="shrink-0 text-scanup-blue transition-transform group-open:rotate-180" />
+                  </summary>
+                  <p className="text-[15px] text-scanup-graytext leading-relaxed mt-3">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ─── CTA ───────────────────────────────────────────────── */}
       <section className="px-6 py-20 bg-white">

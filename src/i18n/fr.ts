@@ -184,7 +184,7 @@ export const fr = {
       },
       {
         q: 'Comment intégrer ScanUp à mon organisation ?',
-        a: 'Le déploiement est rapide et non-intrusif. Un accompagnement dédié est inclus : paramétrage, formation des référents, communication interne. Une API REST est disponible pour les intégrations. Connexion SSO (authentification unique) disponible : vos équipes se connectent avec le compte de leur entreprise. Connexion à votre logiciel RH, notamment Lucca : les salariés sont importés et mis à jour automatiquement, sans liste à saisir.',
+        a: 'Le déploiement est rapide et non-intrusif. Un accompagnement dédié est inclus : paramétrage, formation des référents, communication interne. Une API REST est disponible pour les intégrations. Connexion SSO (authentification unique) disponible : vos équipes se connectent avec le compte de leur entreprise. ScanUp se connecte aussi au logiciel RH Lucca.',
       },
       {
         q: 'Quel est le coût de ScanUp ?',
@@ -506,7 +506,7 @@ export const fr = {
       { q: 'Les données des salariés sont-elles confidentielles ?', a: 'Absolument. Les données individuelles sont strictement confidentielles. Les RH n\'accèdent qu\'à des données agrégées et anonymisées. L\'email est facultatif.' },
       { q: 'Combien coûte ScanUp ?', a: 'Essai gratuit avec 5 dépistages. Ensuite, dépistage RPS dès 20 € HT et dépistage TMS dès 20 € HT par collaborateur, analyse par nos experts incluse. Le détail des offres est sur la page Tarifs.' },
       { q: 'Cela remplace-t-il le Document Unique (DUERP) ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre DUERP et justifier vos plans d\'action.' },
-      { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Vos collaborateurs accèdent aux questionnaires par QR code ou email, sans téléchargement, depuis n\'importe quel appareil. Les équipes qui ont un compte d\'entreprise peuvent aussi se connecter en SSO. Avec Lucca, vos salariés sont importés automatiquement depuis votre logiciel RH.' },
+      { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Vos collaborateurs accèdent aux questionnaires par QR code ou email, sans téléchargement, depuis n\'importe quel appareil. Les équipes qui ont un compte d\'entreprise peuvent aussi se connecter en SSO. ScanUp se connecte aussi au logiciel RH Lucca.' },
     ],
     ctaTitle: 'Prêt à prendre soin',
     ctaTitleEnd: 'de vos équipes ?',
@@ -556,7 +556,7 @@ export const fr = {
       { title: 'Une campagne courte, suivie en temps réel', body: "Le dépistage est proposé sur une période définie, par la RH ou le service de prévention de l'entreprise. L'avancement se suit en temps réel, pour relancer au bon moment." },
       { title: 'Ou proposé sur le terrain', body: "Lors de vos actions de prévention en présentiel, l'intervenant remet au salarié une carte avec QR code et identifiant : il réalise son dépistage sur place, sans compte à créer." },
       { title: 'Une confidentialité qui fait adhérer', body: "Identifiant sous pseudonyme possible, données hébergées en HDS, analyse par des ergonomes et psychologues indépendants : l'employeur ne reçoit que des données agrégées. Salariés et CSE adhèrent plus facilement." },
-      { title: 'Un déploiement préparé pour vous', body: "Modules adaptés aux métiers de chaque entreprise, identifiants et cartes prêts à distribuer, accompagnement par téléphone : nous préparons la campagne avec l'entreprise. Connexion possible au logiciel RH de l'entreprise, comme Lucca, pour importer les salariés automatiquement." },
+      { title: 'Un déploiement préparé pour vous', body: "Modules adaptés aux métiers de chaque entreprise, identifiants et cartes prêts à distribuer, accompagnement par téléphone : nous préparons la campagne avec l'entreprise. ScanUp se connecte aussi au logiciel RH Lucca." },
       { title: "Vous ne payez que l'usage réel", body: "Facturation au nombre de salariés effectivement dépistés, sans abonnement : un service qui n'est pas utilisé ne vous coûte rien." },
     ],
     // ── Bénéfices ────────────────────────────────────────────────
@@ -686,7 +686,7 @@ export const fr = {
       { q: 'Plus de 500 collaborateurs, partenaire ou revendeur ?', a: 'Contactez-nous : nous construisons une proposition adaptée à votre volume et à votre organisation.' },
       { q: 'Nous disposons de nos propres experts en prévention — existe-t-il une formule adaptée ?', a: 'Oui. Une formule en autonomie existe : vos ergonomes et psychologues du travail utilisent la plateforme pour réaliser et qualifier eux-mêmes les dépistages. Contactez-nous pour en discuter.' },
       { q: 'Cela remplace-t-il l\'évaluation réglementaire des risques professionnels ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre évaluation des risques — Document Unique (DUERP) en France 🇫🇷, démarche MSST en Suisse 🇨🇭 — et justifier vos plans d\'action.' },
-      { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Vos collaborateurs accèdent aux questionnaires par QR code ou email, sans téléchargement, depuis n\'importe quel appareil. Les équipes qui ont un compte d\'entreprise peuvent aussi se connecter en SSO. Avec Lucca, vos salariés sont importés automatiquement depuis votre logiciel RH.' },
+      { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Vos collaborateurs accèdent aux questionnaires par QR code ou email, sans téléchargement, depuis n\'importe quel appareil. Les équipes qui ont un compte d\'entreprise peuvent aussi se connecter en SSO. ScanUp se connecte aussi au logiciel RH Lucca.' },
       { q: 'Y a-t-il un engagement de durée ?', a: 'Aucun engagement de durée. Vous achetez des crédits, au tarif de la formule choisie, et ils sont valables 12 mois.' },
     ],
     ctaTitle: 'Vous hésitez ?',

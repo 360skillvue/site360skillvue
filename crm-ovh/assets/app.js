@@ -1190,7 +1190,10 @@ function openTrial(d) {
     const lines = [], eligible = types.some(ty => rets.some(x => ty === "TMS" || x === "perso"));
     for (const ty of types) { const set = new Set(); rets.forEach(x => livFor(ty, x, nom).forEach(l => set.add(l)));
       lines.push(`<b>${ty}</b> : ${[...set].join(", ")}${r === "both" && ty === "RPS" ? " (selon le groupe d'opérateurs)" : ""}`); }
-    $("#tLiv").innerHTML = lines.join("<br>");
+    // Niveau écrit à la fin du titre de chaque module, pour la correctrice (règle de Laure du 17/11/2026).
+    const niv = [];
+    for (const ty of types) for (const x of rets) niv.push(`<b>${ty}${rets.length > 1 ? (x === "perso" ? ", accompagnement" : ", conduite à tenir") : ""}</b> : ${ty === "TMS" && x === "perso" ? "Niveau 1, qualification et coaching vidéo" : "Niveau 0, qualification du dépistage"}`);
+    $("#tLiv").innerHTML = lines.join("<br>") + `<br><span style="color:var(--muted)">Niveau indiqué dans le titre, pour Laura (seule correctrice, sans rapport) :</span><br>` + niv.join("<br>");
     // Conduite à tenir : mêmes textes que ceux posés par le serveur (lib/sumodules.php).
     const COND = {
       "TMS|rcat": "Votre étude ergonomique a mis en évidence des points de vigilance sur votre poste. Parlez-en à votre médecin du travail ou au référent santé et sécurité de votre site, qui pourront vous conseiller sur les aménagements possibles. Si une douleur persiste, consultez votre médecin traitant.",

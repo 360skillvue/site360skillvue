@@ -22,6 +22,15 @@ function su_retour_label(string $type, string $r): string {
     if ($r === 'perso') return $type === 'RPS' ? "téléconsultation d'orientation" : 'coaching vidéo';
     return SU_RETOURS[$r] ?? $r;
 }
+/* Niveau de retour, écrit à la fin du titre pour dire à la correctrice ce qu'elle doit faire (règle de Laure du 17/11/2026).
+   Niveau 1 : qualification et coaching vidéo (TMS avec coaching vidéo). Niveau 0 : qualification seule (tous les autres,
+   et toujours pour un RPS). */
+function su_niveau(string $type, string $retour): int { return $type === 'TMS' && $retour === 'perso' ? 1 : 0; }
+function su_niveau_label(string $type, string $retour): string {
+    return su_niveau($type, $retour) ? 'Niveau 1, qualification et coaching vidéo' : 'Niveau 0, qualification du dépistage';
+}
+const SU_INTERDITS = [36 => 'Julie Sallamand', 1116 => 'Isabelle Auray']; // jamais correctrices d'un module test
+
 // Version suisse : mêmes questions, vocabulaire adapté dans les textes.
 const SU_SUISSE = ['rapport Gollac (INRS)' => 'référentiel du SECO', 'INRS' => 'SUVA', 'CARSAT' => 'SUVA', 'CSE' => 'commission du personnel',
                    'Code du travail' => 'loi sur le travail', 'service de santé au travail' => 'service de santé au travail', 'euros' => 'francs'];
@@ -66,7 +75,10 @@ function su_textes(array $model, array $s, array $mod): array {
     // Nom du client du modèle (entre la virgule et la parenthèse), remplacé par celui du nouveau client.
     $ancien = preg_match('/,\s*(.+?)\s*\(/u', $titre, $m) ? trim($m[1]) : '';
     $court = trim(preg_replace('/\s*\(.*$/u', '', $s['client']));
-    $titreN = mb_substr("$base, $court (" . su_retour_label($mod['type'], $mod['retour']) . ')', 0, 250);
+    // Le niveau termine le titre. Pour un RPS (toujours niveau 0), la téléconsultation reste indiquée entre parenthèses
+    // pour distinguer les deux modules quand on compare les retours.
+    $precision = $mod['type'] === 'RPS' && $mod['retour'] === 'perso' ? " (téléconsultation d'orientation)" : '';
+    $titreN = mb_substr("$base, $court$precision, " . su_niveau_label($mod['type'], $mod['retour']), 0, 250);
     if ($ancien !== '') { $desc = str_replace($ancien, $court, $desc); $cons = str_replace($ancien, $court, $cons); }
     if ($s['jobs'] !== '') $desc = rtrim($desc) . ' Métiers concernés : ' . rtrim($s['jobs'], ' .') . '.';
     if ($s['country'] === 'CH') { $titreN = su_suisse($titreN); $desc = su_suisse($desc); $cons = su_suisse($cons); }
@@ -144,12 +156,22 @@ function su_modules_step(array $me, array $s): array {
         $s['log'][] = 'Image du module fabriquée et posée.';
         $s['step'] = 'eval'; break;
     case 'eval':
-        $mod['evaluator'] = (int)(setting('scanup_correctrice', 0) ?: SU_CORRECTRICE);
-        if ($mod['evaluator']) {
-            [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/evaluators', ['evaluateurId' => $mod['evaluator']]);
-            su_ok($c, $j, 'Désignation du correcteur');
-            $s['log'][] = 'Évaluatrice désignée : Laura Gasqueres.';
-        } else $s['log'][] = 'Attention : le modèle n\'a pas de correcteur ; à désigner dans ScanUp.';
+        // Laura seule correctrice : on l'ajoute, puis on retire Julie (ajoutée parce que le module est créé avec son compte)
+        // et Isabelle (reprise de certains modèles). Le contrôle final vérifie qu'il ne reste qu'elle.
+        $mod['evaluator'] = SU_CORRECTRICE;
+        [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/evaluators', ['evaluateurId' => SU_CORRECTRICE]);
+        if ($c !== 409) su_ok($c, $j, 'Désignation de Laura Gasqueres comme correctrice');
+        [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/evaluators', null, 'GET');
+        $evs = su_ok($c, $j, 'Lecture des correcteurs du module'); $evs = isset($evs['data']) ? $evs['data'] : $evs;
+        $retires = [];
+        foreach ((array)$evs as $e) {
+            $eid = (int)($e['id'] ?? 0);
+            if (!isset(SU_INTERDITS[$eid])) continue;
+            [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . "/evaluators/$eid", null, 'DELETE');
+            su_ok($c, $j, 'Retrait de ' . SU_INTERDITS[$eid] . ' des correcteurs');
+            $retires[] = SU_INTERDITS[$eid];
+        }
+        $s['log'][] = 'Correctrice : Laura Gasqueres' . ($retires ? ' (retiré : ' . implode(', ', $retires) . ')' : '') . '.';
         $s['step'] = 'publish'; break;
     case 'publish':
         [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/publish', [], 'POST', SU_AUTRICE);
@@ -195,11 +217,32 @@ function su_modules_step(array $me, array $s): array {
             $s['assigned'][] = ($a['login'] ?: $a['op']) . ' → n° ' . $m['id'];
             array_shift($s['queue']);
         }
-        if (!$s['queue']) { $s['log'][] = count($s['assigned']) . ' inscriptions faites.'; $s['step'] = 'finish'; }
+        if (!$s['queue']) { $s['log'][] = count($s['assigned']) . ' inscriptions faites.'; $s['step'] = 'check'; $s['ci'] = 0; $s['ecarts'] = []; }
+        break;
+    case 'check':
+        // Contrôle final, un module par étape : niveau dans le titre, Laura seule correctrice, résultats visibles.
+        $m = $s['mods'][(int)$s['ci']]; $e = [];
+        [$c, $j] = scanup_call($cab, '/api/modules/' . $m['id'], null, 'GET');
+        $info = su_ok($c, $j, 'Contrôle du module n° ' . $m['id'])['data']['module'] ?? [];
+        $niv = su_niveau_label($m['type'], $m['retour']);
+        if (mb_strpos((string)($info['titre'] ?? ''), $niv) === false) $e[] = "le titre ne contient pas « $niv »";
+        $vis = $info['resultatsVisiblesOperateurs'] ?? null;
+        if ($m['retour'] === 'none') { if ($vis !== false) $e[] = 'les résultats devraient être masqués (pas de retour)'; }
+        elseif ($vis !== true) $e[] = 'les résultats ne sont pas visibles par les opérateurs';
+        [$c, $j] = scanup_call($cab, '/api/modules/' . $m['id'] . '/evaluators', null, 'GET');
+        $evs = su_ok($c, $j, 'Contrôle des correcteurs du module n° ' . $m['id']); $evs = isset($evs['data']) ? $evs['data'] : $evs;
+        $noms = array_map(fn($x) => trim(($x['prenom'] ?? '') . ' ' . ($x['nom'] ?? '')) ?: 'n° ' . ($x['id'] ?? '?'), (array)$evs);
+        $ids = array_map(fn($x) => (int)($x['id'] ?? 0), (array)$evs);
+        if ($ids !== [SU_CORRECTRICE]) $e[] = 'correcteurs : ' . ($noms ? implode(', ', $noms) : 'aucun') . ' (attendu : Laura Gasqueres seule)';
+        if ($e) { $s['ecarts'][] = "Module n° {$m['id']} : " . implode(' ; ', $e) . '.'; $s['log'][] = "Écart sur le module n° {$m['id']} : " . implode(' ; ', $e) . '.'; }
+        else $s['log'][] = "Contrôle du module n° {$m['id']} : niveau dans le titre, Laura seule correctrice, résultats " . ($m['retour'] === 'none' ? 'masqués comme prévu' : 'visibles') . '.';
+        $s['ci'] = (int)$s['ci'] + 1;
+        if ($s['ci'] >= $nMods) $s['step'] = 'finish';
         break;
     case 'finish':
         su_modules_trace($me, $s);
-        $s['log'][] = 'Terminé. Restent à envoyer : les vignettes des opérateurs au contact du client.';
+        $s['log'][] = (!empty($s['ecarts']) ? 'Terminé avec ' . count($s['ecarts']) . ' écart(s) à signaler à Laure (tâche créée dans le CRM). ' : 'Terminé. ')
+            . 'Restent à envoyer : les vignettes des opérateurs au contact du client.';
         $s['step'] = 'done'; break;
     case 'done':
         break;
@@ -208,7 +251,7 @@ function su_modules_step(array $me, array $s): array {
     }
     unset($mod);
     $order = ['dup' => 0, 'texts' => 1, 'image' => 2, 'eval' => 3, 'publish' => 4, 'client' => 5];
-    $done = $s['step'] === 'done' ? 100 : (isset($order[$s['step']]) ? (int)(($s['i'] * 6 + $order[$s['step']]) / max(1, $nMods * 6) * 80) : ($s['step'] === 'credits' ? 82 : ($s['step'] === 'assign' ? 85 + (int)(10 * count($s['assigned']) / max(1, count($s['assigned']) + count($s['queue']))) : 97)));
+    $done = $s['step'] === 'done' ? 100 : (isset($order[$s['step']]) ? (int)(($s['i'] * 6 + $order[$s['step']]) / max(1, $nMods * 6) * 80) : ($s['step'] === 'credits' ? 82 : ($s['step'] === 'assign' ? 85 + (int)(10 * count($s['assigned']) / max(1, count($s['assigned']) + count($s['queue']))) : ($s['step'] === 'check' ? 95 + (int)(4 * (int)($s['ci'] ?? 0) / max(1, $nMods)) : 99))));
     $s['pct'] = $done;
     $s['log'] = array_slice($s['log'], -40);
     return $s;
@@ -224,6 +267,8 @@ function su_modules_trace(array $me, array $s): void {
     $liv = [];
     foreach ($s['mods'] as $m) $liv[] = "Module n° {$m['id']} ({$m['type']}, " . su_retour_label($m['type'], $m['retour']) . ') : ' . implode(', ', su_livrables($m['type'], $m['retour'], !empty($s['nominatif'])));
     $lines[] = "Livrables prévus :\n- " . implode("\n- ", $liv);
+    $lines[] = 'Correctrice : Laura Gasqueres seule. Pas de rapport de la correctrice sur un module test, rien pour l\'observateur.';
+    $lines[] = 'Contrôle final : ' . (empty($s['ecarts']) ? 'aucun écart.' : "\n- " . implode("\n- ", $s['ecarts']));
     if ($s['retour'] !== 'none') $lines[] = "Conduite à tenir : textes de départ réglés sur chaque module, personnalisables dans ScanUp (menu du module, par le responsable de projet du client ou par l'équipe).";
     $note = implode("\n", $lines) . "\nInscriptions : " . implode(', ', $s['assigned']) . "\nPays : " . ($s['country'] === 'CH' ? 'Suisse' : 'France')
           . ($s['jobs'] !== '' ? "\nMétiers : {$s['jobs']}" : '') . "\nFin de session : " . date('d/m/Y', strtotime($s['end_date']));
@@ -242,6 +287,13 @@ function su_modules_trace(array $me, array $s): void {
     q('INSERT INTO activities (type, subject, due_date, done, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?)',
       ['task', mb_substr('ScanUp : préparer et envoyer les livrables (' . trim(preg_replace('/\s*\(.*$/u', '', $s['client'])) . ')', 0, 500), $s['end_date'], (int)$me['id'],
        $deal['id'], $deal['person_id'], $deal['org_id'], "Fin de session le " . date('d/m/Y', strtotime($s['end_date'])) . ".\n- " . implode("\n- ", $liv) . "\nTest : tous les livrables, rapport individuel nominatif compris, sont envoyés par e-mail au prospect, sans accès observateur.", $now, $now]);
+    // Écarts au contrôle final : tâche pour Laure (règle du 17/11/2026 : signaler tout écart à Laure).
+    if (!empty($s['ecarts'])) {
+        $laure = (int)(q("SELECT id FROM users WHERE email LIKE 'laure.dellamonica@%' LIMIT 1")->fetchColumn() ?: $me['id']);
+        q('INSERT INTO activities (type, subject, due_date, done, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?)',
+          ['task', mb_substr('ScanUp : écarts au contrôle des modules du client test (' . trim(preg_replace('/\s*\(.*$/u', '', $s['client'])) . ')', 0, 500), substr($now, 0, 10), $laure,
+           $deal['id'], $deal['person_id'], $deal['org_id'], "À corriger dans ScanUp :\n- " . implode("\n- ", $s['ecarts']), $now, $now]);
+    }
     // La tâche « préparer les modules et envoyer les vignettes » devient « envoyer les vignettes ».
     q("UPDATE activities SET subject = REPLACE(subject, 'préparer les modules et envoyer les vignettes', 'envoyer les vignettes'),
        note = REPLACE(note, 'Mettre les modules à disposition avec une session et des crédits, inscrire les opérateurs, puis envoyer', 'Modules prêts et opérateurs inscrits : envoyer'), update_time = ? WHERE deal_id = ? AND done = 0 AND subject LIKE 'ScanUp : préparer les modules%'", [$now, $deal['id']]);

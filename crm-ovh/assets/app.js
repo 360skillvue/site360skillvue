@@ -957,7 +957,7 @@ function bindActsSection(dr, preset) {
   dr.querySelectorAll("[data-actid]").forEach(r => r.addEventListener("click", e => { const t = e.target.closest("[data-toggle]"); if (t) { e.stopPropagation(); return toggleDone(t.dataset.toggle); } openAct(findAct(r.dataset.actid)); }));
 }
 function extraSection(kind, doc) {
-  const defs = (S.fields[kind] || []).filter(f => !f.hidden); if (!defs.length) return "";
+  const defs = (S.fields[kind] || []).filter(f => !f.hidden && f.key !== "crm_fonction"); if (!defs.length) return "";
   const ex = doc.extra || {};
   return `<section class="sec"><h3>Informations complémentaires</h3><div class="grid2">${defs.map(f => {
     const v = ex[f.key] ?? "";
@@ -1344,7 +1344,7 @@ function drawDealContacts(id, dr, r) {
   const row = c => {
     const ph = c.phones[0], em = c.emails[0];
     const other = c.org_id && c.org_id !== d.org_id && c.org_name ? `<span class="note">${esc(c.org_name)}</span>` : "";
-    return `<div class="dc-row"><div class="dc-main"><button type="button" class="dc-name" data-goct="${esc(c.id)}">${esc(c.name || "Sans nom")}</button>${other}
+    return `<div class="dc-row"><div class="dc-main"><button type="button" class="dc-name" data-goct="${esc(c.id)}">${esc(c.name || "Sans nom")}</button>${c.fonction ? `<span class="dc-fn">${esc(c.fonction)}</span>` : ""}${other}
         <span class="dc-roles">${c.roles.map(x => `<span class="chip${x === "principal" ? " ok" : x === "même domaine" ? " today" : ""}" ${x === "même domaine" ? `title="Même domaine d'e-mail mais rangée dans une autre organisation : doublon ou filiale à vérifier"` : ""}>${esc(DC_ROLE[x] || x)}</span>`).join("")}</span>
         <button type="button" class="dc-role${c.role ? "" : " empty"}" data-dcrole="${esc(c.id)}" title="Rôle de cette personne dans l'affaire">${esc(c.role || "+ rôle")}</button></div>
       <div class="dc-ct">${ph ? `<a class="ct" href="${esc(telHref(ph))}" title="Appeler">${ico("call")}<span>${esc(ph)}</span></a>` : ""}
@@ -1498,12 +1498,12 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
     <div class="db">
       <section class="sec"><h3>Coordonnées</h3><div class="grid2">
       ${kind === "org" ? `<label class="f"><span>Adresse</span><input type="text" id="eAddr" value="${esc(e.address || "")}"></label><label class="f"><span>Site web</span><input type="text" id="eWeb" value="${esc(e.website || "")}"></label>`
-        : `<label class="f"><span>E-mails (un par ligne)</span><textarea id="eMails" rows="2">${esc(lines(e.emails))}</textarea></label><label class="f"><span>Téléphones (un par ligne)</span><textarea id="ePhones" rows="2">${esc(lines(e.phones))}</textarea></label>`}
+        : `<label class="f" style="grid-column:1/-1"><span>Fonction</span><input type="text" data-extra="crm_fonction" maxlength="160" placeholder="Ex. responsable formation, chargée de mission innovation, DRH…" value="${esc((e.extra || {}).crm_fonction || "")}"></label><label class="f"><span>E-mails (un par ligne)</span><textarea id="eMails" rows="2">${esc(lines(e.emails))}</textarea></label><label class="f"><span>Téléphones (un par ligne)</span><textarea id="ePhones" rows="2">${esc(lines(e.phones))}</textarea></label>`}
         <label class="f"><span>Responsable</span><select id="eOwner"><option value=""></option>${team().map(u => `<option value="${esc(u.id)}" ${u.id === e.owner_id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select></label></div>
         ${tagField("eTags", S.panelTags)}
         ${kind === "person" ? pickerHtml("org", "org", {id: e.org_id, name: e.org_name}, "Organisation") + (e.org_id ? `<div><button class="btn sm" data-goorg>Voir l'organisation</button></div>` : "") : ""}
         ${kind === "person" && (e.phones || []).length ? `<p class="note">Appeler : ${e.phones.map(x => `<a href="tel:${esc(String(x.value).replace(/[^+\d]/g, ""))}">${esc(x.value)}</a>`).join(", ")}</p>` : ""}</section>
-      ${kind === "org" ? `<section class="sec"><h3>Personnes <button class="btn sm" data-newperson>${ico("plus")}Personne</button></h3>${(e.persons || []).length ? `<div class="rows">${e.persons.map(x => `<div class="r crow" tabindex="0" data-gop="${esc(x.id)}"><span class="main"><b>${esc(x.name)}</b><small>${esc([(x.emails || [])[0]?.value, (x.phones || [])[0]?.value].filter(Boolean).join(" · "))}</small></span><span>${(x.emails || []).length ? `<button class="btn sm" data-mailp="${esc(x.id)}">Écrire</button>` : ""}</span></div>`).join("")}</div>` : `<p class="note">Aucune personne rattachée.</p>`}</section>` : ""}
+      ${kind === "org" ? `<section class="sec"><h3>Personnes <button class="btn sm" data-newperson>${ico("plus")}Personne</button></h3>${(e.persons || []).length ? `<div class="rows">${e.persons.map(x => `<div class="r crow" tabindex="0" data-gop="${esc(x.id)}"><span class="main"><b>${esc(x.name)}</b><small>${esc([(x.extra || {}).crm_fonction, (x.emails || [])[0]?.value, (x.phones || [])[0]?.value].filter(Boolean).join(" · "))}</small></span><span>${(x.emails || []).length ? `<button class="btn sm" data-mailp="${esc(x.id)}">Écrire</button>` : ""}</span></div>`).join("")}</div>` : `<p class="note">Aucune personne rattachée.</p>`}</section>` : ""}
       <section class="sec"><h3>Affaires <button class="btn sm" data-newdeal>${ico("plus")}Affaire</button></h3>${deals.length ? `<div class="rows">${deals.map(d => `<div class="r crow" tabindex="0" data-god="${esc(d.id)}"><span class="main"><b>${esc(d.title)}</b><small>${esc((stageOf(d.stage_id)?.s.name) || "")}${d.value ? " · " + eur(d.value) : ""}</small></span><span>${d.status === "won" ? `<span class="won-tag">Gagnée</span>` : d.status === "lost" ? `<span class="lost-tag">Perdue</span>` : `<span class="chip ok">En cours</span>`}</span></div>`).join("")}</div>` : `<p class="note">Aucune affaire.</p>`}</section>
       ${actsSection()}
       ${mailsSection()}

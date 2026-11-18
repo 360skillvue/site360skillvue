@@ -149,7 +149,8 @@ function mcp_fmt_org(array $o, bool $full = false): array {
 }
 function mcp_fmt_person(array $p, bool $full = false): array {
     $r = ['id' => (int)$p['id'], 'nom' => $p['name'], 'organisation' => $p['org_id'] ? ['id' => (int)$p['org_id'], 'nom' => $p['org_name'] ?? null] : null,
-          'emails' => mcp_list_json($p['emails']), 'telephones' => mcp_list_json($p['phones']), 'responsable' => mcp_user_name($p['owner_id'])];
+          'fonction' => null, 'emails' => mcp_list_json($p['emails']), 'telephones' => mcp_list_json($p['phones']), 'responsable' => mcp_user_name($p['owner_id'])];
+    if (array_key_exists('extra', $p)) { require_once __DIR__ . '/contacts.php'; $r['fonction'] = dc_fonction($p['extra']); }
     if ($full) { $r['notes'] = $p['notes']; $r['champs'] = mcp_extra_labeled('person', $p['extra']) ?: new stdClass; $r['tags'] = mcp_tags('person', (int)$p['id']); }
     return $r;
 }
@@ -236,11 +237,11 @@ function mcp_tool_defs(): array {
          'inputSchema' => $obj(['id' => $i('Identifiant.'), 'name' => $s('Nouveau nom.'), 'address' => $s('Adresse.'), 'website' => $s('Site web.'), 'owner' => $owner], ['id'])],
         ['name' => 'create_person', 'title' => 'Créer une personne', 'annotations' => $rw + ['title' => 'Créer une personne'],
          'description' => 'Crée une personne, éventuellement rattachée à une organisation. Vérifiez d\'abord avec search_contacts qu\'elle n\'existe pas déjà.',
-         'inputSchema' => $obj(['name' => $s('Prénom et nom.'), 'org_id' => $i('Organisation de rattachement.'), 'emails' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => 'Adresses e-mail, la principale en premier.'],
+         'inputSchema' => $obj(['name' => $s('Prénom et nom.'), 'fonction' => $s('Fonction ou poste.'), 'org_id' => $i('Organisation de rattachement.'), 'emails' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => 'Adresses e-mail, la principale en premier.'],
             'phones' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => 'Téléphones, le principal en premier.'], 'owner' => $owner, 'notes' => $s('Notes.')], ['name'])],
         ['name' => 'update_person', 'title' => 'Modifier une personne', 'annotations' => $rw + ['title' => 'Modifier une personne'],
          'description' => 'Modifie une personne. Les listes emails et phones remplacent les listes existantes ; add_email et add_phone ajoutent sans rien retirer. Seuls les champs fournis changent.',
-         'inputSchema' => $obj(['id' => $i('Identifiant.'), 'name' => $s('Prénom et nom.'), 'org_id' => $i('Organisation (0 pour retirer).'),
+         'inputSchema' => $obj(['id' => $i('Identifiant.'), 'name' => $s('Prénom et nom.'), 'fonction' => $s('Fonction ou poste (ex. « Responsable formation », « Chargée de mission innovation ») ; chaîne vide pour effacer.'), 'org_id' => $i('Organisation (0 pour retirer).'),
             'emails' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => 'Remplace toutes les adresses e-mail.'], 'add_email' => $s('Adresse e-mail à ajouter.'),
             'phones' => ['type' => 'array', 'items' => ['type' => 'string'], 'description' => 'Remplace tous les téléphones.'], 'add_phone' => $s('Téléphone à ajouter.'), 'owner' => $owner], ['id'])],
     ];
@@ -318,7 +319,7 @@ function mcp_call_tool(string $name, array $a, array $me) {
         $id = mcp_int($a['id'] ?? null, "d'affaire");
         require_once __DIR__ . '/contacts.php';
         $dc = deal_contacts($id);
-        return mcp_fmt_deal(mcp_get_deal_row($id), true) + ['contacts' => array_map(fn($c) => ['id' => $c['id'], 'nom' => $c['name'], 'organisation' => $c['org_name'], 'emails' => $c['emails'], 'telephones' => $c['phones'], 'lien' => implode(', ', $c['roles']), 'role_dans_affaire' => $c['role']], $dc['contacts']),
+        return mcp_fmt_deal(mcp_get_deal_row($id), true) + ['contacts' => array_map(fn($c) => ['id' => $c['id'], 'nom' => $c['name'], 'fonction' => $c['fonction'], 'organisation' => $c['org_name'], 'emails' => $c['emails'], 'telephones' => $c['phones'], 'lien' => implode(', ', $c['roles']), 'role_dans_affaire' => $c['role']], $dc['contacts']),
             'adresses_sans_fiche' => $dc['unknown'], 'activites' => mcp_acts_for('deal_id', $id, 100)];
 
     case 'list_activities':
@@ -489,7 +490,10 @@ function mcp_call_tool(string $name, array $a, array $me) {
             $parts = preg_split('/\s+/u', $nm, 2);
             q('INSERT INTO persons (name, first_name, last_name, org_id, emails, phones, owner_id, notes, add_time, update_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
               [mb_substr($nm, 0, 255), $parts[0], $parts[1] ?? null, $org, $list($clean($a['emails'] ?? [])), $list($clean($a['phones'] ?? [])), mcp_user_id($a['owner'] ?? 'me', $me), (string)($a['notes'] ?? ''), $now, $now]);
-            return ['cree' => true, 'personne' => mcp_fmt_person(q(MCP_PERSON_SQL . ' WHERE p.id = ?', [(int)db()->lastInsertId()])->fetch())];
+            $nid = (int)db()->lastInsertId();
+            if (trim((string)($a['fonction'] ?? '')) !== '') { require_once __DIR__ . '/contacts.php'; dc_fonction_field();
+                q('UPDATE persons SET extra = ? WHERE id = ?', [json_encode([DC_FONCTION => mb_substr(trim((string)$a['fonction']), 0, 160)], JSON_UNESCAPED_UNICODE), $nid]); }
+            return ['cree' => true, 'personne' => mcp_fmt_person(q(MCP_PERSON_SQL . ' WHERE p.id = ?', [$nid])->fetch())];
         }
         $id = mcp_int($a['id'] ?? null, 'de personne');
         $cur = q('SELECT * FROM persons WHERE id = ?', [$id])->fetch(); if (!$cur) throw new McpToolError("Personne n° $id introuvable.");
@@ -503,6 +507,12 @@ function mcp_call_tool(string $name, array $a, array $me) {
             if (array_key_exists($k, $a) || !empty($a[$add])) $set[$k] = $list($vals);
         }
         if (isset($a['owner'])) $set['owner_id'] = mcp_user_id($a['owner'], $me);
+        if (array_key_exists('fonction', $a)) {
+            require_once __DIR__ . '/contacts.php'; dc_fonction_field();
+            $ex = $cur['extra'] ? (json_decode($cur['extra'], true) ?: []) : [];
+            $fv = mb_substr(trim((string)$a['fonction']), 0, 160); if ($fv === '') unset($ex[DC_FONCTION]); else $ex[DC_FONCTION] = $fv;
+            $set['extra'] = $ex ? json_encode($ex, JSON_UNESCAPED_UNICODE) : null;
+        }
         if (!$set) throw new McpToolError('Aucune modification demandée.');
         $set['update_time'] = $now;
         q('UPDATE persons SET ' . implode(',', array_map(fn($k) => "`$k` = ?", array_keys($set))) . ' WHERE id = ?', [...array_values($set), $id]);

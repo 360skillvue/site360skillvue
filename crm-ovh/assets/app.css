@@ -257,6 +257,7 @@ a.ct:hover span{text-decoration:underline}
 .dc-name:hover{text-decoration:underline}
 .dc-roles{display:inline-flex;gap:4px;flex-wrap:wrap}
 .dc-ct{display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-width:0;font-size:13px}
+.dc-fn{font-size:12px;color:var(--muted)}
 .dc-role{background:none;border:1px dashed transparent;border-radius:6px;padding:1px 6px;font:inherit;font-size:12px;font-style:italic;color:var(--fg);cursor:pointer}
 .dc-role.empty{color:var(--muted);border-color:var(--line);font-style:normal}
 .dc-role:hover{border-color:var(--accent)}

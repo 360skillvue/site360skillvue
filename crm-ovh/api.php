@@ -90,6 +90,7 @@ function route(string $r, string $method, array $b, array $me): void {
         foreach ($pipes as &$p) { $p['id'] = (string)$p['id']; $p['stages'] = array_values(array_map(fn($s) => ['id' => (string)$s['id'], 'name' => $s['name']], array_filter($stages, fn($s) => (string)$s['pipeline_id'] === $p['id']))); }
         unset($p);
         $fields = ['deal' => [], 'org' => [], 'person' => []];
+        require_once __DIR__ . '/lib/contacts.php'; dc_fonction_field();
         $hidden = array_flip((array)setting('hidden_fields', []));
         foreach (q('SELECT entity, fkey, label, type, options FROM fields ORDER BY position, id')->fetchAll() as $f)
             $fields[$f['entity']][] = ['key' => $f['fkey'], 'label' => $f['label'], 'type' => $f['type'], 'options' => $f['options'] ? json_decode($f['options'], true) : [],

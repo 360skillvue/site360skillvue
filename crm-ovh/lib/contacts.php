@@ -9,6 +9,18 @@ const DC_OWN_DOMAINS = ['360skillvue.com', '360skillvue.ch', 'biologie-elearning
 const DC_PUBLIC_DOMAINS = ['gmail.com', 'yahoo.fr', 'yahoo.com', 'hotmail.fr', 'hotmail.com', 'outlook.fr', 'outlook.com', 'live.fr', 'orange.fr', 'wanadoo.fr',
     'free.fr', 'sfr.fr', 'laposte.net', 'icloud.com', 'me.com', 'gmx.fr', 'gmx.ch', 'bluewin.ch', 'protonmail.com', 'proton.me', 'neuf.fr', 'bbox.fr', 'aol.com'];
 
+/* Champ « Fonction » des personnes (qui fait quoi) : un champ complémentaire réservé, créé au besoin. */
+const DC_FONCTION = 'crm_fonction';
+function dc_fonction_field(): void {
+    static $done = false; if ($done) return;
+    q("INSERT IGNORE INTO fields (entity, fkey, label, type, options, position) VALUES ('person', ?, 'Fonction', 'varchar', NULL, -1)", [DC_FONCTION]);
+    $done = true;
+}
+function dc_fonction($extra): ?string {
+    $ex = is_string($extra) && $extra !== '' ? (json_decode($extra, true) ?: []) : (is_array($extra) ? $extra : []);
+    $v = trim((string)($ex[DC_FONCTION] ?? '')); return $v === '' ? null : $v;
+}
+
 function dc_table(): void {
     static $done = false; if ($done) return;
     q('CREATE TABLE IF NOT EXISTS crm_deal_persons (deal_id INT UNSIGNED NOT NULL, person_id INT UNSIGNED NOT NULL, add_time DATETIME NOT NULL,
@@ -80,9 +92,9 @@ function deal_contacts(int $dealId): array {
     $out = [];
     if ($roles) {
         $ids = implode(',', array_map('intval', array_keys($roles)));
-        foreach (q("SELECT p.id, p.name, p.emails, p.phones, p.org_id, o.name AS org_name FROM persons p LEFT JOIN orgs o ON o.id = p.org_id WHERE p.id IN ($ids)")->fetchAll() as $p) {
+        foreach (q("SELECT p.id, p.name, p.emails, p.phones, p.org_id, p.extra, o.name AS org_name FROM persons p LEFT JOIN orgs o ON o.id = p.org_id WHERE p.id IN ($ids)")->fetchAll() as $p) {
             $out[] = ['id' => (int)$p['id'], 'name' => $p['name'], 'org_id' => $p['org_id'] ? (int)$p['org_id'] : null, 'org_name' => $p['org_name'],
-                      'emails' => dc_values($p['emails']), 'phones' => dc_values($p['phones']), 'roles' => $roles[(int)$p['id']], 'role' => $dealRole[(int)$p['id']] ?? null];
+                      'emails' => dc_values($p['emails']), 'phones' => dc_values($p['phones']), 'roles' => $roles[(int)$p['id']], 'role' => $dealRole[(int)$p['id']] ?? null, 'fonction' => dc_fonction($p['extra'])];
         }
         $rank = ['principal' => 0, 'ajouté' => 1, 'activités' => 2, 'e-mails' => 3, 'organisation' => 4, 'même domaine' => 5];
         usort($out, fn($a, $b) => [min(array_map(fn($r) => $rank[$r] ?? 9, $a['roles'])), $a['name']] <=> [min(array_map(fn($r) => $rank[$r] ?? 9, $b['roles'])), $b['name']]);

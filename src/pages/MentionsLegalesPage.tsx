@@ -9,44 +9,60 @@ const SECTIONS = [
   {
     title: '1. Identification de l\'éditeur du site',
     content: [
-      { label: 'Raison sociale', value: '360SkillVue Sàrl' },
+      { label: 'Raison sociale', value: '360skillvue Sàrl' },
       { label: 'Forme juridique', value: 'Société à responsabilité limitée de droit suisse' },
       { label: 'Siège social', value: 'Route de Crassier 7, 1262 Eysins (VD), Suisse' },
       { label: 'Numéro IDE', value: 'CHE-451.592.837' },
       { label: 'Capital social', value: 'CHF 20\'000' },
       { label: 'Date de constitution', value: '11 septembre 2024' },
+      { label: 'Registre', value: 'Registre du commerce du canton de Vaud' },
       { label: 'Organe de publication', value: 'Feuille officielle suisse du commerce (FOSC)' },
     ],
   },
   {
     title: '2. Représentants légaux',
     paragraphs: [
-      'Associée-gérante et présidente : Laure Dellamonica, avec signature collective à deux.',
-      'Gérant : Maxime Bailloud, avec signature individuelle.',
+      'Laure Dellamonica : associée-gérante, présidente des gérants, avec signature collective à deux.',
+      'Maxime Bailloud : gérant, avec signature individuelle.',
+      'Directrice de la publication : Laure Dellamonica.',
     ],
   },
   {
-    title: '3. Activité de la société',
+    title: '3. Société française (clients en France)',
+    paragraphs: [
+      'ScanUp est commercialisé auprès des clients établis en France par la société française 360skillvue.',
+    ],
+    content: [
+      { label: 'Dénomination', value: '360skillvue' },
+      { label: 'Forme juridique', value: 'Société par actions simplifiée à associé unique (SASU)' },
+      { label: 'Capital social', value: '20 000 €' },
+      { label: 'Siège social', value: '122 rue Amelot, 75011 Paris, France' },
+      { label: 'Immatriculation', value: 'RCS Paris 951 352 384' },
+      { label: 'Présidente', value: 'Skill Master Group, SARL (RCS Annecy 943 541 508)' },
+    ],
+  },
+  {
+    title: '4. Activité de la société',
     paragraphs: [
       '360SkillVue Sàrl a pour but la prestation de tous services dans le domaine de l\'informatique, notamment l\'édition de logiciels, de solutions d\'apprentissage en ligne et de diagnostic à distance.',
     ],
   },
   {
-    title: '4. Contact',
+    title: '5. Contact',
     content: [
-      { label: 'Adresse e-mail', value: 'tech@360skillvue.com' },
+      { label: 'Adresse e-mail', value: 'hello@360skillvue.com' },
       { label: 'Site web', value: 'https://360skillvue.com/' },
     ],
   },
   {
-    title: '5. Hébergement du site',
+    title: '6. Hébergement du site',
     content: [
       { label: 'Site vitrine', value: 'Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis (vercel.com)' },
       { label: 'Plateforme ScanUp', value: 'OVHcloud, serveurs certifiés hébergeur de données de santé (HDS) situés à Paris ; sur demande d\'un client suisse, hébergement en Suisse chez Infomaniak' },
     ],
   },
   {
-    title: '6. Propriété intellectuelle',
+    title: '7. Propriété intellectuelle',
     paragraphs: [
       'L\'ensemble du contenu de ce site (textes, images, graphismes, logos, icônes, sons, logiciels, etc.) est la propriété exclusive de 360SkillVue Sàrl ou de ses partenaires et est protégé par les lois suisses et internationales relatives à la propriété intellectuelle.',
       'Toute reproduction, représentation, modification, publication, transmission, dénaturation, totale ou partielle du site ou de son contenu, par quelque procédé que ce soit, et sur quelque support que ce soit, est interdite sans l\'autorisation écrite préalable de 360SkillVue Sàrl.',
@@ -54,41 +70,41 @@ const SECTIONS = [
     ],
   },
   {
-    title: '7. Protection des données personnelles',
+    title: '8. Protection des données personnelles',
     paragraphs: [
       '360SkillVue Sàrl s\'engage à protéger la vie privée des utilisateurs de son site web, conformément à la Loi fédérale sur la protection des données (LPD) et, le cas échéant, au Règlement général sur la protection des données (RGPD) de l\'Union européenne.',
       'Les données personnelles collectées sur ce site sont destinées exclusivement à un usage interne par 360SkillVue Sàrl. Elles ne seront en aucun cas cédées ou vendues à des tiers sans le consentement préalable de l\'utilisateur.',
-      'Conformément à la LPD et au RGPD, tout utilisateur dispose d\'un droit d\'accès, de rectification, de suppression et de portabilité de ses données personnelles. Pour exercer ces droits, veuillez contacter : tech@360skillvue.com.',
+      'Conformément à la LPD et au RGPD, tout utilisateur dispose d\'un droit d\'accès, de rectification, de suppression et de portabilité de ses données personnelles. Pour exercer ces droits, veuillez contacter : hello@360skillvue.com.',
     ],
   },
   {
-    title: '8. Cookies',
+    title: '9. Cookies',
     paragraphs: [
       'Le site 360SkillVue peut utiliser des cookies afin d\'améliorer l\'expérience de navigation des utilisateurs. Les cookies sont de petits fichiers texte stockés sur le terminal de l\'utilisateur.',
       'L\'utilisateur peut configurer son navigateur pour refuser les cookies ou être averti lorsqu\'un cookie est déposé. Le refus des cookies peut limiter l\'accès à certaines fonctionnalités du site.',
     ],
   },
   {
-    title: '9. Limitation de responsabilité',
+    title: '10. Limitation de responsabilité',
     paragraphs: [
       '360SkillVue Sàrl s\'efforce de fournir sur le site des informations aussi précises que possible. Toutefois, elle ne saurait être tenue responsable des omissions, inexactitudes ou carences dans la mise à jour de ces informations, qu\'elles soient de son fait ou du fait de tiers partenaires.',
       'Les informations présentes sur ce site sont fournies à titre indicatif et ne sauraient constituer un conseil juridique, technique ou commercial. 360SkillVue Sàrl décline toute responsabilité pour tout dommage résultant de l\'utilisation du site ou de l\'impossibilité d\'y accéder.',
     ],
   },
   {
-    title: '10. Liens hypertextes',
+    title: '11. Liens hypertextes',
     paragraphs: [
       'Le site 360SkillVue peut contenir des liens hypertextes vers d\'autres sites. 360SkillVue Sàrl n\'exerce aucun contrôle sur le contenu de ces sites tiers et décline toute responsabilité quant à leur contenu ou aux dommages pouvant résulter de leur consultation.',
     ],
   },
   {
-    title: '11. Droit applicable et juridiction compétente',
+    title: '12. Droit applicable et juridiction compétente',
     paragraphs: [
       'Les présentes mentions légales sont régies par le droit suisse. En cas de litige, et après échec de toute tentative de recherche d\'une solution amiable, les tribunaux compétents du canton de Vaud auront juridiction exclusive.',
     ],
   },
   {
-    title: '12. Révision',
+    title: '13. Révision',
     paragraphs: [
       'Conformément à la déclaration du 11 septembre 2024, la société n\'est pas soumise à une révision ordinaire et a renoncé à une révision restreinte (opting-out).',
     ],

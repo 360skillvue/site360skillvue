@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, ChevronDown, Mail, Check, Star } from 'lucide-react';
+import { ArrowRight, ChevronDown, Mail, Check } from 'lucide-react';
 import { useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -320,18 +320,17 @@ export default function EntreprisesPage() {
               {/* giant quote mark */}
               <div className="absolute -top-8 -left-4 text-[140px] font-serif leading-none text-scanup-blue/[0.07] select-none pointer-events-none">"</div>
               <div className="relative">
-                <div className="flex gap-1 mb-8">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={16} className="text-scanup-blue fill-scanup-blue" />
-                  ))}
-                </div>
                 <p className="text-[24px] md:text-[32px] font-medium leading-[1.5] text-scanup-navy mb-10 tracking-[-0.01em]">
                   {t.entreprises.testimonialQuote}
                 </p>
                 <div className="flex items-center gap-4">
+                  {t.entreprises.testimonialPhoto ? (
+                    <img src={t.entreprises.testimonialPhoto} alt={t.entreprises.testimonialName} width={56} height={56} loading="lazy" className="w-14 h-14 rounded-full object-cover ring-2 ring-scanup-blue/30" />
+                  ) : (
                   <div className="w-11 h-11 rounded-full bg-scanup-blue/10 flex items-center justify-center text-scanup-blue font-bold text-[13px]">
                     {t.entreprises.testimonialName.split(/\s+/).map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()}
                   </div>
+                  )}
                   <div>
                     <div className="text-[15px] font-semibold text-scanup-navy">{t.entreprises.testimonialName}</div>
                     <div className="text-[13px] text-scanup-graytext">{t.entreprises.testimonialRole}</div>

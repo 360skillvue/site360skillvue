@@ -8,98 +8,109 @@ import PageMeta from '../components/PageMeta';
 const SECTIONS = [
   {
     title: '1. Identification du vendeur',
+    paragraphs: [
+      "Le vendeur dépend du pays du Client : pour un Client établi en France, le contrat est conclu avec 360skillvue SAS ; pour un Client établi en Suisse ou dans un autre pays, avec 360skillvue Sàrl. Chacune est désignée ci-après « le Vendeur ». Le devis indique la société concernée.",
+    ],
     content: [
-      { label: 'Raison sociale', value: '360SkillVue Sàrl' },
-      { label: 'Siège social', value: 'Route de Crassier 7, 1262 Eysins (VD), Suisse' },
-      { label: 'Numéro IDE', value: 'CHE-451.592.837' },
-      { label: 'E-mail', value: 'tech@360skillvue.com' },
+      { label: 'Clients en France', value: '360skillvue, société par actions simplifiée à associé unique au capital de 20 000 €, siège social 122 rue Amelot, 75011 Paris, France, RCS Paris 951 352 384' },
+      { label: 'Clients en Suisse et hors de France', value: '360skillvue Sàrl, société à responsabilité limitée de droit suisse au capital de CHF 20 000, siège Route de Crassier 7, 1262 Eysins (VD), Suisse, IDE CHE-451.592.837' },
+      { label: 'E-mail', value: 'hello@360skillvue.com' },
       { label: 'Site web', value: 'https://360skillvue.com/' },
     ],
   },
   {
     title: '2. Objet',
     paragraphs: [
-      "Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles entre 360SkillVue Sàrl, ci-après « le Vendeur », et toute personne morale ou physique souhaitant procéder à l'achat d'une offre commerciale ScanUp, ci-après « le Client ».",
+      "Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles entre le Vendeur et toute personne morale ou physique souhaitant procéder à l'achat d'une offre commerciale ScanUp, ci-après « le Client ».",
       "Toute commande implique l'acceptation pleine et entière des présentes CGV, qui prévalent sur toute autre condition à l'exception de celles expressément acceptées par écrit par le Vendeur.",
     ],
   },
   {
     title: '3. Offres et tarification',
     paragraphs: [
-      "Les offres commerciales (abonnements, licences, packs d'évaluations) sont présentées sur le site 360skillvue.com ou dans les devis transmis par voie électronique.",
-      "Les prix sont indiqués en euros (EUR) ou en francs suisses (CHF) hors taxes, sauf mention contraire. Les tarifs applicables sont ceux en vigueur à la date de confirmation de la commande.",
-      "360SkillVue Sàrl se réserve le droit de modifier ses tarifs à tout moment, sans que cela affecte les commandes déjà confirmées.",
+      "Les offres commerciales (dépistages, livrables, formations et prestations associées) sont présentées sur le site 360skillvue.com ou dans les devis transmis par voie électronique.",
+      "Les prix sont indiqués en euros (EUR) pour les clients en France et en francs suisses (CHF) ou en euros pour les autres clients, hors taxes, sauf mention contraire. Les tarifs applicables sont ceux en vigueur à la date de confirmation de la commande.",
+      "Le Vendeur se réserve le droit de modifier ses tarifs à tout moment, sans que cela affecte les commandes déjà confirmées.",
     ],
   },
   {
     title: '4. Commande et formation du contrat',
     paragraphs: [
-      "La commande est ferme et définitive dès la signature d'un devis ou la validation d'une souscription en ligne par le Client. Un e-mail de confirmation récapitulatif est envoyé au Client.",
-      "360SkillVue Sàrl se réserve le droit de refuser toute commande pour des motifs légitimes (insolvabilité, non-conformité aux conditions d'utilisation, etc.).",
+      "La commande est ferme et définitive dès la signature d'un devis par le Client. Un e-mail de confirmation récapitulatif est envoyé au Client.",
+      "Le Vendeur se réserve le droit de refuser toute commande pour des motifs légitimes (insolvabilité, non-conformité aux conditions d'utilisation, etc.).",
     ],
   },
   {
-    title: '5. Modalités de paiement',
+    title: '5. Session de dépistage et facturation',
     paragraphs: [
-      "Le paiement s'effectue par virement bancaire, carte de crédit ou tout autre moyen accepté et précisé sur la facture ou lors du processus de commande.",
-      "Sauf accord particulier, les factures sont payables à 30 jours à compter de leur date d'émission. Tout retard de paiement entraîne de plein droit l'application d'intérêts de retard au taux légal en vigueur en Suisse, ainsi que d'une indemnité forfaitaire pour frais de recouvrement de CHF 40 (ou équivalent EUR).",
+      "Sauf mention contraire dans le devis, la prestation prend la forme d'une session d'un ou trois mois, ouverte au Client pour mener sa campagne de dépistage.",
+      "La facturation intervient à la fin de la session, sur la base du nombre de dépistages réellement réalisés et des livrables commandés, au tarif indiqué dans le devis. Il n'y a ni abonnement ni engagement de durée.",
     ],
   },
   {
-    title: '6. Livraison et accès au service',
+    title: '6. Modalités de paiement',
     paragraphs: [
-      "La plateforme ScanUp est un service SaaS (Software as a Service) accessible via un navigateur web. L'accès est ouvert au Client dans un délai de 3 jours ouvrés suivant la confirmation de commande et le paiement ou la mise en place d'un mandat de prélèvement.",
+      "Le paiement s'effectue par virement bancaire ou tout autre moyen accepté et précisé sur la facture.",
+      "Sauf accord particulier, les factures sont payables à 30 jours à compter de leur date d'émission. Pour les clients en France, tout retard de paiement entraîne de plein droit l'application de pénalités de retard au taux prévu à l'article L. 441-10 du Code de commerce et d'une indemnité forfaitaire pour frais de recouvrement de 40 €. Pour les autres clients, des intérêts moratoires au taux légal suisse sont dus, ainsi qu'une indemnité forfaitaire de CHF 40 pour frais de recouvrement.",
+    ],
+  },
+  {
+    title: '7. Accès au service',
+    paragraphs: [
+      "La plateforme ScanUp est un service en ligne accessible via un navigateur web. L'accès est ouvert au Client dans un délai de 48 heures ouvrées suivant la confirmation de commande.",
       "Les identifiants de connexion sont transmis par e-mail à l'adresse indiquée lors de la commande. Le Client est responsable de la confidentialité de ses accès.",
     ],
   },
   {
-    title: '7. Droit de rétractation',
+    title: '8. Droit de rétractation',
     paragraphs: [
-      "Conformément à la réglementation applicable (directive européenne 2011/83/UE pour les clients UE), le Client consommateur dispose d'un délai de 14 jours calendaires à compter de la date de souscription pour exercer son droit de rétractation, sans avoir à en justifier les motifs.",
+      "Les offres ScanUp s'adressent aux professionnels. Lorsque la réglementation applicable reconnaît au Client un droit de rétractation (directive européenne 2011/83/UE pour les consommateurs de l'Union européenne), il dispose d'un délai de 14 jours calendaires à compter de la commande pour l'exercer, sans avoir à en justifier les motifs.",
       "Ce droit ne s'applique pas aux services dont l'exécution a commencé avec l'accord exprès du Client avant l'expiration du délai de rétractation.",
-      "Pour exercer ce droit, le Client doit notifier sa décision par e-mail à : tech@360skillvue.com.",
+      "Pour exercer ce droit, le Client doit notifier sa décision par e-mail à : hello@360skillvue.com.",
     ],
   },
   {
-    title: '8. Durée et résiliation',
+    title: '9. Durée et résiliation',
     paragraphs: [
-      "Les abonnements sont souscrits pour la durée précisée dans le devis ou l'espace client (mensuel, annuel). Ils sont renouvelables par tacite reconduction sauf résiliation notifiée par e-mail au moins 30 jours avant l'échéance.",
-      "En cas de manquement grave aux CGU ou aux CGV non remédié dans un délai de 15 jours suivant mise en demeure, 360SkillVue Sàrl se réserve le droit de suspendre ou résilier le contrat sans indemnité.",
+      "Le contrat prend fin à l'issue de la session et de la remise des livrables commandés, sauf durée différente prévue au devis.",
+      "En cas de manquement grave aux CGU ou aux CGV non remédié dans un délai de 15 jours suivant mise en demeure, le Vendeur se réserve le droit de suspendre ou résilier le contrat sans indemnité.",
     ],
   },
   {
-    title: '9. Responsabilité et garanties',
+    title: '10. Responsabilité et garanties',
     paragraphs: [
-      "360SkillVue Sàrl s'engage à fournir la plateforme ScanUp avec une disponibilité cible de 99,5 % (hors maintenances planifiées).",
-      "La responsabilité de 360SkillVue Sàrl est limitée aux dommages directs et ne peut excéder le montant total des sommes versées par le Client au cours des 12 derniers mois précédant le sinistre.",
-      "360SkillVue Sàrl ne saurait être tenue responsable des dommages indirects, pertes d'exploitation ou de données imputables à une mauvaise utilisation du service ou à des causes extérieures.",
+      "Le Vendeur s'engage à fournir la plateforme ScanUp avec une disponibilité cible de 99,5 % (hors maintenances planifiées).",
+      "La responsabilité du Vendeur est limitée aux dommages directs et ne peut excéder le montant total des sommes versées par le Client au cours des 12 derniers mois précédant le sinistre.",
+      "Le Vendeur ne saurait être tenu responsable des dommages indirects, pertes d'exploitation ou de données imputables à une mauvaise utilisation du service ou à des causes extérieures.",
     ],
   },
   {
-    title: '10. Propriété intellectuelle',
+    title: '11. Propriété intellectuelle',
     paragraphs: [
-      "L'ensemble des éléments constituant la plateforme ScanUp (algorithmes, interfaces, contenus, questionnaires, bases de données) est la propriété exclusive de 360SkillVue Sàrl et est protégé par les droits de propriété intellectuelle applicables.",
+      "L'ensemble des éléments constituant la plateforme ScanUp (interfaces, contenus, questionnaires, bases de données) est la propriété exclusive de 360skillvue Sàrl ou de ses partenaires et est protégé par les droits de propriété intellectuelle applicables.",
       "Le Client bénéficie d'une licence d'utilisation non exclusive et non transférable pour la durée du contrat et dans le seul cadre de son activité professionnelle interne.",
     ],
   },
   {
-    title: '11. Protection des données personnelles',
+    title: '12. Protection des données personnelles',
     paragraphs: [
-      "Dans le cadre de l'exécution du contrat, 360SkillVue Sàrl traite des données personnelles en qualité de sous-traitant au sens du RGPD. Un accord de traitement des données (DPA) est disponible sur demande.",
+      "Dans le cadre de l'exécution du contrat, le Vendeur traite des données personnelles en qualité de sous-traitant au sens du RGPD. Un accord de traitement des données (DPA) est disponible sur demande.",
       "La politique de confidentialité détaillée est consultable à l'adresse : https://360skillvue.com/politique-confidentialite.",
     ],
   },
   {
-    title: '12. Droit applicable et règlement des litiges',
+    title: '13. Droit applicable et règlement des litiges',
     paragraphs: [
-      "Les présentes CGV sont soumises au droit suisse. En cas de litige, les parties s'efforceront de trouver une solution amiable. À défaut, les tribunaux compétents du canton de Vaud (Suisse) auront juridiction exclusive.",
-      "Pour les clients résidents de l'Union européenne, les dispositions impératives du droit du consommateur applicable dans leur pays de résidence demeurent en vigueur.",
+      "En cas de litige, les parties s'efforceront de trouver une solution amiable.",
+      "Les contrats conclus avec 360skillvue SAS sont soumis au droit français ; à défaut d'accord amiable, les tribunaux compétents de Paris auront juridiction exclusive.",
+      "Les contrats conclus avec 360skillvue Sàrl sont soumis au droit suisse ; à défaut d'accord amiable, les tribunaux compétents du canton de Vaud (Suisse) auront juridiction exclusive.",
+      "Pour les clients consommateurs résidant dans l'Union européenne, les dispositions impératives du droit de la consommation applicable dans leur pays de résidence demeurent en vigueur.",
     ],
   },
   {
-    title: '13. Mise à jour',
+    title: '14. Mise à jour',
     paragraphs: [
-      "360SkillVue Sàrl se réserve le droit de modifier les présentes CGV à tout moment. Les nouvelles CGV seront notifiées au Client avec un préavis de 30 jours et s'appliqueront aux contrats conclus postérieurement à leur entrée en vigueur.",
+      "Le Vendeur se réserve le droit de modifier les présentes CGV à tout moment. Les nouvelles CGV seront notifiées au Client avec un préavis de 30 jours et s'appliqueront aux contrats conclus postérieurement à leur entrée en vigueur.",
     ],
   },
 ];

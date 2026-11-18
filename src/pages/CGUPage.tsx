@@ -34,7 +34,7 @@ const SECTIONS = [
   {
     title: '4. Contact',
     content: [
-      { label: 'Adresse e-mail', value: 'tech@360skillvue.com' },
+      { label: 'Adresse e-mail', value: 'hello@360skillvue.com' },
       { label: 'Site web', value: 'https://360skillvue.com/' },
     ],
   },
@@ -58,7 +58,7 @@ const SECTIONS = [
     paragraphs: [
       '360SkillVue Sàrl s\'engage à protéger la vie privée des utilisateurs de son site web, conformément à la Loi fédérale sur la protection des données (LPD) et, le cas échéant, au Règlement général sur la protection des données (RGPD) de l\'Union européenne.',
       'Les données personnelles collectées sur ce site sont destinées exclusivement à un usage interne par 360SkillVue Sàrl. Elles ne seront en aucun cas cédées ou vendues à des tiers sans le consentement préalable de l\'utilisateur.',
-      'Conformément à la LPD et au RGPD, tout utilisateur dispose d\'un droit d\'accès, de rectification, de suppression et de portabilité de ses données personnelles. Pour exercer ces droits, veuillez contacter : tech@360skillvue.com.',
+      'Conformément à la LPD et au RGPD, tout utilisateur dispose d\'un droit d\'accès, de rectification, de suppression et de portabilité de ses données personnelles. Pour exercer ces droits, veuillez contacter : hello@360skillvue.com.',
     ],
   },
   {

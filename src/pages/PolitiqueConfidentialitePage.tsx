@@ -11,7 +11,7 @@ const SECTIONS = [
     content: [
       { label: 'Société', value: '360SkillVue Sàrl' },
       { label: 'Siège social', value: 'Route de Crassier 7, 1262 Eysins (VD), Suisse' },
-      { label: 'Contact', value: 'tech@360skillvue.com' },
+      { label: 'Contact', value: 'hello@360skillvue.com' },
     ],
   },
   {
@@ -76,7 +76,7 @@ const SECTIONS = [
       'Droit d\'opposition au traitement',
       'Droit de retrait du consentement à tout moment',
     ],
-    after: 'Pour exercer ces droits, contactez : tech@360skillvue.com. Toute demande sera traitée dans un délai maximum de 30 jours.',
+    after: 'Pour exercer ces droits, contactez : hello@360skillvue.com. Toute demande sera traitée dans un délai maximum de 30 jours.',
   },
   {
     title: '9. Cookies',

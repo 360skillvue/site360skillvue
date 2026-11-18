@@ -664,11 +664,12 @@ function bindView() {
     if (t.dataset.sadd) return editPipes(ps => ps.find(p => p.id === t.dataset.sadd).stages.push({id: "", name: "Nouvelle étape"}));
     if (t.dataset.pwipe) { // suppression définitive : deux clics, le second confirme
       const p = S.pipelines.find(x => x.id === t.dataset.pwipe); if (!p) return;
-      if (!t.dataset.confirm) { t.dataset.confirm = 1; t.textContent = `Confirmer : supprimer « ${p.name} », ses étapes et toutes ses affaires (définitif)`; return; }
-      t.disabled = true;
+      // Fenêtre de confirmation du navigateur : elle résiste au rafraîchissement automatique de la vue (le double clic pouvait être remis à zéro).
+      if (!window.confirm(`Supprimer définitivement le pipeline « ${p.name} », ses étapes et toutes ses affaires ?\n\nLes activités et les fiches contacts sont conservées. Cette action est irréversible.`)) return;
+      t.disabled = true; t.textContent = "Suppression en cours…";
       return api("pipeline_delete", {method: "POST", body: {id: p.id}}).then(async r => {
         toast(`Pipeline « ${p.name} » supprimé, avec ${r.deals} affaire(s). Les activités sont conservées.`);
-        try { await loadData(); } catch {} render(); }, e => { t.disabled = false; failToast(e); });
+        try { await loadData(); } catch {} render(); }, e => { t.disabled = false; t.textContent = "Supprimer le pipeline et ses affaires"; failToast(e); });
     }
     if (t.dataset.pdel) return editPipes(ps => ps.splice(ps.findIndex(p => p.id === t.dataset.pdel), 1));
     if (t.dataset.sup || t.dataset.sdown) { const [pid, i] = (t.dataset.sup || t.dataset.sdown).split("|"); const j = +i + (t.dataset.sup ? -1 : 1);

@@ -671,6 +671,10 @@ function route(string $r, string $method, array $b, array $me): void {
         $mine = q('SELECT totp_on, pw_weak FROM users WHERE id = ?', [$me['id']])->fetch();
         $res = ['totp_on' => (bool)(int)$mine['totp_on'], 'pw_weak' => (bool)(int)$mine['pw_weak'], 'required' => (bool)setting('totp_required_admin', false), 'min_password' => AUTH_MIN_PASSWORD];
         if ($me['role'] === 'admin') {
+            $res['php'] = PHP_VERSION;
+            $ovh = dirname(CRM_ROOT) . '/.ovhconfig';
+            $res['ovhconfig'] = is_file($ovh) && preg_match('/app\.engine\.version\s*=\s*([0-9.]+)/', (string)@file_get_contents($ovh), $m) ? $m[1] : null;
+            $res['ovhconfig_crm'] = is_file(CRM_ROOT . '/.ovhconfig');
             $res['users'] = array_map(fn($u) => ['id' => (string)$u['id'], 'name' => $u['name'], 'role' => $u['role'], 'totp_on' => (bool)(int)$u['totp_on'], 'pw_weak' => (bool)(int)$u['pw_weak']],
                 q('SELECT id, name, role, totp_on, pw_weak FROM users WHERE can_login = 1 AND active = 1 ORDER BY name')->fetchAll());
             $res['log'] = array_map(fn($l) => ['at' => str_replace(' ', 'T', $l['at']) . 'Z', 'email' => $l['email'], 'ip' => $l['ip'], 'result' => $l['result'], 'via' => $l['via']],

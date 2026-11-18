@@ -747,6 +747,8 @@ function secSecInner() {
   else h += `<p class="note">Protégez votre compte avec un code à 6 chiffres donné par une application sur votre téléphone, en plus du mot de passe.${admin ? " Fortement conseillé pour les administrateurs." : ""}</p>
       <div><button class="btn" data-act="totpStart">Activer la double authentification</button></div>`;
   if (admin) {
+    if (c.php) { const [M, m, pt] = c.php.split(".").map(Number); const safe = M > 8 || (M === 8 && (m >= 5 ? pt >= 12 : m === 4 ? pt >= 27 : m === 3 ? pt >= 36 : m === 2 ? pt >= 35 : false));
+      h += `<p style="margin-top:10px"><b>PHP du serveur :</b> ${esc(c.php)} <span class="chip ${safe ? "ok" : "late"}">${safe ? "corrige les failles CVE-2026-109618 et 109619" : "concernée par les failles CVE-2026-109618 et 109619"}</span>${c.ovhconfig ? ` <small>(.ovhconfig de l'hébergement : ${esc(c.ovhconfig)})</small>` : ""}</p>`; }
     h += `<div class="sec" style="background:var(--surface-2);margin-top:12px"><h3>Comptes (administrateurs)</h3>
       <label><input type="checkbox" data-act="totpReq" ${c.required ? "checked" : ""}> Double authentification obligatoire pour les administrateurs</label>
       <div class="rows" style="margin-top:8px">${(c.users || []).map(u => `<div class="r"><span class="main"><b>${esc(u.name)}</b><small>${u.role === "admin" ? "administrateur" : "utilisateur"}${u.pw_weak ? " · mot de passe trop court" : ""}</small></span>

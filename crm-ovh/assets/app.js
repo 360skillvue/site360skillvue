@@ -360,7 +360,7 @@ function viewSettings() {
           <button class="btn sm ghost" data-sdown="${esc(p.id)}|${i}" aria-label="Descendre" ${i < p.stages.length - 1 ? "" : "disabled"}>${ico("down")}</button>
           <button class="btn sm ghost" data-sdel="${esc(p.id)}|${esc(s.id)}" aria-label="Supprimer l'étape">${ico("x")}</button></div>`).join("")}
         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-sadd="${esc(p.id)}">${ico("plus")}Étape</button>
-          ${p.stages.length ? "" : `<button class="btn sm ghost" data-pdel="${esc(p.id)}" style="color:var(--bad)">Supprimer le pipeline</button>`}</div></div>`).join("") || `<p class="note">Aucun pipeline.</p>`}
+          ${p.stages.length ? (p.id ? `<button class="btn sm ghost" data-pwipe="${esc(p.id)}" style="color:var(--bad)">Supprimer le pipeline et ses affaires</button>` : "") : `<button class="btn sm ghost" data-pdel="${esc(p.id)}" style="color:var(--bad)">Supprimer le pipeline</button>`}</div></div>`).join("") || `<p class="note">Aucun pipeline.</p>`}
     </section>` : ""}
     ${admin ? fieldsSec() : ""}
     <section class="sec" id="mailSec">${mailSecInner()}</section>
@@ -662,6 +662,14 @@ function bindView() {
     if (a === "addPipe") return editPipes(ps => ps.push({id: "", name: "Nouveau pipeline", stages: [{id: "", name: "Premier contact"}]}));
     if (t.dataset.usave) return saveUser(t.closest("[data-user]"));
     if (t.dataset.sadd) return editPipes(ps => ps.find(p => p.id === t.dataset.sadd).stages.push({id: "", name: "Nouvelle étape"}));
+    if (t.dataset.pwipe) { // suppression définitive : deux clics, le second confirme
+      const p = S.pipelines.find(x => x.id === t.dataset.pwipe); if (!p) return;
+      if (!t.dataset.confirm) { t.dataset.confirm = 1; t.textContent = `Confirmer : supprimer « ${p.name} », ses étapes et toutes ses affaires (définitif)`; return; }
+      t.disabled = true;
+      return api("pipeline_delete", {method: "POST", body: {id: p.id}}).then(async r => {
+        toast(`Pipeline « ${p.name} » supprimé, avec ${r.deals} affaire(s). Les activités sont conservées.`);
+        try { await loadData(); } catch {} render(); }, e => { t.disabled = false; failToast(e); });
+    }
     if (t.dataset.pdel) return editPipes(ps => ps.splice(ps.findIndex(p => p.id === t.dataset.pdel), 1));
     if (t.dataset.sup || t.dataset.sdown) { const [pid, i] = (t.dataset.sup || t.dataset.sdown).split("|"); const j = +i + (t.dataset.sup ? -1 : 1);
       return editPipes(ps => { const st = ps.find(p => p.id === pid).stages; [st[i], st[j]] = [st[j], st[i]]; }); }

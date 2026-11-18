@@ -565,6 +565,24 @@ function route(string $r, string $method, array $b, array $me): void {
         db()->commit();
         json_out(['ok' => true]);
 
+    case 'pipeline_delete':
+        // Supprime un pipeline, ses étapes et ses affaires (définitif). Les activités restent, détachées de l'affaire.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        $pid = (int)($b['id'] ?? 0);
+        if (!$pid || !q('SELECT id FROM pipelines WHERE id = ?', [$pid])->fetchColumn()) fail('Pipeline introuvable.');
+        db()->beginTransaction();
+        $ids = array_map('intval', q('SELECT d.id FROM deals d LEFT JOIN stages s ON s.id = d.stage_id WHERE d.pipeline_id = ? OR s.pipeline_id = ?', [$pid, $pid])->fetchAll(PDO::FETCH_COLUMN));
+        if ($ids) {
+            $in = implode(',', $ids);
+            q("UPDATE activities SET deal_id = NULL WHERE deal_id IN ($in)");
+            q("DELETE FROM deals WHERE id IN ($in)");
+        }
+        q('DELETE FROM stages WHERE pipeline_id = ?', [$pid]);
+        q('DELETE FROM pipelines WHERE id = ?', [$pid]);
+        db()->commit();
+        json_out(['ok' => true, 'deals' => count($ids)]);
+
     case 'user_save':
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);
         require_admin($me);

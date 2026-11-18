@@ -824,6 +824,7 @@ async function actContext(a) {
     <div class="mh"><span class="chip ${x.direction === "out" ? "ok" : "today"}">${x.direction === "out" ? "Envoyé" : "Reçu"}</span><b>${esc(x.subject || "(sans objet)")}</b><span class="when">${esc(frDay(x.sent_at))}</span></div>
     ${mailBodyHtml(x)}</div>`).join("")}</div>`;
   else h += `<p style="margin:0 0 6px"><small>Aucun e-mail rattaché à cette fiche.</small></p>`;
+  if (d) h += freinsHtml(d, acts, mails);
   if (todo.length) h += `<p style="margin:8px 0 0"><b>Autres activités à faire :</b> ${todo.slice(0, 4).map(x => esc(x.subject || "") + " (" + esc(frDay(x.due_date)) + ")").join(" ; ")}</p>`;
   // Parcours ScanUp de l'affaire de l'activité, ou à défaut de l'affaire en cours de son organisation.
   const sd = d || (a.org_id ? [...S.deals.values()].find(x => x.org_id === a.org_id && x.status === "open" && suApplies(x)) : null);
@@ -1032,6 +1033,52 @@ async function mailToPerson(personId, dealId) {
   catch (err) { failToast(err); }
 }
 
+/* « Freins éventuels évoqués » : repérés dans ce que dit le client ou ce qu'on a noté de lui (notes et comptes rendus
+   d'activités, notes et raison de perte de l'affaire, e-mails reçus), plus deux signaux calculés : absence de réponse
+   et essai non utilisé. Les e-mails envoyés par l'équipe sont ignorés (ils parlent de prix sans que ce soit un frein). */
+const FREINS = [
+  ["Objection", /trop (cher|compliqu|lourd|long|complexe)|pas convaincu|pas adapt|surdimensionn|ne (veulent|souhaitent) pas|pas prioritaire|réticen|inquiét|méfian|ne comprendront pas|pas (le|un) besoin|pas intéress/i],
+  ["Concurrent ou prestataire en place", /concurren|déjà (un |une |des )?(prestataire|outil|solution|partenaire|contrat)|travaill\w* déjà avec|(prestataire|solution|outil) (actuel|en place|interne)|déjà en place|ont déjà (un|une|des)|racheter|rachet[ée]|en interne/i],
+  ["Budget", /budget|trop cher|pas les moyens|financement|financ(é|er)|enveloppe|coût jugé|prix jugé|jugé trop cher/i],
+  ["Délai de décision", /pas avant|l'année prochaine|en 202[7-9]|(au |d'ici le )?(T[1-4]|[1-4](er|e) trimestre)|report(é|er|ée)|plus tard|en attente (de|d')|validation (interne|de la direction)|comité|appel d'offres|revien(t|dra|nent) vers nous|rappellera|réfléchi|pas de décision/i],
+  ["Essai non utilisé", /jamais connect|ne s'est (jamais|pas) connect|pas (encore )?commencé|aucun parcours|non terminé|pas (encore )?testé|n'a pas testé|n'ont pas testé|essai (non|pas) utilisé/i],
+  ["Absence de réponse", /sans réponse|pas de réponse|aucune réponse|resté sans|ne répond pas|injoignable|pas de retour|sans nouvelles|messagerie/i],
+];
+function dealFreins(d, acts, mails) {
+  const src = [];
+  const clean = t => String(t || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  if (d && d.lost_reason) src.push({t: clean(d.lost_reason), when: d.lost_time || d.update_time, from: "raison de perte"});
+  if (d && d.notes) src.push({t: clean(d.notes), when: d.update_time, from: "notes de l'affaire"});
+  // Seulement ce qui s'est passé (activités faites, notes) : une tâche à venir dit ce qu'on fera, pas ce que le client a dit.
+  (acts || []).forEach(a => { if (a.done) src.push({t: clean([a.subject, a.note].filter(Boolean).join(". ")), when: a.done_time || a.due_date, from: a.type === "note" ? "note" : "activité"}); });
+  (mails || []).filter(m => m.direction !== "out").forEach(m => src.push({t: clean([m.subject, m.body || m.preview].filter(Boolean).join(". ")), when: m.sent_at, from: "e-mail reçu"}));
+  src.sort((x, y) => String(y.when || "").localeCompare(String(x.when || "")));
+  const out = [], seen = new Set();
+  for (const [cat, re] of FREINS) {
+    let n = 0;
+    for (const x of src) {
+      if (n >= 2) break;
+      const sentences = x.t.split(/(?<=[A-Za-zÀ-ÿ0-9)»]{2}[.!?;])\s+|\n+/);
+      const hit = sentences.find(z => re.test(z)); if (!hit) continue;
+      const ex = hit.length > 200 ? hit.slice(0, 197) + "…" : hit; const key = ex.toLowerCase();
+      if (seen.has(key)) continue; seen.add(key); n++;
+      out.push({cat, ex, when: x.when, from: x.from});
+    }
+  }
+  // Signal calculé : le dernier e-mail envoyé est resté sans réponse depuis plus de 14 jours.
+  const lastOut = (mails || []).find(m => m.direction === "out"), lastIn = (mails || []).find(m => m.direction !== "out");
+  if (d && d.status === "open" && lastOut && (!lastIn || String(lastIn.sent_at) < String(lastOut.sent_at))) {
+    const days = Math.round((Date.now() - new Date(lastOut.sent_at).getTime()) / 864e5);
+    if (days > 14 && !out.some(f => f.cat === "Absence de réponse")) out.push({cat: "Absence de réponse", ex: `aucune réponse à l'e-mail « ${lastOut.subject || "(sans objet)"} » envoyé il y a ${days} jours`, when: lastOut.sent_at, from: "calcul"});
+  }
+  return out;
+}
+function freinsHtml(d, acts, mails) {
+  const f = dealFreins(d, acts, mails);
+  const body = f.length ? `<ul style="margin:2px 0 0;padding-left:18px">${f.map(x => `<li><b>${esc(x.cat)}</b> : ${esc(x.ex)}${x.from !== "calcul" && x.when ? ` <small class="muted">(${esc(x.from)}, ${esc(frDay(x.when))})</small>` : ""}</li>`).join("")}</ul>` : `<small>Aucun frein évoqué</small>`;
+  return `<div style="margin:8px 0 0"><b>Freins éventuels évoqués :</b>${f.length ? body : " " + body}</div>`;
+}
+
 /* « Où en est-on ? » en haut de la fiche d'une affaire : calculé à chaque ouverture à partir des activités
    et des e-mails déjà chargés pour la fiche, donc toujours à jour, sans rien à saisir. */
 function dealSummary(d) {
@@ -1051,6 +1098,7 @@ function dealSummary(d) {
     h += row("Prochaine action", `${esc(todo[0].subject || "")} (${esc(todo[0].due_date ? frDay(todo[0].due_date) : "sans date")})${late ? ` <span style="color:var(--bad);font-weight:600">en retard</span>` : ""}${todo.length > 1 ? ` <small>et ${todo.length - 1} autre${todo.length > 2 ? "s" : ""}</small>` : ""}`); }
   else if (d.status === "open") h += `<div class="banner" style="margin:0 0 8px">Aucune activité prévue pour cette affaire.</div>`;
   if (mails.length) h += `<p style="margin:0"><small>${mails.length} e-mail${mails.length > 1 ? "s" : ""} rattaché${mails.length > 1 ? "s" : ""}, détail plus bas.</small></p>`;
+  h += freinsHtml(d, acts, mails);
   return `<section class="sec"><h3>Où en est-on ?</h3><div style="font-size:13px">${h}</div></section>`;
 }
 

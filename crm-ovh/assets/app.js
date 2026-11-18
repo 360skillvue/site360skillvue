@@ -1519,6 +1519,8 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
       ${mailsSection()}
       <section class="sec"><h3>Notes</h3><textarea id="eNotes" rows="4">${esc(e.notes || "")}</textarea></section>
       ${extraSection(kind, e)}
+      <section class="sec"><h3>Doublon</h3><p class="note">Cette fiche fait doublon ? Choisissez la fiche à garder : ses affaires, activités, e-mails${kind === "org" ? ", personnes" : ""}, coordonnées, notes et étiquettes y sont rapatriés, puis cette fiche-ci est supprimée.</p>
+        ${pickerHtml("emerge", kind, null, "Fusionner cette fiche dans…")}</section>
       <div><button class="btn ghost" data-edel style="color:var(--bad)">Supprimer la fiche</button></div>
     </div>`;
   dr.querySelector(".db").scrollTop = keepScroll;
@@ -1547,6 +1549,18 @@ function drawEntity(kind, id, dr = $("#panel .drawer")) {
   bindActsSection(dr, kind === "org" ? {org_id: id, org_name: e.name} : {person_id: id, person_name: e.name, org_id: e.org_id, org_name: e.org_name});
   dr.querySelectorAll("[data-extra]").forEach(el => el.addEventListener("change", () => up({extra: {[el.dataset.extra]: el.value}})));
   dr.querySelectorAll("[data-extraset]").forEach(box => box.addEventListener("change", () => up({extra: {[box.dataset.extraset]: [...box.querySelectorAll("input:checked")].map(c => c.value).join(", ")}}, true)));
+  bindPicker(dr, "emerge", async v => {
+    if (!v || !v.id) return;
+    if (String(v.id) === String(id)) return toast("Choisissez une autre fiche que celle-ci.");
+    if (!window.confirm(`Fusionner « ${e.name} » dans « ${v.name} » ?\n\nTout ce qui est rattaché à « ${e.name} » passe sur « ${v.name} », puis « ${e.name} » est supprimée. Cette action ne peut pas être annulée.`)) return;
+    try {
+      const r = await api("merge", {method: "POST", body: {kind, from: id, into: v.id}});
+      const n = Object.entries(r.deplaces || {}).filter(([, x]) => x).map(([k, x]) => `${x} ${k}`).join(", ");
+      toast(`Fiches fusionnées${n ? " : " + n + " rapatriés" : ""}`);
+      const deals = await api("deals"); S.deals = new Map(deals.map(d => [d.id, d]));
+      openEntity(kind, String(v.id));
+    } catch (err) { failToast(err); }
+  });
   const del = dr.querySelector("[data-edel]");
   del.onclick = async () => { if (!del.dataset.confirm) { del.dataset.confirm = 1; del.textContent = "Confirmer la suppression de la fiche"; return; }
     try { await deleteE(colName, id); toast("Fiche supprimée"); const deals = await api("deals"); S.deals = new Map(deals.map(d => [d.id, d])); closePanel(); } catch (err) { failToast(err); } };

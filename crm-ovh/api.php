@@ -207,6 +207,13 @@ function route(string $r, string $method, array $b, array $me): void {
         db()->commit();
         json_out(['ok' => true]);
 
+    case 'merge':
+        // Fusion d'un doublon dans une autre fiche (personne ou organisation), lancée à la main depuis la fiche.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require __DIR__ . '/lib/merge.php';
+        try { json_out(merge_records((string)($b['kind'] ?? ''), (int)($b['from'] ?? 0), (int)($b['into'] ?? 0))); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'tags_overview':
         require __DIR__ . '/lib/tags.php';
         json_out(tags_overview());

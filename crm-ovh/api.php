@@ -361,6 +361,16 @@ function route(string $r, string $method, array $b, array $me): void {
         try { json_out(su_modules_step($me, (array)($b['state'] ?? []))); }
         catch (RuntimeException $ex) { fail($ex->getMessage()); }
 
+    case 'deal_mail_backfill':
+        // Bouton « Retrouver les e-mails » de la fiche affaire : échanges des 60 derniers jours avec ses contacts, dans toutes les boîtes connectées.
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_once __DIR__ . '/lib/contacts.php'; require __DIR__ . '/lib/mail.php';
+        try {
+            $dc = deal_contacts((int)($b['deal_id'] ?? 0)); $addrs = [];
+            foreach ($dc['contacts'] as $c) foreach ($c['emails'] as $e) $addrs[] = $e;
+            json_out(mail_backfill($addrs));
+        } catch (RuntimeException $e) { fail($e->getMessage(), 404); }
+
     case 'deal_contacts':
         // Contacts liés à une affaire (voir lib/contacts.php) ; POST pour ajouter ou retirer un lien manuel.
         require_once __DIR__ . '/lib/contacts.php';

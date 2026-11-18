@@ -1355,12 +1355,22 @@ function drawDealContacts(id, dr, r) {
     ${r.contacts.length ? `<div class="dc-list">${r.contacts.map(row).join("")}</div>` : `<p class="note">Aucun contact lié pour l'instant.</p>`}
     ${r.unknown.length ? `<details class="dc-unk"><summary>${r.unknown.length} adresse${r.unknown.length > 1 ? "s" : ""} des e-mails sans fiche</summary>
       ${r.unknown.map(a => `<div class="dc-row"><span class="dc-addr">${esc(a)}</span><button type="button" class="btn sm" data-dcnew="${esc(a)}">Créer la fiche</button></div>`).join("")}</details>` : ""}
-    ${pickerHtml("dcadd", "person", null, "Ajouter un contact")}`;
+    ${pickerHtml("dcadd", "person", null, "Ajouter un contact")}
+    ${r.contacts.some(c => c.emails.length) ? `<div><button type="button" class="btn sm" data-dcmails title="Cherche dans les boîtes connectées les échanges des 60 derniers jours avec ces contacts, y compris ceux envoyés avant la création de l'affaire ou de la fiche">Retrouver les e-mails de ces contacts</button></div>` : ""}`;
   const link = async (pid, on) => {
     try { drawDealContacts(id, dr, await api("deal_contacts", {method: "POST", body: {deal_id: id, person_id: pid, link: on}})); toast(on ? "Contact ajouté" : "Contact retiré"); }
     catch (e) { failToast(e); }
   };
   bindPicker(sec, "dcadd", v => { if (v && v.id) link(v.id, true); });
+  sec.querySelector("[data-dcmails]")?.addEventListener("click", async e => {
+    const b = e.currentTarget; b.disabled = true; b.textContent = "Recherche dans les boîtes…";
+    try {
+      const res = await api("deal_mail_backfill", {method: "POST", body: {deal_id: id}});
+      toast(res.nouveaux ? `${res.nouveaux} e-mail${res.nouveaux > 1 ? "s" : ""} retrouvé${res.nouveaux > 1 ? "s" : ""}` : `Aucun nouvel e-mail (${res.boites.length} boîte${res.boites.length > 1 ? "s" : ""} relue${res.boites.length > 1 ? "s" : ""})`);
+      if (S.panel && S.panel.id === id) loadPanelMails();
+    } catch (err) { failToast(err); }
+    b.disabled = false; b.textContent = "Retrouver les e-mails de ces contacts";
+  });
   sec.querySelectorAll("[data-dcrole]").forEach(b => b.onclick = async e => {
     e.stopPropagation(); const c = r.contacts.find(x => x.id === +b.dataset.dcrole);
     const v = window.prompt("Rôle de " + (c?.name || "ce contact") + " dans l'affaire (ex. décideuse, cheffe de projet, à former) :", c?.role || "");

@@ -225,7 +225,6 @@ function mail_sync_user(int $uid, ?array $map = null, bool $full = false): array
     $sentId = $fc === 200 ? (string)($fd['id'] ?? '') : '';
     $url = 'https://graph.microsoft.com/v1.0/me/messages?%24select=' . MS_SELECT
         . '&%24filter=' . rawurlencode('receivedDateTime ge ' . $since) . '&%24orderby=' . rawurlencode('receivedDateTime asc') . '&%24top=100';
-    $addr = fn($x) => strtolower(trim((string)(is_array($x) ? ($x['emailAddress']['address'] ?? '') : '')));
     $seen = 0; $kept = 0; $pages = 0; $lastDt = null;
     while ($url && $pages < 40) {
         $pages++;
@@ -233,16 +232,77 @@ function mail_sync_user(int $uid, ?array $map = null, bool $full = false): array
         if ($code !== 200) throw new RuntimeException('Lecture de la boîte impossible (code ' . $code . ') : ' . mb_substr((string)($r['error']['message'] ?? ''), 0, 200));
         foreach ($r['value'] ?? [] as $m) {
             $seen++;
-            $ts = strtotime((string)($m['receivedDateTime'] ?? '')) ?: time();
-            $lastDt = gmdate('Y-m-d H:i:s', $ts);
-            if (!empty($m['isDraft'])) continue;
+            $lastDt = gmdate('Y-m-d H:i:s', strtotime((string)($m['receivedDateTime'] ?? '')) ?: time());
+            $kept += mail_keep_message($m, $uid, $own, $sentId, $map);
+        }
+        $url = isset($r['@odata.nextLink']) ? (string)$r['@odata.nextLink'] : null;
+    }
+    // Contacts créés ou complétés depuis le dernier passage : on va chercher leurs échanges plus anciens (60 jours),
+    // envoyés avant que leur fiche existe ou que leur adresse y soit notée.
+    $back = 0;
+    if (!$full && !empty($t['last_sync'])) {
+        $recent = q("SELECT emails FROM persons WHERE update_time >= ? AND emails IS NOT NULL AND emails <> '' AND emails <> '[]' ORDER BY update_time DESC LIMIT 25",
+            [gmdate('Y-m-d H:i:s', strtotime($t['last_sync'] . ' UTC') - 3600)])->fetchAll(PDO::FETCH_COLUMN);
+        $addrs = [];
+        foreach ($recent as $raw) foreach ((array)json_decode((string)$raw, true) as $e) {
+            $a = strtolower(trim((string)(is_array($e) ? ($e['value'] ?? '') : $e)));
+            if ($a !== '' && isset($map[$a])) $addrs[$a] = true;
+        }
+        $back = mail_search_addrs($j['access_token'], $uid, array_slice(array_keys($addrs), 0, 25), $own, $sentId, $map);
+        $kept += $back;
+    }
+    // S'il reste des pages, on reprendra au dernier message lu ; sinon à l'heure de début de cette synchronisation.
+    $total = (int)q('SELECT COUNT(*) FROM crm_emails')->fetchColumn();
+    $res = ['lus' => $seen, 'rattaches' => $kept, 'anciens_rattaches' => $back, 'reste' => $url ? true : false, 'total' => $total, 'contacts' => count($map)];
+    ms_save_token($uid, ['last_sync' => ($url && $lastDt) ? $lastDt : $started, 'last_result' => $res]);
+    return $res;
+}
+
+/* Cherche dans une boîte les échanges des 60 derniers jours avec ces adresses et garde ceux qui concernent un contact. */
+function mail_search_addrs(string $access, int $uid, array $addrs, string $own, string $sentId, array $map): int {
+    $n = 0;
+    foreach ($addrs as $a) {
+        $u = 'https://graph.microsoft.com/v1.0/me/messages?%24select=' . MS_SELECT . '&%24top=50&%24search=' . rawurlencode('"participants:' . $a . '"');
+        [$code, $r] = ms_http('GET', $u, ['Authorization: Bearer ' . $access]);
+        if ($code !== 200) continue;
+        foreach ($r['value'] ?? [] as $m) {
+            if ((strtotime((string)($m['receivedDateTime'] ?? '')) ?: 0) < time() - 60 * 86400) continue;
+            $n += mail_keep_message($m, $uid, $own, $sentId, $map);
+        }
+    }
+    return $n;
+}
+
+/* À la demande, depuis une affaire : relit toutes les boîtes connectées pour ces adresses. */
+function mail_backfill(array $addrs): array {
+    mail_schema();
+    $addrs = array_values(array_unique(array_filter(array_map(fn($x) => strtolower(trim((string)$x)), $addrs))));
+    $map = mail_person_map(); $found = 0; $boxes = [];
+    foreach (ms_tokens() as $uid => $t) {
+        if (!is_array($t) || empty($t['refresh'])) continue;
+        try {
+            $j = ms_token_request(['grant_type' => 'refresh_token', 'refresh_token' => $t['refresh']]);
+            if (!empty($j['refresh_token'])) ms_save_token((int)$uid, ['refresh' => $j['refresh_token']]);
+            [$fc, $fd] = ms_http('GET', 'https://graph.microsoft.com/v1.0/me/mailFolders/sentitems?%24select=id', ['Authorization: Bearer ' . $j['access_token']]);
+            $found += mail_search_addrs($j['access_token'], (int)$uid, array_slice($addrs, 0, 30), strtolower((string)($t['email'] ?? '')), $fc === 200 ? (string)($fd['id'] ?? '') : '', $map);
+            $boxes[] = (string)($t['email'] ?? $uid);
+        } catch (Throwable $e) { error_log('[crm] recherche e-mails ' . $e->getMessage()); }
+    }
+    return ['nouveaux' => $found, 'boites' => $boxes];
+}
+
+/* Garde un message s'il concerne un contact du CRM (1 s'il est nouveau, 0 sinon). */
+function mail_keep_message(array $m, int $uid, string $own, string $sentId, array $map): int {
+    $addr = fn($x) => strtolower(trim((string)(is_array($x) ? ($x['emailAddress']['address'] ?? '') : '')));
+    if (!empty($m['isDraft'])) return 0;
+    $ts = strtotime((string)($m['receivedDateTime'] ?? '')) ?: time();
             $from = $addr($m['from'] ?? null);
             $tos = array_values(array_filter(array_map($addr, array_merge((array)($m['toRecipients'] ?? []), (array)($m['ccRecipients'] ?? [])))));
             $dir = (($sentId !== '' && (string)($m['parentFolderId'] ?? '') === $sentId) || ($own !== '' && $from === $own)) ? 'out' : 'in';
             $cands = $dir === 'out' ? $tos : array_merge([$from], $tos);
             $hit = null;
             foreach ($cands as $a) { if ($a !== '' && isset($map[$a])) { $hit = $map[$a]; break; } }
-            if (!$hit) continue;
+            if (!$hit) return 0;
             [$pid, $oid] = $hit;
             if ($oid !== null) $deal = q("SELECT id FROM deals WHERE status = 'open' AND (person_id = ? OR org_id = ?) ORDER BY update_time DESC LIMIT 1", [$pid, $oid])->fetchColumn();
             else $deal = q("SELECT id FROM deals WHERE status = 'open' AND person_id = ? ORDER BY update_time DESC LIMIT 1", [$pid])->fetchColumn();
@@ -251,15 +311,7 @@ function mail_sync_user(int $uid, ?array $map = null, bool $full = false): array
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [$key, $uid, $dir, mb_substr($from, 0, 255), mb_substr(implode(', ', $tos), 0, 2000), mb_substr((string)($m['subject'] ?? ''), 0, 500),
                  mb_substr((string)($m['bodyPreview'] ?? ''), 0, 1000), gmdate('Y-m-d H:i:s', $ts), $pid, $oid, $deal ? (int)$deal : null, mb_substr((string)($m['webLink'] ?? ''), 0, 2000)]);
-            $kept += $st->rowCount();
-        }
-        $url = isset($r['@odata.nextLink']) ? (string)$r['@odata.nextLink'] : null;
-    }
-    // S'il reste des pages, on reprendra au dernier message lu ; sinon à l'heure de début de cette synchronisation.
-    $total = (int)q('SELECT COUNT(*) FROM crm_emails')->fetchColumn();
-    $res = ['lus' => $seen, 'rattaches' => $kept, 'reste' => $url ? true : false, 'total' => $total, 'contacts' => count($map)];
-    ms_save_token($uid, ['last_sync' => ($url && $lastDt) ? $lastDt : $started, 'last_result' => $res]);
-    return $res;
+    return $st->rowCount();
 }
 
 /* Toutes les boîtes connectées (tâche planifiée). Renvoie une ligne de compte rendu par boîte. */
@@ -316,9 +368,15 @@ function mail_list(string $kind, int $id): array {
             (SELECT t.opens $tr) AS opens, (SELECT t.first_open $tr) AS first_open, (SELECT t.last_open $tr) AS last_open
             FROM crm_emails e LEFT JOIN persons p ON p.id = e.person_id WHERE ";
     if ($kind === 'deal') {
-        $pid = q('SELECT person_id FROM deals WHERE id = ?', [$id])->fetchColumn();
-        if ($pid) { $sql .= '(e.deal_id = ? OR e.person_id = ?)'; $args = [$id, (int)$pid]; }
-        else { $sql .= 'e.deal_id = ?'; $args = [$id]; }
+        // L'affaire montre ses e-mails, ceux de sa personne, des contacts ajoutés et de son organisation :
+        // un message envoyé avant la création de l'affaire n'a pas de deal_id mais la concerne.
+        $d = q('SELECT person_id, org_id FROM deals WHERE id = ?', [$id])->fetch() ?: [];
+        $w = ['e.deal_id = ?']; $args = [$id];
+        $pids = array_filter([(int)($d['person_id'] ?? 0)]);
+        if (q("SHOW TABLES LIKE 'crm_deal_persons'")->fetch()) foreach (q('SELECT person_id FROM crm_deal_persons WHERE deal_id = ?', [$id])->fetchAll(PDO::FETCH_COLUMN) as $x) $pids[] = (int)$x;
+        if ($pids) { $w[] = 'e.person_id IN (' . implode(',', array_map('intval', array_unique($pids))) . ')'; }
+        if (!empty($d['org_id'])) { $w[] = '(e.org_id = ? AND (e.deal_id IS NULL OR e.deal_id = ?))'; $args[] = (int)$d['org_id']; $args[] = $id; }
+        $sql .= '(' . implode(' OR ', $w) . ')';
     } elseif ($kind === 'org') { $sql .= 'e.org_id = ?'; $args = [$id]; }
     else { $sql .= 'e.person_id = ?'; $args = [$id]; }
     $rows = q($sql . ' ORDER BY e.sent_at DESC LIMIT 200', $args)->fetchAll();

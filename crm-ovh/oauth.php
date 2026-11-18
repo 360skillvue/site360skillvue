@@ -88,15 +88,22 @@ function oauth_authorize_page(): void {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!hash_equals($_SESSION['csrf'], (string)($_POST['csrf'] ?? ''))) $err = 'Session expirée : réessayez.';
         elseif (isset($_POST['deny'])) $back(['error' => 'access_denied']);
-        elseif (!$me && isset($_POST['email'])) {
-            $ip = $_SERVER['REMOTE_ADDR'] ?? '0';
-            if (login_blocked($ip)) $err = 'Trop de tentatives : réessayez dans 15 minutes.';
+        elseif (!$me && isset($_POST['code']) && !empty($_SESSION['oauth_pending']) && (time() - (int)($_SESSION['oauth_pending_at'] ?? 0)) < 300) {
+            require_once __DIR__ . '/lib/auth.php';
+            $uid = (int)$_SESSION['oauth_pending'];
+            $r = auth_totp_step($uid, (string)$_POST['code'], 'claude');
+            if ($r['ok']) { unset($_SESSION['oauth_pending'], $_SESSION['oauth_pending_at']); session_regenerate_id(true); $_SESSION['uid'] = $uid; $_SESSION['seen'] = time();
+                            $me = q('SELECT id, name, email, role FROM users WHERE id = ?', [$uid])->fetch(); }
+            else $err = $r['error'];
+        } elseif (!$me && isset($_POST['email'])) {
+            require_once __DIR__ . '/lib/auth.php';
+            $r = auth_password((string)$_POST['email'], (string)($_POST['password'] ?? ''), 'claude');
+            if (!$r['ok']) $err = $r['error'];
             else {
-                $u = q('SELECT id, password_hash FROM users WHERE email = ? AND can_login = 1 AND active = 1', [strtolower(trim((string)$_POST['email']))])->fetch();
-                if ($u && $u['password_hash'] && password_verify((string)($_POST['password'] ?? ''), $u['password_hash'])) {
-                    session_regenerate_id(true); $_SESSION['uid'] = (int)$u['id']; $_SESSION['seen'] = time();
-                    $me = q('SELECT id, name, email, role FROM users WHERE id = ?', [$u['id']])->fetch();
-                } else { login_failed($ip); usleep(400000); $err = 'Identifiant ou mot de passe incorrect.'; }
+                $u = q('SELECT id, name, email, role FROM users WHERE id = ?', [$r['uid']])->fetch();
+                if ($r['totp']) { $_SESSION['oauth_pending'] = $r['uid']; $_SESSION['oauth_pending_at'] = time(); }
+                elseif (auth_totp_required($u)) $err = 'La double authentification est obligatoire pour les administrateurs : connectez-vous d\'abord au CRM pour la mettre en place.';
+                else { session_regenerate_id(true); $_SESSION['uid'] = (int)$u['id']; $_SESSION['seen'] = time(); $me = $u; }
             }
         } elseif ($me && isset($_POST['allow'])) {
             $back(['code' => oauth_issue_code($clientId, (int)$me['id'], $redirect, $challenge)]);
@@ -107,6 +114,14 @@ function oauth_authorize_page(): void {
         $hidden .= '<input type="hidden" name="' . h($k) . '" value="' . h($v) . '">';
     $hidden .= '<input type="hidden" name="csrf" value="' . h($_SESSION['csrf']) . '">';
     $app = h($client['name'] ?: 'Claude');
+    if (!$me && !empty($_SESSION['oauth_pending']) && (time() - (int)($_SESSION['oauth_pending_at'] ?? 0)) < 300) {
+        oauth_page('Connecter ' . $app . ' au CRM', ($err ? '<p class="error">' . h($err) . '</p>' : '') .
+            '<p class="note">Saisissez le code à 6 chiffres de votre application d\'authentification.</p>
+            <form method="post" class="stack">' . $hidden . '
+              <label class="f"><span>Code</span><input name="code" required inputmode="numeric" autocomplete="one-time-code" pattern="[0-9 ]{6,7}" autofocus></label>
+              <button class="btn primary" type="submit">Valider</button></form>');
+        return;
+    }
     if (!$me) {
         oauth_page('Connecter ' . $app . ' au CRM', ($err ? '<p class="error">' . h($err) . '</p>' : '') .
             '<p class="note">Connectez-vous avec votre compte du CRM pour autoriser ' . $app . ' à y accéder en votre nom.</p>

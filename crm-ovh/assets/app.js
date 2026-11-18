@@ -371,9 +371,10 @@ function viewSettings() {
     ${admin ? `<section class="sec" id="hookSec">${hookSecInner()}</section>` : ""}
     <section class="sec" id="claudeSec">${claudeSecInner()}</section>
     ${usersSec}
+    <section class="sec" id="secSec">${secSecInner()}</section>
     <section class="sec"><h3>Mon mot de passe</h3>
       <div class="grid2"><label class="f"><span>Mot de passe actuel</span><input type="password" id="pwCur" autocomplete="current-password"></label>
-      <label class="f"><span>Nouveau mot de passe (10 caractères minimum)</span><input type="password" id="pwNew" autocomplete="new-password"></label></div>
+      <label class="f"><span>Nouveau mot de passe (12 caractères minimum)</span><input type="password" id="pwNew" autocomplete="new-password"></label></div>
       <div><button class="btn" data-act="changePw">Changer mon mot de passe</button></div>
     </section></div>`;
 }
@@ -726,8 +727,57 @@ async function saveUser(row) {
   try { await api("user_save", {method: "POST", body: {user}}); S.addingUser = false; await loadBoot(); render(); toast("Personne enregistrée"); } catch (e) { failToast(e); }
 }
 async function changePw() {
-  try { await api("password", {method: "POST", body: {current: $("#pwCur").value, new: $("#pwNew").value}}); $("#pwCur").value = $("#pwNew").value = ""; toast("Mot de passe changé"); } catch (e) { failToast(e); }
+  try { await api("password", {method: "POST", body: {current: $("#pwCur").value, new: $("#pwNew").value}}); $("#pwCur").value = $("#pwNew").value = ""; toast("Mot de passe changé"); S.sec = null; redrawSec(); } catch (e) { failToast(e); }
 }
+/* ---------- Sécurité du compte : double authentification et journal des connexions ---------- */
+function secSecInner() {
+  if (!S.sec) { if (!S.secLoading) { S.secLoading = true; api("security").then(r => { S.sec = r; }).catch(() => { S.sec = {error: true}; }).finally(() => { S.secLoading = false; redrawSec(); }); }
+    return `<h3>Sécurité de mon compte</h3><p class="note">Chargement…</p>`; }
+  const c = S.sec; if (c.error) return `<h3>Sécurité de mon compte</h3><p class="note">Lecture impossible.</p>`;
+  const admin = S.me.role === "admin";
+  const RES = {reussie: "réussie", echec: "mot de passe faux", code_faux: "code faux", bloque: "bloquée", "2fa_activee": "double authentification activée", "2fa_retiree": "double authentification retirée"};
+  let h = `<h3>Sécurité de mon compte</h3>`;
+  if (c.pw_weak) h += `<div class="banner" style="margin:0 0 8px">Votre mot de passe fait moins de ${c.min_password} caractères : changez-le ci-dessous.</div>`;
+  if (c.totp_on) h += `<p><span class="chip ok">Double authentification active</span> Un code de votre application d'authentification est demandé à chaque connexion.</p>
+      ${c.required && admin ? `<p class="note">Obligatoire pour les administrateurs : elle ne peut pas être désactivée.</p>` : `<div><button class="btn sm ghost" data-act="totpOff">Désactiver la double authentification</button></div>`}`;
+  else if (S.secSetup) h += `<p class="note">1. Installez une application d'authentification (Google Authenticator, Microsoft Authenticator…). 2. Scannez ce QR code. 3. Saisissez le code à 6 chiffres affiché.</p>
+      <div style="width:180px">${qrSvg(S.secSetup.uri)}</div><p class="note">Ou saisissez la clé : <code>${esc(S.secSetup.secret.replace(/(.{4})/g, "$1 ").trim())}</code></p>
+      <div class="grid2"><label class="f"><span>Code à 6 chiffres</span><input id="totpCode" inputmode="numeric" autocomplete="one-time-code" maxlength="7"></label></div>
+      <div style="display:flex;gap:8px"><button class="btn primary" data-act="totpOn">Activer</button><button class="btn ghost" data-act="totpCancel">Annuler</button></div>`;
+  else h += `<p class="note">Protégez votre compte avec un code à 6 chiffres donné par une application sur votre téléphone, en plus du mot de passe.${admin ? " Fortement conseillé pour les administrateurs." : ""}</p>
+      <div><button class="btn" data-act="totpStart">Activer la double authentification</button></div>`;
+  if (admin) {
+    h += `<div class="sec" style="background:var(--surface-2);margin-top:12px"><h3>Comptes (administrateurs)</h3>
+      <label><input type="checkbox" data-act="totpReq" ${c.required ? "checked" : ""}> Double authentification obligatoire pour les administrateurs</label>
+      <div class="rows" style="margin-top:8px">${(c.users || []).map(u => `<div class="r"><span class="main"><b>${esc(u.name)}</b><small>${u.role === "admin" ? "administrateur" : "utilisateur"}${u.pw_weak ? " · mot de passe trop court" : ""}</small></span>
+        ${u.totp_on ? `<span class="chip ok">2FA</span>${u.id !== String(S.me.id) ? ` <button class="btn sm ghost" data-totpreset="${esc(u.id)}" title="Si la personne a perdu son téléphone">Retirer</button>` : ""}` : `<span class="chip none">sans 2FA</span>`}</div>`).join("")}</div>
+      <h3 style="margin-top:12px">Dernières connexions</h3>
+      <div class="rows" style="font-size:12px">${(c.log || []).map(l => `<div class="r"><span class="main">${esc(new Date(l.at).toLocaleString("fr-FR", {day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"}))} · ${esc(l.email)}<small>${esc(l.ip)} · ${l.via === "claude" ? "connexion de Claude" : "CRM"}</small></span><span class="chip ${l.result === "reussie" ? "ok" : /^2fa/.test(l.result) ? "" : "late"}">${esc(RES[l.result] || l.result)}</span></div>`).join("") || `<p class="note">Aucune connexion enregistrée pour l'instant.</p>`}</div></div>`;
+  }
+  return h;
+}
+function redrawSec() { const el = document.getElementById("secSec"); if (el) el.innerHTML = secSecInner(); }
+async function secAction(a, t) {
+  try {
+    if (a === "totpStart") { S.secSetup = await api("totp_start", {method: "POST"}); redrawSec(); setTimeout(() => $("#totpCode")?.focus(), 50); }
+    else if (a === "totpCancel") { S.secSetup = null; redrawSec(); }
+    else if (a === "totpOn") { await api("totp_enable", {method: "POST", body: {code: $("#totpCode").value}}); S.secSetup = null; S.sec = null; toast("Double authentification activée"); redrawSec(); }
+    else if (a === "totpOff") { const pw = window.prompt("Pour désactiver la double authentification, saisissez votre mot de passe :"); if (!pw) return;
+      await api("totp_disable", {method: "POST", body: {password: pw}}); S.sec = null; toast("Double authentification désactivée"); redrawSec(); }
+    else if (a === "totpReq") { await api("totp_required", {method: "POST", body: {on: t.checked}}); S.sec = null; toast(t.checked ? "Obligatoire pour les administrateurs" : "Plus obligatoire"); redrawSec(); }
+  } catch (e) { failToast(e); if (a === "totpReq") { S.sec = null; redrawSec(); } }
+}
+document.addEventListener("click", async e => {
+  const t = e.target.closest?.("#secSec [data-act], #secSec [data-totpreset]"); if (!t) return;
+  if (t.dataset.totpreset) {
+    e.preventDefault();
+    if (!window.confirm("Retirer la double authentification de ce compte ? La personne pourra se connecter avec son seul mot de passe, puis la réactiver.")) return;
+    try { await api("totp_disable", {method: "POST", body: {user_id: t.dataset.totpreset}}); S.sec = null; toast("Double authentification retirée"); redrawSec(); } catch (err) { failToast(err); }
+    return;
+  }
+  if (t.dataset.act === "totpReq") { secAction("totpReq", t); return; }
+  e.preventDefault(); e.stopPropagation(); secAction(t.dataset.act, t);
+}, true);
 function go(v) { S.view = v; ls.set("crm.view", v); render(); window.scrollTo(0, 0); }
 
 /* ---------- Import ---------- */

@@ -193,6 +193,9 @@ function mcp_tool_defs(): array {
             'owner' => $s("Responsable : « me », « all » (défaut), e-mail ou nom."), 'query' => $s('Texte cherché dans le titre de l\'affaire ou le nom de l\'organisation.'),
             'org_id' => $i('Seulement les affaires de cette organisation.'), 'person_id' => $i('Seulement les affaires de cette personne.'),
             'without_next_activity' => ['type' => 'boolean', 'description' => 'Seulement les affaires en cours sans aucune activité prévue.'], 'limit' => $i('Nombre maximum (défaut 50, maximum 200).')])],
+        ['name' => 'security_status', 'title' => 'Contrôle de sécurité du CRM', 'annotations' => $ro + ['title' => 'Contrôle de sécurité'],
+         'description' => 'Réservé aux administrateurs. Donne la version de PHP servie au CRM, les fichiers .ovhconfig, les en-têtes HTTP renvoyés par le CRM (contrôle fait depuis le serveur : page de connexion, API sans jeton, fichier statique, avec et sans compression), les sauvegardes de la base et l\'état de la double authentification des comptes. Avec restore_test=true, rejoue la dernière sauvegarde dans des tables temporaires puis les supprime, pour vérifier qu\'elle se restaure.',
+         'inputSchema' => $obj(['restore_test' => ['type' => 'boolean', 'description' => 'Tester aussi la restauration de la dernière sauvegarde (tables temporaires, supprimées ensuite).']])],
         ['name' => 'get_deal', 'title' => 'Fiche d\'une affaire', 'annotations' => $ro + ['title' => 'Fiche affaire'],
          'description' => 'Donne la fiche complète d\'une affaire : étape, valeur, organisation, personne, notes, champs complémentaires, tags, tous les contacts liés (personne principale, contacts ajoutés, personnes de l\'organisation, des activités et des e-mails, avec les adresses e-mail sans fiche) et toutes ses activités (à faire et historique).',
          'inputSchema' => $obj(['id' => $i('Identifiant de l\'affaire.')], ['id'])],
@@ -314,6 +317,37 @@ function mcp_call_tool(string $name, array $a, array $me) {
         $rows = q($sql, $p)->fetchAll();
         $total = (int)q('SELECT COUNT(*) FROM deals d LEFT JOIN orgs o ON o.id = d.org_id' . ($w ? ' WHERE ' . implode(' AND ', $w) : ''), $p)->fetchColumn();
         return ['total' => $total, 'affichees' => count($rows), 'affaires' => array_map(fn($d) => mcp_fmt_deal($d), $rows)];
+
+    case 'security_status':
+        if (($me['role'] ?? '') !== 'admin') throw new McpToolError('Réservé aux administrateurs.');
+        require_once __DIR__ . '/oauth.php'; require_once __DIR__ . '/auth.php'; require_once __DIR__ . '/backup.php'; auth_schema();
+        $base = crm_base_url();
+        $probe = function (string $path, bool $gzip) use ($base) {
+            $ch = curl_init($base . $path);
+            curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_HEADER => true, CURLOPT_NOBODY => false, CURLOPT_TIMEOUT => 15, CURLOPT_FOLLOWLOCATION => false,
+                CURLOPT_HTTPHEADER => $gzip ? ['Accept-Encoding: gzip, deflate, br'] : [], CURLOPT_ENCODING => null]);
+            $raw = (string)curl_exec($ch); $code = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE); $hs = (int)curl_getinfo($ch, CURLINFO_HEADER_SIZE); curl_close($ch);
+            $keep = [];
+            foreach (preg_split('/\r?\n/', substr($raw, 0, $hs)) as $l) if (preg_match('/^(strict-transport-security|x-powered-by|server|content-encoding|vary|x-frame-options|x-content-type-options|referrer-policy|content-security-policy|set-cookie|www-authenticate):/i', $l)) $keep[] = mb_substr($l, 0, 220);
+            return ['adresse' => $path, 'compression_demandee' => $gzip, 'code' => $code, 'entetes' => $keep];
+        };
+        $ovh = [];
+        foreach (['racine de l\'hébergement' => dirname(CRM_ROOT) . '/.ovhconfig', 'dossier du CRM' => CRM_ROOT . '/.ovhconfig'] as $k => $f)
+            $ovh[$k] = is_file($f) ? mb_substr((string)@file_get_contents($f), 0, 600) : (is_readable(dirname($f)) ? 'absent' : 'illisible');
+        $bk = []; try { $bk = backup_list(); } catch (Throwable $e) { $bk = ['erreur' => $e->getMessage()]; }
+        $res = [
+            'php' => ['version' => PHP_VERSION, 'sapi' => PHP_SAPI, 'expose_php' => ini_get('expose_php'), 'zlib.output_compression' => ini_get('zlib.output_compression'),
+                      'session.cookie_secure' => ini_get('session.cookie_secure'), 'display_errors' => ini_get('display_errors')],
+            'ovhconfig' => $ovh,
+            'controles_http' => [$probe('/', true), $probe('/api.php?r=bootstrap', true), $probe('/assets/app.js', true), $probe('/config.php', false), $probe('/mcp.php', false)],
+            'sauvegardes' => isset($bk['erreur']) ? $bk : ['nombre' => count($bk), 'derniere' => $bk[0] ?? null],
+            'comptes' => array_map(fn($u) => ['nom' => $u['name'], 'role' => $u['role'], 'double_authentification' => (bool)(int)$u['totp_on'], 'mot_de_passe_trop_court' => (bool)(int)$u['pw_weak']],
+                q('SELECT name, role, totp_on, pw_weak FROM users WHERE can_login = 1 AND active = 1 ORDER BY role, name')->fetchAll()),
+            'double_authentification_obligatoire_admins' => (bool)setting('totp_required_admin', false),
+            'connexions_24h' => q("SELECT result, COUNT(*) AS n FROM crm_login_log WHERE at >= ? GROUP BY result", [gmdate('Y-m-d H:i:s', time() - 86400)])->fetchAll(PDO::FETCH_KEY_PAIR),
+        ];
+        if (!empty($a['restore_test'])) { try { $res['test_restauration'] = backup_restore_test(); } catch (Throwable $e) { $res['test_restauration'] = ['erreur' => $e->getMessage()]; } }
+        return $res;
 
     case 'get_deal':
         $id = mcp_int($a['id'] ?? null, "d'affaire");

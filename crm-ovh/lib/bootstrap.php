@@ -2,8 +2,16 @@
 // Chargement commun : configuration, base de données, session, utilitaires.
 declare(strict_types=1);
 
-const CRM_VERSION = '1.0.70';
+const CRM_VERSION = '1.0.71';
 define('CRM_ROOT', dirname(__DIR__));
+
+// Pour toutes les pages du CRM : la version de PHP n'est jamais annoncée et les réponses ne sont pas compressées par
+// PHP (attaque BREACH sur les pages qui contiennent des jetons). HTTPS est imposé par l'en-tête HSTS du .htaccess.
+if (PHP_SAPI !== 'cli' && !headers_sent()) {
+    header_remove('X-Powered-By');
+    @ini_set('zlib.output_compression', '0');
+    if (function_exists('apache_setenv')) { @apache_setenv('no-gzip', '1'); @apache_setenv('dont-vary', '1'); }
+}
 
 function crm_config(): ?array {
     static $cfg = false;

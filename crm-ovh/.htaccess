@@ -2,6 +2,19 @@
 Options -Indexes
 DirectoryIndex index.php
 
+# En-têtes de sécurité : HTTPS imposé pendant un an, version de PHP masquée
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always unset X-Powered-By
+  Header unset X-Powered-By
+</IfModule>
+
+# Pas de compression HTTP pour les pages et les réponses de l'API (attaque BREACH) ; les fichiers statiques
+# (assets/) restent compressés, ils ne contiennent aucun secret.
+<IfModule mod_setenvif.c>
+  SetEnvIf Request_URI "^/(?!assets/)" no-gzip=1 dont-vary=1
+</IfModule>
+
 # Forcer HTTPS
 RewriteEngine On
 RewriteCond %{HTTPS} off

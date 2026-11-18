@@ -630,7 +630,8 @@ function route(string $r, string $method, array $b, array $me): void {
         $role = ($u['role'] ?? 'user') === 'admin' ? 'admin' : 'user';
         $canLogin = !empty($u['can_login']) ? 1 : 0; $active = array_key_exists('active', $u) ? (!empty($u['active']) ? 1 : 0) : 1;
         $pass = (string)($u['password'] ?? '');
-        if ($pass !== '' && strlen($pass) < 10) fail('Le mot de passe doit faire au moins 10 caractères.');
+        require_once __DIR__ . '/lib/auth.php';
+        if ($pass !== '' && ($why = auth_password_rule($pass))) fail($why);
         if ($canLogin && !$email) fail('Une adresse e-mail est nécessaire pour se connecter.');
         if ($email && q('SELECT id FROM users WHERE email = ? AND id <> ?', [$email, $id])->fetchColumn()) fail('Cette adresse e-mail est déjà utilisée.');
         if ($id === (int)$me['id'] && ($role !== 'admin' || !$canLogin)) fail('Vous ne pouvez pas retirer vos propres droits d\'administrateur.');
@@ -663,13 +664,70 @@ function route(string $r, string $method, array $b, array $me): void {
         oauth_revoke($uid, (string)($b['client_id'] ?? ''));
         json_out(['ok' => true]);
 
+    case 'security':
+        // Sécurité du compte : double authentification, mot de passe trop court ; pour les administrateurs, état des
+        // comptes et journal des dernières connexions.
+        require_once __DIR__ . '/lib/auth.php'; auth_schema();
+        $mine = q('SELECT totp_on, pw_weak FROM users WHERE id = ?', [$me['id']])->fetch();
+        $res = ['totp_on' => (bool)(int)$mine['totp_on'], 'pw_weak' => (bool)(int)$mine['pw_weak'], 'required' => (bool)setting('totp_required_admin', false), 'min_password' => AUTH_MIN_PASSWORD];
+        if ($me['role'] === 'admin') {
+            $res['users'] = array_map(fn($u) => ['id' => (string)$u['id'], 'name' => $u['name'], 'role' => $u['role'], 'totp_on' => (bool)(int)$u['totp_on'], 'pw_weak' => (bool)(int)$u['pw_weak']],
+                q('SELECT id, name, role, totp_on, pw_weak FROM users WHERE can_login = 1 AND active = 1 ORDER BY name')->fetchAll());
+            $res['log'] = array_map(fn($l) => ['at' => str_replace(' ', 'T', $l['at']) . 'Z', 'email' => $l['email'], 'ip' => $l['ip'], 'result' => $l['result'], 'via' => $l['via']],
+                q('SELECT at, email, ip, result, via FROM crm_login_log ORDER BY id DESC LIMIT 40')->fetchAll());
+        }
+        json_out($res);
+
+    case 'totp_start':
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_once __DIR__ . '/lib/auth.php'; auth_schema();
+        if ((int)q('SELECT totp_on FROM users WHERE id = ?', [$me['id']])->fetchColumn()) fail('La double authentification est déjà active.');
+        $sec = totp_secret_new();
+        q('UPDATE users SET totp_secret = ?, totp_last = NULL WHERE id = ?', [$sec, $me['id']]);
+        json_out(['secret' => $sec, 'uri' => totp_uri($sec, (string)$me['email'])]);
+
+    case 'totp_enable':
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_once __DIR__ . '/lib/auth.php'; auth_schema();
+        $sec = (string)q('SELECT totp_secret FROM users WHERE id = ?', [$me['id']])->fetchColumn();
+        $step = totp_verify($sec, (string)($b['code'] ?? ''), null);
+        if ($step === null) fail("Code incorrect : vérifiez que l'heure du téléphone est à jour et réessayez.");
+        q('UPDATE users SET totp_on = 1, totp_last = ? WHERE id = ?', [$step, $me['id']]);
+        // Les connexions gardées sur les autres appareils sont fermées : elles devront passer par le code.
+        try { remember_schema(); q('DELETE FROM crm_remember WHERE user_id = ? AND selector <> ?', [$me['id'], substr((string)($_COOKIE[REMEMBER_COOKIE] ?? ''), 0, 24)]); } catch (Throwable $ex) {}
+        auth_log((string)$me['email'], (int)$me['id'], '2fa_activee', 'crm');
+        json_out(['ok' => true]);
+
+    case 'totp_disable':
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_once __DIR__ . '/lib/auth.php'; auth_schema();
+        $uid = (int)($b['user_id'] ?? 0) ?: (int)$me['id'];
+        if ($uid === (int)$me['id']) {
+            $hash = q('SELECT password_hash FROM users WHERE id = ?', [$me['id']])->fetchColumn();
+            if (!$hash || !password_verify((string)($b['password'] ?? ''), $hash)) fail('Mot de passe incorrect.');
+            if (auth_totp_required($me)) fail('La double authentification est obligatoire pour les administrateurs : elle ne peut pas être désactivée.');
+        } else require_admin($me);
+        q('UPDATE users SET totp_on = 0, totp_secret = NULL, totp_last = NULL WHERE id = ?', [$uid]);
+        auth_log((string)q('SELECT email FROM users WHERE id = ?', [$uid])->fetchColumn(), $uid, '2fa_retiree', 'crm');
+        json_out(['ok' => true]);
+
+    case 'totp_required':
+        if ($method !== 'POST') fail('Méthode non autorisée.', 405);
+        require_admin($me);
+        require_once __DIR__ . '/lib/auth.php'; auth_schema();
+        $on = !empty($b['on']);
+        if ($on && !(int)q('SELECT totp_on FROM users WHERE id = ?', [$me['id']])->fetchColumn()) fail("Activez d'abord votre propre double authentification.");
+        set_setting('totp_required_admin', $on);
+        json_out(['ok' => true]);
+
     case 'password':
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);
         $hash = q('SELECT password_hash FROM users WHERE id = ?', [$me['id']])->fetchColumn();
         if (!$hash || !password_verify((string)($b['current'] ?? ''), $hash)) fail('Mot de passe actuel incorrect.');
         $new = (string)($b['new'] ?? '');
-        if (strlen($new) < 10) fail('Le nouveau mot de passe doit faire au moins 10 caractères.');
-        q('UPDATE users SET password_hash = ? WHERE id = ?', [password_hash($new, PASSWORD_DEFAULT), $me['id']]);
+        require_once __DIR__ . '/lib/auth.php'; auth_schema();
+        if ($why = auth_password_rule($new)) fail($why);
+        q('UPDATE users SET password_hash = ?, pw_weak = 0 WHERE id = ?', [password_hash($new, PASSWORD_DEFAULT), $me['id']]);
         // Mot de passe changé : les connexions gardées sur les autres appareils sont fermées.
         try { remember_schema(); q('DELETE FROM crm_remember WHERE user_id = ? AND selector <> ?', [$me['id'], substr((string)($_COOKIE[REMEMBER_COOKIE] ?? ''), 0, 24)]); } catch (Throwable $ex) {}
         json_out(['ok' => true]);

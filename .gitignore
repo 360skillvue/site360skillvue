@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Sauvegardes du CRM (données personnelles) : jamais dans le dépôt
+sauvegardes-crm/

@@ -250,6 +250,16 @@ a.ct:hover span{text-decoration:underline}
 .card .ct-line{font-size:11px}
 .ct-block{display:grid;gap:6px}
 .ct-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dc-list{display:grid;gap:6px}
+.dc-row{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;padding:6px 8px 6px 10px;min-width:0}
+.dc-main{display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-width:0}
+.dc-name{background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--fg);cursor:pointer;text-align:left}
+.dc-name:hover{text-decoration:underline}
+.dc-roles{display:inline-flex;gap:4px;flex-wrap:wrap}
+.dc-ct{display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-width:0;font-size:13px}
+.dc-unk summary{cursor:pointer;font-size:13px;color:var(--muted);margin:4px 0}
+.dc-unk .dc-row{margin-top:6px}
+.dc-addr{font-size:13px;overflow:hidden;text-overflow:ellipsis}
 .ct-row{display:flex;gap:8px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:8px;padding:5px 6px 5px 10px;min-width:0}
 
 /* Un élément masqué le reste, même s'il a une mise en page en grille */

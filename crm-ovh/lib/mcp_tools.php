@@ -193,7 +193,7 @@ function mcp_tool_defs(): array {
             'org_id' => $i('Seulement les affaires de cette organisation.'), 'person_id' => $i('Seulement les affaires de cette personne.'),
             'without_next_activity' => ['type' => 'boolean', 'description' => 'Seulement les affaires en cours sans aucune activité prévue.'], 'limit' => $i('Nombre maximum (défaut 50, maximum 200).')])],
         ['name' => 'get_deal', 'title' => 'Fiche d\'une affaire', 'annotations' => $ro + ['title' => 'Fiche affaire'],
-         'description' => 'Donne la fiche complète d\'une affaire : étape, valeur, organisation, personne, notes, champs complémentaires, tags, et toutes ses activités (à faire et historique).',
+         'description' => 'Donne la fiche complète d\'une affaire : étape, valeur, organisation, personne, notes, champs complémentaires, tags, tous les contacts liés (personne principale, contacts ajoutés, personnes de l\'organisation, des activités et des e-mails, avec les adresses e-mail sans fiche) et toutes ses activités (à faire et historique).',
          'inputSchema' => $obj(['id' => $i('Identifiant de l\'affaire.')], ['id'])],
         ['name' => 'list_activities', 'title' => 'Lister les activités', 'annotations' => $ro + ['title' => 'Lister les activités'],
          'description' => 'Liste les activités (appels, réunions, tâches, e-mails, échéances). Par défaut : les activités à faire de l\'utilisateur connecté. Les dates sont à l\'heure de Paris.',
@@ -220,7 +220,9 @@ function mcp_tool_defs(): array {
          'description' => 'Modifie une affaire : changer d\'étape ou de pipeline, la marquer gagnée, perdue (avec la raison) ou la rouvrir, changer sa valeur, son titre, son responsable, sa date de clôture, ses liens ou ses champs complémentaires. Seuls les champs fournis changent.',
          'inputSchema' => $obj(['id' => $i('Identifiant de l\'affaire.'), 'title' => $s('Nouveau titre.'), 'stage' => $s('Nouvelle étape (nom ou identifiant).'), 'pipeline' => $s('Nouveau pipeline (nom ou identifiant).'),
             'status' => $s('Nouveau statut.', ['enum' => ['open', 'won', 'lost']]), 'lost_reason' => $s('Raison de la perte.'), 'value' => ['type' => 'number', 'description' => 'Valeur en euros.'],
-            'owner' => $owner, 'expected_close_date' => $s('Date AAAA-MM-JJ (chaîne vide pour retirer).'), 'org_id' => $i('Organisation (0 pour retirer).'), 'person_id' => $i('Personne (0 pour retirer).'),
+            'owner' => $owner, 'expected_close_date' => $s('Date AAAA-MM-JJ (chaîne vide pour retirer).'), 'org_id' => $i('Organisation (0 pour retirer).'), 'person_id' => $i('Personne principale (0 pour retirer).'),
+            'add_contacts' => ['type' => 'array', 'items' => ['type' => 'integer'], 'description' => 'Identifiants de personnes à lier à l\'affaire comme contacts (en plus de la personne principale).'],
+            'remove_contacts' => ['type' => 'array', 'items' => ['type' => 'integer'], 'description' => 'Identifiants de personnes ajoutées à délier de l\'affaire (la fiche personne n\'est pas supprimée).'],
             'fields' => ['type' => 'object', 'description' => 'Champs complémentaires à modifier, par leur libellé exact tel que donné par get_deal (valeur texte ; chaîne vide pour vider).', 'additionalProperties' => ['type' => 'string']]], ['id'])],
         ['name' => 'add_note', 'title' => 'Ajouter une note', 'annotations' => $rw + ['title' => 'Ajouter une note'],
          'description' => 'Ajoute une note datée et signée à la fin des notes d\'une affaire, d\'une organisation ou d\'une personne, sans effacer les notes existantes.',
@@ -313,7 +315,10 @@ function mcp_call_tool(string $name, array $a, array $me) {
 
     case 'get_deal':
         $id = mcp_int($a['id'] ?? null, "d'affaire");
-        return mcp_fmt_deal(mcp_get_deal_row($id), true) + ['activites' => mcp_acts_for('deal_id', $id, 100)];
+        require_once __DIR__ . '/contacts.php';
+        $dc = deal_contacts($id);
+        return mcp_fmt_deal(mcp_get_deal_row($id), true) + ['contacts' => array_map(fn($c) => ['id' => $c['id'], 'nom' => $c['name'], 'organisation' => $c['org_name'], 'emails' => $c['emails'], 'telephones' => $c['phones'], 'lien' => implode(', ', $c['roles'])], $dc['contacts']),
+            'adresses_sans_fiche' => $dc['unknown'], 'activites' => mcp_acts_for('deal_id', $id, 100)];
 
     case 'list_activities':
         $w = []; $p = []; $t = mcp_today();
@@ -426,7 +431,12 @@ function mcp_call_tool(string $name, array $a, array $me) {
             }
             $set['extra'] = $ex ? json_encode($ex, JSON_UNESCAPED_UNICODE) : null;
         }
-        if (!$set) throw new McpToolError('Aucune modification demandée.');
+        $links = 0;
+        foreach (['add_contacts' => true, 'remove_contacts' => false] as $k => $on) if (!empty($a[$k]) && is_array($a[$k])) {
+            require_once __DIR__ . '/contacts.php';
+            foreach ($a[$k] as $pid) { $pid = (int)$pid; mcp_exists('persons', $pid); deal_contact_link($id, $pid, $on); $links++; }
+        }
+        if (!$set && !$links) throw new McpToolError('Aucune modification demandée.');
         $set['update_time'] = $now;
         q('UPDATE deals SET ' . implode(',', array_map(fn($k) => "`$k` = ?", array_keys($set))) . ' WHERE id = ?', [...array_values($set), $id]);
         $after = mcp_get_deal_row($id);

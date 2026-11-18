@@ -360,6 +360,17 @@ function route(string $r, string $method, array $b, array $me): void {
         try { json_out(su_modules_step($me, (array)($b['state'] ?? []))); }
         catch (RuntimeException $ex) { fail($ex->getMessage()); }
 
+    case 'deal_contacts':
+        // Contacts liés à une affaire (voir lib/contacts.php) ; POST pour ajouter ou retirer un lien manuel.
+        require_once __DIR__ . '/lib/contacts.php';
+        try {
+            if ($method === 'POST') {
+                deal_contact_link((int)($b['deal_id'] ?? 0), (int)($b['person_id'] ?? 0), !empty($b['link']));
+                json_out(deal_contacts((int)($b['deal_id'] ?? 0)));
+            }
+            json_out(deal_contacts((int)($_GET['id'] ?? 0)));
+        } catch (RuntimeException $e) { fail($e->getMessage(), 404); }
+
     case 'cadrage':
         // Lien de chaque affaire vers sa fiche de cadrage Airtable. Rangé à part pour ne pas être écrasé par l'import Pipedrive.
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);

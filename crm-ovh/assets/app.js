@@ -1329,6 +1329,51 @@ document.addEventListener("click", async ev => {
   } catch (err) { failToast(err); }
 });
 
+/* Contacts liés à une affaire : personne principale, contacts ajoutés, personnes de l'organisation,
+   des activités et des e-mails échangés. Les adresses sans fiche peuvent être transformées en fiche. */
+const DC_ROLE = {"principal": "Principal", "ajouté": "Ajouté", "activités": "Activités", "e-mails": "E-mails", "organisation": "Organisation"};
+async function loadDealContacts(id, dr) {
+  const sec = dr.querySelector("#dContacts"); if (!sec) return;
+  let r; try { r = await api("deal_contacts", {params: {id}}); } catch (e) { sec.innerHTML = `<h3>Contacts liés</h3><p class="note">${esc(e.message)}</p>`; return; }
+  if (!dr.isConnected || !dr.querySelector("#dContacts")) return;
+  drawDealContacts(id, dr, r);
+}
+function drawDealContacts(id, dr, r) {
+  const sec = dr.querySelector("#dContacts"); if (!sec) return;
+  const d = S.deals.get(id) || {};
+  const row = c => {
+    const ph = c.phones[0], em = c.emails[0];
+    const other = c.org_id && c.org_id !== d.org_id && c.org_name ? `<span class="note">${esc(c.org_name)}</span>` : "";
+    return `<div class="dc-row"><div class="dc-main"><button type="button" class="dc-name" data-goct="${esc(c.id)}">${esc(c.name || "Sans nom")}</button>${other}
+        <span class="dc-roles">${c.roles.map(x => `<span class="chip${x === "principal" ? " ok" : ""}">${esc(DC_ROLE[x] || x)}</span>`).join("")}</span></div>
+      <div class="dc-ct">${ph ? `<a class="ct" href="${esc(telHref(ph))}" title="Appeler">${ico("call")}<span>${esc(ph)}</span></a>` : ""}
+        ${em ? `<a class="ct" href="mailto:${esc(em)}" data-mailp="${esc(c.id)}" data-mailto-addr="${esc(em)}" data-mdeal="${esc(id)}" title="Écrire">${ico("email")}<span>${esc(em)}</span></a>` : ""}
+        ${c.roles.includes("ajouté") ? `<button type="button" class="btn sm ghost" data-dcunlink="${esc(c.id)}" title="Retirer ce contact de l'affaire (la fiche est conservée)" aria-label="Retirer">${ico("x")}</button>` : ""}</div></div>`;
+  };
+  sec.innerHTML = `<h3>Contacts liés <span class="muted" style="font-weight:500">(${r.contacts.length})</span></h3>
+    ${r.contacts.length ? `<div class="dc-list">${r.contacts.map(row).join("")}</div>` : `<p class="note">Aucun contact lié pour l'instant.</p>`}
+    ${r.unknown.length ? `<details class="dc-unk"><summary>${r.unknown.length} adresse${r.unknown.length > 1 ? "s" : ""} des e-mails sans fiche</summary>
+      ${r.unknown.map(a => `<div class="dc-row"><span class="dc-addr">${esc(a)}</span><button type="button" class="btn sm" data-dcnew="${esc(a)}">Créer la fiche</button></div>`).join("")}</details>` : ""}
+    ${pickerHtml("dcadd", "person", null, "Ajouter un contact")}`;
+  const link = async (pid, on) => {
+    try { drawDealContacts(id, dr, await api("deal_contacts", {method: "POST", body: {deal_id: id, person_id: pid, link: on}})); toast(on ? "Contact ajouté" : "Contact retiré"); }
+    catch (e) { failToast(e); }
+  };
+  bindPicker(sec, "dcadd", v => { if (v && v.id) link(v.id, true); });
+  sec.querySelectorAll("[data-dcunlink]").forEach(b => b.onclick = e => { e.stopPropagation(); link(+b.dataset.dcunlink, false); });
+  sec.querySelectorAll("[data-dcnew]").forEach(b => b.onclick = async () => {
+    const addr = b.dataset.dcnew, local = addr.split("@")[0].replace(/[._-]+/g, " ").replace(/\d+/g, "").trim();
+    const name = window.prompt("Nom de la personne pour " + addr, local.replace(/\b\w/g, m => m.toUpperCase()) || addr);
+    if (name === null) return;
+    b.disabled = true;
+    try {
+      const v = await quickCreate("person", name.trim() || addr); if (!v) { b.disabled = false; return; }
+      await updateE("persons", v.id, {emails: [{value: addr, primary: true}], ...(d.org_id ? {org_id: d.org_id} : {})});
+      await link(v.id, true);
+    } catch (e) { failToast(e); b.disabled = false; }
+  });
+}
+
 function drawDeal(id, dr = $("#panel .drawer")) {
   if (!dr) return; const d = S.deals.get(id);
   if (!d) { dr.innerHTML = `<div class="db"><div class="empty"><h3>Affaire introuvable</h3><p>Elle a peut-être été supprimée.</p><button class="btn" data-pc>Fermer</button></div></div>`; dr.querySelector("[data-pc]").onclick = closePanel; return; }
@@ -1345,6 +1390,7 @@ function drawDeal(id, dr = $("#panel .drawer")) {
       ${d.status === "lost" ? `<section class="sec"><label class="f"><span>Raison de la perte</span><input type="text" id="dLost" value="${esc(d.lost_reason || "")}"></label></section>` : ""}
       ${dealSummary(d)}
       ${d.contact_id ? `<section class="sec"><h3>Coordonnées</h3>${contactBlock(d, {dealId: d.id})}</section>` : ""}
+      <section class="sec" id="dContacts"><h3>Contacts liés</h3><p class="note">Chargement…</p></section>
       ${scanupBlock(d, S.panelActs || [])}
       <section class="sec"><h3>Affaire</h3><div class="grid2">
         <label class="f"><span>Valeur (€)</span><input type="number" id="dValue" min="0" step="100" value="${esc(d.value || 0)}"></label>
@@ -1370,6 +1416,7 @@ function drawDeal(id, dr = $("#panel .drawer")) {
   dr.querySelector(".db").scrollTop = keepScroll;
   const up = async (patch, redraw) => { try { const row = await updateE("deals", id, patch); S.deals.set(id, row); if (redraw) drawDeal(id); else toast("Enregistré"); return row; } catch (e) { failToast(e); if (redraw) drawDeal(id); } };
   dr.querySelector("[data-pc]").onclick = closePanel;
+  loadDealContacts(id, dr);
   $("#dTitle", dr).onchange = e => up({title: e.target.value.trim() || "Sans titre"});
   $("#dValue", dr).onchange = e => up({value: Number(e.target.value) || 0}, true);
   $("#dClose", dr).onchange = e => up({expected_close_date: e.target.value || null});

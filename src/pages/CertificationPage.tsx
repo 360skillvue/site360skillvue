@@ -183,7 +183,7 @@ export default function CertificationPage() {
               <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue/20 to-scanup-turquoise/20 rounded-2xl transform translate-x-4 translate-y-4 blur-sm"></div>
               <img
                 src="/medecin-certification.webp"
-                alt="Médecin remplissant un dossier de certification"
+                alt={t.certification.heroImageAlt}
                 className="relative rounded-2xl shadow-2xl border border-scanup-white/50 w-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -335,7 +335,7 @@ export default function CertificationPage() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-scanup-blue to-scanup-turquoise rounded-2xl transform translate-x-3 translate-y-3 opacity-20 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-500"></div>
                 <img
                   src="/dashboard-rh.webp"
-                  alt="Tableau de bord 360SkillVue — suivi de la certification"
+                  alt={t.certification.dashboardImageAlt}
                   className="relative rounded-2xl shadow-xl border border-scanup-white w-full object-cover transition-transform duration-500 group-hover:-translate-y-1"
                   loading="lazy"
                   decoding="async"

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronDown, ChevronUp, Shield } from 'lucide-react';
+import { useLanguage } from '../i18n';
+import { Link } from '../i18n/Link';
 
 type ConsentState = {
   analytics: boolean;
@@ -57,6 +59,8 @@ function loadGTM() {
 }
 
 export default function CookieConsent() {
+  const { t } = useLanguage();
+  const c = t.cookies;
   const [visible, setVisible] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [analyticsOn, setAnalyticsOn] = useState(false);
@@ -90,7 +94,7 @@ export default function CookieConsent() {
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Gestion des cookies"
+      aria-label={c.dialogLabel}
       className="fixed bottom-0 left-0 right-0 z-[9999] px-4 pb-4 sm:px-6 sm:pb-6"
     >
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl shadow-black/20 border border-black/[0.07] overflow-hidden">
@@ -100,18 +104,17 @@ export default function CookieConsent() {
             <Shield size={15} className="text-scanup-blue" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[14px] font-semibold text-scanup-navy mb-1">Nous respectons votre vie privée</p>
+            <p className="text-[14px] font-semibold text-scanup-navy mb-1">{c.title}</p>
             <p className="text-[12px] text-scanup-graytext leading-relaxed">
-              Nous utilisons des cookies pour améliorer votre expérience et mesurer l'audience du site.
-              Certains sont nécessaires au fonctionnement, d'autres sont optionnels.{' '}
-              <a href="/politique-confidentialite" className="text-scanup-blue underline underline-offset-2">
-                En savoir plus
-              </a>
+              {c.text}{' '}
+              <Link to="/politique-confidentialite" className="text-scanup-blue underline underline-offset-2">
+                {c.learnMore}
+              </Link>
             </p>
           </div>
           <button
             onClick={refuseAll}
-            aria-label="Fermer et refuser"
+            aria-label={c.closeLabel}
             className="flex-shrink-0 text-scanup-graytext hover:text-scanup-navy transition-colors p-1 -mr-1 -mt-1"
           >
             <X size={16} />
@@ -124,8 +127,8 @@ export default function CookieConsent() {
             {/* Nécessaires */}
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-[13px] font-medium text-scanup-navy">Cookies nécessaires</p>
-                <p className="text-[11px] text-scanup-graytext">Authentification, sécurité, préférences de langue. Toujours actifs.</p>
+                <p className="text-[13px] font-medium text-scanup-navy">{c.necessaryTitle}</p>
+                <p className="text-[11px] text-scanup-graytext">{c.necessaryDesc}</p>
               </div>
               <div className="flex-shrink-0">
                 <div className="w-10 h-5 rounded-full bg-scanup-blue/20 relative cursor-not-allowed">
@@ -136,13 +139,13 @@ export default function CookieConsent() {
             {/* Analytiques */}
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-[13px] font-medium text-scanup-navy">Cookies analytiques</p>
-                <p className="text-[11px] text-scanup-graytext">Google Analytics — mesure d'audience anonymisée.</p>
+                <p className="text-[13px] font-medium text-scanup-navy">{c.analyticsTitle}</p>
+                <p className="text-[11px] text-scanup-graytext">{c.analyticsDesc}</p>
               </div>
               <button
                 role="switch"
                 aria-checked={analyticsOn}
-                aria-label="Activer les cookies analytiques"
+                aria-label={c.analyticsToggle}
                 onClick={() => setAnalyticsOn(v => !v)}
                 className={`flex-shrink-0 w-10 h-5 rounded-full transition-colors relative focus:outline-none focus:ring-2 focus:ring-scanup-blue focus:ring-offset-1 ${analyticsOn ? 'bg-scanup-blue' : 'bg-black/10'}`}
               >
@@ -152,13 +155,13 @@ export default function CookieConsent() {
             {/* Marketing */}
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-[13px] font-medium text-scanup-navy">Cookies marketing</p>
-                <p className="text-[11px] text-scanup-graytext">Google Ads — publicités personnalisées et mesure de conversions.</p>
+                <p className="text-[13px] font-medium text-scanup-navy">{c.marketingTitle}</p>
+                <p className="text-[11px] text-scanup-graytext">{c.marketingDesc}</p>
               </div>
               <button
                 role="switch"
                 aria-checked={marketingOn}
-                aria-label="Activer les cookies marketing"
+                aria-label={c.marketingToggle}
                 onClick={() => setMarketingOn(v => !v)}
                 className={`flex-shrink-0 w-10 h-5 rounded-full transition-colors relative focus:outline-none focus:ring-2 focus:ring-scanup-blue focus:ring-offset-1 ${marketingOn ? 'bg-scanup-blue' : 'bg-black/10'}`}
               >
@@ -176,19 +179,19 @@ export default function CookieConsent() {
                 onClick={saveCustom}
                 className="flex-1 sm:flex-none sm:order-3 bg-scanup-blue text-white text-[13px] font-semibold px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-colors"
               >
-                Enregistrer mes choix
+                {c.save}
               </button>
               <button
                 onClick={acceptAll}
                 className="flex-1 sm:flex-none sm:order-2 bg-scanup-navy text-white text-[13px] font-semibold px-5 py-2.5 rounded-xl hover:bg-[#0a1628] transition-colors"
               >
-                Tout accepter
+                {c.acceptAll}
               </button>
               <button
                 onClick={refuseAll}
                 className="flex-1 sm:flex-none sm:order-1 text-scanup-graytext text-[13px] px-5 py-2.5 rounded-xl border border-black/10 hover:border-scanup-navy hover:text-scanup-navy transition-colors"
               >
-                Tout refuser
+                {c.refuseAll}
               </button>
             </>
           ) : (
@@ -197,19 +200,19 @@ export default function CookieConsent() {
                 onClick={acceptAll}
                 className="flex-1 sm:flex-none sm:order-3 bg-scanup-blue text-white text-[13px] font-semibold px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-colors"
               >
-                Tout accepter
+                {c.acceptAll}
               </button>
               <button
                 onClick={refuseAll}
                 className="flex-1 sm:flex-none sm:order-2 text-scanup-graytext text-[13px] px-5 py-2.5 rounded-xl border border-black/10 hover:border-scanup-navy hover:text-scanup-navy transition-colors"
               >
-                Tout refuser
+                {c.refuseAll}
               </button>
               <button
                 onClick={() => setExpanded(true)}
                 className="flex-1 sm:flex-none sm:order-1 text-scanup-blue text-[13px] px-5 py-2.5 rounded-xl hover:bg-scanup-blue/5 transition-colors flex items-center justify-center gap-1"
               >
-                Personnaliser <ChevronDown size={13} />
+                {c.customize} <ChevronDown size={13} />
               </button>
             </>
           )}
@@ -218,7 +221,7 @@ export default function CookieConsent() {
               onClick={() => setExpanded(false)}
               className="sm:ml-auto text-scanup-graytext text-[12px] flex items-center gap-1 hover:text-scanup-navy transition-colors"
             >
-              <ChevronUp size={12} /> Réduire
+              <ChevronUp size={12} /> {c.collapse}
             </button>
           )}
         </div>

@@ -46,7 +46,7 @@ export default function Footer() {
           <span aria-hidden="true">·</span>
           <Link to="/revue-de-presse" className="hover:text-white transition-colors">{t.footer.press}</Link>
         </div>
-        <p className="text-center">© {new Date().getFullYear()} 360SkillVue Sàrl — {t.footer.rights}</p>
+        <p className="text-center">© {new Date().getFullYear()} 360SkillVue Sàrl. {t.footer.rights}.</p>
       </div>
     </footer>
   );

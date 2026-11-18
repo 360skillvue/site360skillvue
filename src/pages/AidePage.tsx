@@ -97,10 +97,13 @@ export default function AidePage() {
   }, []);
 
   // Lien « Demander à tester » : /aide-support?sujet=test#contact
+  // La demande de test est la premiere option de sujetOptions dans toutes les
+  // langues (« Solicitud de prueba » en espagnol ne contient pas « test ») :
+  // on la retrouve par sa position, pas par son libelle.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('sujet') === 'test') {
-      const opt = SUJET_OPTIONS.find(o => /test/i.test(o));
+      const opt = SUJET_OPTIONS[0];
       if (opt) setForm(prev => ({ ...prev, sujet: opt }));
     }
     if (window.location.hash === '#contact') {
@@ -124,7 +127,7 @@ export default function AidePage() {
           access_key: WEB3FORMS_KEY,
           name: form.nom,
           email: form.email,
-          subject: `[ScanUp] ${form.sujet} — ${form.nom}`,
+          subject: `[ScanUp] ${form.sujet} (${form.nom})`,
           message: form.message,
           from_name: 'ScanUp Contact',
         }),
@@ -134,10 +137,10 @@ export default function AidePage() {
         setSubmitted(true);
         setForm(INITIAL_FORM);
       } else {
-        setSendError('Une erreur est survenue. Veuillez réessayer ou nous écrire directement.');
+        setSendError(t.aide.errorGeneric);
       }
     } catch {
-      setSendError('Impossible d\'envoyer le message. Vérifiez votre connexion.');
+      setSendError(t.aide.errorNetwork);
     } finally {
       setSending(false);
     }
@@ -258,7 +261,7 @@ export default function AidePage() {
                         className="flex-shrink-0 bg-scanup-blue text-white rounded-full px-6 py-2.5 text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20 flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                       >
                         {sending
-                          ? <><span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Envoi…</>
+                          ? <><span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {t.aide.sendingLabel}</>
                           : <><Mail size={13} /> {t.aide.sendButton}</>
                         }
                       </motion.button>

@@ -46,7 +46,7 @@ const SECTIONS = [
     ],
   },
   {
-    title: '6. Livraison — Accès au service',
+    title: '6. Livraison et accès au service',
     paragraphs: [
       "La plateforme ScanUp est un service SaaS (Software as a Service) accessible via un navigateur web. L'accès est ouvert au Client dans un délai de 3 jours ouvrés suivant la confirmation de commande et le paiement ou la mise en place d'un mandat de prélèvement.",
       "Les identifiants de connexion sont transmis par e-mail à l'adresse indiquée lors de la commande. Le Client est responsable de la confidentialité de ses accès.",
@@ -112,22 +112,23 @@ export default function CGVPage() {
         title={t.meta.cgv.title}
         description={t.meta.cgv.description}
         path="/cgv"
+        noindexTranslations
       />
       <Navbar />
 
       <main className="flex-1 max-w-3xl mx-auto px-6 py-20 w-full">
         {/* Header */}
         <div className="mb-12">
-          <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-3">Informations légales</p>
-          <h1 className="text-[36px] font-bold tracking-tight mb-4">Conditions Générales de Vente</h1>
+          <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-3">{t.legal.label}</p>
+          <h1 className="text-[36px] font-bold tracking-tight mb-4">{t.meta.cgv.title}</h1>
           <p className="text-[13px] text-scanup-graytext">
-            Seule la version française des informations légales fait foi.<br />
-            Dernière mise à jour : <strong>20 octobre 2026</strong>
+            {t.legal.frenchOnly}<br />
+            {t.legal.lastUpdated} <strong>{t.legal.updatedOn}</strong>
           </p>
           <div className="flex flex-wrap gap-4 mt-4">
-            <Link to="/cgu" className="text-[13px] text-scanup-blue hover:underline font-medium">CGU</Link>
-            <Link to="/mentions-legales" className="text-[13px] text-scanup-blue hover:underline font-medium">Mentions légales</Link>
-            <Link to="/politique-confidentialite" className="text-[13px] text-scanup-blue hover:underline font-medium">Politique de confidentialité</Link>
+            <Link to="/cgu" className="text-[13px] text-scanup-blue hover:underline font-medium">{t.footer.cgu}</Link>
+            <Link to="/mentions-legales" className="text-[13px] text-scanup-blue hover:underline font-medium">{t.footer.legal}</Link>
+            <Link to="/politique-confidentialite" className="text-[13px] text-scanup-blue hover:underline font-medium">{t.footer.privacy}</Link>
           </div>
         </div>
 
@@ -161,7 +162,7 @@ export default function CGVPage() {
 
         {/* Back */}
         <div className="mt-16 pt-8 border-t border-black/[0.07]">
-          <Link to="/" className="text-[13px] text-scanup-blue hover:underline">← Retour à l'accueil</Link>
+          <Link to="/" className="text-[13px] text-scanup-blue hover:underline">{t.legal.backHome}</Link>
         </div>
       </main>
 

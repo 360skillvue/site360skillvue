@@ -103,21 +103,22 @@ export default function MentionsLegalesPage() {
         title={t.meta.mentions.title}
         description={t.meta.mentions.description}
         path="/mentions-legales"
+        noindexTranslations
       />
       <Navbar />
 
       <main className="max-w-3xl mx-auto px-6 py-20">
         {/* Header */}
         <div className="mb-12">
-          <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-3">Informations légales</p>
-          <h1 className="text-[36px] font-bold tracking-tight mb-4">Mentions légales</h1>
+          <p className="text-[11px] font-semibold text-scanup-blue uppercase tracking-widest mb-3">{t.legal.label}</p>
+          <h1 className="text-[36px] font-bold tracking-tight mb-4">{t.meta.mentions.title}</h1>
           <p className="text-[13px] text-scanup-graytext">
-            Seule la version française des informations légales fait foi.<br />
-            Dernière mise à jour : <strong>20 octobre 2026</strong>
+            {t.legal.frenchOnly}<br />
+            {t.legal.lastUpdated} <strong>{t.legal.updatedOn}</strong>
           </p>
           <div className="flex gap-4 mt-4">
-            <Link to="/cgu" className="text-[13px] text-scanup-blue hover:underline font-medium">CGU</Link>
-            <Link to="/politique-confidentialite" className="text-[13px] text-scanup-blue hover:underline font-medium">Politique de confidentialité</Link>
+            <Link to="/cgu" className="text-[13px] text-scanup-blue hover:underline font-medium">{t.footer.cgu}</Link>
+            <Link to="/politique-confidentialite" className="text-[13px] text-scanup-blue hover:underline font-medium">{t.footer.privacy}</Link>
           </div>
         </div>
 
@@ -151,7 +152,7 @@ export default function MentionsLegalesPage() {
 
         {/* Back */}
         <div className="mt-16 pt-8 border-t border-black/[0.07]">
-          <Link to="/" className="text-[13px] text-scanup-blue hover:underline">← Retour à l'accueil</Link>
+          <Link to="/" className="text-[13px] text-scanup-blue hover:underline">{t.legal.backHome}</Link>
         </div>
       </main>
 

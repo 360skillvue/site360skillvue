@@ -52,7 +52,7 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Psychosocial risks:', rpsText: 'people at risk are identified, and only they are seen in individual interviews.',
     inclusiveTag: 'More inclusive', inclusiveFigure: 'Everyone takes part',
     inclusiveText: 'including isolated employees, shift workers and remote sites, wherever they are.',
-    cta: 'Talk to our team',
+    cta: 'Request a trial',
   },
   de: {
     label: 'Warum digital',
@@ -68,7 +68,7 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Psychosoziale Risiken:', rpsText: 'gefährdete Personen werden erkannt und nur sie zum Einzelgespräch eingeladen.',
     inclusiveTag: 'Inklusiver', inclusiveFigure: 'Alle machen mit',
     inclusiveText: 'auch Mitarbeitende an abgelegenen Standorten, im Schichtbetrieb oder allein arbeitend.',
-    cta: 'Mit unserem Team sprechen',
+    cta: 'Test anfragen',
   },
   it: {
     label: 'Perché il digitale',
@@ -84,7 +84,7 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Rischi psicosociali:', rpsText: 'le persone a rischio vengono individuate e solo loro ricevute in colloquio individuale.',
     inclusiveTag: 'Più inclusivo', inclusiveFigure: 'Tutti partecipano',
     inclusiveText: 'anche i collaboratori isolati, a turni o in sedi lontane, ovunque si trovino.',
-    cta: 'Parla con il nostro team',
+    cta: 'Richiedi una prova',
   },
   es: {
     label: 'Por qué lo digital',
@@ -100,7 +100,7 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Riesgos psicosociales:', rpsText: 'se detecta a las personas en riesgo y solo ellas pasan a entrevista individual.',
     inclusiveTag: 'Más inclusivo', inclusiveFigure: 'Todos participan',
     inclusiveText: 'incluidos los empleados aislados, a turnos o en centros alejados, estén donde estén.',
-    cta: 'Hablar con nuestro equipo',
+    cta: 'Solicitar una prueba',
   },
   pt: {
     label: 'Porquê o digital',
@@ -116,7 +116,7 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Riscos psicossociais:', rpsText: 'as pessoas em risco são identificadas e só elas passam a entrevista individual.',
     inclusiveTag: 'Mais inclusivo', inclusiveFigure: 'Todos participam',
     inclusiveText: 'incluindo colaboradores isolados, por turnos ou em locais afastados, onde quer que estejam.',
-    cta: 'Falar com a nossa equipa',
+    cta: 'Pedir um teste',
   },
 };
 

@@ -7,7 +7,7 @@ import {
 import { Link, useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { useLanguage } from '../i18n';
+import { useLanguage, type Translations } from '../i18n';
 import PageMeta from '../components/PageMeta';
 import { MapContainer, TileLayer, CircleMarker, Circle, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -54,6 +54,11 @@ const GEOCACHE_TTL = 14 * 24 * 60 * 60 * 1000;
 const BATCH_SIZE   = 20;
 
 // FILTERS are built dynamically inside the component using translated labels
+
+/** Libelle traduit d'une competence (pastilles, legende, popups, filtres). */
+function competenceLabel(t: Translations, c: CompetenceInfo): string {
+  return t.partenaires.competences[c.key as keyof typeof t.partenaires.competences] || c.label;
+}
 
 // ─── Zone radius ──────────────────────────────────────────────────────────────
 
@@ -146,6 +151,7 @@ const ProCard = React.forwardRef<
   HTMLDivElement,
   { pro: Professional; selected: boolean; onClick: () => void }
 >(({ pro, selected, onClick }, ref) => {
+  const { t } = useLanguage();
   const primary = pro.competences[0];
   return (
     <motion.div
@@ -185,7 +191,7 @@ const ProCard = React.forwardRef<
               className="inline-flex items-center px-2 py-[2px] rounded-full text-[9px] font-semibold tracking-wide"
               style={{ background: `${c.color}12`, color: c.color }}
             >
-              {c.label}
+              {competenceLabel(t, c)}
             </span>
           ))}
         </div>
@@ -254,7 +260,7 @@ export default function PartenairesPage() {
     { key: 'all', label: t.partenaires.filterAll, color: '#0068FF' },
     ...Object.values(COMPETENCES).filter(c => c.key !== 'non_defini').map(c => ({
       ...c,
-      label: t.partenaires.competences[c.key as keyof typeof t.partenaires.competences] || c.label,
+      label: competenceLabel(t, c),
     })),
   ];
 
@@ -394,7 +400,7 @@ export default function PartenairesPage() {
               className="flex items-center gap-1.5 hover:opacity-70 transition-opacity text-left"
             >
               <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: c.color }} />
-              <span className="text-[10px] text-scanup-graytext leading-tight">{c.label}</span>
+              <span className="text-[10px] text-scanup-graytext leading-tight">{competenceLabel(t, c)}</span>
             </button>
           ))}
         </div>
@@ -471,7 +477,7 @@ export default function PartenairesPage() {
                       background: `${c.color}15`, color: c.color,
                       fontSize: '9px', padding: '2px 7px', borderRadius: '99px', fontWeight: 600,
                     }}>
-                      {c.label}
+                      {competenceLabel(t, c)}
                     </span>
                   ))}
                 </div>

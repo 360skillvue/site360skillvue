@@ -28,14 +28,14 @@ const OG_LOCALE = {
  * Chemins publics et emplacement du titre et de la description dans les
  * fichiers de traduction. Doit rester aligne sur PAGES dans src/App.tsx.
  */
-/** Titre et description de la page « cabinets de sante au travail », par langue. */
+/** Titre et description de la page « cabinets de santé au travail », par langue. */
 const CABINETS_META = {
-  fr: { title: 'Cabinets de sante au travail', description: "ScanUp, outil metier des cabinets de conseil en ergonomie et en RPS : vos ergonomes et psychologues creent leurs modules, menent les evaluations a distance et recueillent les donnees terrain sur un hebergement certifie HDS." },
+  fr: { title: 'Cabinets de santé au travail', description: "ScanUp, outil métier des cabinets de conseil en ergonomie et en RPS : vos ergonomes et psychologues créent leurs modules, mènent les évaluations à distance et recueillent les données terrain sur un hébergement certifié HDS." },
   en: { title: 'Occupational health consultancies', description: 'ScanUp as a professional tool for ergonomics and psychosocial risk consultancies: your experts build their own modules, run remote assessments and collect field data on health-data certified hosting.' },
-  de: { title: 'Beratungsburos fur Arbeitsgesundheit', description: 'ScanUp als Fachwerkzeug fur Ergonomie- und Psychosozialberatungen: Ihre Fachleute erstellen eigene Module, fuhren Beurteilungen aus der Ferne durch und erheben Felddaten auf zertifiziertem Gesundheitsdaten-Hosting.' },
+  de: { title: 'Beratungsbüros für Arbeitsgesundheit', description: 'ScanUp als Fachwerkzeug für Ergonomie- und Psychosozialberatungen: Ihre Fachleute erstellen eigene Module, führen Beurteilungen aus der Ferne durch und erheben Felddaten auf zertifiziertem Gesundheitsdaten-Hosting.' },
   it: { title: 'Studi di salute sul lavoro', description: 'ScanUp come strumento professionale per studi di ergonomia e rischi psicosociali: i vostri esperti creano i propri moduli, conducono le valutazioni a distanza e raccolgono i dati sul campo in sicurezza.' },
-  es: { title: 'Gabinetes de salud laboral', description: 'ScanUp como herramienta profesional para gabinetes de ergonomia y riesgos psicosociales: vuestros expertos crean sus modulos, evaluan a distancia y recogen los datos de campo con seguridad.' },
-  pt: { title: 'Gabinetes de saude no trabalho', description: 'A ScanUp como ferramenta profissional para gabinetes de ergonomia e riscos psicossociais: os vossos especialistas criam os seus modulos, avaliam a distancia e recolhem os dados de terreno em seguranca.' },
+  es: { title: 'Gabinetes de salud laboral', description: 'ScanUp como herramienta profesional para gabinetes de ergonomía y riesgos psicosociales: sus expertos crean sus módulos, evalúan a distancia y recogen los datos de campo con seguridad.' },
+  pt: { title: 'Gabinetes de saúde no trabalho', description: 'A ScanUp como ferramenta profissional para gabinetes de ergonomia e riscos psicossociais: os vossos especialistas criam os seus módulos, avaliam à distância e recolhem os dados de terreno em segurança.' },
 };
 
 const ROUTES = [
@@ -48,10 +48,10 @@ const ROUTES = [
   { path: '/partenaires',                    pick: t => t.meta.partenaires },
   { path: '/aide-support',                   pick: t => t.meta.aide },
   { path: '/tarifs',                         pick: t => t.meta.tarifs },
-  { path: '/mentions-legales',               pick: t => t.meta.mentions },
-  { path: '/cgu',                            pick: t => t.meta.cgu },
-  { path: '/cgv',                            pick: t => t.meta.cgv },
-  { path: '/politique-confidentialite',      pick: t => t.meta.confidentialite },
+  { path: '/mentions-legales',               pick: t => t.meta.mentions, noindexTranslations: true },
+  { path: '/cgu',                            pick: t => t.meta.cgu, noindexTranslations: true },
+  { path: '/cgv',                            pick: t => t.meta.cgv, noindexTranslations: true },
+  { path: '/politique-confidentialite',      pick: t => t.meta.confidentialite, noindexTranslations: true },
   { path: '/a-propos',                       pick: t => t.meta.apropos },
   { path: '/revue-de-presse',                pick: t => ({ title: t.revueDePresse.metaTitle, description: t.revueDePresse.metaDescription }) },
 ];
@@ -100,12 +100,21 @@ function renderPage(route, lang, t) {
   const fullTitle = `${title} | ScanUp 360SkillVue`;
   const url = `${BASE}${localizePath(route.path, lang)}`;
 
+  // Pages legales : le contenu reste en francais dans toutes les langues. Les
+  // versions traduites sont exclues de l'index et designent la version
+  // francaise comme canonique ; pas de hreflang, faute de vraie traduction.
+  // Meme logique que la prop noindexTranslations de src/components/PageMeta.tsx.
+  const frOnly = route.noindexTranslations === true;
+  const canonical = frOnly ? `${BASE}${localizePath(route.path, 'fr')}` : url;
   const alternates = [
-    ...LANGS.map(l =>
-      `    <link rel="alternate" hreflang="${l}" href="${BASE}${localizePath(route.path, l)}" />`
-    ),
-    `    <link rel="alternate" hreflang="x-default" href="${BASE}${localizePath(route.path, 'fr')}" />`,
-    `    <link rel="canonical" href="${url}" />`,
+    ...(frOnly ? [] : [
+      ...LANGS.map(l =>
+        `    <link rel="alternate" hreflang="${l}" href="${BASE}${localizePath(route.path, l)}" />`
+      ),
+      `    <link rel="alternate" hreflang="x-default" href="${BASE}${localizePath(route.path, 'fr')}" />`,
+    ]),
+    `    <link rel="canonical" href="${canonical}" />`,
+    ...(frOnly && lang !== 'fr' ? ['    <meta name="robots" content="noindex, follow" />'] : []),
   ].join('\n');
 
   let html = template;

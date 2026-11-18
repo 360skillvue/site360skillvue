@@ -96,14 +96,14 @@ export default function AProposPage() {
                       <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
                         fill="rgba(0,104,255,0.15)" stroke="#0068ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    <span className="text-[11px] font-bold text-scanup-blue uppercase tracking-wide">Prix Innovation</span>
+                    <span className="text-[11px] font-bold text-scanup-blue uppercase tracking-wide">{tr.awardPrize}</span>
                   </div>
 
                   <h3 className="text-[22px] sm:text-[28px] font-bold text-scanup-navy leading-tight mb-2">
-                    Prix Innovation<br />by Préventica 2025
+                    {tr.awardPrize}<br />{tr.awardBy}
                   </h3>
                   <p className="text-[12px] text-scanup-graytext mb-5 uppercase tracking-widest font-semibold">
-                    Préventica Paris 2025
+                    {tr.awardSubtitle}
                   </p>
 
                   <p className="text-[14px] text-scanup-graytext leading-relaxed mb-6"
@@ -122,7 +122,7 @@ export default function AProposPage() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <Reveal>
             <div className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-scanup-blue mb-4">Notre histoire</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-scanup-blue mb-4">{tr.storyLabel}</p>
               <p className="text-[22px] sm:text-[28px] font-bold text-scanup-navy leading-tight">{tr.originText1}</p>
             </div>
           </Reveal>
@@ -133,7 +133,7 @@ export default function AProposPage() {
               </p>
               <div className="flex items-center gap-2 text-scanup-blue text-[14px] font-semibold">
                 <div className="w-8 h-[2px] bg-scanup-blue rounded-full" />
-                360SkillVue — fondée pour changer ça
+                {tr.storyTagline}
               </div>
             </div>
           </Reveal>
@@ -232,7 +232,7 @@ export default function AProposPage() {
             <div className="bg-scanup-navy rounded-2xl px-8 py-7 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 rounded-full"
                 style={{ background: 'radial-gradient(circle at top right, rgba(0,210,200,0.15) 0%, transparent 70%)' }} />
-              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-scanup-turquoise mb-3 relative">Notre ambition</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-scanup-turquoise mb-3 relative">{tr.ambitionLabel}</p>
               <p className="text-[17px] text-white font-medium leading-relaxed relative">{tr.positionQuote}</p>
             </div>
           </Reveal>

@@ -8,12 +8,18 @@ interface Props {
   path: string;
   ogImage?: string;
   schema?: object;
+  /**
+   * Page dont le contenu reste en francais dans toutes les langues (pages
+   * legales) : les versions traduites ne sont pas indexees et pointent vers
+   * la version francaise comme canonique, sans balises hreflang.
+   */
+  noindexTranslations?: boolean;
 }
 
 const BASE = 'https://360skillvue.com';
 const DEFAULT_OG_IMAGE = `${BASE}/og-image.png`;
 
-export default function PageMeta({ title, description, path, ogImage, schema }: Props) {
+export default function PageMeta({ title, description, path, ogImage, schema, noindexTranslations = false }: Props) {
   const { lang } = useLanguage();
   const image = ogImage ?? DEFAULT_OG_IMAGE;
 
@@ -21,6 +27,9 @@ export default function PageMeta({ title, description, path, ogImage, schema }: 
   // laisse tel quel dans ce cas, sinon on le localise.
   const dejaPrefixe = LANGUAGES.some(l => l.code !== 'fr' && path.startsWith(`/${l.code}/`));
   const url = dejaPrefixe ? `${BASE}${path}` : `${BASE}${localizePath(path, lang)}`;
+  const noindex = noindexTranslations && lang !== 'fr';
+  const canonical = noindexTranslations ? `${BASE}${localizePath(path, 'fr')}` : url;
+  const alternates = !dejaPrefixe && !noindexTranslations;
 
   return (
     <Helmet>
@@ -29,11 +38,12 @@ export default function PageMeta({ title, description, path, ogImage, schema }: 
           de plusieurs morceaux produit une balise vide. */}
       <title>{`${title} | ScanUp 360SkillVue`}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={url} />
+      <link rel="canonical" href={canonical} />
+      {noindex && <meta name="robots" content="noindex, follow" />}
 
       {/* Versions linguistiques : sans ces balises, Google ne sait pas que ces
           pages sont les traductions les unes des autres. */}
-      {!dejaPrefixe && LANGUAGES.map(l => (
+      {alternates && LANGUAGES.map(l => (
         <link
           key={l.code}
           rel="alternate"
@@ -41,7 +51,7 @@ export default function PageMeta({ title, description, path, ogImage, schema }: 
           href={`${BASE}${localizePath(path, l.code as Lang)}`}
         />
       ))}
-      {!dejaPrefixe && (
+      {alternates && (
         <link rel="alternate" hrefLang="x-default" href={`${BASE}${localizePath(path, 'fr')}`} />
       )}
 

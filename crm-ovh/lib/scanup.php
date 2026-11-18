@@ -123,6 +123,7 @@ function scanup_trial_create(array $me, array $in): array {
     $extra = $deal['extra'] ? (json_decode((string)$deal['extra'], true) ?: []) : [];
     $extra['su_client'] = substr($now, 0, 10);
     $extra['su_org'] = (string)$orgId; $extra['su_cab'] = (string)$cabinet;
+    if ($ids) $extra['su_ids'] = implode(',', $ids);
     if (!$error) $extra['su_ops'] = substr($now, 0, 10);
     q('UPDATE deals SET extra = ?, update_time = ? WHERE id = ?', [json_encode($extra, JSON_UNESCAPED_UNICODE), $now, $dealId]);
     if (!$error) {
@@ -158,4 +159,25 @@ function scanup_rp_access(array $me, array $in): array {
     $extra['su_rp_client'] = substr($now, 0, 10);
     q('UPDATE deals SET extra = ?, update_time = ? WHERE id = ?', [json_encode($extra, JSON_UNESCAPED_UNICODE), $now, $deal['id']]);
     return ['ok' => true, 'email' => $email, 'password' => $pass, 'url' => 'https://scanup.360skillvue.com/'];
+}
+
+/* Vignettes à découper : une par opérateur, avec l'adresse de connexion, l'identifiant et le mot de passe initial.
+   Les identifiants viennent de l'affaire (su_ids) ou, pour les clients créés avant, de la trace de création. */
+function scanup_vignettes(int $dealId): array {
+    $deal = q('SELECT d.id, d.title, d.extra, o.name AS org_name FROM deals d LEFT JOIN orgs o ON o.id = d.org_id WHERE d.id = ?', [$dealId])->fetch();
+    if (!$deal) throw new RuntimeException('Affaire introuvable.');
+    $extra = $deal['extra'] ? (json_decode((string)$deal['extra'], true) ?: []) : [];
+    $ids = array_values(array_filter(array_map('trim', explode(',', (string)($extra['su_ids'] ?? '')))));
+    if (!$ids) {
+        foreach (q("SELECT note FROM activities WHERE deal_id = ? AND note IS NOT NULL ORDER BY id DESC", [$dealId])->fetchAll(PDO::FETCH_COLUMN) as $n) {
+            if (preg_match('/op[ée]rateurs cr[ée]{2}s(?: avant l\'arr[êe]t)?\s*:\s*([a-z0-9]+(?:\s*,\s*[a-z0-9]+)*)/iu', (string)$n, $m)
+             || preg_match('/Identifiants\s*:\s*([a-z0-9]+(?:\s*,\s*[a-z0-9]+)*)/iu', (string)$n, $m)) {
+                $ids = array_values(array_filter(array_map('trim', explode(',', $m[1])))); break;
+            }
+        }
+    }
+    if (!$ids) throw new RuntimeException("Aucun identifiant d'opérateur trouvé sur cette affaire : le client test a-t-il été créé depuis le CRM ?");
+    $pass = scanup_conf()['op_password'];
+    if ($pass === '') throw new RuntimeException("Le mot de passe initial des opérateurs n'est pas réglé (Réglages, liaison ScanUp).");
+    return ['client' => preg_replace('/\s*\(test[^)]*\)\s*$/iu', '', (string)($deal['org_name'] ?: $deal['title'])), 'url' => 'https://scanup.360skillvue.com/', 'password' => $pass, 'ids' => $ids];
 }

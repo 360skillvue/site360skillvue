@@ -278,3 +278,23 @@ a.ct:hover span{text-decoration:underline}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .done-banner.ok{background:#123a24;color:#bdf0d0;border-color:#2d7a4d}:root:not([data-theme="light"]) .done-banner.ko{background:#3d1717;color:#f8c4c4;border-color:#8a3333}}
 :root[data-theme="dark"] .done-banner.ok{background:#123a24;color:#bdf0d0;border-color:#2d7a4d}:root[data-theme="dark"] .done-banner.ko{background:#3d1717;color:#f8c4c4;border-color:#8a3333}
 @keyframes donePop{from{transform:scale(.97);opacity:0}to{transform:none;opacity:1}}
+
+/* Vignettes à découper : visibles seulement à l'impression */
+#vgSheet{display:none}
+@media print{
+  body.vg-printing > *:not(#vgSheet){display:none!important}
+  body.vg-printing{background:#fff!important}
+  body.vg-printing #vgSheet{display:block}
+  @page{size:A4;margin:10mm}
+  .vg-page{display:grid;grid-template-columns:95mm 95mm;grid-auto-rows:55mm;break-after:page;page-break-after:always}
+  .vg-page:last-child{break-after:auto;page-break-after:auto}
+  .vg-card{box-sizing:border-box;border:1px dashed #888;padding:4mm;display:flex;gap:3mm;align-items:center;font-family:Arial,Helvetica,sans-serif;color:#000;overflow:hidden}
+  .vg-txt{flex:1;min-width:0}
+  .vg-logo{height:8mm;width:auto;display:block;margin-bottom:2mm}
+  .vg-t{font-weight:700;font-size:10pt;margin-bottom:1.5mm}
+  .vg-l{font-size:9.5pt;line-height:1.35}
+  .vg-s{font-size:7pt;color:#444;margin-top:1.5mm}
+  .vg-qr{width:30mm;text-align:center;flex:none}
+  .vg-qr svg{width:28mm;height:28mm;display:block;margin:0 auto}
+  .vg-qr small{display:block;font-size:6.5pt;line-height:1.2;color:#444;margin-top:1mm}
+}

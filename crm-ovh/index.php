@@ -69,6 +69,7 @@ $v = CRM_VERSION;
 <div id="layer"></div>
 <div id="toastHost"></div>
 <script id="boot" type="application/json"><?= json_encode(['csrf' => $_SESSION['csrf']], JSON_HEX_TAG) ?></script>
+<script src="assets/qrcode.js?v=<?= $v ?>"></script>
 <script src="assets/app.js?v=<?= $v ?>"></script>
 </body>
 <?php endif; ?>

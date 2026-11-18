@@ -1151,9 +1151,40 @@ function scanupBlock(d, acts) {
   // Client final dont le client test existe : accès responsable de projet sur demande du client.
   const canRp = final && !canCreate && !ex.su_rp_client && !acts.some(a => /^ScanUp responsable de projet : accès donné au client/i.test(a.subject || ""));
   const btns = [canCreate || canMods ? `<button type="button" class="btn sm" data-sutrial="${esc(d.id)}">${canCreate ? "Créer le client test dans ScanUp" : "Ajouter les modules au client test"}</button>` : "",
+    !canCreate ? `<button type="button" class="btn sm" data-suvign="${esc(d.id)}" title="Une vignette par opérateur, avec l'adresse, l'identifiant, le mot de passe et un QR code, à enregistrer en PDF et à joindre au mail du client">Vignettes PDF</button>` : "",
     canRp ? `<button type="button" class="btn sm ghost" data-surp="${esc(d.id)}" title="Seulement si le client le demande : par défaut, il n'a accès qu'aux comptes opérateurs">Donner un accès responsable de projet</button>` : ""].filter(Boolean).join("");
   return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}${btns ? `<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">${btns}</div>` : ""}</section>`;
 }
+/* Vignettes à découper (A4, 10 par page, traits de coupe) : logo, adresse de connexion, identifiant, mot de passe initial
+   et QR code vers la page de connexion. La fenêtre d'impression du navigateur permet de choisir « Enregistrer au format PDF ». */
+function qrSvg(text) {
+  if (typeof qrcode !== "function") return "";
+  const q = qrcode(0, "M"); q.addData(text); q.make();
+  const n = q.getModuleCount(); let path = "";
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) path += `M${c} ${r}h1v1h-1z`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 ${n + 4} ${n + 4}" shape-rendering="crispEdges"><rect x="-2" y="-2" width="${n + 4}" height="${n + 4}" fill="#fff"/><path d="${path}" fill="#000"/></svg>`;
+}
+async function printVignettes(dealId) {
+  let v; try { v = await api("su_vignettes", {params: {id: dealId}}); } catch (e) { return failToast(e); }
+  const qr = qrSvg(v.url), host = v.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  const card = id => `<div class="vg-card"><div class="vg-txt"><img src="assets/logo360.png" alt="360SkillVue" class="vg-logo">
+      <div class="vg-t">Votre accès ScanUp${v.client ? " · " + esc(v.client) : ""}</div>
+      <div class="vg-l">Adresse : <b>${esc(host)}</b></div><div class="vg-l">Identifiant : <b>${esc(id)}</b></div><div class="vg-l">Mot de passe : <b>${esc(v.password)}</b></div>
+      <div class="vg-s">Changez le mot de passe à la première connexion.</div></div><div class="vg-qr">${qr}<small>Scannez pour vous connecter</small></div></div>`;
+  const pages = []; for (let i = 0; i < v.ids.length; i += 10) pages.push(v.ids.slice(i, i + 10));
+  document.getElementById("vgSheet")?.remove();
+  const sh = document.createElement("div"); sh.id = "vgSheet";
+  sh.innerHTML = pages.map(p => `<div class="vg-page">${p.map(card).join("")}</div>`).join("");
+  document.body.appendChild(sh); document.body.classList.add("vg-printing");
+  const prevTitle = document.title; document.title = "Vignettes ScanUp " + (v.client || "");
+  const done = () => { document.body.classList.remove("vg-printing"); sh.remove(); document.title = prevTitle; };
+  window.addEventListener("afterprint", done, {once: true});
+  // Laisse le logo se charger avant d'ouvrir l'impression.
+  const img = sh.querySelector("img"); const go = () => setTimeout(() => window.print(), 50);
+  if (img && !img.complete) { img.onload = go; img.onerror = go; } else go();
+  toast("Dans la fenêtre d'impression, choisissez « Enregistrer au format PDF ».");
+}
+
 /* Numéro de l'organisation et du cabinet ScanUp du client test : gardés sur l'affaire, ou lus dans la trace de création. */
 function suOrgOf(d) {
   let org = String((d.extra || {}).su_org || ""), cab = String((d.extra || {}).su_cab || "");
@@ -1296,7 +1327,9 @@ function openTrial(d) {
   const signal = (ok, msg) => {
     const ban = $("#tDone"); ban.hidden = false; ban.className = "done-banner " + (ok ? "ok" : "ko"); ban.textContent = msg;
     ban.scrollIntoView({behavior: "smooth", block: "nearest"});
-    if (ok) { const x = f.querySelector("[data-x]"); x.classList.add("primary"); x.textContent = "Fermer la fenêtre"; }
+    if (ok) { const x = f.querySelector("[data-x]"); x.classList.add("primary"); x.textContent = "Fermer la fenêtre";
+      const vb = document.createElement("button"); vb.type = "button"; vb.className = "btn sm"; vb.style.marginLeft = "10px"; vb.textContent = "Vignettes PDF";
+      vb.onclick = () => printVignettes(d.id); ban.appendChild(vb); }
     try {
       if (audio) (ok ? [[660, 0], [880, .18], [1175, .36]] : [[330, 0], [247, .25]]).forEach(([hz, t]) => {
         const o = audio.createOscillator(), g = audio.createGain(), t0 = audio.currentTime + t;
@@ -1364,6 +1397,8 @@ function openTrial(d) {
 document.addEventListener("click", async ev => {
   const t = ev.target.closest?.("[data-sutrial]");
   if (t) { ev.preventDefault(); const d = S.deals.get(t.dataset.sutrial); if (d) openTrial(d); return; }
+  const vg = ev.target.closest?.("[data-suvign]");
+  if (vg) { ev.preventDefault(); printVignettes(vg.dataset.suvign); return; }
   const rp = ev.target.closest?.("[data-surp]");
   if (rp) { ev.preventDefault(); const d = S.deals.get(rp.dataset.surp); if (d) openRpAccess(d); return; }
   const b = ev.target.closest?.("[data-su]"); if (!b || b.disabled) return;

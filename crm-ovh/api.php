@@ -345,6 +345,12 @@ function route(string $r, string $method, array $b, array $me): void {
         if ($method === 'POST') { require_admin($me); try { scanup_save($b); } catch (RuntimeException $ex) { fail($ex->getMessage()); } }
         json_out(scanup_public());
 
+    case 'su_vignettes':
+        // Vignettes des opérateurs du client test, à imprimer en PDF depuis la fiche affaire.
+        require __DIR__ . '/lib/scanup.php';
+        try { json_out(scanup_vignettes((int)($_GET['id'] ?? 0))); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'scanup_rp':
         // Accès responsable de projet pour le client, à sa demande.
         if ($method !== 'POST') fail('Méthode non autorisée.', 405);

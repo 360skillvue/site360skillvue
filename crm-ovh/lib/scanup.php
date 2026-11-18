@@ -27,10 +27,11 @@ function scanup_save(array $in): void {
    modules, que le compte administrateur du cabinet incarne pour agir dans l'espace évaluateurs. $fileUrl : image du CRM
    (media/su/…) que Make télécharge puis envoie à ScanUp en pièce jointe. */
 function scanup_call(int $cabinet, string $path, ?array $body, string $method = 'POST', ?int $asUser = null, ?string $fileUrl = null): array {
-    // ScanUp n'accepte que 10 connexions par minute, et Make se connecte à chaque appel : on espace les appels
-    // (au moins 6,7 s entre deux), et un refus de connexion (401 ou 429 : l'opération n'a pas été exécutée) est réessayé.
+    // ScanUp n'accepte que 10 connexions par minute, et Make se connecte à chaque appel (deux fois quand il agit au nom
+    // de l'auteure des modules) : on espace les appels (7,5 s, ou 13 s avec incarnation), et un refus de connexion
+    // (401 ou 429, ou connexion refusée avant l'appel : l'opération n'a pas été exécutée) est réessayé.
     for ($try = 0; ; $try++) {
-        $wait = 6.7 - (microtime(true) - (float)setting('scanup_last_call', 0));
+        $wait = ($asUser ? 13.0 : 7.5) - (microtime(true) - (float)setting('scanup_last_call', 0));
         if ($wait > 0) usleep((int)($wait * 1e6));
         set_setting('scanup_last_call', microtime(true));
         [$code, $j] = scanup_call_once($cabinet, $path, $body, $method, $asUser, $fileUrl);
@@ -38,7 +39,7 @@ function scanup_call(int $cabinet, string $path, ?array $body, string $method = 
             if ($code === 401 || $code === 429) throw new RuntimeException("ScanUp refuse la connexion de Make (limite de 10 connexions par minute, ou mot de passe du cabinet n° $cabinet changé). Attendez une minute puis cliquez sur « Reprendre ».");
             return [$code, $j];
         }
-        sleep(20);
+        sleep(30);
     }
 }
 function scanup_call_once(int $cabinet, string $path, ?array $body, string $method, ?int $asUser, ?string $fileUrl): array {
@@ -52,10 +53,15 @@ function scanup_call_once(int $cabinet, string $path, ?array $body, string $meth
         CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_UNICODE)]);
     $raw = curl_exec($ch);
     $err = curl_error($ch);
+    $http = (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
     curl_close($ch);
     if ($raw === false) throw new RuntimeException('Make ne répond pas : ' . $err);
+    // Le scénario Make a échoué en cours de route (code 5xx) : en pratique, ScanUp a refusé la connexion du cabinet
+    // (limite de connexions par minute) avant l'appel lui-même, qui n'a donc pas été fait. On le signale comme un 429
+    // pour qu'il soit réessayé après une pause.
+    if ($http >= 500 && !preg_match('/^\s*\d{3} \| /', (string)$raw)) return [429, []];
     // Make répond « code | réponse de ScanUp ». Autre chose : la demande a été refusée (clé, cabinet absent de la table).
-    if (!preg_match('/^\s*(\d{3}) \| (.*)$/s', (string)$raw, $m)) throw new RuntimeException("Make a refusé la demande ($method $path) : le cabinet n° $cabinet est-il bien dans la table des cabinets en essai, avec son mot de passe, et le scénario Make est-il à jour ?");
+    if (!preg_match('/^\s*(\d{3}) \| (.*)$/s', (string)$raw, $m)) throw new RuntimeException("Make a refusé la demande ($method $path, code $http" . ($raw !== '' ? ', « ' . mb_substr(trim((string)$raw), 0, 60) . ' »' : '') . ") : le cabinet n° $cabinet est-il bien dans la table des cabinets en essai, avec son mot de passe, et le scénario Make est-il à jour ?");
     $j = json_decode($m[2], true);
     return [(int)$m[1], is_array($j) ? $j : []];
 }

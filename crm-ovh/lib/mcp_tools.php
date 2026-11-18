@@ -222,6 +222,7 @@ function mcp_tool_defs(): array {
             'status' => $s('Nouveau statut.', ['enum' => ['open', 'won', 'lost']]), 'lost_reason' => $s('Raison de la perte.'), 'value' => ['type' => 'number', 'description' => 'Valeur en euros.'],
             'owner' => $owner, 'expected_close_date' => $s('Date AAAA-MM-JJ (chaîne vide pour retirer).'), 'org_id' => $i('Organisation (0 pour retirer).'), 'person_id' => $i('Personne principale (0 pour retirer).'),
             'add_contacts' => ['type' => 'array', 'items' => ['type' => 'integer'], 'description' => 'Identifiants de personnes à lier à l\'affaire comme contacts (en plus de la personne principale).'],
+            'contact_roles' => ['type' => 'object', 'description' => 'Rôle de chaque contact dans l\'affaire, par identifiant de personne (ex. {"7724": "Responsable de Domitille, décideuse"}). Lie aussi la personne à l\'affaire. Chaîne vide pour effacer le rôle.', 'additionalProperties' => ['type' => 'string']],
             'remove_contacts' => ['type' => 'array', 'items' => ['type' => 'integer'], 'description' => 'Identifiants de personnes ajoutées à délier de l\'affaire (la fiche personne n\'est pas supprimée).'],
             'fields' => ['type' => 'object', 'description' => 'Champs complémentaires à modifier, par leur libellé exact tel que donné par get_deal (valeur texte ; chaîne vide pour vider).', 'additionalProperties' => ['type' => 'string']]], ['id'])],
         ['name' => 'add_note', 'title' => 'Ajouter une note', 'annotations' => $rw + ['title' => 'Ajouter une note'],
@@ -317,7 +318,7 @@ function mcp_call_tool(string $name, array $a, array $me) {
         $id = mcp_int($a['id'] ?? null, "d'affaire");
         require_once __DIR__ . '/contacts.php';
         $dc = deal_contacts($id);
-        return mcp_fmt_deal(mcp_get_deal_row($id), true) + ['contacts' => array_map(fn($c) => ['id' => $c['id'], 'nom' => $c['name'], 'organisation' => $c['org_name'], 'emails' => $c['emails'], 'telephones' => $c['phones'], 'lien' => implode(', ', $c['roles'])], $dc['contacts']),
+        return mcp_fmt_deal(mcp_get_deal_row($id), true) + ['contacts' => array_map(fn($c) => ['id' => $c['id'], 'nom' => $c['name'], 'organisation' => $c['org_name'], 'emails' => $c['emails'], 'telephones' => $c['phones'], 'lien' => implode(', ', $c['roles']), 'role_dans_affaire' => $c['role']], $dc['contacts']),
             'adresses_sans_fiche' => $dc['unknown'], 'activites' => mcp_acts_for('deal_id', $id, 100)];
 
     case 'list_activities':
@@ -435,6 +436,10 @@ function mcp_call_tool(string $name, array $a, array $me) {
         foreach (['add_contacts' => true, 'remove_contacts' => false] as $k => $on) if (!empty($a[$k]) && is_array($a[$k])) {
             require_once __DIR__ . '/contacts.php';
             foreach ($a[$k] as $pid) { $pid = (int)$pid; mcp_exists('persons', $pid); deal_contact_link($id, $pid, $on); $links++; }
+        }
+        if (!empty($a['contact_roles']) && is_array($a['contact_roles'])) {
+            require_once __DIR__ . '/contacts.php';
+            foreach ($a['contact_roles'] as $pid => $role) { $pid = (int)$pid; mcp_exists('persons', $pid); deal_contact_link($id, $pid, true, (string)$role); $links++; }
         }
         if (!$set && !$links) throw new McpToolError('Aucune modification demandée.');
         $set['update_time'] = $now;

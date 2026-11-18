@@ -365,7 +365,7 @@ function route(string $r, string $method, array $b, array $me): void {
         require_once __DIR__ . '/lib/contacts.php';
         try {
             if ($method === 'POST') {
-                deal_contact_link((int)($b['deal_id'] ?? 0), (int)($b['person_id'] ?? 0), !empty($b['link']));
+                deal_contact_link((int)($b['deal_id'] ?? 0), (int)($b['person_id'] ?? 0), !empty($b['link']), array_key_exists('role', $b) ? (string)$b['role'] : null);
                 json_out(deal_contacts((int)($b['deal_id'] ?? 0)));
             }
             json_out(deal_contacts((int)($_GET['id'] ?? 0)));

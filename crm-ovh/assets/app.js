@@ -1331,7 +1331,7 @@ document.addEventListener("click", async ev => {
 
 /* Contacts liés à une affaire : personne principale, contacts ajoutés, personnes de l'organisation,
    des activités et des e-mails échangés. Les adresses sans fiche peuvent être transformées en fiche. */
-const DC_ROLE = {"principal": "Principal", "ajouté": "Ajouté", "activités": "Activités", "e-mails": "E-mails", "organisation": "Organisation"};
+const DC_ROLE = {"principal": "Principal", "ajouté": "Ajouté", "activités": "Activités", "e-mails": "E-mails", "organisation": "Organisation", "même domaine": "Même domaine"};
 async function loadDealContacts(id, dr) {
   const sec = dr.querySelector("#dContacts"); if (!sec) return;
   let r; try { r = await api("deal_contacts", {params: {id}}); } catch (e) { sec.innerHTML = `<h3>Contacts liés</h3><p class="note">${esc(e.message)}</p>`; return; }
@@ -1345,7 +1345,8 @@ function drawDealContacts(id, dr, r) {
     const ph = c.phones[0], em = c.emails[0];
     const other = c.org_id && c.org_id !== d.org_id && c.org_name ? `<span class="note">${esc(c.org_name)}</span>` : "";
     return `<div class="dc-row"><div class="dc-main"><button type="button" class="dc-name" data-goct="${esc(c.id)}">${esc(c.name || "Sans nom")}</button>${other}
-        <span class="dc-roles">${c.roles.map(x => `<span class="chip${x === "principal" ? " ok" : ""}">${esc(DC_ROLE[x] || x)}</span>`).join("")}</span></div>
+        <span class="dc-roles">${c.roles.map(x => `<span class="chip${x === "principal" ? " ok" : x === "même domaine" ? " today" : ""}" ${x === "même domaine" ? `title="Même domaine d'e-mail mais rangée dans une autre organisation : doublon ou filiale à vérifier"` : ""}>${esc(DC_ROLE[x] || x)}</span>`).join("")}</span>
+        <button type="button" class="dc-role${c.role ? "" : " empty"}" data-dcrole="${esc(c.id)}" title="Rôle de cette personne dans l'affaire">${esc(c.role || "+ rôle")}</button></div>
       <div class="dc-ct">${ph ? `<a class="ct" href="${esc(telHref(ph))}" title="Appeler">${ico("call")}<span>${esc(ph)}</span></a>` : ""}
         ${em ? `<a class="ct" href="mailto:${esc(em)}" data-mailp="${esc(c.id)}" data-mailto-addr="${esc(em)}" data-mdeal="${esc(id)}" title="Écrire">${ico("email")}<span>${esc(em)}</span></a>` : ""}
         ${c.roles.includes("ajouté") ? `<button type="button" class="btn sm ghost" data-dcunlink="${esc(c.id)}" title="Retirer ce contact de l'affaire (la fiche est conservée)" aria-label="Retirer">${ico("x")}</button>` : ""}</div></div>`;
@@ -1360,6 +1361,13 @@ function drawDealContacts(id, dr, r) {
     catch (e) { failToast(e); }
   };
   bindPicker(sec, "dcadd", v => { if (v && v.id) link(v.id, true); });
+  sec.querySelectorAll("[data-dcrole]").forEach(b => b.onclick = async e => {
+    e.stopPropagation(); const c = r.contacts.find(x => x.id === +b.dataset.dcrole);
+    const v = window.prompt("Rôle de " + (c?.name || "ce contact") + " dans l'affaire (ex. décideuse, cheffe de projet, à former) :", c?.role || "");
+    if (v === null) return;
+    try { drawDealContacts(id, dr, await api("deal_contacts", {method: "POST", body: {deal_id: id, person_id: +b.dataset.dcrole, link: true, role: v}})); toast("Rôle enregistré"); }
+    catch (err) { failToast(err); }
+  });
   sec.querySelectorAll("[data-dcunlink]").forEach(b => b.onclick = e => { e.stopPropagation(); link(+b.dataset.dcunlink, false); });
   sec.querySelectorAll("[data-dcnew]").forEach(b => b.onclick = async () => {
     const addr = b.dataset.dcnew, local = addr.split("@")[0].replace(/[._-]+/g, " ").replace(/\d+/g, "").trim();

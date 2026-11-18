@@ -50,7 +50,7 @@ export default function HomePage() {
 
   const products = [
     { tag: t.home.productTagPrevention,     name: t.home.product1Name, desc: t.home.product1Desc, icon: Users,     link: "/entreprises-drh",               accent: "#0068FF", accentLight: "rgba(0,104,255,0.07)" },
-    { tag: t.home.productTagPrevention,     name: t.home.product2Name, desc: t.home.product2Desc, icon: Brain,     link: "/assureurs-mutuelles",            accent: "#33FFCC", accentLight: "rgba(51,255,204,0.08)" },
+    { tag: t.home.productTagPrevention,     name: t.home.product2Name, desc: t.home.product2Desc, icon: Brain,     link: "/entreprises-drh",                accent: "#33FFCC", accentLight: "rgba(51,255,204,0.08)" },
     { tag: t.home.productTagReglementation, name: t.home.product3Name, desc: t.home.product3Desc, icon: FileCheck, link: "/certification-periodique-sante", accent: "#16A34A", accentLight: "rgba(22,163,74,0.07)", highlight: true },
   ];
 

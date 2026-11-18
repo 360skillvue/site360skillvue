@@ -311,6 +311,8 @@ export default function EntreprisesPage() {
       </section>
 
       {/* ── Testimonial ──────────────────────────────────────── */}
+      {/* Affiché seulement si un témoignage réel est renseigné dans la langue. */}
+      {t.entreprises.testimonialQuote && (
       <section className="py-28 px-6">
         <div className="max-w-4xl mx-auto">
           <Reveal>
@@ -328,7 +330,7 @@ export default function EntreprisesPage() {
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-11 h-11 rounded-full bg-scanup-blue/10 flex items-center justify-center text-scanup-blue font-bold text-[13px]">
-                    MA
+                    {t.entreprises.testimonialName.split(/\s+/).map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()}
                   </div>
                   <div>
                     <div className="text-[15px] font-semibold text-scanup-navy">{t.entreprises.testimonialName}</div>
@@ -339,6 +341,7 @@ export default function EntreprisesPage() {
             </div>
           </Reveal>
 
+          {t.entreprises.testimonials.length > 0 && (
           <div className="mt-16 grid md:grid-cols-2 gap-px bg-black/[0.06] rounded-2xl overflow-hidden">
             {t.entreprises.testimonials.map((testimonial, i) => (
               <Reveal key={i} delay={i * 0.1} className="bg-white p-8">
@@ -348,8 +351,10 @@ export default function EntreprisesPage() {
               </Reveal>
             ))}
           </div>
+          )}
         </div>
       </section>
+      )}
 
 
       {/* ── FAQ ──────────────────────────────────────────────── */}

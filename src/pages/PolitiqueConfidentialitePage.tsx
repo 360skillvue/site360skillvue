@@ -47,7 +47,8 @@ const SECTIONS = [
   {
     title: '5. Durée de conservation',
     paragraphs: [
-      'Les données personnelles sont conservées pour la durée strictement nécessaire à l\'accomplissement des finalités décrites ci-dessus, et au maximum pendant 3 ans après la dernière interaction avec le service. Les données anonymisées peuvent être conservées indéfiniment à des fins statistiques.',
+      'Les données de santé recueillies lors des dépistages (vidéos, enregistrements audio et réponses aux questionnaires) sont supprimées au bout de 30 jours.',
+      'Les autres données personnelles (compte, coordonnées, échanges) sont conservées pour la durée strictement nécessaire à l\'accomplissement des finalités décrites ci-dessus, et au maximum pendant 3 ans après la dernière interaction avec le service. Les données anonymisées peuvent être conservées à des fins statistiques.',
     ],
   },
   {
@@ -59,7 +60,7 @@ const SECTIONS = [
   {
     title: '7. Hébergement et sécurité',
     paragraphs: [
-      'Les données sont hébergées sur des serveurs certifiés HDS (Hébergeur de Données de Santé) gérés par OVHcloud, situés en France. Des mesures techniques et organisationnelles appropriées sont mises en place pour garantir la sécurité, la confidentialité et l\'intégrité des données.',
+      'Les données sont hébergées sur des serveurs certifiés HDS (Hébergeur de Données de Santé) gérés par OVHcloud, situés à Paris. À la demande d\'un client suisse, elles peuvent être hébergées en Suisse chez Infomaniak. Des mesures techniques et organisationnelles appropriées sont mises en place pour garantir la sécurité, la confidentialité et l\'intégrité des données.',
     ],
   },
   {
@@ -87,7 +88,7 @@ const SECTIONS = [
   {
     title: '10. Transferts internationaux',
     paragraphs: [
-      'Les données sont hébergées en France (Union européenne). Aucun transfert de données vers des pays tiers n\'est effectué sans garanties appropriées conformes au RGPD et à la LPD.',
+      'Les données sont hébergées en France (Union européenne), ou en Suisse à la demande d\'un client suisse ; la Suisse bénéficie d\'une décision d\'adéquation de la Commission européenne. Aucun autre transfert de données vers des pays tiers n\'est effectué sans garanties appropriées conformes au RGPD et à la LPD.',
     ],
   },
   {

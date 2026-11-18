@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';
 import PageMeta from '../components/PageMeta';
+import { Link } from '../i18n/Link';
 
 // ➜ Créer la clé sur https://web3forms.com/create avec tech@360skillvue.com
 const WEB3FORMS_KEY = '19385c98-ba2c-4ac6-a6d8-0090c5416c33';
@@ -250,7 +251,7 @@ export default function AidePage() {
                     <div className="px-7 pb-7 flex items-center justify-between gap-4">
                       <p className="text-[11px] text-scanup-graytext/50 leading-snug">
                         {t.aide.privacyText}{' '}
-                        <a href="#" className="underline hover:text-scanup-blue transition-colors">{t.aide.privacyLink}</a>.
+                        <Link to="/politique-confidentialite" className="underline hover:text-scanup-blue transition-colors">{t.aide.privacyLink}</Link>.
                       </p>
                       <motion.button type="submit" disabled={sending}
                         whileHover={{ scale: sending ? 1 : 1.03 }} whileTap={{ scale: sending ? 1 : 0.97 }}

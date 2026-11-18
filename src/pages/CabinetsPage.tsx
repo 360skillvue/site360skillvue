@@ -148,7 +148,7 @@ const TEXTS: Record<Lang, Texts> = {
     essai: [
       {
         title: 'Votre espace prêt au premier jour',
-        text: "Un espace à votre nom, avec des modules modèles TMS et RPS que vous pouvez utiliser tels quels ou adapter, et des crédits offerts.",
+        text: "Un espace à votre nom, avec des modules modèles TMS et RPS que vous pouvez utiliser tels quels ou adapter, et des dépistages offerts.",
       },
       {
         title: 'Un test avec quelques salariés',
@@ -255,7 +255,7 @@ const TEXTS: Record<Lang, Texts> = {
     essaiTitle: "Fourteen days to try it on a real case",
     essaiText: "The trial starts at your first login. To make it truly useful, we prepare it with you in a short call, then remain available throughout.",
     essai: [
-      { title: "Your space ready on day one", text: "A space in your name, with TMS and psychosocial template modules you can use as they are or adapt, and free credits." },
+      { title: "Your space ready on day one", text: "A space in your name, with TMS and psychosocial template modules you can use as they are or adapt, and free screenings." },
       { title: "A test with a few employees", text: "At a willing client or within your own team: a few employees take part, and your assessors handle their answers as in a real assignment." },
       { title: "A mid-point review", text: "We review things with you halfway through the trial: what works, what needs adjusting, how to present it to your clients." },
       { title: "A review to decide", text: "At the end, you know what the tool brings to your consultancy and how to fit it into your offers. No commitment." },
@@ -323,7 +323,7 @@ const TEXTS: Record<Lang, Texts> = {
     essaiTitle: "Vierzehn Tage zum Testen an einem echten Fall",
     essaiText: "Der Test beginnt mit Ihrer ersten Anmeldung. Damit er wirklich etwas bringt, bereiten wir ihn in einem kurzen Gespräch mit Ihnen vor und bleiben die ganze Zeit erreichbar.",
     essai: [
-      { title: "Ihr Bereich ab dem ersten Tag bereit", text: "Ein Bereich auf Ihren Namen, mit Mustermodulen für Muskel-Skelett-Erkrankungen und psychosoziale Risiken, die Sie so verwenden oder anpassen können, und mit Gratis-Credits." },
+      { title: "Ihr Bereich ab dem ersten Tag bereit", text: "Ein Bereich auf Ihren Namen, mit Mustermodulen für Muskel-Skelett-Erkrankungen und psychosoziale Risiken, die Sie so verwenden oder anpassen können, und mit kostenlosen Screenings." },
       { title: "Ein Test mit einigen Mitarbeitenden", text: "Bei einem interessierten Kunden oder in Ihrem eigenen Team: Einige Mitarbeitende nehmen teil, und Ihre Fachleute bearbeiten die Antworten wie in einem echten Auftrag." },
       { title: "Eine Zwischenbilanz", text: "Zur Halbzeit besprechen wir mit Ihnen, was funktioniert, was angepasst werden muss und wie Sie es Ihren Kunden vorstellen." },
       { title: "Eine Bilanz für Ihre Entscheidung", text: "Am Ende wissen Sie, was das Werkzeug Ihrem Büro bringt und wie Sie es in Ihre Angebote einbauen. Ohne Verpflichtung." },
@@ -391,7 +391,7 @@ const TEXTS: Record<Lang, Texts> = {
     essaiTitle: "Quattordici giorni per provarlo su un caso reale",
     essaiText: "La prova inizia al primo accesso. Perché sia davvero utile, la prepariamo con voi in un breve colloquio e restiamo disponibili per tutta la sua durata.",
     essai: [
-      { title: "Il vostro spazio pronto dal primo giorno", text: "Uno spazio a vostro nome, con moduli modello per i disturbi muscoloscheletrici e i rischi psicosociali da usare così come sono o da adattare, e crediti gratuiti." },
+      { title: "Il vostro spazio pronto dal primo giorno", text: "Uno spazio a vostro nome, con moduli modello per i disturbi muscoloscheletrici e i rischi psicosociali da usare così come sono o da adattare, e screening gratuiti." },
       { title: "Un test con alcuni dipendenti", text: "Presso un cliente disponibile o nel vostro team: alcuni dipendenti partecipano e i vostri valutatori trattano le risposte come in un incarico reale." },
       { title: "Un punto a metà percorso", text: "A metà prova facciamo il punto con voi: che cosa funziona, che cosa va adattato, come presentarlo ai clienti." },
       { title: "Un bilancio per decidere", text: "Alla fine sapete che cosa lo strumento porta al vostro studio e come integrarlo nelle vostre offerte. Senza impegno." },
@@ -459,7 +459,7 @@ const TEXTS: Record<Lang, Texts> = {
     essaiTitle: "Catorce días para probarla en un caso real",
     essaiText: "La prueba empieza con su primera conexión. Para que sea realmente útil, la preparamos con usted en una breve conversación y seguimos disponibles durante todo el periodo.",
     essai: [
-      { title: "Su espacio listo desde el primer día", text: "Un espacio a su nombre, con módulos modelo de TME y de riesgos psicosociales que puede usar tal cual o adaptar, y créditos gratuitos." },
+      { title: "Su espacio listo desde el primer día", text: "Un espacio a su nombre, con módulos modelo de TME y de riesgos psicosociales que puede usar tal cual o adaptar, y cribados gratuitos." },
       { title: "Una prueba con algunos empleados", text: "En un cliente voluntario o en su propio equipo: algunos empleados participan y sus evaluadores tratan sus respuestas como en una misión real." },
       { title: "Un punto a mitad de camino", text: "A mitad de la prueba revisamos con usted lo que funciona, lo que hay que ajustar y cómo presentarlo a sus clientes." },
       { title: "Un balance para decidir", text: "Al final, sabe lo que la herramienta aporta a su gabinete y cómo integrarla en sus ofertas. Sin compromiso." },
@@ -527,7 +527,7 @@ const TEXTS: Record<Lang, Texts> = {
     essaiTitle: "Catorze dias para o experimentar num caso real",
     essaiText: "O teste começa no seu primeiro acesso. Para que seja realmente útil, preparamo-lo consigo numa breve conversa e ficamos disponíveis durante todo o período.",
     essai: [
-      { title: "O seu espaço pronto no primeiro dia", text: "Um espaço em seu nome, com módulos modelo de LMERT e de riscos psicossociais que pode usar tal como estão ou adaptar, e créditos oferecidos." },
+      { title: "O seu espaço pronto no primeiro dia", text: "Um espaço em seu nome, com módulos modelo de LMERT e de riscos psicossociais que pode usar tal como estão ou adaptar, e rastreios oferecidos." },
       { title: "Um teste com alguns colaboradores", text: "Num cliente interessado ou na sua própria equipa: alguns colaboradores participam e os seus avaliadores tratam as respostas como numa missão real." },
       { title: "Um ponto a meio do percurso", text: "A meio do teste fazemos o ponto consigo: o que funciona, o que é preciso ajustar, como o apresentar aos seus clientes." },
       { title: "Um balanço para decidir", text: "No fim, sabe o que a ferramenta traz ao seu gabinete e como a integrar nas suas ofertas. Sem compromisso." },

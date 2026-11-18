@@ -83,7 +83,7 @@ export default function TarifsPage() {
       </div>
       <motion.button
         whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-        onClick={goContact}
+        onClick={() => navigate('/aide-support?sujet=test#contact')}
         className="py-3 px-6 rounded-xl font-bold text-[13px] bg-scanup-blue text-white hover:brightness-110 transition-all inline-flex items-center gap-2 flex-shrink-0"
       >
         {tr.trial.cta} <ArrowRight size={13} />

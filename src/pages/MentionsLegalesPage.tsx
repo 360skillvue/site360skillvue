@@ -41,8 +41,8 @@ const SECTIONS = [
   {
     title: '5. Hébergement du site',
     content: [
-      { label: 'Site vitrine', value: 'WordPress – hébergé par OVH' },
-      { label: 'Plateforme', value: 'Hébergement sur serveurs certifiés HDS – OVHcloud' },
+      { label: 'Site vitrine', value: 'Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis (vercel.com)' },
+      { label: 'Plateforme ScanUp', value: 'OVHcloud, serveurs certifiés hébergeur de données de santé (HDS) situés à Paris ; sur demande d\'un client suisse, hébergement en Suisse chez Infomaniak' },
     ],
   },
   {

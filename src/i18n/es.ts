@@ -947,6 +947,7 @@ export const es = {
     frenchOnly: 'La información legal de esta página solo está disponible en francés; únicamente la versión francesa es jurídicamente vinculante.',
     lastUpdated: 'Última actualización:',
     updatedOn: '20 de octubre de 2026',
+    cgvUpdatedOn: '19 de noviembre de 2026', // date propre aux CGV
     backHome: '← Volver al inicio',
   },
   footer: {

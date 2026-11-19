@@ -51,7 +51,7 @@ const SECTIONS = [
     title: '6. Modalités de paiement',
     paragraphs: [
       "Le paiement s'effectue par virement bancaire ou tout autre moyen accepté et précisé sur la facture.",
-      "Sauf accord particulier, les factures sont payables à 30 jours à compter de leur date d'émission. Pour les clients en France, tout retard de paiement entraîne de plein droit l'application de pénalités de retard au taux prévu à l'article L. 441-10 du Code de commerce et d'une indemnité forfaitaire pour frais de recouvrement de 40 €. Pour les autres clients, des intérêts moratoires au taux légal suisse sont dus, ainsi qu'une indemnité forfaitaire de CHF 40 pour frais de recouvrement.",
+      "Pour les prestations ScanUp comprenant un plan de prévention, 50 % du montant est facturé dès que l'entretien exploratoire est planifié et doit être réglé avant sa tenue ; le solde est facturé à la livraison du plan de prévention. Les autres factures sont payables à 30 jours à compter de leur date d'émission, sauf accord particulier. Pour les clients en France, tout retard de paiement entraîne de plein droit l'application de pénalités de retard au taux prévu à l'article L. 441-10 du Code de commerce et d'une indemnité forfaitaire pour frais de recouvrement de 40 €. Pour les autres clients, des intérêts moratoires au taux légal suisse sont dus, ainsi qu'une indemnité forfaitaire de CHF 40 pour frais de recouvrement.",
     ],
   },
   {
@@ -134,7 +134,7 @@ export default function CGVPage() {
           <h1 className="text-[36px] font-bold tracking-tight mb-4">{t.meta.cgv.title}</h1>
           <p className="text-[13px] text-scanup-graytext">
             {t.legal.frenchOnly}<br />
-            {t.legal.lastUpdated} <strong>{t.legal.updatedOn}</strong>
+            {t.legal.lastUpdated} <strong>{t.legal.cgvUpdatedOn}</strong>
           </p>
           <div className="flex flex-wrap gap-4 mt-4">
             <Link to="/cgu" className="text-[13px] text-scanup-blue hover:underline font-medium">{t.footer.cgu}</Link>

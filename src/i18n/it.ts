@@ -947,6 +947,7 @@ export const it = {
     frenchOnly: 'Le informazioni legali di questa pagina sono disponibili solo in francese; fa fede esclusivamente la versione francese.',
     lastUpdated: 'Ultimo aggiornamento:',
     updatedOn: '20 ottobre 2026',
+    cgvUpdatedOn: '19 novembre 2026', // date propre aux CGV
     backHome: '← Torna alla home page',
   },
   footer: {

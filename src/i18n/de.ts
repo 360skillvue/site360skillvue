@@ -947,6 +947,7 @@ export const de = {
     frenchOnly: 'Die rechtlichen Informationen auf dieser Seite sind nur auf Französisch verfügbar; massgebend ist allein die französische Fassung.',
     lastUpdated: 'Letzte Aktualisierung:',
     updatedOn: '20. Oktober 2026',
+    cgvUpdatedOn: '19. November 2026', // date propre aux CGV
     backHome: '← Zurück zur Startseite',
   },
   footer: {

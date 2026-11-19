@@ -960,6 +960,7 @@ export const fr = {
     frenchOnly: 'Seule la version française des informations légales fait foi.',
     lastUpdated: 'Dernière mise à jour :',
     updatedOn: '20 octobre 2026',
+    cgvUpdatedOn: '19 novembre 2026', // date propre aux CGV
     backHome: '← Retour à l\'accueil',
   },
   footer: {

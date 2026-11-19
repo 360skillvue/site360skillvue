@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, ChevronDown, Mail, Check, EyeOff, CalendarX2, Wallet, BatteryLow, ClipboardCheck } from 'lucide-react';
+import { ArrowRight, ChevronDown, Mail, Check, EyeOff, CalendarX2, Wallet, BatteryLow, ClipboardCheck, ScanSearch, Video, Brain, PersonStanding } from 'lucide-react';
 
 // Icônes des cinq constats du bloc « La réalité terrain », dans l'ordre des textes.
 const PROBLEM_ICONS = [EyeOff, CalendarX2, Wallet, BatteryLow, ClipboardCheck];
@@ -30,6 +30,13 @@ const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: 
 
 /* Destinations des quatre offres. Le simulateur et la page formation sont des
    pages statiques hors SPA, d'où la navigation par lien plein. */
+// Icône et couleur de chaque offre, dans l'ordre des textes : dépistage, étude de situation, formation RPS, formation TMS.
+const OFFRE_STYLES = [
+  { icon: ScanSearch,     color: '#0068FF', soft: 'rgba(0,104,255,0.08)' },
+  { icon: Video,          color: '#0E9F8A', soft: 'rgba(14,159,138,0.10)' },
+  { icon: Brain,          color: '#8B5CF6', soft: 'rgba(139,92,246,0.10)' },
+  { icon: PersonStanding, color: '#F97316', soft: 'rgba(249,115,22,0.10)' },
+];
 const OFFRE_LINKS = [
   { href: '/simulateur-cout-tms-rps',         spa: false },
   { href: '/aide-support',                    spa: true  },
@@ -139,40 +146,48 @@ export default function EntreprisesPage() {
       </section>
 
       {/* ── Nos quatre offres ─────────────────────────────────── */}
-      <section className="py-24 px-6 border-t border-black/[0.06]">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-24 px-6 border-t border-black/[0.06] bg-gradient-to-b from-white to-[#F8F9FC]">
+        <div className="max-w-6xl mx-auto">
           <Reveal className="mb-14">
             <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.entreprises.offresLabel}</p>
             <h2 className="text-[32px] md:text-[44px] font-bold tracking-[-0.02em] leading-[1.1]">
-              {t.entreprises.offresTitle}<br />{t.entreprises.offresTitleEnd}
+              {t.entreprises.offresTitle}<br /><span className="text-scanup-blue">{t.entreprises.offresTitleEnd}</span>
             </h2>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {offres.map((o: { title: string; body: string; cta: string }, i: number) => (
-              <motion.a
-                key={i}
-                href={OFFRE_LINKS[i].href}
-                onClick={(e) => {
-                  if (OFFRE_LINKS[i].spa) { e.preventDefault(); navigate(OFFRE_LINKS[i].href); }
-                }}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{ delay: i * 0.08, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="group flex flex-col rounded-2xl border border-black/[0.08] bg-white p-7 hover:border-scanup-blue transition-colors no-underline"
-              >
-                <div className="text-[11px] text-scanup-blue font-semibold uppercase tracking-widest mb-3">
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-                <h3 className="text-[18px] font-semibold mb-3 text-scanup-navy group-hover:text-scanup-blue transition-colors">{o.title}</h3>
-                <p className="text-[14px] text-scanup-graytext leading-relaxed mb-6 flex-1">{o.body}</p>
-                <span className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-scanup-blue">
-                  {o.cta}
-                  <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-                </span>
-              </motion.a>
-            ))}
+          <div className="grid md:grid-cols-2 gap-5">
+            {offres.map((o: { title: string; body: string; cta: string }, i: number) => {
+              const st = OFFRE_STYLES[i % OFFRE_STYLES.length];
+              const Icon = st.icon;
+              return (
+                <motion.a
+                  key={i}
+                  href={OFFRE_LINKS[i].href}
+                  onClick={(e) => {
+                    if (OFFRE_LINKS[i].spa) { e.preventDefault(); navigate(OFFRE_LINKS[i].href); }
+                  }}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ delay: i * 0.08, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  className="group relative flex flex-col rounded-2xl border border-black/[0.06] bg-white p-7 md:p-8 overflow-hidden shadow-[0_1px_2px_rgba(28,36,75,0.04)] hover:shadow-[0_16px_40px_-16px_rgba(28,36,75,0.22)] hover:-translate-y-0.5 transition-all duration-300 no-underline"
+                >
+                  <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1" style={{ background: st.color }} />
+                  <span aria-hidden="true" className="absolute -right-24 -top-24 w-48 h-48 rounded-full opacity-[0.06] group-hover:opacity-[0.11] transition-opacity" style={{ background: st.color }} />
+                  <div className="relative flex items-center gap-4 mb-5">
+                    <span className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: st.soft, color: st.color }}>
+                      <Icon className="w-6 h-6" strokeWidth={1.8} />
+                    </span>
+                    <h3 className="text-[19px] font-semibold leading-snug text-scanup-navy">{o.title}</h3>
+                  </div>
+                  <p className="relative text-[14.5px] text-scanup-graytext leading-relaxed mb-7 flex-1">{o.body}</p>
+                  <span className="relative self-start inline-flex items-center gap-2 text-[14px] font-semibold px-4 py-2.5 rounded-full transition-colors" style={{ background: st.soft, color: st.color }}>
+                    {o.cta}
+                    <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
+                  </span>
+                </motion.a>
+              );
+            })}
           </div>
         </div>
       </section>

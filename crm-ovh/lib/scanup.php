@@ -191,7 +191,10 @@ function scanup_vignettes(int $dealId): array {
 /* Modules publiés de l'espace évaluateurs d'un cabinet (pour les mettre à disposition d'un client test de distributeur). */
 function scanup_cabinet_modules(int $cab): array {
     if ($cab < 1) throw new RuntimeException('Indiquez le numéro du cabinet.');
-    [$code, $j] = scanup_call($cab, '/api/modules?page=1&limit=100', null, 'GET');
+    // Appel léger dédié (modules publiés et non archivés de l'espace évaluateurs, dès qu'il est en production dans ScanUp),
+    // sinon la liste complète des modules visibles par l'administrateur du cabinet.
+    [$code, $j] = scanup_call($cab, '/api/modules/espace-evaluateurs', null, 'GET');
+    if ($code === 404) [$code, $j] = scanup_call($cab, '/api/modules?page=1&limit=100', null, 'GET');
     if ($code !== 200) throw new RuntimeException(scanup_fail('Lecture des modules du cabinet', $code, $j));
     $list = $j['data']['modules'] ?? ($j['data'] ?? null);
     if (!is_array($list)) throw new RuntimeException('ScanUp a renvoyé une liste de modules illisible (trop longue ?) : indiquez les numéros des modules à la main.');

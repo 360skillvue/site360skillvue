@@ -130,6 +130,10 @@ function scanup_trial_create(array $me, array $in): array {
     $extra['su_client'] = substr($now, 0, 10);
     $extra['su_org'] = (string)$orgId; $extra['su_cab'] = (string)$cabinet;
     if ($ids) $extra['su_ids'] = implode(',', $ids);
+    // Un distributeur peut avoir plusieurs clients test sur la même affaire : on les garde tous (vignettes par client).
+    $cl = is_array($extra['su_clients'] ?? null) ? $extra['su_clients'] : [];
+    $cl[] = ['org' => (string)$orgId, 'cab' => (string)$cabinet, 'name' => $name, 'ids' => implode(',', $ids)];
+    $extra['su_clients'] = array_values($cl);
     if (!$error) $extra['su_ops'] = substr($now, 0, 10);
     q('UPDATE deals SET extra = ?, update_time = ? WHERE id = ?', [json_encode($extra, JSON_UNESCAPED_UNICODE), $now, $dealId]);
     if (!$error) {
@@ -168,24 +172,37 @@ function scanup_rp_access(array $me, array $in): array {
 }
 
 /* Vignettes à découper : une par opérateur, avec l'adresse de connexion, l'identifiant et le mot de passe initial.
-   Les identifiants viennent de l'affaire (su_ids) ou, pour les clients créés avant, de la trace de création. */
-function scanup_vignettes(int $dealId): array {
-    $deal = q('SELECT d.id, d.title, d.extra, o.name AS org_name FROM deals d LEFT JOIN orgs o ON o.id = d.org_id WHERE d.id = ?', [$dealId])->fetch();
+   Les clients test de l'affaire sont dans su_clients (plusieurs pour un distributeur) ; pour ceux créés avant,
+   l'organisation et les identifiants viennent de su_org / su_ids ou de la trace de création. $org choisit le client. */
+function scanup_test_clients(int $dealId): array {
+    $deal = q('SELECT id, extra FROM deals WHERE id = ?', [$dealId])->fetch();
     if (!$deal) throw new RuntimeException('Affaire introuvable.');
     $extra = $deal['extra'] ? (json_decode((string)$deal['extra'], true) ?: []) : [];
-    $ids = array_values(array_filter(array_map('trim', explode(',', (string)($extra['su_ids'] ?? '')))));
-    if (!$ids) {
-        foreach (q("SELECT note FROM activities WHERE deal_id = ? AND note IS NOT NULL ORDER BY id DESC", [$dealId])->fetchAll(PDO::FETCH_COLUMN) as $n) {
-            if (preg_match('/op[ée]rateurs cr[ée]{2}s(?: avant l\'arr[êe]t)?\s*:\s*([a-z0-9]+(?:\s*,\s*[a-z0-9]+)*)/iu', (string)$n, $m)
-             || preg_match('/Identifiants\s*:\s*([a-z0-9]+(?:\s*,\s*[a-z0-9]+)*)/iu', (string)$n, $m)) {
-                $ids = array_values(array_filter(array_map('trim', explode(',', $m[1])))); break;
-            }
-        }
+    $cl = [];
+    foreach ((array)($extra['su_clients'] ?? []) as $c) if (!empty($c['org'])) $cl[(string)$c['org']] = $c;
+    // Clients créés avant la liste su_clients : relus dans les traces de création de l'affaire.
+    foreach (q("SELECT note FROM activities WHERE deal_id = ? AND note IS NOT NULL AND subject LIKE 'ScanUp cabinet : client test%' ORDER BY id", [$dealId])->fetchAll(PDO::FETCH_COLUMN) as $n) {
+        if (!preg_match('/Organisation « (.+?) » créée \(n° (\d+)\)/u', (string)$n, $o) || isset($cl[$o[2]])) continue;
+        preg_match('/op[ée]rateurs cr[ée]{2}s(?: avant l\'arr[êe]t)?\s*:\s*([a-z0-9]+(?:\s*,\s*[a-z0-9]+)*)/iu', (string)$n, $m);
+        $cl[$o[2]] = ['org' => $o[2], 'name' => $o[1], 'ids' => $m[1] ?? ''];
     }
-    if (!$ids) throw new RuntimeException("Aucun identifiant d'opérateur trouvé sur cette affaire : le client test a-t-il été créé depuis le CRM ?");
+    if (!$cl && !empty($extra['su_ids'])) $cl[(string)($extra['su_org'] ?? '0')] = ['org' => (string)($extra['su_org'] ?? ''), 'name' => '', 'ids' => (string)$extra['su_ids']];
+    return array_values($cl);
+}
+function scanup_vignettes(int $dealId, ?string $org = null): array {
+    $deal = q('SELECT d.id, d.title, o.name AS org_name FROM deals d LEFT JOIN orgs o ON o.id = d.org_id WHERE d.id = ?', [$dealId])->fetch();
+    if (!$deal) throw new RuntimeException('Affaire introuvable.');
+    $cl = scanup_test_clients($dealId);
+    if ($org !== null && $org !== '') $cl = array_values(array_filter($cl, fn($c) => (string)$c['org'] === $org));
+    if (!$cl) throw new RuntimeException("Aucun identifiant d'opérateur trouvé sur cette affaire : le client test a-t-il été créé depuis le CRM ?");
+    if (count($cl) > 1) return ['choose' => array_map(fn($c) => ['org' => (string)$c['org'], 'name' => (string)$c['name']], $cl)];
+    $c = $cl[0];
+    $ids = array_values(array_filter(array_map('trim', explode(',', (string)$c['ids']))));
+    if (!$ids) throw new RuntimeException("Aucun identifiant d'opérateur trouvé pour ce client test.");
     $pass = scanup_conf()['op_password'];
     if ($pass === '') throw new RuntimeException("Le mot de passe initial des opérateurs n'est pas réglé (Réglages, liaison ScanUp).");
-    return ['client' => preg_replace('/\s*\(test[^)]*\)\s*$/iu', '', (string)($deal['org_name'] ?: $deal['title'])), 'url' => 'https://scanup.360skillvue.com/', 'password' => $pass, 'ids' => $ids];
+    $name = (string)($c['name'] ?: ($deal['org_name'] ?: $deal['title']));
+    return ['client' => trim(preg_replace('/\s*\(test[^)]*\)\s*$/iu', '', $name)), 'url' => 'https://scanup.360skillvue.com/', 'password' => $pass, 'ids' => $ids];
 }
 
 /* Modules publiés de l'espace évaluateurs d'un cabinet (pour les mettre à disposition d'un client test de distributeur). */

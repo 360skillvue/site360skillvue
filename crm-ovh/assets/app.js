@@ -1203,6 +1203,7 @@ function scanupBlock(d, acts) {
   // Client final dont le client test existe : accès responsable de projet sur demande du client.
   const canRp = final && !canCreate && !ex.su_rp_client && !acts.some(a => /^ScanUp responsable de projet : accès donné au client/i.test(a.subject || ""));
   const btns = [canCreate || canMods ? `<button type="button" class="btn sm" data-sutrial="${esc(d.id)}">${canCreate ? "Créer le client test dans ScanUp" : "Ajouter les modules au client test"}</button>` : "",
+    !final && !canCreate ? `<button type="button" class="btn sm" data-sutrial="${esc(d.id)}" data-sunew="1" title="Un distributeur peut avoir plusieurs clients test">Créer un autre client test</button>` : "",
     !canCreate ? `<button type="button" class="btn sm" data-suvign="${esc(d.id)}" title="Une vignette par opérateur, avec l'adresse, l'identifiant, le mot de passe et un QR code, à enregistrer en PDF et à joindre au mail du client">Vignettes PDF</button>` : "",
     canRp ? `<button type="button" class="btn sm ghost" data-surp="${esc(d.id)}" title="Seulement si le client le demande : par défaut, il n'a accès qu'aux comptes opérateurs">Donner un accès responsable de projet</button>` : ""].filter(Boolean).join("");
   return `<section class="sec" style="margin:0 0 12px"><h3>Parcours ScanUp</h3><div class="su-steps">${items}</div>${next ? `<p style="margin:6px 0 0;font-size:12px"><small>Prochaine étape à proposer : ${esc(next[1].toLowerCase())}.</small></p>` : ""}${btns ? `<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">${btns}</div>` : ""}</section>`;
@@ -1216,8 +1217,14 @@ function qrSvg(text) {
   for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) path += `M${c} ${r}h1v1h-1z`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 ${n + 4} ${n + 4}" shape-rendering="crispEdges"><rect x="-2" y="-2" width="${n + 4}" height="${n + 4}" fill="#fff"/><path d="${path}" fill="#000"/></svg>`;
 }
-async function printVignettes(dealId) {
-  let v; try { v = await api("su_vignettes", {params: {id: dealId}}); } catch (e) { return failToast(e); }
+async function printVignettes(dealId, org) {
+  let v; try { v = await api("su_vignettes", {params: org ? {id: dealId, org} : {id: dealId}}); } catch (e) { return failToast(e); }
+  if (v.choose) {
+    const list = v.choose.map((c, i) => `${i + 1}. ${c.name || "organisation n° " + c.org}`).join("\n");
+    const k = Number(window.prompt("Vignettes de quel client test ?\n" + list + "\n\nTapez le numéro :", "1"));
+    const c = v.choose[k - 1]; if (!c) return;
+    return printVignettes(dealId, c.org);
+  }
   const qr = qrSvg(v.url), host = v.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
   const card = id => `<div class="vg-card"><div class="vg-txt"><img src="assets/logo360.png" alt="360SkillVue" class="vg-logo">
       <div class="vg-t">Votre accès ScanUp${v.client ? " · " + esc(v.client) : ""}</div>
@@ -1284,7 +1291,7 @@ function openRpAccess(d) {
 }
 /* Création du client test dans ScanUp : organisation « … (test) », responsable de projet à l'alias Gmail de la personne
    connectée (jamais remis au client) et opérateurs sans e-mail. Passe par Make, qui détient l'accès au cabinet. */
-function openTrial(d) {
+function openTrial(d, fresh = false) {
   const m = {kind: "trial"}; S.modal = m; histPush();
   const final = /clients? finaux/i.test(suPipe(d));
   const base = (d.org_name || d.title || "client").replace(/\s*\(.*$/, "").trim();
@@ -1293,6 +1300,9 @@ function openTrial(d) {
   // Client déjà créé ? Numéro gardé sur l'affaire, ou lu dans la trace de création.
   let orgId = String((d.extra || {}).su_org || ""), cabId = String((d.extra || {}).su_cab || "");
   if (!orgId) for (const a of SU_ACTS.get(d.id) || []) { const mm = /créée \(n° (\d+)\) dans le cabinet n° (\d+)/.exec(a.note || ""); if (mm) { orgId = mm[1]; cabId = mm[2]; break; } }
+  // Nouveau client test d'un distributeur : même cabinet, nouvelle organisation, nom et identifiants à choisir.
+  let fName = null, fSlug = null;
+  if (fresh) { orgId = ""; fName = " (test)"; fSlug = ""; }
   const exists = !!orgId;
   const end = (() => { const x = new Date(); x.setDate(x.getDate() + 30); return isoDay(x); })();
   const radios = (name, opts, val) => `<div class="seg" role="radiogroup" data-radio="${name}">${opts.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${k === val}">${l}</button>`).join("")}</div>`;
@@ -1300,15 +1310,15 @@ function openTrial(d) {
     <div class="mh"><h2>${exists ? "Ajouter les modules au client test" : "Créer le client test dans ScanUp"}</h2><button type="button" class="btn ghost sm" data-x aria-label="Fermer">${ico("x")}</button></div>
     <div class="mb">
       <p class="note" style="margin:0">Le test client consiste à inscrire quelques salariés (5 par défaut) sur des modules préparés pour lui ; sauf demande de sa part, le client n'a accès qu'aux comptes opérateurs. ${exists ? "Le client existe déjà dans ScanUp : seuls les modules sont créés." : "Le CRM crée l'organisation cliente, un compte responsable de projet interne (votre alias, jamais remis au client, il sert au suivi automatique) et les opérateurs sans e-mail."} Les modules sont copiés du modèle le plus proche, adaptés au client et à ses métiers, illustrés, publiés, mis à disposition avec une session et des crédits, puis les opérateurs y sont inscrits.</p>
-      <label class="f"><span>Nom du client test (doit contenir « test »)</span><input type="text" id="tName" maxlength="120" value="${esc(base + " (test)")}"></label>
+      <label class="f"><span>Nom du client test (doit contenir « test »)</span><input type="text" id="tName" maxlength="120" value="${esc(fName !== null ? fName : base + " (test)")}" ${fresh ? 'placeholder="Nom du nouveau client (test)"' : ""}></label>
       <div class="grid2">
         <label class="f"><span>N° du cabinet ScanUp</span><input type="number" id="tCab" min="1" value="${esc(cabId || (final ? "10" : ""))}" placeholder="${final ? "" : "cabinet test du distributeur"}"></label>
         <label class="f"><span>N° de l'organisation, si déjà créée</span><input type="number" id="tOrg" min="1" value="${esc(orgId)}" placeholder="vide : elle sera créée"></label>
       </div>
       <div id="tNew" ${exists ? "hidden" : ""} class="grid2">
         <label class="f"><span>Nombre de testeurs</span><input type="number" id="tN" min="1" max="20" value="5"></label>
-        <label class="f"><span>Identifiant des opérateurs (suivi de 1, 2, 3…)</span><input type="text" id="tPrefix" maxlength="20" value="${esc(slug)}"></label>
-        <label class="f" style="grid-column:1/-1"><span>Responsable de projet (alias Gmail pour le cabinet 360skillvue n° 10 ; pour un cabinet distributeur, l'adresse réelle de la personne, qui recevra le mot de passe initial habituel)</span><input type="text" id="tRp" value="${esc(who + "+" + slug + "rp@gmail.com")}"></label>
+        <label class="f"><span>Identifiant des opérateurs (suivi de 1, 2, 3…)</span><input type="text" id="tPrefix" maxlength="20" value="${esc(fSlug !== null ? fSlug : slug)}" ${fresh ? 'placeholder="par exemple bezons"' : ""}></label>
+        <label class="f" style="grid-column:1/-1"><span>Responsable de projet (alias Gmail pour le cabinet 360skillvue n° 10 ; pour un cabinet distributeur, l'adresse réelle de la personne, qui recevra le mot de passe initial habituel)</span><input type="text" id="tRp" value="${esc(fresh ? "" : who + "+" + slug + "rp@gmail.com")}"></label>
       </div>
       <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tMods" ${final ? "checked" : ""}> <span id="tModsLbl">Créer aussi les modules</span></label>
       <div id="tExBox" class="stack" hidden>
@@ -1406,7 +1416,7 @@ function openTrial(d) {
     ban.scrollIntoView({behavior: "smooth", block: "nearest"});
     if (ok) { const x = f.querySelector("[data-x]"); x.classList.add("primary"); x.textContent = "Fermer la fenêtre";
       const vb = document.createElement("button"); vb.type = "button"; vb.className = "btn sm"; vb.style.marginLeft = "10px"; vb.textContent = "Vignettes PDF";
-      vb.onclick = () => printVignettes(d.id); ban.appendChild(vb); }
+      vb.onclick = () => printVignettes(d.id, $("#tOrg").value || undefined); ban.appendChild(vb); }
     try {
       if (audio) (ok ? [[660, 0], [880, .18], [1175, .36]] : [[330, 0], [247, .25]]).forEach(([hz, t]) => {
         const o = audio.createOscillator(), g = audio.createGain(), t0 = audio.currentTime + t;
@@ -1475,7 +1485,7 @@ function openTrial(d) {
 }
 document.addEventListener("click", async ev => {
   const t = ev.target.closest?.("[data-sutrial]");
-  if (t) { ev.preventDefault(); const d = S.deals.get(t.dataset.sutrial); if (d) openTrial(d); return; }
+  if (t) { ev.preventDefault(); const d = S.deals.get(t.dataset.sutrial); if (d) openTrial(d, !!t.dataset.sunew); return; }
   const vg = ev.target.closest?.("[data-suvign]");
   if (vg) { ev.preventDefault(); printVignettes(vg.dataset.suvign); return; }
   const rp = ev.target.closest?.("[data-surp]");

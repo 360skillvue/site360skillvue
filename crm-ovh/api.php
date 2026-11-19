@@ -354,7 +354,7 @@ function route(string $r, string $method, array $b, array $me): void {
     case 'su_vignettes':
         // Vignettes des opérateurs du client test, à imprimer en PDF depuis la fiche affaire.
         require __DIR__ . '/lib/scanup.php';
-        try { json_out(scanup_vignettes((int)($_GET['id'] ?? 0))); }
+        try { json_out(scanup_vignettes((int)($_GET['id'] ?? 0), isset($_GET['org']) ? (string)$_GET['org'] : null)); }
         catch (RuntimeException $ex) { fail($ex->getMessage()); }
 
     case 'scanup_rp':

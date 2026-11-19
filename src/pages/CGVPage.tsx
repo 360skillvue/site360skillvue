@@ -44,7 +44,7 @@ const SECTIONS = [
     title: '5. Session de dépistage et facturation',
     paragraphs: [
       "Sauf mention contraire dans le devis, la prestation prend la forme d'une session d'un ou trois mois, ouverte au Client pour mener sa campagne de dépistage.",
-      "La facturation intervient à la fin de la session, sur la base du nombre de dépistages réellement réalisés et des livrables commandés, au tarif indiqué dans le devis. Il n'y a ni abonnement ni engagement de durée.",
+      "La facturation intervient à la fin de la session, sur la base du nombre de dépistages réellement réalisés et des livrables commandés, au tarif indiqué dans le devis, sous réserve des modalités prévues à l'article 6 pour les prestations comprenant un plan de prévention. Il n'y a ni abonnement ni engagement de durée.",
     ],
   },
   {

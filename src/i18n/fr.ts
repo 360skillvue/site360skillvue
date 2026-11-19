@@ -448,7 +448,7 @@ export const fr = {
     problemsCtaTitle: 'ScanUp les repère avant l\'arrêt.',
     problemsCtaBody: 'Un dépistage TMS et RPS à distance, ouvert à tous les salariés, avec des résultats exploitables en quelques jours.',
     problems: [
-      { n: '01', title: 'RPS invisibles en télétravail', body: 'Les signaux de burn-out se cachent. Les sondages annuels ne capturent plus la réalité des équipes dispersées.', stat: 'des signaux faibles que personne ne voit' },
+      { n: '01', title: 'RPS invisibles', body: 'Beaucoup de salariés n\'osent pas parler de leur mal-être, sur site comme en télétravail. Les signaux d\'épuisement restent cachés, et les sondages annuels ne les captent pas.', stat: 'des signaux faibles que personne ne voit' },
       { n: '02', title: 'Absentéisme mal compris', body: 'Les chiffres remontent trop tard et sans contexte, quand l\'arrêt est déjà posé.', stat: 'un absentéisme constaté, jamais anticipé' },
       { n: '03', title: 'Coût prohibitif de la prévention', body: 'Un diagnostic RPS en présentiel se chiffre en milliers d\'euros, et l\'inaction coûte davantage encore.', stat: 'dès 20 € avec ScanUp' },
       { n: '04', title: 'Quiet Quitting & désengagement', body: 'Une part importante des équipes se limite au strict nécessaire. Cause principale : aucune perspective visible de développement.', stat: 'un désengagement qui ne remonte nulle part' },

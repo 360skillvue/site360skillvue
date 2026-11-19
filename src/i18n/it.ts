@@ -442,7 +442,7 @@ export const it = {
     problemsCtaTitle: 'ScanUp li individua prima dell\'assenza.',
     problemsCtaBody: 'Uno screening a distanza di DMS e rischi psicosociali, aperto a tutti i dipendenti, con risultati utilizzabili in pochi giorni.',
     problems: [
-      { n: '01', title: 'RPS invisibili nel telelavoro', body: 'I segnali di burnout restano nascosti. I sondaggi annuali non colgono più la realtà dei team dispersi.', stat: 'segnali deboli che nessuno vede' },
+      { n: '01', title: 'RPS invisibili', body: 'Molti dipendenti non osano parlare del proprio malessere, in sede come in telelavoro. I segnali di esaurimento restano nascosti e i sondaggi annuali non li colgono.', stat: 'segnali deboli che nessuno vede' },
       { n: '02', title: 'Assenteismo incompreso', body: 'I dati arrivano troppo tardi e senza contesto, quando l\'assenza è già iniziata.', stat: 'un assenteismo constatato, mai anticipato' },
       { n: '03', title: 'Costo proibitivo della prevenzione', body: 'Un audit dei rischi psicosociali in presenza si conta in migliaia di euro, e l\'inazione costa ancora di più.', stat: 'da 20 € con ScanUp' },
       { n: '04', title: 'Quiet Quitting & disimpegno', body: 'Una parte importante dei team si limita allo stretto necessario. Causa principale: nessuna prospettiva visibile di sviluppo.', stat: 'un disimpegno che non risale a nessuno' },

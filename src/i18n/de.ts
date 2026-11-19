@@ -442,7 +442,7 @@ export const de = {
     problemsCtaTitle: 'ScanUp erkennt sie vor dem Ausfall.',
     problemsCtaBody: 'Ein Remote-Screening zu MSE und psychosozialen Risiken, offen für alle Mitarbeitenden, mit verwertbaren Ergebnissen in wenigen Tagen.',
     problems: [
-      { n: '01', title: 'Unsichtbare PSR im Homeoffice', body: 'Burnout-Signale bleiben verborgen. Jährliche Umfragen erfassen die Realität verteilter Teams nicht mehr.', stat: 'schwache Signale, die niemand sieht' },
+      { n: '01', title: 'Unsichtbare psychosoziale Risiken', body: 'Viele Mitarbeitende trauen sich nicht, über ihre Belastung zu sprechen, vor Ort wie im Homeoffice. Erschöpfungssignale bleiben verborgen, und jährliche Umfragen erfassen sie nicht.', stat: 'schwache Signale, die niemand sieht' },
       { n: '02', title: 'Missverstandener Absentismus', body: 'Zahlen kommen zu spät und ohne Kontext, wenn die Krankmeldung bereits vorliegt.', stat: 'Absenzen werden erfasst, nie vorweggenommen' },
       { n: '03', title: 'Unerschwingliche Präventionskosten', body: 'Ein Audit psychosozialer Risiken vor Ort geht in die Tausende, und Nichtstun kostet noch mehr.', stat: 'ab 20 € mit ScanUp' },
       { n: '04', title: 'Quiet Quitting & Desengagement', body: 'Ein erheblicher Teil der Belegschaft macht nur das Nötigste. Hauptursache: keine sichtbaren Entwicklungsperspektiven.', stat: 'Desengagement, das in keinem Dashboard auftaucht' },

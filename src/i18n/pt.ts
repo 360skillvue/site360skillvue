@@ -442,7 +442,7 @@ export const pt = {
     problemsCtaTitle: 'O ScanUp deteta-os antes da baixa.',
     problemsCtaBody: 'Um rastreio à distância de LMERT e riscos psicossociais, aberto a todos os colaboradores, com resultados úteis em poucos dias.',
     problems: [
-      { n: '01', title: 'RPS invisíveis em teletrabalho', body: 'Os sinais de esgotamento ficam escondidos. Os inquéritos anuais já não captam a realidade das equipas dispersas.', stat: 'sinais fracos que ninguém vê' },
+      { n: '01', title: 'RPS invisíveis', body: 'Muitos colaboradores não se atrevem a falar do seu mal-estar, no local de trabalho como em teletrabalho. Os sinais de esgotamento ficam escondidos e os inquéritos anuais não os captam.', stat: 'sinais fracos que ninguém vê' },
       { n: '02', title: 'Absentismo mal compreendido', body: 'Os números chegam demasiado tarde e sem contexto, quando a baixa já foi passada.', stat: 'um absentismo constatado, nunca antecipado' },
       { n: '03', title: 'Custo proibitivo da prevenção', body: 'Uma auditoria presencial de riscos psicossociais conta-se em milhares de euros, e a inação custa ainda mais.', stat: 'a partir de 20 € com o ScanUp' },
       { n: '04', title: 'Quiet Quitting & desinvestimento', body: 'Uma parte importante das equipas limita-se ao estritamente necessário. Causa principal: nenhuma perspetiva visível de desenvolvimento.', stat: 'um desinvestimento que não chega a nenhum painel' },

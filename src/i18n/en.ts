@@ -442,7 +442,7 @@ export const en = {
     problemsCtaTitle: 'ScanUp spots them before sick leave.',
     problemsCtaBody: 'Remote MSD and psychosocial risk screening, open to every employee, with actionable results within days.',
     problems: [
-      { n: '01', title: 'Invisible PSR in remote work', body: 'Burnout signals are hidden. Annual surveys no longer capture the reality of dispersed teams.', stat: 'weak signals nobody sees' },
+      { n: '01', title: 'Invisible psychosocial risks', body: 'Many employees don\'t dare talk about how they feel, on site as well as when working remotely. Burnout signals stay hidden, and annual surveys don\'t pick them up.', stat: 'weak signals nobody sees' },
       { n: '02', title: 'Misunderstood absenteeism', body: 'Numbers come in too late and without context, once the sick leave has already started.', stat: 'absenteeism recorded, never anticipated' },
       { n: '03', title: 'Prohibitive cost of prevention', body: 'An on-site psychosocial risk audit runs into thousands, and inaction costs even more.', stat: 'from €20 with ScanUp' },
       { n: '04', title: 'Quiet Quitting & disengagement', body: 'A significant share of teams do the bare minimum. Main cause: no visible development prospects.', stat: 'disengagement that reaches no dashboard' },

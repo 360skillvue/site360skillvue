@@ -442,7 +442,7 @@ export const es = {
     problemsCtaTitle: 'ScanUp los detecta antes de la baja.',
     problemsCtaBody: 'Un cribado a distancia de TME y riesgos psicosociales, abierto a todos los empleados, con resultados útiles en pocos días.',
     problems: [
-      { n: '01', title: 'Riesgos psicosociales invisibles en el teletrabajo', body: 'Las señales de burnout quedan ocultas. Las encuestas anuales ya no reflejan la realidad de los equipos dispersos.', stat: 'señales débiles que nadie ve' },
+      { n: '01', title: 'Riesgos psicosociales invisibles', body: 'Muchos empleados no se atreven a hablar de su malestar, ni en el centro de trabajo ni en teletrabajo. Las señales de agotamiento quedan ocultas y las encuestas anuales no las detectan.', stat: 'señales débiles que nadie ve' },
       { n: '02', title: 'Absentismo mal interpretado', body: 'Las cifras llegan demasiado tarde y sin contexto, cuando la baja ya se ha producido.', stat: 'un absentismo constatado, nunca anticipado' },
       { n: '03', title: 'Coste prohibitivo de la prevención', body: 'Una auditoría presencial de riesgos psicosociales se cuenta en miles de euros, y no hacer nada cuesta aún más.', stat: 'desde 20 € con ScanUp' },
       { n: '04', title: 'Renuncia silenciosa y desvinculación', body: 'Una parte importante de los equipos se limita a lo estrictamente necesario. Causa principal: la ausencia de perspectivas visibles de desarrollo.', stat: 'una desvinculación que no llega a ningún cuadro de mando' },

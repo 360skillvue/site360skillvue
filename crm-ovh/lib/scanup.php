@@ -194,7 +194,8 @@ function scanup_cabinet_modules(int $cab): array {
     // Appel léger dédié (modules publiés et non archivés de l'espace évaluateurs, dès qu'il est en production dans ScanUp),
     // sinon la liste complète des modules visibles par l'administrateur du cabinet.
     [$code, $j] = scanup_call($cab, '/api/modules/espace-evaluateurs', null, 'GET');
-    if ($code === 404) [$code, $j] = scanup_call($cab, '/api/modules?page=1&limit=100', null, 'GET');
+    // Tant qu'il n'est pas en production, ScanUp prend « espace-evaluateurs » pour un numéro de module et répond 400 (ou 404).
+    if ($code !== 200) [$code, $j] = scanup_call($cab, '/api/modules?page=1&limit=100', null, 'GET');
     if ($code !== 200) throw new RuntimeException(scanup_fail('Lecture des modules du cabinet', $code, $j));
     $list = $j['data']['modules'] ?? ($j['data'] ?? null);
     if (!is_array($list)) throw new RuntimeException('ScanUp a renvoyé une liste de modules illisible (trop longue ?) : indiquez les numéros des modules à la main.');

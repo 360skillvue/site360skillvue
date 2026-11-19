@@ -85,7 +85,12 @@ function scanup_trial_create(array $me, array $in): array {
     if ($cabinet < 1) throw new RuntimeException('Indiquez le numéro du cabinet.');
     if (!preg_match('/^[a-z][a-z0-9]{2,19}$/', $prefix)) throw new RuntimeException("L'identifiant des opérateurs doit faire 3 à 20 lettres ou chiffres, sans espace ni accent.");
     if ($n < 1 || $n > 20) throw new RuntimeException('Le nombre de testeurs doit être compris entre 1 et 20.');
-    if (!preg_match('/^(lauredellamonica|maximebailloud)\+[a-z0-9._-]{2,40}@gmail\.com$/', $rp)) throw new RuntimeException("Le responsable de projet doit être un alias Gmail de Laure ou de Maxime (par exemple lauredellamonica+client@gmail.com).");
+    // Cabinet 360skillvue (n° 10) : le responsable de projet est un alias Gmail de Laure ou de Maxime, jamais remis au client,
+    // qui sert au suivi automatique. Cabinet distributeur : c'est le distributeur qui suit ses clients, le responsable de projet
+    // peut donc être une vraie personne (son adresse), qui se connecte avec le mot de passe initial habituel.
+    $alias = (bool)preg_match('/^(lauredellamonica|maximebailloud)\+[a-z0-9._-]{2,40}@gmail\.com$/', $rp);
+    if ($cabinet === 10 && !$alias) throw new RuntimeException("Pour le cabinet 360skillvue (n° 10), le responsable de projet doit être un alias Gmail de Laure ou de Maxime (par exemple lauredellamonica+client@gmail.com).");
+    if (!filter_var($rp, FILTER_VALIDATE_EMAIL) || str_ends_with($rp, '@operator.local')) throw new RuntimeException("Adresse e-mail du responsable de projet invalide.");
     $conf = scanup_conf();
     if ($conf['op_password'] === '') throw new RuntimeException("Le mot de passe initial des opérateurs n'est pas réglé.");
 
@@ -99,9 +104,10 @@ function scanup_trial_create(array $me, array $in): array {
     $ids = [];
     try {
         [$code, $j] = scanup_call($cabinet, "/api/admin/organisations/$orgId/users",
-            ['firstName' => 'Responsable', 'lastName' => mb_substr(preg_replace('/\s*\(.*$/', '', $name), 0, 60), 'email' => $rp, 'password' => bin2hex(random_bytes(9)) . 'Aa1!', 'role' => 'hse']);
+            ['firstName' => 'Responsable', 'lastName' => mb_substr(preg_replace('/\s*\(.*$/', '', $name), 0, 60), 'email' => $rp, 'password' => $alias ? bin2hex(random_bytes(9)) . 'Aa1!' : $conf['op_password'], 'role' => 'hse']);
+        if ($code === 409) throw new RuntimeException("Le responsable de projet $rp a déjà un compte dans ScanUp : choisissez une autre adresse.");
         if ($code !== 201) throw new RuntimeException(scanup_fail('Création du responsable de projet', $code, $j));
-        $done[] = "Responsable de projet créé : $rp.";
+        $done[] = $alias ? "Responsable de projet créé : $rp." : "Responsable de projet créé : $rp, avec le mot de passe initial habituel des comptes (à changer à la première connexion sur scanup.360skillvue.com).";
         $short = mb_substr(preg_replace('/\s*\(.*$/', '', $name), 0, 60);
         for ($i = 1; $i <= $n; $i++) {
             [$code, $j] = scanup_call($cabinet, "/api/admin/organisations/$orgId/users",

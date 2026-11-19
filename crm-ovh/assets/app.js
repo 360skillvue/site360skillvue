@@ -1308,7 +1308,7 @@ function openTrial(d) {
       <div id="tNew" ${exists ? "hidden" : ""} class="grid2">
         <label class="f"><span>Nombre de testeurs</span><input type="number" id="tN" min="1" max="20" value="5"></label>
         <label class="f"><span>Identifiant des opérateurs (suivi de 1, 2, 3…)</span><input type="text" id="tPrefix" maxlength="20" value="${esc(slug)}"></label>
-        <label class="f" style="grid-column:1/-1"><span>Responsable de projet (alias Gmail)</span><input type="text" id="tRp" value="${esc(who + "+" + slug + "rp@gmail.com")}"></label>
+        <label class="f" style="grid-column:1/-1"><span>Responsable de projet (alias Gmail pour le cabinet 360skillvue n° 10 ; pour un cabinet distributeur, l'adresse réelle de la personne, qui recevra le mot de passe initial habituel)</span><input type="text" id="tRp" value="${esc(who + "+" + slug + "rp@gmail.com")}"></label>
       </div>
       <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tMods" ${final ? "checked" : ""}> Créer aussi les modules</label>
       <div id="tModsBox" class="stack" ${final ? "" : "hidden"}>

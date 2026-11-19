@@ -187,3 +187,20 @@ function scanup_vignettes(int $dealId): array {
     if ($pass === '') throw new RuntimeException("Le mot de passe initial des opérateurs n'est pas réglé (Réglages, liaison ScanUp).");
     return ['client' => preg_replace('/\s*\(test[^)]*\)\s*$/iu', '', (string)($deal['org_name'] ?: $deal['title'])), 'url' => 'https://scanup.360skillvue.com/', 'password' => $pass, 'ids' => $ids];
 }
+
+/* Modules publiés de l'espace évaluateurs d'un cabinet (pour les mettre à disposition d'un client test de distributeur). */
+function scanup_cabinet_modules(int $cab): array {
+    if ($cab < 1) throw new RuntimeException('Indiquez le numéro du cabinet.');
+    [$code, $j] = scanup_call($cab, '/api/modules?page=1&limit=100', null, 'GET');
+    if ($code !== 200) throw new RuntimeException(scanup_fail('Lecture des modules du cabinet', $code, $j));
+    $list = $j['data']['modules'] ?? ($j['data'] ?? null);
+    if (!is_array($list)) throw new RuntimeException('ScanUp a renvoyé une liste de modules illisible (trop longue ?) : indiquez les numéros des modules à la main.');
+    $out = [];
+    foreach ($list as $m) {
+        if (!is_array($m) || ($m['statut'] ?? '') !== 'publie' || !empty($m['archivedAt'])) continue;
+        $out[] = ['id' => (int)$m['id'], 'titre' => (string)($m['titre'] ?? ''), 'type' => (string)($m['typeModule'] ?? ''),
+                  'client' => !empty($m['organisationClienteId']) ? (int)$m['organisationClienteId'] : null];
+    }
+    usort($out, fn($a, $b) => [$a['client'] !== null, $a['type'], $a['titre']] <=> [$b['client'] !== null, $b['type'], $b['titre']]);
+    return $out;
+}

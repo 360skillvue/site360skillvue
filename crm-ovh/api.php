@@ -345,6 +345,12 @@ function route(string $r, string $method, array $b, array $me): void {
         if ($method === 'POST') { require_admin($me); try { scanup_save($b); } catch (RuntimeException $ex) { fail($ex->getMessage()); } }
         json_out(scanup_public());
 
+    case 'su_cab_modules':
+        // Lot 20 : modules publiés de l'espace évaluateurs d'un cabinet distributeur, à cocher pour un client test.
+        require __DIR__ . '/lib/scanup.php';
+        try { json_out(scanup_cabinet_modules((int)($_GET['cab'] ?? 0))); }
+        catch (RuntimeException $ex) { fail($ex->getMessage()); }
+
     case 'su_vignettes':
         // Vignettes des opérateurs du client test, à imprimer en PDF depuis la fiche affaire.
         require __DIR__ . '/lib/scanup.php';

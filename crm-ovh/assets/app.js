@@ -1310,7 +1310,13 @@ function openTrial(d) {
         <label class="f"><span>Identifiant des opérateurs (suivi de 1, 2, 3…)</span><input type="text" id="tPrefix" maxlength="20" value="${esc(slug)}"></label>
         <label class="f" style="grid-column:1/-1"><span>Responsable de projet (alias Gmail pour le cabinet 360skillvue n° 10 ; pour un cabinet distributeur, l'adresse réelle de la personne, qui recevra le mot de passe initial habituel)</span><input type="text" id="tRp" value="${esc(who + "+" + slug + "rp@gmail.com")}"></label>
       </div>
-      <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tMods" ${final ? "checked" : ""}> Créer aussi les modules</label>
+      <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tMods" ${final ? "checked" : ""}> <span id="tModsLbl">Créer aussi les modules</span></label>
+      <div id="tExBox" class="stack" hidden>
+        <p class="note" style="margin:0">Cabinet distributeur : cochez les modules de son espace évaluateurs à mettre à disposition du client test. Pour chacun, le CRM crée une session, attribue les crédits (un par opérateur) et inscrit les opérateurs. Les modules ne sont pas modifiés.</p>
+        <div><button type="button" class="btn sm" id="tExLoad">Afficher les modules du cabinet</button></div>
+        <div id="tExList" class="stack" style="gap:6px"></div>
+        <label class="f"><span>Fin de la session</span><input type="date" id="tExEnd" value="${end}"></label>
+      </div>
       <div id="tModsBox" class="stack" ${final ? "" : "hidden"}>
         <div class="f"><span>Questionnaire</span>${radios("types", [["TMS", "TMS"], ["RPS", "RPS"], ["both", "Les deux"]], "both")}</div>
         <div class="grid2">
@@ -1327,7 +1333,7 @@ function openTrial(d) {
         <label class="f"><span>Fin de la session</span><input type="date" id="tEnd" value="${end}"></label>
         <p class="note" style="margin:0">Pas de retour : à la demande du prospect, « résultats visibles par les opérateurs » est décoché et Laura fait uniquement la qualification (niveau 0). Accompagnement : coaching vidéo pour les TMS, téléconsultation d'orientation pour les RPS, en cas de dépistage positif. Comparer : la moitié des opérateurs voit son résultat avec la conduite à tenir, l'autre moitié l'accompagnement. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
       </div>
-      ${final ? "" : `<p class="note" style="margin:0">Distributeur : le cabinet test doit déjà exister dans ScanUp et figurer dans la table Make des cabinets en essai, avec son compte administrateur. Les modules automatiques ne concernent que le cabinet 360skillvue (n° 10).</p>`}
+      ${final ? "" : `<p class="note" style="margin:0">Distributeur : le cabinet test doit déjà exister dans ScanUp et figurer dans la table Make des cabinets en essai, avec son compte administrateur. La création de modules adaptés ne concerne que le cabinet 360skillvue (n° 10) ; pour un autre cabinet, on met à disposition ses modules existants.</p>`}
       <p class="note" style="margin:0">Comptez 5 à 10 minutes avec les modules : ScanUp limite les connexions à 10 par minute, le CRM espace donc ses demandes. Laissez cette fenêtre ouverte.</p>
       <div class="progress" id="tProg" hidden><i style="width:0%"></i></div>
       <div id="tOut" class="note" style="margin:0;white-space:pre-line"></div>
@@ -1365,7 +1371,26 @@ function openTrial(d) {
   f.querySelectorAll('[data-radio="types"], [data-radio="retour"]').forEach(g => g.addEventListener("click", () => setTimeout(showLiv, 0)));
   $("#tNom").onchange = showLiv;
   showLiv();
-  $("#tMods").onchange = e => { $("#tModsBox").hidden = !e.target.checked; };
+  // Cabinet 10 : modules adaptés à partir de nos modèles ; autre cabinet : modules existants de son espace évaluateurs (lot 20).
+  const syncMods = () => {
+    const cab = Number($("#tCab").value), on = $("#tMods").checked, ex = !!cab && cab !== 10;
+    $("#tModsLbl").textContent = ex ? "Mettre à disposition des modules existants du cabinet" : "Créer aussi les modules";
+    $("#tModsBox").hidden = !on || ex; $("#tExBox").hidden = !on || !ex;
+  };
+  $("#tMods").onchange = syncMods; $("#tCab").oninput = () => { $("#tExList").innerHTML = ""; syncMods(); };
+  syncMods();
+  $("#tExLoad").onclick = async () => {
+    const cab = Number($("#tCab").value), box = $("#tExList"), b = $("#tExLoad");
+    if (!cab) return toast("Indiquez le numéro du cabinet.", true);
+    b.disabled = true; b.textContent = "Lecture des modules dans ScanUp…";
+    try {
+      const list = await api("su_cab_modules", {params: {cab}});
+      box.innerHTML = list.length ? list.map(m => `<label style="display:flex;gap:8px;align-items:flex-start;font-size:14px"><input type="checkbox" data-exmod="${esc(m.id)}" style="margin-top:3px">
+          <span><b>n° ${esc(m.id)}</b> · ${esc(m.titre || "Sans titre")} <span class="chip">${esc(m.type || "")}</span>${m.client ? ` <small class="muted">module d'un client (organisation n° ${esc(m.client)})</small>` : ""}</span></label>`).join("")
+        : `<p class="note" style="margin:0">Aucun module publié dans ce cabinet.</p>`;
+    } catch (err) { box.innerHTML = `<p class="note" style="margin:0;color:var(--bad)">${esc(err.message)}</p>`; }
+    b.disabled = false; b.textContent = "Actualiser la liste";
+  };
   $("#tOrg").oninput = e => { $("#tNew").hidden = !!e.target.value; };
   const out = $("#tOut"), prog = $("#tProg");
   const show = (lines, err) => { out.innerHTML = lines.map(x => "✓ " + esc(x)).join("<br>") + (err ? `<br><b style="color:var(--bad)">${esc(err)}</b>` : ""); };
@@ -1405,8 +1430,9 @@ function openTrial(d) {
         prog.firstElementChild.style.width = (state.pct || 0) + "%";
         show([...doneLines, ...(state.log || [])]);
       } while (state.step !== "done");
-      btn.textContent = "Terminé"; toast("Modules créés et opérateurs inscrits");
-      signal(true, "C'est terminé : modules créés et opérateurs inscrits. Vous pouvez fermer la fenêtre.");
+      const w = state.existing ? "modules mis à disposition" : "modules créés";
+      btn.textContent = "Terminé"; toast(w[0].toUpperCase() + w.slice(1) + " et opérateurs inscrits");
+      signal(true, `C'est terminé : ${w} et opérateurs inscrits. Vous pouvez fermer la fenêtre.`);
     } catch (err) {
       show([...doneLines, ...((state && state.log) || [])], err.message);
       btn.disabled = false; btn.textContent = "Reprendre là où ça s'est arrêté"; btn.dataset.resume = "1";
@@ -1428,8 +1454,9 @@ function openTrial(d) {
     const t = radio("types");
     const modIn = {deal_id: d.id, cabinet, client: name, types: t === "both" ? ["TMS", "RPS"] : [t], country: radio("country"), length: radio("length"),
       retour: radio("retour"), jobs: $("#tJobs").value.trim(), end_date: $("#tEnd").value, nominatif: $("#tNom").checked};
-    if (wantMods && !modIn.jobs) return toast("Indiquez les métiers ou postes concernés : ils servent à adapter les modules.", true);
-    if (wantMods && cabinet !== 10) return toast("Les modules automatiques ne concernent que le cabinet 360skillvue (n° 10).", true);
+    const exIds = [...f.querySelectorAll("[data-exmod]:checked")].map(x => Number(x.dataset.exmod));
+    if (wantMods && cabinet === 10 && !modIn.jobs) return toast("Indiquez les métiers ou postes concernés : ils servent à adapter les modules.", true);
+    if (wantMods && cabinet !== 10 && !exIds.length) return toast("Cochez au moins un module du cabinet (bouton « Afficher les modules du cabinet »).", true);
     btn.disabled = true; btn.textContent = "Création en cours…";
     doneLines = [];
     if (!org) {
@@ -1442,7 +1469,7 @@ function openTrial(d) {
       } catch (err) { btn.disabled = false; btn.textContent = "Créer dans ScanUp"; out.textContent = ""; return failToast(err); }
     }
     if (!wantMods) { show(doneLines); btn.textContent = "Créé"; toast("Client test créé dans ScanUp"); signal(true, "C'est terminé : client test créé. Vous pouvez fermer la fenêtre."); try { await loadData(); } catch {} return; }
-    state = {...modIn, org_id: org};
+    state = cabinet === 10 ? {...modIn, org_id: org} : {deal_id: d.id, cabinet, client: name, org_id: org, existing: exIds, end_date: $("#tExEnd").value};
     return runModules(btn);
   };
 }

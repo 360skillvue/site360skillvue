@@ -90,6 +90,8 @@ function su_modules_init(array $me, array $in): array {
     $deal = q('SELECT id, title, extra FROM deals WHERE id = ?', [(int)($in['deal_id'] ?? 0)])->fetch();
     if (!$deal) throw new RuntimeException('Affaire introuvable.');
     $cab = (int)($in['cabinet'] ?? 0); $org = (int)($in['org_id'] ?? 0);
+    $existing = array_values(array_unique(array_filter(array_map('intval', (array)($in['existing'] ?? [])))));
+    if ($existing) return su_existing_init($deal, $cab, $org, $existing, $in);
     if ($cab !== SU_CABINET_MODELES) throw new RuntimeException("Les modules modèles sont dans le cabinet 360skillvue (n° 10) : pour le cabinet d'un distributeur, les modules restent à préparer à la main.");
     if ($org < 1) throw new RuntimeException("Indiquez le numéro de l'organisation cliente dans ScanUp.");
     $types = array_values(array_intersect(['TMS', 'RPS'], (array)($in['types'] ?? [])));
@@ -113,11 +115,25 @@ function su_modules_init(array $me, array $in): array {
         'mods' => $mods, 'i' => 0, 'step' => 'dup', 'queue' => [], 'assigned' => [], 'log' => $log, 'pct' => 0, 'nominatif' => !empty($in['nominatif'])];
 }
 
+/* Lot 20 : modules déjà existants dans l'espace évaluateurs du cabinet (distributeur). Rien n'est copié ni modifié :
+   mise à disposition du client, session, crédits et inscriptions seulement. */
+function su_existing_init(array $deal, int $cab, int $org, array $ids, array $in): array {
+    if ($org < 1) throw new RuntimeException("Indiquez le numéro de l'organisation cliente dans ScanUp.");
+    if (count($ids) > 10) throw new RuntimeException('Dix modules au plus à la fois.');
+    $end = (string)($in['end_date'] ?? '');
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $end) || $end <= gmdate('Y-m-d')) throw new RuntimeException('Choisissez une date de fin de session à venir.');
+    $mods = array_map(fn($id) => ['type' => '', 'retour' => 'rcat', 'model' => null, 'id' => $id, 'session' => null, 'evaluator' => null, 'existing' => true, 'titre' => ''], $ids);
+    return ['deal_id' => (int)$deal['id'], 'cabinet' => $cab, 'org_id' => $org, 'client' => mb_substr(trim((string)($in['client'] ?? '')), 0, 120) ?: $deal['title'],
+        'jobs' => '', 'country' => 'FR', 'length' => 'standard', 'retour' => 'rcat', 'end_date' => $end, 'existing' => true,
+        'mods' => $mods, 'i' => 0, 'step' => 'client', 'queue' => [], 'assigned' => [], 'log' => [], 'pct' => 0, 'nominatif' => false];
+}
+
 /* Une étape. Renvoie l'état mis à jour ; terminé quand step = done. */
 function su_modules_step(array $me, array $s): array {
     if (empty($s['step'])) return su_modules_init($me, $s);
     $cab = (int)$s['cabinet']; $org = (int)$s['org_id'];
-    if ($cab !== SU_CABINET_MODELES || $org < 1 || empty($s['mods'])) throw new RuntimeException('Demande incomplète : relancez la création des modules.');
+    $ex = !empty($s['existing']);
+    if ((!$ex && $cab !== SU_CABINET_MODELES) || $org < 1 || empty($s['mods'])) throw new RuntimeException('Demande incomplète : relancez la création des modules.');
     $nMods = count($s['mods']);
     $i = (int)$s['i']; $mod = &$s['mods'][$i];
     $lab = fn($m) => $m['type'] . ' (' . su_retour_label($m['type'], $m['retour']) . ')';
@@ -178,9 +194,16 @@ function su_modules_step(array $me, array $s): array {
         su_ok($c, $j, 'Publication du module');
         $s['step'] = 'client'; break;
     case 'client':
+        if ($ex && $mod['titre'] === '') {
+            [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'], null, 'GET');
+            $info = su_ok($c, $j, 'Lecture du module n° ' . $mod['id'])['data']['module'] ?? [];
+            if (!$info) throw new RuntimeException('Module n° ' . $mod['id'] . ' introuvable dans ce cabinet.');
+            $mod['titre'] = (string)($info['titre'] ?? ''); $mod['type'] = (string)($info['typeModule'] ?? '');
+            if (($info['statut'] ?? '') !== 'publie') throw new RuntimeException('Le module n° ' . $mod['id'] . " n'est pas publié : publiez-le dans ScanUp puis reprenez.");
+        }
         [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/clients', ['clientOrgId' => $org]);
-        su_ok($c, $j, 'Mise à disposition du client');
-        if (($cond = su_conduite($mod['type'], $mod['retour'])) !== null) {
+        if (!($ex && $c === 409)) su_ok($c, $j, 'Mise à disposition du client');
+        if (!$ex && ($cond = su_conduite($mod['type'], $mod['retour'])) !== null) {
             [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . "/clients/$org/conduite-positive", ['conduitePositive' => $cond], 'PUT');
             su_ok($c, $j, 'Réglage de la conduite à tenir');
             $s['log'][] = 'Conduite à tenir réglée (texte de départ, personnalisable dans ScanUp).';
@@ -190,8 +213,9 @@ function su_modules_step(array $me, array $s): array {
         if (!$sid) throw new RuntimeException("ScanUp n'a pas renvoyé le numéro de la session.");
         $mod['session'] = $sid;
         scanup_call($cab, '/api/modules/' . $mod['id'] . "/sessions/$sid/clients", ['clientOrgId' => $org]); // facultatif : oriente le choix de session
-        $s['log'][] = "Module n° {$mod['id']} publié, mis à disposition du client, session n° $sid jusqu'au " . date('d/m/Y', strtotime($s['end_date'])) . '.';
-        if ($i + 1 < $nMods) { $s['i'] = $i + 1; $s['step'] = 'dup'; } else $s['step'] = 'credits';
+        $s['log'][] = $ex ? "Module existant n° {$mod['id']} « {$mod['titre']} » mis à disposition du client, session n° $sid jusqu'au " . date('d/m/Y', strtotime($s['end_date'])) . '.'
+                          : "Module n° {$mod['id']} publié, mis à disposition du client, session n° $sid jusqu'au " . date('d/m/Y', strtotime($s['end_date'])) . '.';
+        if ($i + 1 < $nMods) { $s['i'] = $i + 1; $s['step'] = $ex ? 'client' : 'dup'; } else $s['step'] = 'credits';
         break;
     case 'credits':
         [$c, $j] = scanup_call($cab, "/api/organisations/$org/members?page=1&limit=100", null, 'GET');
@@ -217,7 +241,7 @@ function su_modules_step(array $me, array $s): array {
             $s['assigned'][] = ($a['login'] ?: $a['op']) . ' → n° ' . $m['id'];
             array_shift($s['queue']);
         }
-        if (!$s['queue']) { $s['log'][] = count($s['assigned']) . ' inscriptions faites.'; $s['step'] = 'check'; $s['ci'] = 0; $s['ecarts'] = []; }
+        if (!$s['queue']) { $s['log'][] = count($s['assigned']) . ' inscriptions faites.'; $s['step'] = $ex ? 'finish' : 'check'; $s['ci'] = 0; $s['ecarts'] = []; }
         break;
     case 'check':
         // Contrôle final, un module par étape : niveau dans le titre, Laura seule correctrice, résultats visibles.
@@ -240,6 +264,7 @@ function su_modules_step(array $me, array $s): array {
         if ($s['ci'] >= $nMods) $s['step'] = 'finish';
         break;
     case 'finish':
+        if ($ex) { su_existing_trace($me, $s); $s['log'][] = 'Terminé. Restent à envoyer : les vignettes des opérateurs au contact du client.'; $s['step'] = 'done'; break; }
         su_modules_trace($me, $s);
         $s['log'][] = (!empty($s['ecarts']) ? 'Terminé avec ' . count($s['ecarts']) . ' écart(s) à signaler à Laure (tâche créée dans le CRM). ' : 'Terminé. ')
             . 'Restent à envoyer : les vignettes des opérateurs au contact du client.';
@@ -250,7 +275,7 @@ function su_modules_step(array $me, array $s): array {
         throw new RuntimeException('Étape inconnue.');
     }
     unset($mod);
-    $order = ['dup' => 0, 'texts' => 1, 'image' => 2, 'eval' => 3, 'publish' => 4, 'client' => 5];
+    $order = $ex ? ['client' => 5] : ['dup' => 0, 'texts' => 1, 'image' => 2, 'eval' => 3, 'publish' => 4, 'client' => 5];
     $done = $s['step'] === 'done' ? 100 : (isset($order[$s['step']]) ? (int)(($s['i'] * 6 + $order[$s['step']]) / max(1, $nMods * 6) * 80) : ($s['step'] === 'credits' ? 82 : ($s['step'] === 'assign' ? 85 + (int)(10 * count($s['assigned']) / max(1, count($s['assigned']) + count($s['queue']))) : ($s['step'] === 'check' ? 95 + (int)(4 * (int)($s['ci'] ?? 0) / max(1, $nMods)) : 99))));
     $s['pct'] = $done;
     $s['log'] = array_slice($s['log'], -40);
@@ -295,6 +320,23 @@ function su_modules_trace(array $me, array $s): void {
            $deal['id'], $deal['person_id'], $deal['org_id'], "À corriger dans ScanUp :\n- " . implode("\n- ", $s['ecarts']), $now, $now]);
     }
     // La tâche « préparer les modules et envoyer les vignettes » devient « envoyer les vignettes ».
+    q("UPDATE activities SET subject = REPLACE(subject, 'préparer les modules et envoyer les vignettes', 'envoyer les vignettes'),
+       note = REPLACE(note, 'Mettre les modules à disposition avec une session et des crédits, inscrire les opérateurs, puis envoyer', 'Modules prêts et opérateurs inscrits : envoyer'), update_time = ? WHERE deal_id = ? AND done = 0 AND subject LIKE 'ScanUp : préparer les modules%'", [$now, $deal['id']]);
+}
+
+/* Trace sur l'affaire pour des modules existants mis à disposition (lot 20). */
+function su_existing_trace(array $me, array $s): void {
+    $deal = q('SELECT id, person_id, org_id, extra FROM deals WHERE id = ?', [$s['deal_id']])->fetch();
+    if (!$deal) return;
+    $now = now_utc();
+    $lines = array_map(fn($m) => "Module n° {$m['id']} ({$m['type']}) : {$m['titre']}, session n° {$m['session']}", $s['mods']);
+    $note = "Modules existants du cabinet n° {$s['cabinet']} mis à disposition de l'organisation n° {$s['org_id']} :\n- " . implode("\n- ", $lines)
+          . "\nInscriptions : " . implode(', ', $s['assigned']) . "\nFin de session : " . date('d/m/Y', strtotime($s['end_date']));
+    q('INSERT INTO activities (type, subject, due_date, done, done_time, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?)',
+      ['note', mb_substr('ScanUp cabinet : modules du client test mis à disposition (' . count($s['mods']) . ')', 0, 500), substr($now, 0, 10), $now, (int)$me['id'], $deal['id'], $deal['person_id'], $deal['org_id'], $note, $now, $now]);
+    $extra = $deal['extra'] ? (json_decode((string)$deal['extra'], true) ?: []) : [];
+    $extra['su_modules'] = substr($now, 0, 10);
+    q('UPDATE deals SET extra = ?, update_time = ? WHERE id = ?', [json_encode($extra, JSON_UNESCAPED_UNICODE), $now, $deal['id']]);
     q("UPDATE activities SET subject = REPLACE(subject, 'préparer les modules et envoyer les vignettes', 'envoyer les vignettes'),
        note = REPLACE(note, 'Mettre les modules à disposition avec une session et des crédits, inscrire les opérateurs, puis envoyer', 'Modules prêts et opérateurs inscrits : envoyer'), update_time = ? WHERE deal_id = ? AND done = 0 AND subject LIKE 'ScanUp : préparer les modules%'", [$now, $deal['id']]);
 }

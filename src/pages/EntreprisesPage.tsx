@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, ChevronDown, Mail, Check, EyeOff, CalendarX2, Wallet, BatteryLow, ClipboardCheck, ScanSearch, Video, Brain, PersonStanding } from 'lucide-react';
+import { ArrowRight, ChevronDown, Mail, Check, EyeOff, CalendarX2, Wallet, BatteryLow, ClipboardCheck, ScanSearch, Video, Brain, PersonStanding, Radar, Users, ShieldCheck, ChartColumn, Accessibility } from 'lucide-react';
+
+// Icônes des cinq leviers du bloc « La solution », dans l'ordre des textes.
+const FEATURE_ICONS = [Radar, Users, ShieldCheck, ChartColumn, Accessibility];
 
 // Icônes des cinq constats du bloc « La réalité terrain », dans l'ordre des textes.
 const PROBLEM_ICONS = [EyeOff, CalendarX2, Wallet, BatteryLow, ClipboardCheck];
@@ -255,39 +258,55 @@ export default function EntreprisesPage() {
 
       {/* ── Features ─────────────────────────────────────────── */}
       <section className="py-28 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-[1fr_1.4fr] gap-20 items-start">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-[1fr_1.35fr] gap-14 md:gap-20 items-start">
             <Reveal className="md:sticky md:top-28">
-              <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-4">{t.entreprises.featuresLabel}</p>
-              <h2 className="text-[32px] md:text-[40px] font-bold tracking-[-0.02em] leading-[1.15] mb-5">
-                {t.entreprises.featuresTitle}<br />{t.entreprises.featuresTitleEnd}
-              </h2>
-              <p className="text-[15px] text-scanup-graytext leading-relaxed mb-8">
-                {t.entreprises.featuresSubtitle}
-              </p>
-              <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                onClick={() => { window.location.href = '/simulateur-cout-tms-rps'; }}
-                className="bg-scanup-blue text-white px-6 py-3 rounded-full font-semibold text-[14px] hover:bg-blue-700 transition-colors"
-              >
-                {t.entreprises.featuresCtaButton}
-              </motion.button>
+              <div className="relative rounded-3xl bg-scanup-navy text-white p-9 md:p-10 overflow-hidden">
+                <div aria-hidden="true" className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-scanup-blue/50 blur-3xl" />
+                <div aria-hidden="true" className="absolute -left-16 -bottom-24 w-56 h-56 rounded-full bg-scanup-turquoise/20 blur-3xl" />
+                <div className="relative">
+                  <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-turquoise mb-4">{t.entreprises.featuresLabel}</p>
+                  <h2 className="text-[32px] md:text-[40px] font-bold tracking-[-0.02em] leading-[1.15] mb-5 text-white">
+                    {t.entreprises.featuresTitle}<br /><span className="text-scanup-turquoise">{t.entreprises.featuresTitleEnd}</span>
+                  </h2>
+                  <p className="text-[15px] text-white/70 leading-relaxed mb-8">
+                    {t.entreprises.featuresSubtitle}
+                  </p>
+                  <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    onClick={() => { window.location.href = '/simulateur-cout-tms-rps'; }}
+                    className="inline-flex items-center gap-2 bg-white text-scanup-navy px-6 py-3 rounded-full font-semibold text-[14px] hover:bg-scanup-turquoise transition-colors"
+                  >
+                    {t.entreprises.featuresCtaButton}
+                    <ArrowRight className="w-4 h-4" />
+                  </motion.button>
+                </div>
+              </div>
             </Reveal>
 
-            <div>
-              {features.map((f, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-30px' }}
-                  transition={{ delay: i * 0.07, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                  className="py-7 border-b border-black/[0.06] last:border-0 group"
-                >
-                  <div className="text-[11px] text-scanup-blue font-semibold uppercase tracking-widest mb-2">{f.label}</div>
-                  <h3 className="text-[18px] font-semibold mb-2 group-hover:text-scanup-blue transition-colors">{f.title}</h3>
-                  <p className="text-[14px] text-scanup-graytext leading-relaxed">{f.body}</p>
-                </motion.div>
-              ))}
+            <div className="relative">
+              <div aria-hidden="true" className="absolute left-[23px] top-6 bottom-6 w-px bg-gradient-to-b from-scanup-blue/40 via-scanup-blue/15 to-transparent" />
+              {features.map((f, i) => {
+                const Icon = FEATURE_ICONS[i % FEATURE_ICONS.length];
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-30px' }}
+                    transition={{ delay: i * 0.07, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative grid grid-cols-[48px_1fr] gap-5 pb-5 last:pb-0 group"
+                  >
+                    <span className="relative z-[1] w-12 h-12 rounded-2xl bg-white border border-scanup-blue/15 text-scanup-blue flex items-center justify-center shadow-[0_4px_12px_-4px_rgba(0,104,255,0.25)] group-hover:bg-scanup-blue group-hover:text-white transition-colors">
+                      <Icon className="w-5 h-5" strokeWidth={1.8} />
+                    </span>
+                    <div className="rounded-2xl border border-black/[0.06] bg-white p-6 shadow-[0_1px_2px_rgba(28,36,75,0.04)] group-hover:shadow-[0_14px_34px_-16px_rgba(28,36,75,0.22)] group-hover:-translate-y-0.5 transition-all duration-300">
+                      <span className="inline-block text-[11px] font-semibold uppercase tracking-widest text-scanup-blue bg-scanup-blue/[0.08] px-2.5 py-1 rounded-full mb-3">{f.label}</span>
+                      <h3 className="text-[18px] font-semibold mb-2 leading-snug">{f.title}</h3>
+                      <p className="text-[14px] text-scanup-graytext leading-relaxed">{f.body}</p>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>

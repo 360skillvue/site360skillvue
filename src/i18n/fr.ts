@@ -445,6 +445,8 @@ export const fr = {
     problemsLabel: 'La réalité terrain',
     problemsTitle: 'Vous le voyez',
     problemsTitleEnd: 'trop tard.',
+    problemsCtaTitle: 'ScanUp les repère avant l\'arrêt.',
+    problemsCtaBody: 'Un dépistage TMS et RPS à distance, ouvert à tous les salariés, avec des résultats exploitables en quelques jours.',
     problems: [
       { n: '01', title: 'RPS invisibles en télétravail', body: 'Les signaux de burn-out se cachent. Les sondages annuels ne capturent plus la réalité des équipes dispersées.', stat: 'des signaux faibles que personne ne voit' },
       { n: '02', title: 'Absentéisme mal compris', body: 'Les chiffres remontent trop tard et sans contexte, quand l\'arrêt est déjà posé.', stat: 'un absentéisme constaté, jamais anticipé' },

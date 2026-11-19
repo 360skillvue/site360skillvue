@@ -439,6 +439,8 @@ export const de = {
     problemsLabel: 'Die Realität vor Ort',
     problemsTitle: 'Sie sehen es',
     problemsTitleEnd: 'zu spät.',
+    problemsCtaTitle: 'ScanUp erkennt sie vor dem Ausfall.',
+    problemsCtaBody: 'Ein Remote-Screening zu MSE und psychosozialen Risiken, offen für alle Mitarbeitenden, mit verwertbaren Ergebnissen in wenigen Tagen.',
     problems: [
       { n: '01', title: 'Unsichtbare PSR im Homeoffice', body: 'Burnout-Signale bleiben verborgen. Jährliche Umfragen erfassen die Realität verteilter Teams nicht mehr.', stat: 'schwache Signale, die niemand sieht' },
       { n: '02', title: 'Missverstandener Absentismus', body: 'Zahlen kommen zu spät und ohne Kontext, wenn die Krankmeldung bereits vorliegt.', stat: 'Absenzen werden erfasst, nie vorweggenommen' },

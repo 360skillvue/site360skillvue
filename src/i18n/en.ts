@@ -439,6 +439,8 @@ export const en = {
     problemsLabel: 'The field reality',
     problemsTitle: 'You see it',
     problemsTitleEnd: 'too late.',
+    problemsCtaTitle: 'ScanUp spots them before sick leave.',
+    problemsCtaBody: 'Remote MSD and psychosocial risk screening, open to every employee, with actionable results within days.',
     problems: [
       { n: '01', title: 'Invisible PSR in remote work', body: 'Burnout signals are hidden. Annual surveys no longer capture the reality of dispersed teams.', stat: 'weak signals nobody sees' },
       { n: '02', title: 'Misunderstood absenteeism', body: 'Numbers come in too late and without context, once the sick leave has already started.', stat: 'absenteeism recorded, never anticipated' },

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, ChevronDown, Mail, Check } from 'lucide-react';
+import { ArrowRight, ChevronDown, Mail, Check, EyeOff, CalendarX2, Wallet, BatteryLow, ClipboardCheck } from 'lucide-react';
+
+// Icônes des cinq constats du bloc « La réalité terrain », dans l'ordre des textes.
+const PROBLEM_ICONS = [EyeOff, CalendarX2, Wallet, BatteryLow, ClipboardCheck];
 import { useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -176,34 +179,61 @@ export default function EntreprisesPage() {
 
       {/* ── Problems ─────────────────────────────────────────── */}
       <section className="py-28 px-6 bg-[#F8F9FC]">
-        <div className="max-w-5xl mx-auto">
-          <Reveal className="mb-16">
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="mb-14 max-w-2xl">
             <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.entreprises.problemsLabel}</p>
             <h2 className="text-[36px] md:text-[48px] font-bold tracking-[-0.02em] leading-[1.1]">
-              {t.entreprises.problemsTitle}<br />{t.entreprises.problemsTitleEnd}
+              {t.entreprises.problemsTitle} <span className="text-scanup-blue">{t.entreprises.problemsTitleEnd}</span>
             </h2>
           </Reveal>
 
-          <div>
-            {problems.map((p, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ delay: i * 0.06, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="grid grid-cols-[40px_1fr_auto] md:grid-cols-[56px_1fr_160px] gap-6 md:gap-10 py-7 border-b border-black/[0.06] group"
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {problems.map((p, i) => {
+              const Icon = PROBLEM_ICONS[i % PROBLEM_ICONS.length];
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ delay: i * 0.06, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  className="group relative flex flex-col bg-white rounded-2xl border border-black/[0.06] p-7 shadow-[0_1px_2px_rgba(28,36,75,0.04)] hover:shadow-[0_12px_32px_-12px_rgba(28,36,75,0.18)] hover:-translate-y-0.5 transition-all duration-300"
+                >
+                  <div className="flex items-start justify-between mb-5">
+                    <span className="w-11 h-11 rounded-xl bg-scanup-blue/[0.08] text-scanup-blue flex items-center justify-center group-hover:bg-scanup-blue group-hover:text-white transition-colors">
+                      <Icon className="w-5 h-5" strokeWidth={1.8} />
+                    </span>
+                    <span className="text-[12px] font-mono text-black/20">{p.n}</span>
+                  </div>
+                  <h3 className="text-[17px] font-semibold mb-2 leading-snug">{p.title}</h3>
+                  <p className="text-[14px] text-scanup-graytext leading-relaxed mb-6">{p.body}</p>
+                  <p className="mt-auto pt-4 border-t border-black/[0.06] text-[13px] font-semibold text-scanup-navy flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-scanup-warning shrink-0" aria-hidden="true" />
+                    {p.stat}
+                  </p>
+                </motion.div>
+              );
+            })}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ delay: problems.length * 0.06, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className="relative flex flex-col justify-between rounded-2xl p-7 bg-scanup-navy text-white overflow-hidden"
+            >
+              <div aria-hidden="true" className="absolute -right-16 -top-16 w-48 h-48 rounded-full bg-scanup-blue/40 blur-3xl" />
+              <div className="relative">
+                <h3 className="text-[22px] font-bold leading-tight mb-3 text-white">{t.entreprises.problemsCtaTitle}</h3>
+                <p className="text-[14px] text-white/70 leading-relaxed">{t.entreprises.problemsCtaBody}</p>
+              </div>
+              <button
+                onClick={() => { window.location.href = '/simulateur-cout-tms-rps'; }}
+                className="relative mt-6 self-start inline-flex items-center gap-2 bg-white text-scanup-navy text-[14px] font-semibold px-5 py-3 rounded-full hover:bg-scanup-turquoise transition-colors"
               >
-                <div className="text-[13px] font-mono text-black/20 pt-0.5 group-hover:text-scanup-blue transition-colors">{p.n}</div>
-                <div>
-                  <h3 className="text-[17px] font-semibold mb-1.5 group-hover:text-scanup-blue transition-colors">{p.title}</h3>
-                  <p className="text-[14px] text-scanup-graytext leading-relaxed">{p.body}</p>
-                </div>
-                <div className="hidden md:block text-right pt-0.5">
-                  <span className="text-[12px] font-semibold text-scanup-blue bg-scanup-blue/8 px-3 py-1.5 rounded-full whitespace-nowrap">{p.stat}</span>
-                </div>
-              </motion.div>
-            ))}
+                {t.entreprises.heroCtaPrimary}
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </motion.div>
           </div>
         </div>
       </section>

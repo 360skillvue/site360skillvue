@@ -439,6 +439,8 @@ export const pt = {
     problemsLabel: 'A realidade no terreno',
     problemsTitle: 'Só se apercebe',
     problemsTitleEnd: 'demasiado tarde.',
+    problemsCtaTitle: 'O ScanUp deteta-os antes da baixa.',
+    problemsCtaBody: 'Um rastreio à distância de LMERT e riscos psicossociais, aberto a todos os colaboradores, com resultados úteis em poucos dias.',
     problems: [
       { n: '01', title: 'RPS invisíveis em teletrabalho', body: 'Os sinais de esgotamento ficam escondidos. Os inquéritos anuais já não captam a realidade das equipas dispersas.', stat: 'sinais fracos que ninguém vê' },
       { n: '02', title: 'Absentismo mal compreendido', body: 'Os números chegam demasiado tarde e sem contexto, quando a baixa já foi passada.', stat: 'um absentismo constatado, nunca antecipado' },

@@ -439,6 +439,8 @@ export const es = {
     problemsLabel: 'La realidad del terreno',
     problemsTitle: 'Se da cuenta',
     problemsTitleEnd: 'demasiado tarde.',
+    problemsCtaTitle: 'ScanUp los detecta antes de la baja.',
+    problemsCtaBody: 'Un cribado a distancia de TME y riesgos psicosociales, abierto a todos los empleados, con resultados útiles en pocos días.',
     problems: [
       { n: '01', title: 'Riesgos psicosociales invisibles en el teletrabajo', body: 'Las señales de burnout quedan ocultas. Las encuestas anuales ya no reflejan la realidad de los equipos dispersos.', stat: 'señales débiles que nadie ve' },
       { n: '02', title: 'Absentismo mal interpretado', body: 'Las cifras llegan demasiado tarde y sin contexto, cuando la baja ya se ha producido.', stat: 'un absentismo constatado, nunca anticipado' },

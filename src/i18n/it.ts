@@ -439,6 +439,8 @@ export const it = {
     problemsLabel: 'La realtà sul campo',
     problemsTitle: 'Lo vedete',
     problemsTitleEnd: 'troppo tardi.',
+    problemsCtaTitle: 'ScanUp li individua prima dell\'assenza.',
+    problemsCtaBody: 'Uno screening a distanza di DMS e rischi psicosociali, aperto a tutti i dipendenti, con risultati utilizzabili in pochi giorni.',
     problems: [
       { n: '01', title: 'RPS invisibili nel telelavoro', body: 'I segnali di burnout restano nascosti. I sondaggi annuali non colgono più la realtà dei team dispersi.', stat: 'segnali deboli che nessuno vede' },
       { n: '02', title: 'Assenteismo incompreso', body: 'I dati arrivano troppo tardi e senza contesto, quando l\'assenza è già iniziata.', stat: 'un assenteismo constatato, mai anticipato' },

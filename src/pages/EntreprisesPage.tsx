@@ -58,9 +58,7 @@ export default function EntreprisesPage() {
   const problems = t.entreprises.problems;
   const features = t.entreprises.features;
   const offres   = t.entreprises.offres;
-  const personas = t.entreprises.personas;
   const faqs     = t.entreprises.faqs;
-  const [activePersona, setActivePersona] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
@@ -312,72 +310,10 @@ export default function EntreprisesPage() {
         </div>
       </section>
 
-      {/* ── Personas ─────────────────────────────────────────── */}
-      <section className="py-24 px-6 bg-[#F8F9FC]">
-        <div className="max-w-4xl mx-auto">
-          <Reveal className="mb-12">
-            <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-blue mb-3">{t.entreprises.personasLabel}</p>
-            <h2 className="text-[32px] md:text-[42px] font-bold tracking-[-0.02em]">{t.entreprises.personasTitle}</h2>
-          </Reveal>
-
-          <Reveal delay={0.05}>
-            {/* tabs */}
-            <div className="inline-flex bg-white border border-black/[0.08] rounded-full p-1 mb-10 shadow-sm">
-              {personas.map((p, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActivePersona(i)}
-                  className={`px-6 py-2 rounded-full text-[14px] font-semibold transition-all duration-200 ${
-                    activePersona === i ? 'bg-scanup-navy text-white shadow-sm' : 'text-scanup-graytext hover:text-scanup-navy'
-                  }`}
-                >
-                  {p.name}
-                </button>
-              ))}
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activePersona}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.2 }}
-                className="bg-white rounded-3xl p-10 border border-black/[0.06] shadow-sm"
-              >
-                <div className="flex flex-col md:flex-row gap-10">
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 rounded-2xl bg-scanup-blue/8 flex items-center justify-center text-scanup-blue font-bold text-2xl mb-4">
-                      {personas[activePersona].name[0]}
-                    </div>
-                    <div className="text-[13px] text-scanup-blue font-semibold mb-0.5">{personas[activePersona].role}</div>
-                    <div className="text-[14px] text-scanup-graytext italic">{personas[activePersona].intro}</div>
-                  </div>
-                  <div className="w-px bg-black/[0.06] hidden md:block" />
-                  <div className="flex-1">
-                    <div className="text-[11px] text-scanup-graytext font-semibold uppercase tracking-widest mb-5">{t.entreprises.personaChallengesLabel}</div>
-                    <ul className="space-y-4">
-                      {personas[activePersona].items.map((item, j) => (
-                        <li key={j} className="flex items-start gap-3 text-[15px] text-scanup-navy">
-                          <div className="w-5 h-5 rounded-full bg-scanup-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <Check size={10} className="text-scanup-blue" />
-                          </div>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </Reveal>
-        </div>
-      </section>
-
       {/* ── Testimonial ──────────────────────────────────────── */}
       {/* Affiché seulement si un témoignage réel est renseigné dans la langue. */}
       {t.entreprises.testimonialQuote && (
-      <section className="py-28 px-6">
+      <section className="py-28 px-6 bg-[#F8F9FC]">
         <div className="max-w-4xl mx-auto">
           <Reveal>
             <div className="relative">

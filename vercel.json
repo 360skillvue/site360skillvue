@@ -517,12 +517,12 @@
     },
     {
       "source": "/blog",
-      "destination": "https://blog.360skillvue.com/",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/blog/:path*",
-      "destination": "https://blog.360skillvue.com/:path*",
+      "destination": "/",
       "permanent": true
     }
   ],

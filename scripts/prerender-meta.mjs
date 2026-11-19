@@ -242,8 +242,8 @@ const LEGACY_REDIRECTS = [
   ['/de/preise', '/de/tarifs'],
   ['/de/kontakt', '/de/aide-support'],
   ['/:lang(en|de|it|es|pt)/simulateur-cout-tms-rps', '/simulateur-cout-tms-rps'],
-  ['/blog', 'https://blog.360skillvue.com/'],
-  ['/blog/:path*', 'https://blog.360skillvue.com/:path*'],
+  ['/blog', '/'],
+  ['/blog/:path*', '/'],
 ];
 
 const vercelPath = join(ROOT, 'vercel.json');

@@ -42,7 +42,7 @@ const OFFRE_STYLES = [
 ];
 const OFFRE_LINKS = [
   { href: '/simulateur-cout-tms-rps',         spa: false },
-  { href: '/aide-support',                    spa: true  },
+  { href: '/aide-support#contact',            spa: false }, // Étude de situation : directement le formulaire « Nous contacter »
   { href: '/formation-risques-psychosociaux', spa: false },
   { href: '/formation-prevention-tms-sur-mesure.html', spa: false },
 ];

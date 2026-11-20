@@ -493,7 +493,7 @@ export const pt = {
     pricingSubtitle: 'Comece a partir de 20 € por colaborador. Aumente a escala conforme as suas necessidades.',
     pricingPopular: 'Popular',
     plans: [
-      { name: 'Starter', price: 'Gratuito', sub: 'teste de 15 dias', items: ['5 rastreios', 'Painel de bordo', 'Análise pelos nossos especialistas'], cta: 'Começar' },
+      { name: 'Starter', price: 'Gratuito', sub: 'teste de 15 dias', items: ['Rastreios gratuitos', 'Painel de bordo', 'Análise pelos nossos especialistas'], cta: 'Começar' },
       { name: 'RPS Essential', price: '27 €', sub: 'sem IVA / colaborador', items: ['Questionário + testemunho áudio', 'Análise por um psicólogo do trabalho', 'Retorno individual confidencial'], cta: 'Marcar uma reunião' },
       { name: 'RPS Premium', price: '40 €', sub: 'sem IVA / colaborador', items: ['Tudo o que inclui o Essential', 'Teleconsulta de 30 min em caso de rastreio positivo'], cta: 'Marcar uma reunião' },
       { name: 'LME Essential', price: '40 €', sub: 'sem IVA / colaborador', items: ['Rastreio por vídeo em situação real de trabalho', 'Qualificação por um ergonomista', 'Coaching em vídeo personalizado'], cta: 'Marcar uma reunião' },
@@ -507,7 +507,7 @@ export const pt = {
     faqs: [
       { q: 'O que são o ScanUp RPS e o ScanUp LME?', a: 'Módulos de avaliação cientificamente validados para rastrear os riscos psicossociais e as lesões musculoesqueléticas nas suas equipas. Resultados em 48 horas.' },
       { q: 'Os dados dos colaboradores são confidenciais?', a: 'Sem dúvida. Os dados individuais são estritamente confidenciais. Os RH acedem apenas a dados agregados e anonimizados. O e-mail é facultativo.' },
-      { q: 'Quanto custa o ScanUp?', a: 'Teste gratuito com 5 rastreios. Depois, rastreio RPS a partir de 20 € sem IVA e rastreio LME a partir de 20 € sem IVA por colaborador, com a análise dos nossos especialistas incluída. O detalhe dos packs está na página Preços.' },
+      { q: 'Quanto custa o ScanUp?', a: 'Teste gratuito com rastreios incluídos. Depois, rastreio RPS a partir de 20 € sem IVA e rastreio LME a partir de 20 € sem IVA por colaborador, com a análise dos nossos especialistas incluída. O detalhe dos packs está na página Preços.' },
       { q: 'Isto substitui a avaliação de riscos exigida pela regulamentação?', a: 'Não, alimenta-a. Os nossos painéis fornecem dados objetivos para atualizar a sua avaliação de riscos (Document unique, ou DUERP, em França; abordagem MSST na Suíça) e justificar os seus planos de ação.' },
       { q: 'Quanto tempo demora a começar?', a: 'Em 48 horas. Sem descarregamentos, a partir de qualquer dispositivo, com um modo de acesso adaptado a cada colaborador: e-mail, SSO ou uma conta criada pelo próprio por um link, com pseudónimo e sem e-mail, para quem trabalha ao computador; cartão com código QR e identificador para quem não trabalha. O ScanUp está ligado ao software de RH Lucca.' },
     ],
@@ -604,7 +604,7 @@ export const pt = {
     subtitle: "Paga apenas por colaborador rastreado, sem subscrição. Escolhe o que recebem os seus colaboradores, de que dispõe para agir enquanto RH e o que recebe o seu médico do trabalho. Tudo é opcional e cumulável. Teste gratuito de 15 dias, sem cartão bancário.",
     trial: {
       title: 'Teste gratuito de 15 dias',
-      desc: '5 rastreios incluídos, sem cartão de crédito e sem compromisso. Experimente o ScanUp com as suas equipas antes de escolher o seu pack.',
+      desc: 'Rastreios incluídos, sem cartão de crédito e sem compromisso. Experimente o ScanUp com as suas equipas antes de escolher o seu pack.',
       cta: 'Começar o teste gratuito',
     },
     step1Label: "Para os seus colaboradores",
@@ -686,10 +686,10 @@ export const pt = {
       { q: 'Temos os nossos próprios especialistas em prevenção: existe um plano adequado?', a: 'Sim. Existe um plano em autonomia: os seus ergonomistas e psicólogos do trabalho utilizam a plataforma para realizar e qualificar eles próprios os rastreios. Contacte-nos para falarmos sobre isso.' },
       { q: 'Isto substitui a avaliação regulamentar dos riscos?', a: 'Não, alimenta-a. Os nossos painéis fornecem dados objetivos para atualizar a sua avaliação dos riscos profissionais (Document unique, ou DUERP, em França 🇫🇷; abordagem MSST na Suíça 🇨🇭) e justificar os seus planos de ação.' },
       { q: 'Quanto tempo demora a começar?', a: 'Em 48 horas. Sem descarregamentos, a partir de qualquer dispositivo, com um modo de acesso adaptado a cada colaborador: e-mail, SSO ou uma conta criada pelo próprio por um link, com pseudónimo e sem e-mail, para quem trabalha ao computador; cartão com código QR e identificador para quem não trabalha. O ScanUp está ligado ao software de RH Lucca.' },
-      { q: 'Existe um período de fidelização?', a: 'Sem período de fidelização nem assinatura. Abrimos uma sessão de um ou três meses, o tempo de realizar a sua campanha de rastreio, e faturamos no fim, com base no número de rastreios efetivamente realizados.' },
+      { q: 'Existe um período de fidelização?', a: 'Sem período de fidelização nem assinatura. Abrimos uma sessão de um ou três meses, o tempo de realizar a sua campanha de rastreio. Faturamos 50 % do orçamento no arranque e o saldo no fim, com base no número de rastreios efetivamente realizados.' },
     ],
     ctaTitle: 'Ainda tem dúvidas?',
-    ctaSubtitle: '15 dias de acesso gratuito, 5 rastreios incluídos, sem compromisso.',
+    ctaSubtitle: '15 dias de acesso gratuito, rastreios incluídos, sem compromisso.',
     ctaStart: 'Começar gratuitamente',
     ctaDemo: 'Pedir uma demonstração',
   },
@@ -727,7 +727,7 @@ export const pt = {
     awardDesc: 'A 360SkillVue foi distinguida na categoria <strong>Ferramentas digitais de apoio à prevenção</strong> no Préventica Paris 2025, o evento de referência nacional em França para a saúde e a segurança no trabalho.',
     awardCaption: 'A equipa 360SkillVue a receber o Prémio Inovação by Préventica 2025',
     ctaTitle: 'Pronto para objetivar a sua prevenção?',
-    ctaSubtitle: 'Comece com 5 rastreios gratuitos. As suas equipas acedem aos questionários em 48 h.',
+    ctaSubtitle: 'Comece com rastreios gratuitos. As suas equipas acedem aos questionários em 48 h.',
     ctaStart: 'Começar gratuitamente',
     ctaTarifs: 'Ver os preços',
     awardPrize: 'Prémio Inovação',
@@ -947,7 +947,7 @@ export const pt = {
     frenchOnly: 'As informações legais desta página estão disponíveis apenas em francês; só a versão francesa faz fé.',
     lastUpdated: 'Última atualização:',
     updatedOn: '20 de outubro de 2026',
-    cgvUpdatedOn: '19 de novembro de 2026', // date propre aux CGV
+    cgvUpdatedOn: '20 de novembro de 2026', // date propre aux CGV
     backHome: '← Voltar à página inicial',
   },
   footer: {

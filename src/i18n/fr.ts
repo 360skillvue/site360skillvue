@@ -499,7 +499,7 @@ export const fr = {
     pricingSubtitle: 'Démarrez dès 20 € par collaborateur. Passez à l\'échelle selon vos besoins.',
     pricingPopular: 'Populaire',
     plans: [
-      { name: 'Starter', price: 'Gratuit', sub: '15 jours d\'essai', items: ['5 dépistages', 'Tableau de bord', 'Analyse par nos experts'], cta: 'Démarrer' },
+      { name: 'Starter', price: 'Gratuit', sub: '15 jours d\'essai', items: ['Dépistages offerts', 'Tableau de bord', 'Analyse par nos experts'], cta: 'Démarrer' },
       { name: 'RPS Essential', price: '27 €', sub: 'HT / collaborateur', items: ['Questionnaire + témoignage audio', 'Analyse par un psychologue du travail', 'Retour individuel confidentiel'], cta: 'Prendre RDV' },
       { name: 'RPS Premium', price: '40 €', sub: 'HT / collaborateur', items: ['Tout le Pack Essential', 'Téléconsultation de 30 min si dépistage positif'], cta: 'Prendre RDV' },
       { name: 'TMS Essential', price: '40 €', sub: 'HT / collaborateur', items: ['Dépistage par vidéos en situation réelle', 'Qualification par un ergonome', 'Coaching vidéo personnalisé'], cta: 'Prendre RDV' },
@@ -513,7 +513,7 @@ export const fr = {
     faqs: [
       { q: 'Qu\'est-ce que ScanUp RPS et TMS ?', a: 'Des modules d\'évaluation scientifiquement validés pour dépister les Risques Psycho-Sociaux et les Troubles Musculo-Squelettiques au sein de vos équipes. Résultats en 48 h.' },
       { q: 'Les données des salariés sont-elles confidentielles ?', a: 'Absolument. Les données individuelles sont strictement confidentielles. Les RH n\'accèdent qu\'à des données agrégées et anonymisées. L\'email est facultatif.' },
-      { q: 'Combien coûte ScanUp ?', a: 'Essai gratuit avec 5 dépistages. Ensuite, dépistage RPS dès 20 € HT et dépistage TMS dès 20 € HT par collaborateur, analyse par nos experts incluse. Le détail des offres est sur la page Tarifs.' },
+      { q: 'Combien coûte ScanUp ?', a: 'Essai gratuit avec des dépistages offerts. Ensuite, dépistage RPS dès 20 € HT et dépistage TMS dès 20 € HT par collaborateur, analyse par nos experts incluse. Le détail des offres est sur la page Tarifs.' },
       { q: 'Cela remplace-t-il l\'évaluation réglementaire des risques ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre évaluation des risques (Document unique, ou DUERP, en France ; démarche MSST en Suisse) et justifier vos plans d\'action.' },
       { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Sans téléchargement, depuis n\'importe quel appareil, avec un mode de connexion adapté à chaque salarié : e-mail, SSO ou compte créé soi-même par un lien, sous pseudonyme et sans e-mail, pour ceux qui travaillent sur ordinateur ; vignette avec QR code et identifiant pour ceux qui n\'en ont pas. ScanUp est connecté au logiciel RH Lucca.' },
     ],
@@ -617,7 +617,7 @@ export const fr = {
     subtitle: "Vous payez uniquement par salarié dépisté, sans abonnement. Vous choisissez ce que reçoivent vos salariés, ce dont vous disposez pour agir en tant que RH, et ce que reçoit votre médecin du travail. Tout est facultatif et cumulable. Essai gratuit de 15 jours, sans carte bancaire.",
     trial: {
       title: 'Essai gratuit 15 jours',
-      desc: '5 dépistages offerts, sans carte bancaire ni engagement. Testez ScanUp avec vos équipes avant de choisir votre offre.',
+      desc: 'Des dépistages offerts, sans carte bancaire ni engagement. Testez ScanUp avec vos équipes avant de choisir votre offre.',
       cta: 'Démarrer l\'essai gratuit',
     },
     step1Label: "Pour vos salariés",
@@ -699,10 +699,10 @@ export const fr = {
       { q: 'Nous disposons de nos propres experts en prévention : existe-t-il une formule adaptée ?', a: 'Oui. Une formule en autonomie existe : vos ergonomes et psychologues du travail utilisent la plateforme pour réaliser et qualifier eux-mêmes les dépistages. Contactez-nous pour en discuter.' },
       { q: 'Cela remplace-t-il l\'évaluation réglementaire des risques professionnels ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre évaluation des risques (Document unique, ou DUERP, en France 🇫🇷 ; démarche MSST en Suisse 🇨🇭) et justifier vos plans d\'action.' },
       { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Sans téléchargement, depuis n\'importe quel appareil, avec un mode de connexion adapté à chaque salarié : e-mail, SSO ou compte créé soi-même par un lien, sous pseudonyme et sans e-mail, pour ceux qui travaillent sur ordinateur ; vignette avec QR code et identifiant pour ceux qui n\'en ont pas. ScanUp est connecté au logiciel RH Lucca.' },
-      { q: 'Y a-t-il un engagement de durée ?', a: 'Aucun engagement de durée ni abonnement. Nous ouvrons une session d\'un ou trois mois, le temps de mener votre campagne de dépistage, et nous facturons à la fin, sur le nombre de dépistages réellement réalisés.' },
+      { q: 'Y a-t-il un engagement de durée ?', a: 'Aucun engagement de durée ni abonnement. Nous ouvrons une session d\'un ou trois mois, le temps de mener votre campagne de dépistage. Nous facturons 50 % du devis au démarrage, puis le solde à la fin, selon le nombre de dépistages réellement réalisés.' },
     ],
     ctaTitle: 'Vous hésitez ?',
-    ctaSubtitle: '15 jours d\'accès gratuit, 5 dépistages offerts, sans engagement.',
+    ctaSubtitle: '15 jours d\'accès gratuit, dépistages offerts, sans engagement.',
     ctaStart: 'Démarrer gratuitement',
     ctaDemo: 'Demander une démo',
   },
@@ -740,7 +740,7 @@ export const fr = {
     awardDesc: '360SkillVue a été récompensé dans la catégorie <strong>Outils digitaux d\'aide à la prévention</strong> lors du salon Préventica Paris 2025, la référence nationale en santé et sécurité au travail.',
     awardCaption: 'L\'équipe 360SkillVue lors de la remise du Prix Innovation by Préventica 2025',
     ctaTitle: 'Prêt à objectiver votre prévention ?',
-    ctaSubtitle: 'Démarrez avec 5 dépistages gratuits. Vos équipes accèdent aux questionnaires en 48h.',
+    ctaSubtitle: 'Démarrez avec des dépistages gratuits. Vos équipes accèdent aux questionnaires en 48h.',
     ctaStart: 'Démarrer gratuitement',
     ctaTarifs: 'Voir les tarifs',
     awardPrize: 'Prix Innovation',
@@ -960,7 +960,7 @@ export const fr = {
     frenchOnly: 'Seule la version française des informations légales fait foi.',
     lastUpdated: 'Dernière mise à jour :',
     updatedOn: '20 octobre 2026',
-    cgvUpdatedOn: '19 novembre 2026', // date propre aux CGV
+    cgvUpdatedOn: '20 novembre 2026', // date propre aux CGV
     backHome: '← Retour à l\'accueil',
   },
   footer: {

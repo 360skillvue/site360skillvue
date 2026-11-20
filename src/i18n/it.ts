@@ -493,7 +493,7 @@ export const it = {
     pricingSubtitle: 'Partite da 20 € per collaboratore. Scalate secondo le vostre esigenze.',
     pricingPopular: 'Popolare',
     plans: [
-      { name: 'Starter', price: 'Gratuito', sub: '15 giorni di prova', items: ['5 screening', 'Cruscotto', 'Analisi dei nostri esperti'], cta: 'Inizia' },
+      { name: 'Starter', price: 'Gratuito', sub: '15 giorni di prova', items: ['Screening gratuiti', 'Cruscotto', 'Analisi dei nostri esperti'], cta: 'Inizia' },
       { name: 'RPS Essential', price: '27 €', sub: '+ IVA / collaboratore', items: ['Questionario + testimonianza audio', 'Analisi di uno psicologo del lavoro', 'Feedback individuale riservato'], cta: 'Prenota un appuntamento' },
       { name: 'RPS Premium', price: '40 €', sub: '+ IVA / collaboratore', items: ['Tutto il Pack Essential', 'Teleconsulto di 30 min se positivo allo screening'], cta: 'Prenota un appuntamento' },
       { name: 'DMS Essential', price: '40 €', sub: '+ IVA / collaboratore', items: ['Screening video in situazioni reali', 'Qualificazione di un ergonomo', 'Coaching video personalizzato'], cta: 'Prenota un appuntamento' },
@@ -507,7 +507,7 @@ export const it = {
     faqs: [
       { q: 'Cos\'è ScanUp RPS e DMS?', a: 'Moduli di valutazione scientificamente validati per lo screening dei Rischi Psicosociali e dei Disturbi Muscoloscheletrici nei vostri team. Risultati in 48 ore.' },
       { q: 'I dati dei dipendenti sono riservati?', a: 'Assolutamente. I dati individuali sono strettamente riservati. Le risorse umane accedono solo a dati aggregati e anonimizzati. L\'email è facoltativa.' },
-      { q: 'Quanto costa ScanUp?', a: 'Prova gratuita con 5 screening. Poi screening RPS da 20 € + IVA e screening DMS da 20 € + IVA per collaboratore, analisi dei nostri esperti inclusa. Il dettaglio dei pacchetti è nella pagina Prezzi.' },
+      { q: 'Quanto costa ScanUp?', a: 'Prova gratuita con screening inclusi. Poi screening RPS da 20 € + IVA e screening DMS da 20 € + IVA per collaboratore, analisi dei nostri esperti inclusa. Il dettaglio dei pacchetti è nella pagina Prezzi.' },
       { q: 'Sostituisce la valutazione dei rischi prevista dalla legge?', a: 'No, la alimenta. I nostri dashboard forniscono dati oggettivi per aggiornare la vostra valutazione dei rischi (Document unique, o DUERP, in Francia; approccio MSST in Svizzera) e giustificare i vostri piani d\'azione.' },
       { q: 'Quanto tempo per iniziare?', a: 'In 48 ore. Senza download, da qualsiasi dispositivo, con una modalità di accesso adatta a ogni dipendente: email, SSO o un account creato da sé tramite un link, con pseudonimo e senza email, per chi lavora al computer; scheda con codice QR e identificativo per chi non lo usa. ScanUp è collegato al software HR Lucca.' },
     ],
@@ -604,7 +604,7 @@ export const it = {
     subtitle: "Pagate solo per collaboratore sottoposto a screening, senza abbonamento. Scegliete cosa ricevono i vostri collaboratori, di cosa disponete per agire come HR e cosa riceve il vostro medico del lavoro. Tutto è facoltativo e cumulabile. Prova gratuita di 15 giorni, senza carta di credito.",
     trial: {
       title: 'Prova gratuita di 15 giorni',
-      desc: '5 screening inclusi, senza carta di credito né impegno. Provate ScanUp con i vostri team prima di scegliere il pacchetto.',
+      desc: 'Screening inclusi, senza carta di credito né impegno. Provate ScanUp con i vostri team prima di scegliere il pacchetto.',
       cta: 'Inizia la prova gratuita',
     },
     step1Label: "Per i vostri collaboratori",
@@ -686,10 +686,10 @@ export const it = {
       { q: 'Abbiamo i nostri esperti di prevenzione: esiste una formula adatta?', a: 'Sì. Esiste una formula in autonomia: i vostri ergonomi e psicologi del lavoro utilizzano la piattaforma per effettuare e qualificare gli screening in autonomia. Contattateci per parlarne.' },
       { q: 'Questo sostituisce la valutazione dei rischi prevista dalla legge?', a: 'No, la alimenta. Le nostre dashboard forniscono dati oggettivi per aggiornare la vostra valutazione dei rischi professionali (Document unique, o DUERP, in Francia 🇫🇷; approccio MSST in Svizzera 🇨🇭) e giustificare i piani d\'azione.' },
       { q: 'Quanto tempo ci vuole per iniziare?', a: 'In 48 ore. Senza download, da qualsiasi dispositivo, con una modalità di accesso adatta a ogni dipendente: email, SSO o un account creato da sé tramite un link, con pseudonimo e senza email, per chi lavora al computer; scheda con codice QR e identificativo per chi non lo usa. ScanUp è collegato al software HR Lucca.' },
-      { q: 'Esiste un impegno di durata?', a: 'Nessun impegno di durata né abbonamento. Apriamo una sessione di uno o tre mesi, il tempo di svolgere la vostra campagna di screening, e fatturiamo alla fine in base al numero di screening effettivamente svolti.' },
+      { q: 'Esiste un impegno di durata?', a: 'Nessun impegno di durata né abbonamento. Apriamo una sessione di uno o tre mesi, il tempo di svolgere la vostra campagna di screening. Fatturiamo il 50 % del preventivo all\'avvio e il saldo alla fine, in base al numero di screening effettivamente svolti.' },
     ],
     ctaTitle: 'Non siete sicuri?',
-    ctaSubtitle: '15 giorni di accesso gratuito, 5 screening inclusi, senza impegno.',
+    ctaSubtitle: '15 giorni di accesso gratuito, screening inclusi, senza impegno.',
     ctaStart: 'Inizia gratuitamente',
     ctaDemo: 'Richiedi una demo',
   },
@@ -727,7 +727,7 @@ export const it = {
     awardDesc: '360SkillVue è stato premiato nella categoria <strong>Strumenti digitali per la prevenzione</strong> al salone Préventica Paris 2025, riferimento nazionale per la salute e sicurezza sul lavoro.',
     awardCaption: 'Il team 360SkillVue durante la premiazione del Prix Innovation by Préventica 2025',
     ctaTitle: 'Pronti a oggettivare la vostra prevenzione?',
-    ctaSubtitle: 'Iniziate con 5 screening gratuiti. I vostri team accedono ai questionari in 48 ore.',
+    ctaSubtitle: 'Iniziate con screening gratuiti. I vostri team accedono ai questionari in 48 ore.',
     ctaStart: 'Inizia gratuitamente',
     ctaTarifs: 'Vedi i prezzi',
     awardPrize: 'Premio Innovazione',
@@ -947,7 +947,7 @@ export const it = {
     frenchOnly: 'Le informazioni legali di questa pagina sono disponibili solo in francese; fa fede esclusivamente la versione francese.',
     lastUpdated: 'Ultimo aggiornamento:',
     updatedOn: '20 ottobre 2026',
-    cgvUpdatedOn: '19 novembre 2026', // date propre aux CGV
+    cgvUpdatedOn: '20 novembre 2026', // date propre aux CGV
     backHome: '← Torna alla home page',
   },
   footer: {

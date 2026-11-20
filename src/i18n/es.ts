@@ -493,7 +493,7 @@ export const es = {
     pricingSubtitle: 'Empiece desde 20 € por empleado. Amplíe según sus necesidades.',
     pricingPopular: 'Más elegido',
     plans: [
-      { name: 'Starter', price: 'Gratis', sub: 'prueba de 15 días', items: ['5 cribados', 'Cuadro de mando', 'Análisis por nuestros expertos'], cta: 'Empezar' },
+      { name: 'Starter', price: 'Gratis', sub: 'prueba de 15 días', items: ['Cribados gratuitos', 'Cuadro de mando', 'Análisis por nuestros expertos'], cta: 'Empezar' },
       { name: 'RPS Essential', price: '27 €', sub: 'sin IVA / empleado', items: ['Cuestionario + testimonio en audio', 'Análisis por un psicólogo del trabajo', 'Retorno individual confidencial'], cta: 'Reservar una llamada' },
       { name: 'RPS Premium', price: '40 €', sub: 'sin IVA / empleado', items: ['Todo lo del pack Essential', 'Teleconsulta de 30 min en caso de cribado positivo'], cta: 'Reservar una llamada' },
       { name: 'TME Essential', price: '40 €', sub: 'sin IVA / empleado', items: ['Cribado en vídeo en situación real de trabajo', 'Cualificación por un ergónomo', 'Coaching en vídeo personalizado'], cta: 'Reservar una llamada' },
@@ -507,7 +507,7 @@ export const es = {
     faqs: [
       { q: '¿Qué son ScanUp RPS y TME?', a: 'Módulos de evaluación científicamente validados para cribar los riesgos psicosociales y los trastornos musculoesqueléticos en sus equipos. Resultados en 48 horas.' },
       { q: '¿Son confidenciales los datos de los empleados?', a: 'Absolutamente. Los datos individuales son estrictamente confidenciales. RR. HH. solo accede a datos agregados y anonimizados. El correo electrónico es opcional.' },
-      { q: '¿Cuánto cuesta ScanUp?', a: 'Prueba gratuita con 5 cribados. Después, el cribado de RPS desde 20 € sin IVA y el cribado de TME desde 20 € sin IVA por empleado, con el análisis experto incluido. Todo el detalle de los packs está en la página de tarifas.' },
+      { q: '¿Cuánto cuesta ScanUp?', a: 'Prueba gratuita con cribados incluidos. Después, el cribado de RPS desde 20 € sin IVA y el cribado de TME desde 20 € sin IVA por empleado, con el análisis experto incluido. Todo el detalle de los packs está en la página de tarifas.' },
       { q: '¿Sustituye a la evaluación de riesgos exigida por la normativa?', a: 'No, la alimenta. Nuestros cuadros de mando aportan datos objetivos para actualizar su evaluación de riesgos (Document unique, o DUERP, en Francia; enfoque MSST en Suiza) y justificar sus planes de acción.' },
       { q: '¿Cuánto se tarda en empezar?', a: 'En 48 horas. Sin descarga, desde cualquier dispositivo, con un modo de conexión adaptado a cada empleado: correo, SSO o una cuenta creada por uno mismo mediante un enlace, con seudónimo y sin correo, para quienes trabajan con ordenador; tarjeta con código QR e identificador para quienes no. ScanUp está conectado al software de RR. HH. Lucca.' },
     ],
@@ -604,7 +604,7 @@ export const es = {
     subtitle: "Solo paga por empleado cribado, sin suscripción. Usted elige qué reciben sus empleados, de qué dispone para actuar como RR. HH. y qué recibe su médico del trabajo. Todo es opcional y combinable. Prueba gratuita de 15 días, sin tarjeta bancaria.",
     trial: {
       title: 'Prueba gratuita de 15 días',
-      desc: '5 cribados incluidos, sin tarjeta bancaria y sin compromiso. Pruebe ScanUp con sus equipos antes de elegir su pack.',
+      desc: 'Cribados incluidos, sin tarjeta bancaria y sin compromiso. Pruebe ScanUp con sus equipos antes de elegir su pack.',
       cta: 'Empezar la prueba gratuita',
     },
     step1Label: "Para sus empleados",
@@ -686,10 +686,10 @@ export const es = {
       { q: 'Tenemos nuestros propios expertos en prevención, ¿existe una fórmula adecuada?', a: 'Sí. Existe una fórmula en autonomía: sus ergónomos y psicólogos del trabajo utilizan la plataforma para realizar y cualificar los cribados ellos mismos. Contáctenos para hablarlo.' },
       { q: '¿Sustituye esto a la evaluación de riesgos exigida por la normativa?', a: 'No, la alimenta. Nuestros cuadros de mando aportan datos objetivos para actualizar su evaluación de riesgos profesionales (Document unique, o DUERP, en Francia 🇫🇷; enfoque MSST en Suiza 🇨🇭) y justificar sus planes de acción.' },
       { q: '¿Cuánto se tarda en empezar?', a: 'En 48 horas. Sin descarga, desde cualquier dispositivo, con un modo de conexión adaptado a cada empleado: correo, SSO o una cuenta creada por uno mismo mediante un enlace, con seudónimo y sin correo, para quienes trabajan con ordenador; tarjeta con código QR e identificador para quienes no. ScanUp está conectado al software de RR. HH. Lucca.' },
-      { q: '¿Hay permanencia?', a: 'Sin permanencia ni suscripción. Abrimos una sesión de uno o tres meses, el tiempo de realizar su campaña de cribado, y facturamos al final según el número de cribados realmente realizados.' },
+      { q: '¿Hay permanencia?', a: 'Sin permanencia ni suscripción. Abrimos una sesión de uno o tres meses, el tiempo de realizar su campaña de cribado. Facturamos el 50 % del presupuesto al inicio y el saldo al final, según el número de cribados realmente realizados.' },
     ],
     ctaTitle: '¿Todavía lo está pensando?',
-    ctaSubtitle: '15 días de acceso gratuito, 5 cribados incluidos, sin compromiso.',
+    ctaSubtitle: '15 días de acceso gratuito, cribados incluidos, sin compromiso.',
     ctaStart: 'Empezar gratis',
     ctaDemo: 'Solicitar una demo',
   },
@@ -727,7 +727,7 @@ export const es = {
     awardDesc: '360SkillVue fue premiada en la categoría <strong>Herramientas digitales para la prevención</strong> en Préventica París 2025, el evento nacional de referencia en Francia en materia de salud y seguridad en el trabajo.',
     awardCaption: 'El equipo de 360SkillVue recibiendo el premio a la innovación de Préventica 2025',
     ctaTitle: '¿Listos para objetivar la prevención?',
-    ctaSubtitle: 'Empiece con 5 cribados gratuitos. Sus equipos acceden a los cuestionarios en 48 horas.',
+    ctaSubtitle: 'Empiece con cribados gratuitos. Sus equipos acceden a los cuestionarios en 48 horas.',
     ctaStart: 'Empezar gratis',
     ctaTarifs: 'Ver las tarifas',
     awardPrize: 'Premio a la Innovación',
@@ -947,7 +947,7 @@ export const es = {
     frenchOnly: 'La información legal de esta página solo está disponible en francés; únicamente la versión francesa es jurídicamente vinculante.',
     lastUpdated: 'Última actualización:',
     updatedOn: '20 de octubre de 2026',
-    cgvUpdatedOn: '19 de noviembre de 2026', // date propre aux CGV
+    cgvUpdatedOn: '20 de noviembre de 2026', // date propre aux CGV
     backHome: '← Volver al inicio',
   },
   footer: {

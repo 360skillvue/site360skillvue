@@ -493,7 +493,7 @@ export const de = {
     pricingSubtitle: 'Starten Sie ab 20 € pro Mitarbeitendem. Skalieren Sie nach Bedarf.',
     pricingPopular: 'Beliebt',
     plans: [
-      { name: 'Starter', price: 'Kostenlos', sub: '15 Tage Testphase', items: ['5 Screenings', 'Übersichtsseite', 'Analyse durch unsere Experten'], cta: 'Starten' },
+      { name: 'Starter', price: 'Kostenlos', sub: '15 Tage Testphase', items: ['Kostenlose Screenings', 'Übersichtsseite', 'Analyse durch unsere Experten'], cta: 'Starten' },
       { name: 'PSR Essential', price: '27 €', sub: 'zzgl. MwSt. / Mitarbeitendem', items: ['Fragebogen + Audio-Bericht', 'Analyse durch Arbeitspsycholog:in', 'Vertrauliches individuelles Feedback'], cta: 'Termin buchen' },
       { name: 'PSR Premium', price: '40 €', sub: 'zzgl. MwSt. / Mitarbeitendem', items: ['Alles aus Essential', '30-Min-Telekonsultation bei positivem Screening'], cta: 'Termin buchen' },
       { name: 'MSE Essential', price: '40 €', sub: 'zzgl. MwSt. / Mitarbeitendem', items: ['Video-Screening in realen Arbeitssituationen', 'Qualifizierung durch Ergonom:in', 'Personalisiertes Video-Coaching'], cta: 'Termin buchen' },
@@ -507,7 +507,7 @@ export const de = {
     faqs: [
       { q: 'Was ist ScanUp PSR und MSE?', a: 'Wissenschaftlich validierte Bewertungsmodule zum Screening von psychosozialen Risiken und Muskel-Skelett-Erkrankungen in Ihren Teams. Ergebnisse innerhalb von 48 Stunden.' },
       { q: 'Sind die Mitarbeiterdaten vertraulich?', a: 'Selbstverständlich. Individuelle Daten sind streng vertraulich. Die Personalabteilung hat nur Zugang zu aggregierten und anonymisierten Daten. Die E-Mail-Angabe ist optional.' },
-      { q: 'Was kostet ScanUp?', a: 'Kostenlose Testphase mit 5 Screenings. Danach PSR-Screening ab 20 € zzgl. MwSt. und MSE-Screening ab 20 € zzgl. MwSt. pro Mitarbeitendem, Expertenanalyse inklusive. Details zu den Paketen auf der Preisseite.' },
+      { q: 'Was kostet ScanUp?', a: 'Kostenlose Testphase mit inbegriffenen Screenings. Danach PSR-Screening ab 20 € zzgl. MwSt. und MSE-Screening ab 20 € zzgl. MwSt. pro Mitarbeitendem, Expertenanalyse inklusive. Details zu den Paketen auf der Preisseite.' },
       { q: 'Ersetzt es die gesetzliche Gefährdungsbeurteilung?', a: 'Nein, es speist sie. Unsere Dashboards liefern objektive Daten, um Ihre Risikobeurteilung zu aktualisieren (Document unique, kurz DUERP, in Frankreich; MSST-Vorgehen in der Schweiz) und Ihre Massnahmenpläne zu begründen.' },
       { q: 'Wie schnell kann ich starten?', a: 'In 48 Stunden. Ohne Download, von jedem Gerät aus, mit einer Anmeldung, die zu jeder Person passt: E-Mail, SSO oder ein selbst über einen Link angelegtes Konto, unter Pseudonym und ohne E-Mail, für alle, die am Computer arbeiten; eine Karte mit QR-Code und Kennung für alle anderen. ScanUp ist mit der HR-Software Lucca verbunden.' },
     ],
@@ -604,7 +604,7 @@ export const de = {
     subtitle: "Sie zahlen nur pro gescreenter Person, ohne Abonnement. Sie entscheiden, was Ihre Mitarbeitenden erhalten, was Ihnen als HR zum Handeln zur Verfügung steht und was Ihr Arbeitsmediziner erhält. Alles ist optional und kombinierbar. 15 Tage kostenlos testen, ohne Kreditkarte.",
     trial: {
       title: '15 Tage kostenlos testen',
-      desc: '5 Screenings inklusive, ohne Kreditkarte und ohne Verpflichtung. Testen Sie ScanUp mit Ihren Teams, bevor Sie Ihr Paket wählen.',
+      desc: 'Screenings inklusive, ohne Kreditkarte und ohne Verpflichtung. Testen Sie ScanUp mit Ihren Teams, bevor Sie Ihr Paket wählen.',
       cta: 'Kostenlose Testphase starten',
     },
     step1Label: "Für Ihre Mitarbeitenden",
@@ -686,10 +686,10 @@ export const de = {
       { q: 'Wir haben eigene Präventionsexperten: Gibt es ein passendes Paket?', a: 'Ja. Es gibt ein Selbstbedienungspaket: Ihre Ergonomen und Arbeitspsychologen nutzen die Plattform, um Screenings selbst durchzuführen und zu qualifizieren. Kontaktieren Sie uns.' },
       { q: 'Ersetzt dies die gesetzliche Gefährdungsbeurteilung?', a: 'Nein, es ergänzt sie. Unsere Dashboards liefern objektive Daten, um Ihre Beurteilung der Berufsrisiken zu aktualisieren (Document unique, kurz DUERP, in Frankreich 🇫🇷; MSST-Vorgehen in der Schweiz 🇨🇭) und Ihre Massnahmenpläne zu begründen.' },
       { q: 'Wie lange dauert es bis zum Start?', a: 'In 48 Stunden. Ohne Download, von jedem Gerät aus, mit einer Anmeldung, die zu jeder Person passt: E-Mail, SSO oder ein selbst über einen Link angelegtes Konto, unter Pseudonym und ohne E-Mail, für alle, die am Computer arbeiten; eine Karte mit QR-Code und Kennung für alle anderen. ScanUp ist mit der HR-Software Lucca verbunden.' },
-      { q: 'Gibt es eine Mindestlaufzeit?', a: 'Keine Mindestlaufzeit und kein Abonnement. Wir eröffnen eine Session von einem oder drei Monaten, damit Sie Ihre Screening-Kampagne durchführen können, und rechnen am Ende nach der Zahl der tatsächlich durchgeführten Screenings ab.' },
+      { q: 'Gibt es eine Mindestlaufzeit?', a: 'Keine Mindestlaufzeit und kein Abonnement. Wir eröffnen eine Session von einem oder drei Monaten, damit Sie Ihre Screening-Kampagne durchführen können. Wir stellen 50 % des Angebots zu Beginn in Rechnung und den Restbetrag am Ende, nach der Zahl der tatsächlich durchgeführten Screenings.' },
     ],
     ctaTitle: 'Noch unschlüssig?',
-    ctaSubtitle: '15 Tage kostenloser Zugang, 5 Screenings inklusive, ohne Verpflichtung.',
+    ctaSubtitle: '15 Tage kostenloser Zugang, Screenings inklusive, ohne Verpflichtung.',
     ctaStart: 'Kostenlos starten',
     ctaDemo: 'Demo anfordern',
   },
@@ -727,7 +727,7 @@ export const de = {
     awardDesc: '360SkillVue wurde in der Kategorie <strong>Digitale Hilfsmittel für die Prävention</strong> auf der Préventica Paris 2025 ausgezeichnet, der nationalen Referenzveranstaltung für Gesundheit und Sicherheit am Arbeitsplatz.',
     awardCaption: 'Das 360SkillVue-Team bei der Verleihung des Innovationspreises by Préventica 2025',
     ctaTitle: 'Bereit, Prävention objektiv zu gestalten?',
-    ctaSubtitle: 'Starten Sie mit 5 kostenlosen Screenings. Ihre Teams erhalten in 48 Stunden Zugang.',
+    ctaSubtitle: 'Starten Sie mit kostenlosen Screenings. Ihre Teams erhalten in 48 Stunden Zugang.',
     ctaStart: 'Kostenlos starten',
     ctaTarifs: 'Preise anzeigen',
     awardPrize: 'Innovationspreis',
@@ -947,7 +947,7 @@ export const de = {
     frenchOnly: 'Die rechtlichen Informationen auf dieser Seite sind nur auf Französisch verfügbar; massgebend ist allein die französische Fassung.',
     lastUpdated: 'Letzte Aktualisierung:',
     updatedOn: '20. Oktober 2026',
-    cgvUpdatedOn: '19. November 2026', // date propre aux CGV
+    cgvUpdatedOn: '20. November 2026', // date propre aux CGV
     backHome: '← Zurück zur Startseite',
   },
   footer: {

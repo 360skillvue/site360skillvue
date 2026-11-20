@@ -493,7 +493,7 @@ export const en = {
     pricingSubtitle: 'Start from €20 per employee. Scale as needed.',
     pricingPopular: 'Popular',
     plans: [
-      { name: 'Starter', price: 'Free', sub: '15-day trial', items: ['5 screenings', 'Dashboard', 'Analysis by our experts'], cta: 'Get started' },
+      { name: 'Starter', price: 'Free', sub: '15-day trial', items: ['Free screenings', 'Dashboard', 'Analysis by our experts'], cta: 'Get started' },
       { name: 'PSR Essential', price: '€27', sub: 'excl. VAT / employee', items: ['Questionnaire + audio testimonial', 'Analysis by an occupational psychologist', 'Confidential individual feedback'], cta: 'Book a call' },
       { name: 'PSR Premium', price: '€40', sub: 'excl. VAT / employee', items: ['Everything in Essential', '30-min teleconsultation if screened positive'], cta: 'Book a call' },
       { name: 'MSD Essential', price: '€40', sub: 'excl. VAT / employee', items: ['Video screening in real work situations', 'Qualification by an ergonomist', 'Personalised video coaching'], cta: 'Book a call' },
@@ -507,7 +507,7 @@ export const en = {
     faqs: [
       { q: 'What is ScanUp PSR and MSD?', a: 'Scientifically validated assessment modules to screen for Psychosocial Risks and Musculoskeletal Disorders within your teams. Results in 48 hours.' },
       { q: 'Is employee data confidential?', a: 'Absolutely. Individual data is strictly confidential. HR only accesses aggregated and anonymized data. Email is optional.' },
-      { q: 'How much does ScanUp cost?', a: 'Free trial with 5 screenings. Then PSR screening from €20 excl. VAT and MSD screening from €20 excl. VAT per employee, expert analysis included. Full details on the Pricing page.' },
+      { q: 'How much does ScanUp cost?', a: 'Free trial with screenings included. Then PSR screening from €20 excl. VAT and MSD screening from €20 excl. VAT per employee, expert analysis included. Full details on the Pricing page.' },
       { q: 'Does it replace the statutory risk assessment?', a: 'No, it feeds it. Our dashboards provide objective data to update your risk assessment (Document unique, or DUERP, in France; MSST approach in Switzerland) and justify your action plans.' },
       { q: 'How long to get started?', a: 'In 48 hours. No download, from any device, with a login method suited to each employee: email, SSO or a self-created account via a link, under a pseudonym and with no email, for those who work at a computer; a small card with a QR code and login for those who don\'t. ScanUp is connected to the Lucca HR software.' },
     ],
@@ -604,7 +604,7 @@ export const en = {
     subtitle: "You only pay per employee screened, with no subscription. You choose what your employees receive, what you get to take action as HR, and what your occupational physician receives. Everything is optional and can be combined. Free 15-day trial, no credit card required.",
     trial: {
       title: 'Free 15-day trial',
-      desc: '5 screenings included, no credit card, no commitment. Try ScanUp with your teams before choosing your pack.',
+      desc: 'Screenings included, no credit card, no commitment. Try ScanUp with your teams before choosing your pack.',
       cta: 'Start free trial',
     },
     step1Label: "For your employees",
@@ -686,10 +686,10 @@ export const en = {
       { q: 'We have our own prevention experts: is there a suitable plan?', a: 'Yes. A self-service plan exists: your ergonomists and occupational psychologists use the platform to carry out and qualify screenings themselves. Contact us to discuss it.' },
       { q: 'Does this replace the regulatory risk assessment?', a: 'No, it feeds it. Our dashboards provide objective data to update your occupational risk assessment (Document unique, or DUERP, in France 🇫🇷; MSST approach in Switzerland 🇨🇭) and justify your action plans.' },
       { q: 'How long to get started?', a: 'In 48 hours. No download, from any device, with a login method suited to each employee: email, SSO or a self-created account via a link, under a pseudonym and with no email, for those who work at a computer; a small card with a QR code and login for those who don\'t. ScanUp is connected to the Lucca HR software.' },
-      { q: 'Is there a commitment period?', a: 'No commitment period and no subscription. We open a one- or three-month session, long enough to run your screening campaign, and invoice at the end, based on the number of screenings actually completed.' },
+      { q: 'Is there a commitment period?', a: 'No commitment period and no subscription. We open a one- or three-month session, long enough to run your screening campaign. We invoice 50% of the quote at the start, then the balance at the end, based on the number of screenings actually completed.' },
     ],
     ctaTitle: 'Not sure yet?',
-    ctaSubtitle: '15 days free access, 5 screenings included, no commitment.',
+    ctaSubtitle: '15 days free access, screenings included, no commitment.',
     ctaStart: 'Start for free',
     ctaDemo: 'Request a demo',
   },
@@ -727,7 +727,7 @@ export const en = {
     awardDesc: '360SkillVue was recognised in the <strong>Digital tools for prevention</strong> category at Préventica Paris 2025, France\'s national reference event for workplace health and safety.',
     awardCaption: 'The 360SkillVue team receiving the Innovation Award by Préventica 2025',
     ctaTitle: 'Ready to make prevention objective?',
-    ctaSubtitle: 'Start with 5 free screenings. Your teams access questionnaires within 48 hours.',
+    ctaSubtitle: 'Start with free screenings. Your teams access questionnaires within 48 hours.',
     ctaStart: 'Start for free',
     ctaTarifs: 'View pricing',
     awardPrize: 'Innovation Award',
@@ -947,7 +947,7 @@ export const en = {
     frenchOnly: 'The legal information on this page is available in French only; only the French version is legally binding.',
     lastUpdated: 'Last updated:',
     updatedOn: '20 October 2026',
-    cgvUpdatedOn: '19 November 2026', // date propre aux CGV
+    cgvUpdatedOn: '20 November 2026', // date propre aux CGV
     backHome: '← Back to home',
   },
   footer: {

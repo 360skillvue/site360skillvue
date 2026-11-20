@@ -1335,13 +1335,17 @@ function openTrial(d, fresh = false) {
         </div>
         <label class="f"><span>Métiers ou postes concernés</span><input type="text" id="tJobs" maxlength="200" placeholder="Par exemple : opérateurs de production, caristes, préparateurs de commandes"></label>
         <div class="f"><span>Retour au salarié</span>${radios("retour", [["none", "Pas de retour (résultat masqué)"], ["rcat", "Retour avec la conduite à tenir"], ["perso", "Accompagnement si dépistage positif"], ["both", "Comparer conduite à tenir et accompagnement"]], "rcat")}</div>
-        <details id="tCond" style="font-size:13px"><summary style="cursor:pointer;font-weight:600">Voir les textes de conduite à tenir réglés sur les modules</summary>
+        <div class="f" id="tVisBox"><span>Résultat visible par les salariés</span>${radios("visible", [["yes", "Oui"], ["no", "Non"]], "yes")}</div>
+        <div class="f" id="tCondBox"><span>Conduite à tenir si dépistage positif</span>${radios("cond", [["default", "Par défaut"], ["custom", "Personnalisée"]], "default")}</div>
+        <label class="f" id="tCondCustomBox" hidden><span>Texte de la conduite à tenir (le même sur chaque module)</span><textarea id="tCondCustom" rows="5" maxlength="4000" placeholder="Par exemple : contactez l'infirmière de santé au travail au 01 23 45 67 89, ou votre référent RH."></textarea></label>
+        <details id="tCond" style="font-size:13px"><summary style="cursor:pointer;font-weight:600">Voir les textes de conduite à tenir par défaut</summary>
           <div class="note" style="margin:6px 0 0;white-space:pre-line" id="tCondTxt"></div></details>
+        <div class="f"><span>Consignes à l'évaluateur</span><div id="tCons" class="note" style="margin:0;color:var(--fg)"></div></div>
         <div class="f"><span>Livrables prévus</span><div id="tLiv" class="note" style="margin:0;color:var(--fg)"></div></div>
         <label id="tNomBox" style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tNom"> Ajouter le rapport individuel nominatif</label>
         <p class="note" style="margin:0">Pendant le test, tous les livrables, rapport individuel nominatif compris, sont envoyés par e-mail au prospect, sans accès observateur. Après signature, le rapport individuel va au professionnel de santé du client (infirmière de santé au travail, service de santé autonome) par un accès observateur.</p>
         <label class="f"><span>Fin de la session</span><input type="date" id="tEnd" value="${end}"></label>
-        <p class="note" style="margin:0">Pas de retour : à la demande du prospect, « résultats visibles par les opérateurs » est décoché et Laura fait uniquement la qualification (niveau 0). Accompagnement : coaching vidéo pour les TMS, téléconsultation d'orientation pour les RPS, en cas de dépistage positif. Comparer : la moitié des opérateurs voit son résultat avec la conduite à tenir, l'autre moitié l'accompagnement. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
+        <p class="note" style="margin:0">Pas de retour : à la demande du prospect, « résultats visibles par les opérateurs » est décoché et Laura fait uniquement la qualification (niveau 0). Avec un retour, le résultat est visible par défaut ; répondez « Non » si le client veut tester sans résultat visible. Accompagnement : coaching vidéo pour les TMS, téléconsultation d'orientation pour les RPS, en cas de dépistage positif. Comparer : la moitié des opérateurs voit son résultat avec la conduite à tenir, l'autre moitié l'accompagnement. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
       </div>
       ${final ? "" : `<p class="note" style="margin:0">Distributeur : le cabinet test doit déjà exister dans ScanUp et figurer dans la table Make des cabinets en essai, avec son compte administrateur. La création de modules adaptés ne concerne que le cabinet 360skillvue (n° 10) ; pour un autre cabinet, on met à disposition ses modules existants.</p>`}
       <p class="note" style="margin:0">Comptez 5 à 10 minutes avec les modules : ScanUp limite les connexions à 10 par minute, le CRM espace donc ses demandes. Laissez cette fenêtre ouverte.</p>
@@ -1374,11 +1378,18 @@ function openTrial(d, fresh = false) {
       "RPS|rcat": "Votre témoignage fait apparaître des points qui méritent attention. N'hésitez pas à en parler à votre médecin du travail ou au référent santé et sécurité de votre site, qui pourront vous écouter et vous orienter vers un accompagnement adapté. En cas de difficulté importante, vous pouvez aussi consulter votre médecin traitant.",
       "RPS|perso": "Votre témoignage fait apparaître des points qui méritent attention. Une psychologue clinicienne vous propose une téléconsultation d'orientation confidentielle de 30 minutes, pour faire le point et vous orienter si besoin. Votre employeur n'est pas informé de ce rendez-vous. Prenez rendez-vous ici : https://calendly.com/isabelle-auray09/teleconsultation-d-orientation-scanup. Vous pouvez aussi en parler à votre médecin du travail."};
     const conds = []; for (const ty of types) for (const x of rets) if (x !== "none") conds.push(`<b>${ty}, ${x === "perso" ? (ty === "RPS" ? "téléconsultation d'orientation" : "coaching vidéo") : "retour avec la conduite à tenir"}</b> : ${esc(COND[ty + "|" + x])}`);
-    $("#tCond").hidden = !conds.length;
+    // Sans retour : résultat masqué d'office, pas de conduite à tenir. Sinon la question est posée (oui par défaut).
+    const noRet = r === "none", custom = radio("cond") === "custom";
+    $("#tVisBox").hidden = noRet; $("#tCondBox").hidden = noRet; $("#tCondCustomBox").hidden = noRet || !custom;
+    // Consignes réglées dans ScanUp pour le client sur chaque module (mêmes règles que lib/sumodules.php).
+    const cons = [];
+    for (const ty of types) for (const x of rets) cons.push(`<b>${ty}${rets.length > 1 ? (x === "perso" ? ", accompagnement" : ", conduite à tenir") : ""}</b> : qualification oui, vidéo de coaching ${ty === "TMS" && x === "perso" ? "oui" : "non"}, rapport nominatif ${nom ? "oui" : "non"}`);
+    $("#tCons").innerHTML = cons.join("<br>");
+    $("#tCond").hidden = !conds.length || custom;
     $("#tCondTxt").innerHTML = conds.join("<br><br>") + (conds.length ? "<br><br><i>Ces textes sont des textes de départ, personnalisables ensuite dans ScanUp (menu du module) par le responsable de projet du client ou par l'équipe : numéro d'aide, RH référent, infirmière de santé au travail…</i>" : "");
     $("#tNomBox").hidden = !eligible; if (!eligible) $("#tNom").checked = false;
   };
-  f.querySelectorAll('[data-radio="types"], [data-radio="retour"]').forEach(g => g.addEventListener("click", () => setTimeout(showLiv, 0)));
+  f.querySelectorAll('[data-radio="types"], [data-radio="retour"], [data-radio="cond"]').forEach(g => g.addEventListener("click", () => setTimeout(showLiv, 0)));
   $("#tNom").onchange = showLiv;
   showLiv();
   // Cabinet 10 : modules adaptés à partir de nos modèles ; autre cabinet : modules existants de son espace évaluateurs (lot 20).
@@ -1463,8 +1474,11 @@ function openTrial(d, fresh = false) {
     if (!cabinet) return toast("Indiquez le numéro du cabinet.", true);
     const t = radio("types");
     const modIn = {deal_id: d.id, cabinet, client: name, types: t === "both" ? ["TMS", "RPS"] : [t], country: radio("country"), length: radio("length"),
-      retour: radio("retour"), jobs: $("#tJobs").value.trim(), end_date: $("#tEnd").value, nominatif: $("#tNom").checked};
+      retour: radio("retour"), jobs: $("#tJobs").value.trim(), end_date: $("#tEnd").value, nominatif: $("#tNom").checked,
+      visible: radio("retour") !== "none" && radio("visible") !== "no",
+      conduite: radio("retour") !== "none" && radio("cond") === "custom" ? $("#tCondCustom").value.trim() : ""};
     const exIds = [...f.querySelectorAll("[data-exmod]:checked")].map(x => Number(x.dataset.exmod));
+    if (wantMods && cabinet === 10 && radio("retour") !== "none" && radio("cond") === "custom" && !modIn.conduite) return toast("Saisissez le texte de la conduite à tenir personnalisée, ou choisissez « Par défaut ».", true);
     if (wantMods && cabinet === 10 && !modIn.jobs) return toast("Indiquez les métiers ou postes concernés : ils servent à adapter les modules.", true);
     if (wantMods && cabinet !== 10 && !exIds.length) return toast("Cochez au moins un module du cabinet (bouton « Afficher les modules du cabinet »).", true);
     btn.disabled = true; btn.textContent = "Création en cours…";

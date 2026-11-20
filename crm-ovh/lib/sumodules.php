@@ -58,6 +58,21 @@ function su_conduite(string $type, string $retour): ?string {
     return "Votre témoignage fait apparaître des points qui méritent attention. N'hésitez pas à en parler à votre médecin du travail ou au référent santé et sécurité de votre site, qui pourront vous écouter et vous orienter vers un accompagnement adapté.\n\nEn cas de difficulté importante, vous pouvez aussi consulter votre médecin traitant.";
 }
 
+/* Consignes à l'évaluateur, réglées dans ScanUp pour le client sur chaque module (demande de Laure du 20/11/2026) :
+   qualification toujours attendue sur un module test, vidéo de coaching pour un TMS avec coaching vidéo seulement,
+   rapport nominatif seulement s'il est demandé. */
+function su_consignes(string $type, string $retour, bool $nominatif): array {
+    return ['qualificationAttendue' => true, 'videoCoachingAttendue' => $type === 'TMS' && $retour === 'perso', 'rapportPersonnaliseAttendu' => $nominatif];
+}
+/* Résultats visibles par les opérateurs : jamais sans retour au salarié ; sinon selon la réponse du formulaire (oui par défaut). */
+function su_visible(array $s, string $retour): bool { return $retour !== 'none' && ($s['visible'] ?? true) !== false; }
+/* Conduite à tenir posée sur le module : texte personnalisé saisi à la création du client test, sinon texte par défaut. */
+function su_conduite_pour(array $s, string $type, string $retour): ?string {
+    if ($retour === 'none') return null;
+    $perso = trim((string)($s['conduite'] ?? ''));
+    return $perso !== '' ? $perso : su_conduite($type, $retour);
+}
+
 function su_models(): array {
     $m = setting('scanup_models', []);
     return array_merge(SU_MODELES, is_array($m) ? array_map('intval', $m) : []);
@@ -101,6 +116,8 @@ function su_modules_init(array $me, array $in): array {
     $length = ($in['length'] ?? 'standard') === 'court' ? 'court' : 'standard';
     $end = (string)($in['end_date'] ?? '');
     if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $end) || $end <= gmdate('Y-m-d')) throw new RuntimeException('Choisissez une date de fin de session à venir.');
+    $visible = !array_key_exists('visible', $in) || !empty($in['visible']);
+    $conduite = mb_substr(trim((string)($in['conduite'] ?? '')), 0, 4000);
     $models = su_models(); $mods = []; $log = [];
     foreach ($types as $t) foreach ($retour === 'both' ? ['rcat', 'perso'] : [$retour] as $r) {
         // Sans retour : même modèle que le retour avec la conduite à tenir, résultats masqués aux opérateurs ensuite.
@@ -112,7 +129,8 @@ function su_modules_init(array $me, array $in): array {
     }
     return ['deal_id' => (int)$deal['id'], 'cabinet' => $cab, 'org_id' => $org, 'client' => mb_substr(trim((string)($in['client'] ?? '')), 0, 120) ?: $deal['title'],
         'jobs' => mb_substr(trim((string)($in['jobs'] ?? '')), 0, 200), 'country' => $country, 'length' => $length, 'retour' => $retour, 'end_date' => $end,
-        'mods' => $mods, 'i' => 0, 'step' => 'dup', 'queue' => [], 'assigned' => [], 'log' => $log, 'pct' => 0, 'nominatif' => !empty($in['nominatif'])];
+        'mods' => $mods, 'i' => 0, 'step' => 'dup', 'queue' => [], 'assigned' => [], 'log' => $log, 'pct' => 0, 'nominatif' => !empty($in['nominatif']),
+        'visible' => $visible, 'conduite' => $conduite];
 }
 
 /* Lot 20 : modules déjà existants dans l'espace évaluateurs du cabinet (distributeur). Rien n'est copié ni modifié :
@@ -157,10 +175,10 @@ function su_modules_step(array $me, array $s): array {
         $s['step'] = 'texts'; break;
     case 'texts':
         $patch = ['titre' => $mod['titre'], 'description' => $mod['desc'], 'organisationClienteId' => $org];
-        if ($mod['retour'] === 'none') $patch['resultatsVisiblesOperateurs'] = false;
+        $patch['resultatsVisiblesOperateurs'] = su_visible($s, $mod['retour']);
         [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'], $patch, 'PATCH', SU_AUTRICE);
         su_ok($c, $j, 'Adaptation du titre et de la description');
-        $s['log'][] = "Titre : « {$mod['titre']} »." . ($mod['retour'] === 'none' ? ' Résultats masqués aux opérateurs.' : '');
+        $s['log'][] = "Titre : « {$mod['titre']} »." . (su_visible($s, $mod['retour']) ? ' Résultats visibles par les opérateurs.' : ' Résultats masqués aux opérateurs.');
         $s['step'] = 'image'; break;
     case 'image':
         $url = suimg_publish(suimg_render($mod['type'], $s['jobs'], trim(preg_replace('/\s*\(.*$/u', '', $s['client'])), $s['country']));
@@ -203,10 +221,23 @@ function su_modules_step(array $me, array $s): array {
         }
         [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/clients', ['clientOrgId' => $org]);
         if (!($ex && $c === 409)) su_ok($c, $j, 'Mise à disposition du client');
-        if (!$ex && ($cond = su_conduite($mod['type'], $mod['retour'])) !== null) {
+        if (!$ex && ($cond = su_conduite_pour($s, $mod['type'], $mod['retour'])) !== null) {
             [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . "/clients/$org/conduite-positive", ['conduitePositive' => $cond], 'PUT');
             su_ok($c, $j, 'Réglage de la conduite à tenir');
-            $s['log'][] = 'Conduite à tenir réglée (texte de départ, personnalisable dans ScanUp).';
+            $s['log'][] = trim((string)($s['conduite'] ?? '')) !== '' ? 'Conduite à tenir réglée (texte personnalisé).' : 'Conduite à tenir réglée (texte par défaut, personnalisable dans ScanUp).';
+        }
+        if (!$ex) {
+            // Consignes à l'évaluateur pour ce client sur ce module. Un refus ne bloque pas la suite : il est signalé comme écart.
+            $cons = su_consignes($mod['type'], $mod['retour'], !empty($s['nominatif']));
+            $mod['consignes'] = false;
+            try {
+                [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . "/consignes-evaluateur/$org", $cons, 'PUT');
+                su_ok($c, $j, "Réglage des consignes à l'évaluateur");
+                $mod['consignes'] = true;
+                $s['log'][] = "Consignes à l'évaluateur réglées : qualification oui, vidéo de coaching " . ($cons['videoCoachingAttendue'] ? 'oui' : 'non') . ', rapport nominatif ' . ($cons['rapportPersonnaliseAttendu'] ? 'oui' : 'non') . '.';
+            } catch (RuntimeException $e) {
+                $s['log'][] = "Consignes à l'évaluateur non réglées sur le module n° {$mod['id']} : " . mb_substr($e->getMessage(), 0, 200);
+            }
         }
         [$c, $j] = scanup_call($cab, '/api/modules/' . $mod['id'] . '/sessions', ['dateDebut' => gmdate('c'), 'dateFinPrevue' => $s['end_date'] . 'T21:59:00.000Z']);
         $sid = (int)(su_ok($c, $j, 'Création de la session')['data']['id'] ?? ($j['id'] ?? 0));
@@ -244,22 +275,24 @@ function su_modules_step(array $me, array $s): array {
         if (!$s['queue']) { $s['log'][] = count($s['assigned']) . ' inscriptions faites.'; $s['step'] = $ex ? 'finish' : 'check'; $s['ci'] = 0; $s['ecarts'] = []; }
         break;
     case 'check':
-        // Contrôle final, un module par étape : niveau dans le titre, Laura seule correctrice, résultats visibles.
+        // Contrôle final, un module par étape : niveau dans le titre, Laura seule correctrice, visibilité des résultats, consignes.
         $m = $s['mods'][(int)$s['ci']]; $e = [];
         [$c, $j] = scanup_call($cab, '/api/modules/' . $m['id'], null, 'GET');
         $info = su_ok($c, $j, 'Contrôle du module n° ' . $m['id'])['data']['module'] ?? [];
         $niv = su_niveau_label($m['type'], $m['retour']);
         if (mb_strpos((string)($info['titre'] ?? ''), $niv) === false) $e[] = "le titre ne contient pas « $niv »";
         $vis = $info['resultatsVisiblesOperateurs'] ?? null;
-        if ($m['retour'] === 'none') { if ($vis !== false) $e[] = 'les résultats devraient être masqués (pas de retour)'; }
-        elseif ($vis !== true) $e[] = 'les résultats ne sont pas visibles par les opérateurs';
+        $attendu = su_visible($s, $m['retour']);
+        if (!$attendu && $vis !== false) $e[] = 'les résultats devraient être masqués' . ($m['retour'] === 'none' ? ' (pas de retour)' : ' (demande du client)');
+        elseif ($attendu && $vis !== true) $e[] = 'les résultats ne sont pas visibles par les opérateurs';
+        if (empty($m['consignes'])) $e[] = "les consignes à l'évaluateur n'ont pas été réglées (à régler dans ScanUp)";
         [$c, $j] = scanup_call($cab, '/api/modules/' . $m['id'] . '/evaluators', null, 'GET');
         $evs = su_ok($c, $j, 'Contrôle des correcteurs du module n° ' . $m['id']); $evs = isset($evs['data']) ? $evs['data'] : $evs;
         $noms = array_map(fn($x) => trim(($x['prenom'] ?? '') . ' ' . ($x['nom'] ?? '')) ?: 'n° ' . ($x['id'] ?? '?'), (array)$evs);
         $ids = array_map(fn($x) => (int)($x['id'] ?? 0), (array)$evs);
         if ($ids !== [SU_CORRECTRICE]) $e[] = 'correcteurs : ' . ($noms ? implode(', ', $noms) : 'aucun') . ' (attendu : Laura Gasqueres seule)';
         if ($e) { $s['ecarts'][] = "Module n° {$m['id']} : " . implode(' ; ', $e) . '.'; $s['log'][] = "Écart sur le module n° {$m['id']} : " . implode(' ; ', $e) . '.'; }
-        else $s['log'][] = "Contrôle du module n° {$m['id']} : niveau dans le titre, Laura seule correctrice, résultats " . ($m['retour'] === 'none' ? 'masqués comme prévu' : 'visibles') . '.';
+        else $s['log'][] = "Contrôle du module n° {$m['id']} : niveau dans le titre, Laura seule correctrice, résultats " . ($attendu ? 'visibles' : 'masqués comme prévu') . ", consignes à l'évaluateur réglées.";
         $s['ci'] = (int)$s['ci'] + 1;
         if ($s['ci'] >= $nMods) $s['step'] = 'finish';
         break;
@@ -294,7 +327,12 @@ function su_modules_trace(array $me, array $s): void {
     $lines[] = "Livrables prévus :\n- " . implode("\n- ", $liv);
     $lines[] = 'Correctrice : Laura Gasqueres seule. Pas de rapport de la correctrice sur un module test, rien pour l\'observateur.';
     $lines[] = 'Contrôle final : ' . (empty($s['ecarts']) ? 'aucun écart.' : "\n- " . implode("\n- ", $s['ecarts']));
-    if ($s['retour'] !== 'none') $lines[] = "Conduite à tenir : textes de départ réglés sur chaque module, personnalisables dans ScanUp (menu du module, par le responsable de projet du client ou par l'équipe).";
+    if ($s['retour'] !== 'none') $lines[] = trim((string)($s['conduite'] ?? '')) !== ''
+        ? "Conduite à tenir : texte personnalisé réglé sur chaque module : « " . mb_substr(trim((string)$s['conduite']), 0, 600) . " »"
+        : "Conduite à tenir : textes par défaut réglés sur chaque module, personnalisables dans ScanUp (menu du module, par le responsable de projet du client ou par l'équipe).";
+    $lines[] = 'Résultats visibles par les opérateurs : ' . (($s['visible'] ?? true) !== false && $s['retour'] !== 'none' ? 'oui' : 'non') . '.';
+    $lines[] = "Consignes à l'évaluateur : " . implode(' ; ', array_map(function ($m) use ($s) { $c = su_consignes($m['type'], $m['retour'], !empty($s['nominatif']));
+        return "module n° {$m['id']} : qualification oui, vidéo de coaching " . ($c['videoCoachingAttendue'] ? 'oui' : 'non') . ', rapport nominatif ' . ($c['rapportPersonnaliseAttendu'] ? 'oui' : 'non') . (empty($m['consignes']) ? ' (NON RÉGLÉES)' : ''); }, $s['mods'])) . '.';
     $note = implode("\n", $lines) . "\nInscriptions : " . implode(', ', $s['assigned']) . "\nPays : " . ($s['country'] === 'CH' ? 'Suisse' : 'France')
           . ($s['jobs'] !== '' ? "\nMétiers : {$s['jobs']}" : '') . "\nFin de session : " . date('d/m/Y', strtotime($s['end_date']));
     q('INSERT INTO activities (type, subject, due_date, done, done_time, owner_id, deal_id, person_id, org_id, note, add_time, update_time) VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?)',

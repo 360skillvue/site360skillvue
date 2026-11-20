@@ -2,7 +2,7 @@
 // Chargement commun : configuration, base de données, session, utilitaires.
 declare(strict_types=1);
 
-const CRM_VERSION = '1.0.78';
+const CRM_VERSION = '1.0.79';
 define('CRM_ROOT', dirname(__DIR__));
 
 // Pour toutes les pages du CRM : la version de PHP n'est jamais annoncée et les réponses ne sont pas compressées par

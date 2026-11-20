@@ -59,10 +59,12 @@ function su_conduite(string $type, string $retour): ?string {
 }
 
 /* Consignes à l'évaluateur, réglées dans ScanUp pour le client sur chaque module (demande de Laure du 20/11/2026) :
-   qualification toujours attendue sur un module test, vidéo de coaching pour un TMS avec coaching vidéo seulement,
-   rapport nominatif seulement s'il est demandé. */
+   qualification toujours attendue sur un module test, vidéo de coaching pour un TMS avec coaching vidéo seulement.
+   Jamais de rapport nominatif à rédiger par l'évaluateur sur un module test (règle du 17/11/2026, confirmée le 20/11) :
+   le rapport individuel nominatif et le plan d'action sont des gabarits d'exemple envoyés par e-mail au prospect.
+   $nominatif ne sert qu'aux livrables à envoyer, il ne change pas les consignes. */
 function su_consignes(string $type, string $retour, bool $nominatif): array {
-    return ['qualificationAttendue' => true, 'videoCoachingAttendue' => $type === 'TMS' && $retour === 'perso', 'rapportPersonnaliseAttendu' => $nominatif];
+    return ['qualificationAttendue' => true, 'videoCoachingAttendue' => $type === 'TMS' && $retour === 'perso', 'rapportPersonnaliseAttendu' => false];
 }
 /* Résultats visibles par les opérateurs : jamais sans retour au salarié ; sinon selon la réponse du formulaire (oui par défaut). */
 function su_visible(array $s, string $retour): bool { return $retour !== 'none' && ($s['visible'] ?? true) !== false; }

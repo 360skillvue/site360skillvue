@@ -1342,7 +1342,7 @@ function openTrial(d, fresh = false) {
           <div class="note" style="margin:6px 0 0;white-space:pre-line" id="tCondTxt"></div></details>
         <div class="f"><span>Consignes à l'évaluateur</span><div id="tCons" class="note" style="margin:0;color:var(--fg)"></div></div>
         <div class="f"><span>Livrables prévus</span><div id="tLiv" class="note" style="margin:0;color:var(--fg)"></div></div>
-        <label id="tNomBox" style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tNom"> Ajouter le rapport individuel nominatif</label>
+        <label id="tNomBox" style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="tNom"> Ajouter le rapport individuel nominatif (gabarit d'exemple envoyé par e-mail, pas rédigé par l'évaluateur)</label>
         <p class="note" style="margin:0">Pendant le test, tous les livrables, rapport individuel nominatif compris, sont envoyés par e-mail au prospect, sans accès observateur. Après signature, le rapport individuel va au professionnel de santé du client (infirmière de santé au travail, service de santé autonome) par un accès observateur.</p>
         <label class="f"><span>Fin de la session</span><input type="date" id="tEnd" value="${end}"></label>
         <p class="note" style="margin:0">Pas de retour : à la demande du prospect, « résultats visibles par les opérateurs » est décoché et Laura fait uniquement la qualification (niveau 0). Avec un retour, le résultat est visible par défaut ; répondez « Non » si le client veut tester sans résultat visible. Accompagnement : coaching vidéo pour les TMS, téléconsultation d'orientation pour les RPS, en cas de dépistage positif. Comparer : la moitié des opérateurs voit son résultat avec la conduite à tenir, l'autre moitié l'accompagnement. Version suisse : mêmes questions, vocabulaire suisse dans les textes. Version courte : le modèle court s'il est réglé, sinon la version standard.</p>
@@ -1383,7 +1383,7 @@ function openTrial(d, fresh = false) {
     $("#tVisBox").hidden = noRet; $("#tCondBox").hidden = noRet; $("#tCondCustomBox").hidden = noRet || !custom;
     // Consignes réglées dans ScanUp pour le client sur chaque module (mêmes règles que lib/sumodules.php).
     const cons = [];
-    for (const ty of types) for (const x of rets) cons.push(`<b>${ty}${rets.length > 1 ? (x === "perso" ? ", accompagnement" : ", conduite à tenir") : ""}</b> : qualification oui, vidéo de coaching ${ty === "TMS" && x === "perso" ? "oui" : "non"}, rapport nominatif ${nom ? "oui" : "non"}`);
+    for (const ty of types) for (const x of rets) cons.push(`<b>${ty}${rets.length > 1 ? (x === "perso" ? ", accompagnement" : ", conduite à tenir") : ""}</b> : qualification oui, vidéo de coaching ${ty === "TMS" && x === "perso" ? "oui" : "non"}, rapport nominatif non (gabarit envoyé par e-mail)`);
     $("#tCons").innerHTML = cons.join("<br>");
     $("#tCond").hidden = !conds.length || custom;
     $("#tCondTxt").innerHTML = conds.join("<br><br>") + (conds.length ? "<br><br><i>Ces textes sont des textes de départ, personnalisables ensuite dans ScanUp (menu du module) par le responsable de projet du client ou par l'équipe : numéro d'aide, RH référent, infirmière de santé au travail…</i>" : "");

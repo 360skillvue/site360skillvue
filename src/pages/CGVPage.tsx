@@ -44,14 +44,14 @@ const SECTIONS = [
     title: '5. Session de dépistage et facturation',
     paragraphs: [
       "Sauf mention contraire dans le devis, la prestation prend la forme d'une session d'un ou trois mois, ouverte au Client pour mener sa campagne de dépistage.",
-      "50 % du montant du devis est facturé au démarrage de la session. Le solde est facturé à la fin de la session, sur la base du nombre de dépistages réellement réalisés et des livrables commandés, au tarif indiqué dans le devis, sous réserve des modalités prévues à l'article 6 pour les prestations comprenant un plan de prévention. Il n'y a ni abonnement ni engagement de durée.",
+      "50 % du montant du devis est facturé au démarrage de la session. Le solde est facturé à la fin de la session, sur la base du nombre de dépistages réellement réalisés et des livrables commandés, au tarif indiqué dans le devis. L'acompte de 50 % reste acquis au Vendeur, quel que soit le nombre de dépistages réalisés. Il n'y a pas d'engagement de durée.",
     ],
   },
   {
     title: '6. Modalités de paiement',
     paragraphs: [
       "Le paiement s'effectue par virement bancaire ou tout autre moyen accepté et précisé sur la facture.",
-      "Pour les prestations ScanUp comprenant un plan de prévention, 50 % du montant est facturé dès que l'entretien exploratoire est planifié et doit être réglé avant sa tenue ; le solde est facturé à la livraison du plan de prévention. Les autres factures sont payables à 30 jours à compter de leur date d'émission, sauf accord particulier. Pour les clients en France, tout retard de paiement entraîne de plein droit l'application de pénalités de retard au taux prévu à l'article L. 441-10 du Code de commerce et d'une indemnité forfaitaire pour frais de recouvrement de 40 €. Pour les autres clients, des intérêts moratoires au taux légal suisse sont dus, ainsi qu'une indemnité forfaitaire de CHF 40 pour frais de recouvrement.",
+      "Les factures sont payables à 30 jours à compter de leur date d'émission, sauf accord particulier. Pour les clients en France, tout retard de paiement entraîne de plein droit l'application de pénalités de retard au taux prévu à l'article L. 441-10 du Code de commerce et d'une indemnité forfaitaire pour frais de recouvrement de 40 €. Pour les autres clients, des intérêts moratoires au taux légal suisse sont dus, ainsi qu'une indemnité forfaitaire de CHF 40 pour frais de recouvrement.",
     ],
   },
   {

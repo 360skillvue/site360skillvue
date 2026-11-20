@@ -566,7 +566,7 @@ export const fr = {
       { title: 'Ou proposé sur le terrain', body: "Lors de vos actions de prévention en présentiel, l'intervenant remet au salarié une carte avec QR code et identifiant : il réalise son dépistage sur place, sans compte à créer." },
       { title: 'Une confidentialité qui fait adhérer', body: "Identifiant sous pseudonyme possible, données hébergées en HDS, analyse par des ergonomes et psychologues indépendants : l'employeur ne reçoit que des données agrégées. Salariés et représentants du personnel adhèrent plus facilement." },
       { title: 'Un déploiement préparé pour vous', body: "Modules adaptés aux métiers de chaque entreprise, identifiants et cartes prêts à distribuer, accompagnement par téléphone : nous préparons la campagne avec l'entreprise. ScanUp est connecté au logiciel RH Lucca." },
-      { title: "Vous ne payez que l'usage réel", body: "Facturation au nombre de salariés effectivement dépistés, sans abonnement : un service qui n'est pas utilisé ne vous coûte rien." },
+      { title: "Vous ne payez que l'usage réel", body: "Facturation au nombre de salariés effectivement dépistés : un service qui n'est pas utilisé ne vous coûte rien." },
     ],
     // ── Bénéfices ────────────────────────────────────────────────
     impactLabel: "L'impact",
@@ -614,7 +614,7 @@ export const fr = {
     badge: 'Tarifs',
     title: "Protégez vos équipes,",
     titleHighlight: "dès 20 € par salarié.",
-    subtitle: "Vous payez uniquement par salarié dépisté, sans abonnement. Vous choisissez ce que reçoivent vos salariés, ce dont vous disposez pour agir en tant que RH, et ce que reçoit votre médecin du travail. Tout est facultatif et cumulable. Essai gratuit de 15 jours, sans carte bancaire.",
+    subtitle: "Vous payez uniquement par salarié dépisté. Vous choisissez ce que reçoivent vos salariés, ce dont vous disposez pour agir en tant que RH, et ce que reçoit votre médecin du travail. Tout est facultatif et cumulable. Essai gratuit de 15 jours, sans carte bancaire.",
     trial: {
       title: 'Essai gratuit 15 jours',
       desc: 'Des dépistages offerts, sans carte bancaire ni engagement. Testez ScanUp avec vos équipes avant de choisir votre offre.',
@@ -699,7 +699,7 @@ export const fr = {
       { q: 'Nous disposons de nos propres experts en prévention : existe-t-il une formule adaptée ?', a: 'Oui. Une formule en autonomie existe : vos ergonomes et psychologues du travail utilisent la plateforme pour réaliser et qualifier eux-mêmes les dépistages. Contactez-nous pour en discuter.' },
       { q: 'Cela remplace-t-il l\'évaluation réglementaire des risques professionnels ?', a: 'Non, cela l\'alimente. Nos tableaux de bord fournissent des données objectives pour mettre à jour votre évaluation des risques (Document unique, ou DUERP, en France 🇫🇷 ; démarche MSST en Suisse 🇨🇭) et justifier vos plans d\'action.' },
       { q: 'Combien de temps pour démarrer ?', a: 'En 48 heures. Sans téléchargement, depuis n\'importe quel appareil, avec un mode de connexion adapté à chaque salarié : e-mail, SSO ou compte créé soi-même par un lien, sous pseudonyme et sans e-mail, pour ceux qui travaillent sur ordinateur ; vignette avec QR code et identifiant pour ceux qui n\'en ont pas. ScanUp est connecté au logiciel RH Lucca.' },
-      { q: 'Y a-t-il un engagement de durée ?', a: 'Aucun engagement de durée ni abonnement. Nous ouvrons une session d\'un ou trois mois, le temps de mener votre campagne de dépistage. Nous facturons 50 % du devis au démarrage, puis le solde à la fin, selon le nombre de dépistages réellement réalisés.' },
+      { q: 'Y a-t-il un engagement de durée ?', a: 'Aucun engagement de durée. Nous ouvrons une session d\'un ou trois mois, le temps de mener votre campagne de dépistage. Nous facturons 50 % du devis au démarrage, puis le solde à la fin, selon le nombre de dépistages réellement réalisés.' },
     ],
     ctaTitle: 'Vous hésitez ?',
     ctaSubtitle: '15 jours d\'accès gratuit, dépistages offerts, sans engagement.',

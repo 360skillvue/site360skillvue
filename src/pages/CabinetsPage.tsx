@@ -66,7 +66,7 @@ const TEXTS: Record<Lang, Texts> = {
     heroSubtitle:
       "ScanUp est l'outil que vos ergonomes et vos psychologues du travail utilisent pour atteindre tous les salariés d'un client, y compris ceux que le présentiel ne touche jamais. Ils créent leurs modules, analysent eux-mêmes les situations et repèrent les signaux faibles. Vous gardez l'expertise et le terrain ; ScanUp vous dit où aller.",
     heroCta: 'Demander une démonstration',
-    heroNote: "Essai gratuit de 14 jours dans votre propre espace, avec des modules modèles prêts à l'emploi.",
+    heroNote: "Essai gratuit de 15 jours dans votre propre espace, avec des modules modèles prêts à l'emploi.",
     usagesLabel: 'Trois usages',
     usagesTitle: 'Ce que vos experts en font',
     usages: [
@@ -219,7 +219,7 @@ const TEXTS: Record<Lang, Texts> = {
     heroTitleHighlight: "where you are needed",
     heroSubtitle: "ScanUp is the tool your ergonomists and occupational psychologists use to reach every employee of a client, including those on-site work never reaches. They build their modules, analyse the situations themselves and pick up weak signals. You keep the expertise and the field work; ScanUp tells you where to go.",
     heroCta: "Request a demo",
-    heroNote: "14-day free trial in your own space, with ready-to-use template modules.",
+    heroNote: "15-day free trial in your own space, with ready-to-use template modules.",
     usagesLabel: "Three uses",
     usagesTitle: "What your experts do with it",
     usages: [
@@ -287,7 +287,7 @@ const TEXTS: Record<Lang, Texts> = {
     heroTitleHighlight: "wo Sie gebraucht werden",
     heroSubtitle: "ScanUp ist das Werkzeug, mit dem Ihre Fachleute für Ergonomie und Arbeitspsychologie alle Mitarbeitenden eines Kunden erreichen, auch jene, die Einsätze vor Ort nie erreichen. Sie erstellen ihre Module, analysieren die Situationen selbst und erkennen schwache Signale. Expertise und Feldarbeit bleiben bei Ihnen; ScanUp zeigt Ihnen, wohin Sie gehen sollten.",
     heroCta: "Demo anfragen",
-    heroNote: "14 Tage kostenlos testen, in Ihrem eigenen Bereich, mit sofort einsetzbaren Mustermodulen.",
+    heroNote: "15 Tage kostenlos testen, in Ihrem eigenen Bereich, mit sofort einsetzbaren Mustermodulen.",
     usagesLabel: "Drei Einsätze",
     usagesTitle: "Was Ihre Fachleute damit machen",
     usages: [
@@ -355,7 +355,7 @@ const TEXTS: Record<Lang, Texts> = {
     heroTitleHighlight: "dove siete utili",
     heroSubtitle: "ScanUp è lo strumento che i vostri ergonomi e psicologi del lavoro usano per raggiungere tutti i dipendenti di un cliente, compresi quelli che l'intervento in presenza non raggiunge mai. Creano i loro moduli, analizzano loro stessi le situazioni e colgono i segnali deboli. Voi mantenete l'esperienza e il campo; ScanUp vi dice dove andare.",
     heroCta: "Richiedere una dimostrazione",
-    heroNote: "Prova gratuita di 14 giorni nel vostro spazio, con moduli modello pronti all'uso.",
+    heroNote: "Prova gratuita di 15 giorni nel vostro spazio, con moduli modello pronti all'uso.",
     usagesLabel: "Tre usi",
     usagesTitle: "Che cosa ne fanno i vostri esperti",
     usages: [
@@ -423,7 +423,7 @@ const TEXTS: Record<Lang, Texts> = {
     heroTitleHighlight: "donde es útil",
     heroSubtitle: "ScanUp es la herramienta que sus ergónomos y psicólogos del trabajo utilizan para llegar a todos los empleados de un cliente, incluidos los que la intervención presencial nunca alcanza. Crean sus módulos, analizan ellos mismos las situaciones y detectan las señales débiles. Usted conserva la experiencia y el terreno; ScanUp le indica adónde ir.",
     heroCta: "Solicitar una demostración",
-    heroNote: "Prueba gratuita de 14 días en su propio espacio, con módulos modelo listos para usar.",
+    heroNote: "Prueba gratuita de 15 días en su propio espacio, con módulos modelo listos para usar.",
     usagesLabel: "Tres usos",
     usagesTitle: "Lo que hacen sus expertos con ella",
     usages: [
@@ -491,7 +491,7 @@ const TEXTS: Record<Lang, Texts> = {
     heroTitleHighlight: "onde é útil",
     heroSubtitle: "O ScanUp é a ferramenta que os seus ergonomistas e psicólogos do trabalho utilizam para chegar a todos os colaboradores de um cliente, incluindo aqueles que a intervenção presencial nunca alcança. Criam os seus módulos, analisam eles próprios as situações e identificam os sinais fracos. Fica com a especialização e o terreno; o ScanUp diz-lhe onde ir.",
     heroCta: "Pedir uma demonstração",
-    heroNote: "Teste gratuito de 14 dias no seu próprio espaço, com módulos modelo prontos a usar.",
+    heroNote: "Teste gratuito de 15 dias no seu próprio espaço, com módulos modelo prontos a usar.",
     usagesLabel: "Três utilizações",
     usagesTitle: "O que os seus especialistas fazem com ela",
     usages: [

@@ -20,6 +20,7 @@ const PolitiqueConfidentialitePage = lazy(() => import('./pages/PolitiqueConfide
 const AProposPage                  = lazy(() => import('./pages/AProposPage'));
 const RevueDePressePage            = lazy(() => import('./pages/RevueDePressePage'));
 const ConfirmationPage             = lazy(() => import('./pages/ConfirmationPage'));
+const EssaiGratuitPage             = lazy(() => import('./pages/EssaiGratuitPage'));
 
 /**
  * Chemins publics du site, sans prefixe de langue.
@@ -42,6 +43,7 @@ const PAGES: { path: string; element: React.ReactNode }[] = [
   { path: '/politique-confidentialite',     element: <PolitiqueConfidentialitePage /> },
   { path: '/a-propos',                      element: <AProposPage /> },
   { path: '/revue-de-presse',               element: <RevueDePressePage /> },
+  { path: '/essai-gratuit',                 element: <EssaiGratuitPage /> },
 ];
 
 /**

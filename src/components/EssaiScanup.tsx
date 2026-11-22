@@ -11,6 +11,16 @@ import { useLanguage, type Lang } from '../i18n';
 export const ESSAI_ANCRE = 'essai-scanup';
 const WEBHOOK = 'https://hook.eu1.make.com/4uxjdwtxs3l5bkn9nln0pyty1rw0f8q6';
 
+/** Titre et description de la page /essai-gratuit (mêmes valeurs dans scripts/prerender-meta.mjs). */
+export const ESSAI_META: Record<Lang, { title: string; description: string }> = {
+  fr: { title: 'Tester ScanUp gratuitement', description: "Testez ScanUp gratuitement en 10 minutes, comme un de vos salariés : questionnaire RPS et vidéo TMS depuis votre téléphone. Sans engagement, données supprimées au bout de 30 jours." },
+  en: { title: 'Try ScanUp for free', description: 'Try ScanUp for free in 10 minutes, as one of your employees would: psychosocial risk questionnaire and MSD video from your phone. No commitment, data deleted after 30 days.' },
+  de: { title: 'ScanUp kostenlos testen', description: 'Testen Sie ScanUp kostenlos in 10 Minuten, wie Ihre Mitarbeitenden: Fragebogen zu psychosozialen Risiken und MSE-Video mit dem Smartphone. Unverbindlich, Daten nach 30 Tagen gelöscht.' },
+  it: { title: 'Prova ScanUp gratis', description: 'Prova ScanUp gratis in 10 minuti, come uno dei tuoi collaboratori: questionario sui rischi psicosociali e video DMS dal telefono. Senza impegno, dati cancellati dopo 30 giorni.' },
+  es: { title: 'Probar ScanUp gratis', description: 'Pruebe ScanUp gratis en 10 minutos, como uno de sus empleados: cuestionario de riesgos psicosociales y vídeo TME desde su teléfono. Sin compromiso, datos eliminados a los 30 días.' },
+  pt: { title: 'Testar a ScanUp grátis', description: 'Teste a ScanUp grátis em 10 minutos, como um dos seus colaboradores: questionário de riscos psicossociais e vídeo LMERT no telemóvel. Sem compromisso, dados apagados ao fim de 30 dias.' },
+};
+
 type Texts = {
   button: string;
   label: string;
@@ -148,7 +158,7 @@ export function EssaiScanupBouton({ variant = 'primary', className = '' }: { var
 const champ = 'w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-[15px] text-scanup-navy placeholder:text-scanup-graytext/70 focus:outline-none focus:border-scanup-blue focus:ring-2 focus:ring-scanup-blue/15 transition';
 
 /** Section avec le formulaire d'essai gratuit. */
-export function EssaiScanupSection() {
+export function EssaiScanupSection({ page = false }: { page?: boolean }) {
   const t = useTexts();
   const [etat, setEtat] = useState<'saisie' | 'envoi' | 'ok' | 'erreur'>('saisie');
   const icones = [Briefcase, ClipboardList, Smartphone];
@@ -172,14 +182,16 @@ export function EssaiScanupSection() {
   }
 
   return (
-    <section id={ESSAI_ANCRE} className="scroll-mt-24 py-24 px-6 bg-[#F8F9FC]">
+    <section id={ESSAI_ANCRE} className={`scroll-mt-24 px-6 bg-[#F8F9FC] ${page ? 'pt-14 pb-24 md:pt-20' : 'py-24'}`}>
       <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_1.15fr] gap-10 md:gap-14 items-start">
         <div className="relative rounded-3xl bg-scanup-navy text-white p-8 md:p-10 overflow-hidden">
           <div aria-hidden="true" className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-scanup-blue/50 blur-3xl" />
           <div aria-hidden="true" className="absolute -left-16 -bottom-24 w-56 h-56 rounded-full bg-scanup-turquoise/20 blur-3xl" />
           <div className="relative">
             <p className="text-[12px] uppercase tracking-widest font-semibold text-scanup-turquoise mb-4">{t.label}</p>
-            <h2 className="text-[30px] md:text-[38px] font-bold tracking-[-0.02em] leading-[1.15] mb-5 text-white">{t.title}</h2>
+            {page
+              ? <h1 className="text-[32px] md:text-[42px] font-bold tracking-[-0.02em] leading-[1.12] mb-5 text-white">{t.title}</h1>
+              : <h2 className="text-[30px] md:text-[38px] font-bold tracking-[-0.02em] leading-[1.15] mb-5 text-white">{t.title}</h2>}
             <p className="text-[15px] text-white/75 leading-relaxed mb-8">{t.intro}</p>
             <ol className="space-y-3">
               {t.steps.map((s, i) => {

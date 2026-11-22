@@ -66,6 +66,10 @@
       "destination": "/revue-de-presse/index.html"
     },
     {
+      "source": "/essai-gratuit",
+      "destination": "/essai-gratuit/index.html"
+    },
+    {
       "source": "/en",
       "destination": "/en/index.html"
     },
@@ -124,6 +128,10 @@
     {
       "source": "/en/revue-de-presse",
       "destination": "/en/revue-de-presse/index.html"
+    },
+    {
+      "source": "/en/essai-gratuit",
+      "destination": "/en/essai-gratuit/index.html"
     },
     {
       "source": "/de",
@@ -186,6 +194,10 @@
       "destination": "/de/revue-de-presse/index.html"
     },
     {
+      "source": "/de/essai-gratuit",
+      "destination": "/de/essai-gratuit/index.html"
+    },
+    {
       "source": "/it",
       "destination": "/it/index.html"
     },
@@ -244,6 +256,10 @@
     {
       "source": "/it/revue-de-presse",
       "destination": "/it/revue-de-presse/index.html"
+    },
+    {
+      "source": "/it/essai-gratuit",
+      "destination": "/it/essai-gratuit/index.html"
     },
     {
       "source": "/es",
@@ -306,6 +322,10 @@
       "destination": "/es/revue-de-presse/index.html"
     },
     {
+      "source": "/es/essai-gratuit",
+      "destination": "/es/essai-gratuit/index.html"
+    },
+    {
       "source": "/pt",
       "destination": "/pt/index.html"
     },
@@ -364,6 +384,10 @@
     {
       "source": "/pt/revue-de-presse",
       "destination": "/pt/revue-de-presse/index.html"
+    },
+    {
+      "source": "/pt/essai-gratuit",
+      "destination": "/pt/essai-gratuit/index.html"
     },
     {
       "source": "/demande-calendly-bien-recue",

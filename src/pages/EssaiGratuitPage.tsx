@@ -15,7 +15,7 @@ export default function EssaiGratuitPage() {
         title={meta.title}
         description={meta.description}
         path="/essai-gratuit"
-        ogImage="https://360skillvue.com/og-essai-gratuit.png"
+        ogImage="https://360skillvue.com/og-essai-audio-video.png"
       />
       <Navbar />
       <EssaiScanupSection page />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Mic, Video } from 'lucide-react';
 import { Link } from '../i18n/Link';
 import { useLanguage, type Lang } from '../i18n';
 import { EssaiScanupBouton } from './EssaiScanup';
@@ -19,6 +19,7 @@ type Texts = {
   cheapTag: string; cheapFigure: string; cheapText: string;
   qualityTag: string; tmsLabel: string; tmsText: string; rpsLabel: string; rpsText: string;
   inclusiveTag: string; inclusiveFigure: string; inclusiveText: string;
+  justeTag: string; justeFigure: string; justeText: string; audioLabel: string; audioText: string; videoLabel: string; videoText: string;
   cta: string;
 };
 
@@ -37,6 +38,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'RPS :', rpsText: 'les personnes à risque repérées, seules reçues en entretien individuel.',
     inclusiveTag: 'Plus inclusif', inclusiveFigure: 'Chacun participe',
     inclusiveText: "y compris les collaborateurs isolés, en horaires décalés ou sur des sites éloignés, où qu'ils soient.",
+    justeTag: 'Plus juste', justeFigure: 'Audio et vidéo',
+    justeText: "L'expert entend le salarié et voit son poste réel, là où un questionnaire seul s'arrête aux cases cochées.",
+    audioLabel: 'RPS :', audioText: 'la voix du salarié, son ressenti dans ses propres mots.',
+    videoLabel: 'TMS :', videoText: 'le geste réel, filmé à son poste de travail.',
     cta: 'Demander à tester',
   },
   en: {
@@ -53,6 +58,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Psychosocial risks:', rpsText: 'people at risk are identified, and only they are seen in individual interviews.',
     inclusiveTag: 'More inclusive', inclusiveFigure: 'Everyone takes part',
     inclusiveText: 'including isolated employees, shift workers and remote sites, wherever they are.',
+    justeTag: 'More accurate', justeFigure: 'Audio and video',
+    justeText: 'The expert hears the employee and sees their real workstation, where a questionnaire alone stops at ticked boxes.',
+    audioLabel: 'Psychosocial risks:', audioText: "the employee's own voice, describing how they feel in their own words.",
+    videoLabel: 'MSDs:', videoText: 'the real movement, filmed at their workstation.',
     cta: 'Request a trial',
   },
   de: {
@@ -69,6 +78,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Psychosoziale Risiken:', rpsText: 'gefährdete Personen werden erkannt und nur sie zum Einzelgespräch eingeladen.',
     inclusiveTag: 'Inklusiver', inclusiveFigure: 'Alle machen mit',
     inclusiveText: 'auch Mitarbeitende an abgelegenen Standorten, im Schichtbetrieb oder allein arbeitend.',
+    justeTag: 'Treffender', justeFigure: 'Audio und Video',
+    justeText: 'Die Fachperson hört die Mitarbeitenden und sieht ihren echten Arbeitsplatz, wo ein Fragebogen allein bei angekreuzten Kästchen stehen bleibt.',
+    audioLabel: 'Psychosoziale Risiken:', audioText: 'die Stimme der Mitarbeitenden, ihr Befinden in eigenen Worten.',
+    videoLabel: 'MSE:', videoText: 'die echte Bewegung, am Arbeitsplatz gefilmt.',
     cta: 'Test anfragen',
   },
   it: {
@@ -85,6 +98,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Rischi psicosociali:', rpsText: 'le persone a rischio vengono individuate e solo loro ricevute in colloquio individuale.',
     inclusiveTag: 'Più inclusivo', inclusiveFigure: 'Tutti partecipano',
     inclusiveText: 'anche i collaboratori isolati, a turni o in sedi lontane, ovunque si trovino.',
+    justeTag: 'Più giusto', justeFigure: 'Audio e video',
+    justeText: "L'esperto ascolta il collaboratore e vede la sua postazione reale, dove un questionario da solo si ferma alle caselle spuntate.",
+    audioLabel: 'Rischi psicosociali:', audioText: 'la voce del collaboratore, come si sente con parole sue.',
+    videoLabel: 'DMS:', videoText: 'il gesto reale, filmato sulla sua postazione di lavoro.',
     cta: 'Richiedi una prova',
   },
   es: {
@@ -101,6 +118,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Riesgos psicosociales:', rpsText: 'se detecta a las personas en riesgo y solo ellas pasan a entrevista individual.',
     inclusiveTag: 'Más inclusivo', inclusiveFigure: 'Todos participan',
     inclusiveText: 'incluidos los empleados aislados, a turnos o en centros alejados, estén donde estén.',
+    justeTag: 'Más justo', justeFigure: 'Audio y vídeo',
+    justeText: 'El experto escucha al empleado y ve su puesto real, donde un cuestionario por sí solo se queda en las casillas marcadas.',
+    audioLabel: 'Riesgos psicosociales:', audioText: 'la voz del empleado, cómo se siente con sus propias palabras.',
+    videoLabel: 'TME:', videoText: 'el gesto real, grabado en su puesto de trabajo.',
     cta: 'Solicitar una prueba',
   },
   pt: {
@@ -117,6 +138,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Riscos psicossociais:', rpsText: 'as pessoas em risco são identificadas e só elas passam a entrevista individual.',
     inclusiveTag: 'Mais inclusivo', inclusiveFigure: 'Todos participam',
     inclusiveText: 'incluindo colaboradores isolados, por turnos ou em locais afastados, onde quer que estejam.',
+    justeTag: 'Mais justo', justeFigure: 'Áudio e vídeo',
+    justeText: 'O especialista ouve o colaborador e vê o seu posto real, onde um questionário sozinho fica pelas caixas assinaladas.',
+    audioLabel: 'Riscos psicossociais:', audioText: 'a voz do colaborador, como se sente nas suas próprias palavras.',
+    videoLabel: 'LMERT:', videoText: 'o gesto real, filmado no seu posto de trabalho.',
     cta: 'Pedir um teste',
   },
 };
@@ -190,6 +215,31 @@ export default function AvantagesPresentiel({ hero = false }: { hero?: boolean }
         </FadeIn>
 
         <div className="grid sm:grid-cols-2 gap-5 md:gap-6">
+          <FadeIn delay={0} className="sm:col-span-2">
+            <div className="relative overflow-hidden rounded-[20px] p-7 md:p-9 text-white bg-gradient-to-br from-scanup-blue to-scanup-navy">
+              <div aria-hidden="true" className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-scanup-turquoise/25 blur-3xl" />
+              <div className="relative grid md:grid-cols-[1.1fr_1fr] gap-6 md:gap-10 items-center">
+                <div className="flex flex-col gap-4">
+                  <span className="self-start rounded-full px-4 py-1.5 text-[13px] font-semibold bg-scanup-turquoise text-scanup-navy">{t.justeTag}</span>
+                  <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight">{t.justeFigure}</p>
+                  <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">{t.justeText}</p>
+                </div>
+                <div className="grid gap-3">
+                  {[{ Icon: Mic, label: t.audioLabel, text: t.audioText }, { Icon: Video, label: t.videoLabel, text: t.videoText }].map(({ Icon, label, text }) => (
+                    <div key={label} className="flex items-start gap-4 rounded-2xl bg-white/10 p-4 md:p-5">
+                      <span className="w-11 h-11 rounded-xl bg-scanup-turquoise/15 text-scanup-turquoise flex items-center justify-center flex-shrink-0">
+                        <Icon size={20} strokeWidth={1.8} />
+                      </span>
+                      <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">
+                        <span className="font-semibold text-white">{label}</span> {text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+
           <FadeIn delay={0}>
             <Card tone="blue" tag={t.simpleTag}>
               <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight">{t.simpleFigure}</p>

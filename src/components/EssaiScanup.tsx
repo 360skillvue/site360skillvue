@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, CheckCircle2, Smartphone, ClipboardList, Briefcase } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Video, Mic, Briefcase } from 'lucide-react';
 import { useLanguage, type Lang } from '../i18n';
 
 /**
@@ -27,6 +27,7 @@ type Texts = {
   title: string;
   intro: string;
   steps: [string, string, string];
+  valeur: string;
   prenom: string; nom: string; entreprise: string; fonction: string; email: string; telephone: string;
   optional: string;
   accord: string;
@@ -43,6 +44,7 @@ const TEXTS: Record<Lang, Texts> = {
     title: 'Tester ScanUp gratuitement',
     intro: 'Essayez ScanUp comme un de vos salariés, en TMS comme en RPS : choisissez votre métier, répondez au questionnaire et enregistrez un court témoignage audio sur votre ressenti (RPS), filmez une situation de travail depuis votre téléphone (TMS). Gratuit, sans engagement, en 10 minutes.',
     steps: ['Choisissez votre métier', 'RPS : questionnaire et témoignage audio', 'TMS : filmez une situation de travail'],
+    valeur: "Ce qu'un questionnaire ne dit pas : la voix du salarié (RPS) et son geste réel (TMS).",
     prenom: 'Prénom', nom: 'Nom', entreprise: 'Entreprise', fonction: 'Fonction', email: 'E-mail professionnel', telephone: 'Téléphone',
     optional: 'facultatif',
     accord: "J'accepte que 360SkillVue me contacte au sujet de ScanUp. Mes données d'essai sont supprimées au bout de 30 jours.",
@@ -57,6 +59,7 @@ const TEXTS: Record<Lang, Texts> = {
     title: 'Try ScanUp for free',
     intro: 'Try ScanUp as one of your employees would, for both MSDs and psychosocial risks: choose your job, answer the questionnaire and record a short audio testimony about how you feel (psychosocial risks), film a work situation with your phone (MSDs). Free, no commitment, in 10 minutes.',
     steps: ['Choose your job', 'Psychosocial risks: questionnaire and audio testimony', 'MSDs: film a work situation'],
+    valeur: "What a questionnaire cannot tell you: the employee's voice (psychosocial risks) and their real movement (MSDs).",
     prenom: 'First name', nom: 'Last name', entreprise: 'Company', fonction: 'Job title', email: 'Work email', telephone: 'Phone',
     optional: 'optional',
     accord: 'I agree that 360SkillVue may contact me about ScanUp. My trial data is deleted after 30 days.',
@@ -71,6 +74,7 @@ const TEXTS: Record<Lang, Texts> = {
     title: 'ScanUp kostenlos testen',
     intro: 'Testen Sie ScanUp wie Ihre Mitarbeitenden, für MSE und psychosoziale Risiken: Beruf wählen, Fragebogen ausfüllen und ein kurzes Audio-Statement zu Ihrem Befinden aufnehmen (psychosoziale Risiken), eine Arbeitssituation mit dem Smartphone filmen (MSE). Kostenlos, unverbindlich, in 10 Minuten.',
     steps: ['Beruf wählen', 'Psychosoziale Risiken: Fragebogen und Audio-Statement', 'MSE: Arbeitssituation filmen'],
+    valeur: 'Was ein Fragebogen nicht sagt: die Stimme der Mitarbeitenden (psychosoziale Risiken) und ihre echte Bewegung (MSE).',
     prenom: 'Vorname', nom: 'Nachname', entreprise: 'Unternehmen', fonction: 'Funktion', email: 'Geschäftliche E-Mail', telephone: 'Telefon',
     optional: 'optional',
     accord: 'Ich bin einverstanden, dass 360SkillVue mich zu ScanUp kontaktiert. Meine Testdaten werden nach 30 Tagen gelöscht.',
@@ -85,6 +89,7 @@ const TEXTS: Record<Lang, Texts> = {
     title: 'Prova ScanUp gratis',
     intro: 'Prova ScanUp come uno dei tuoi collaboratori, sia per i DMS sia per i rischi psicosociali: scegli il tuo mestiere, rispondi al questionario e registra una breve testimonianza audio su come ti senti (rischi psicosociali), filma una situazione di lavoro con il telefono (DMS). Gratis, senza impegno, in 10 minuti.',
     steps: ['Scegli il tuo mestiere', 'Rischi psicosociali: questionario e testimonianza audio', 'DMS: filma una situazione di lavoro'],
+    valeur: 'Ciò che un questionario non dice: la voce del collaboratore (rischi psicosociali) e il suo gesto reale (DMS).',
     prenom: 'Nome', nom: 'Cognome', entreprise: 'Azienda', fonction: 'Funzione', email: 'E-mail professionale', telephone: 'Telefono',
     optional: 'facoltativo',
     accord: 'Accetto che 360SkillVue mi contatti in merito a ScanUp. I miei dati di prova vengono cancellati dopo 30 giorni.',
@@ -99,6 +104,7 @@ const TEXTS: Record<Lang, Texts> = {
     title: 'Probar ScanUp gratis',
     intro: 'Pruebe ScanUp como uno de sus empleados, tanto en TME como en riesgos psicosociales: elija su oficio, responda al cuestionario y grabe un breve testimonio de audio sobre cómo se siente (riesgos psicosociales), grabe una situación de trabajo con su teléfono (TME). Gratis, sin compromiso, en 10 minutos.',
     steps: ['Elija su oficio', 'Riesgos psicosociales: cuestionario y testimonio de audio', 'TME: grabe una situación de trabajo'],
+    valeur: 'Lo que un cuestionario no dice: la voz del empleado (riesgos psicosociales) y su gesto real (TME).',
     prenom: 'Nombre', nom: 'Apellido', entreprise: 'Empresa', fonction: 'Cargo', email: 'Correo profesional', telephone: 'Teléfono',
     optional: 'opcional',
     accord: 'Acepto que 360SkillVue me contacte sobre ScanUp. Mis datos de prueba se eliminan a los 30 días.',
@@ -113,6 +119,7 @@ const TEXTS: Record<Lang, Texts> = {
     title: 'Testar a ScanUp grátis',
     intro: 'Experimente a ScanUp como um dos seus colaboradores, em LMERT e em riscos psicossociais: escolha a sua profissão, responda ao questionário e grave um breve testemunho áudio sobre como se sente (riscos psicossociais), filme uma situação de trabalho com o telemóvel (LMERT). Grátis, sem compromisso, em 10 minutos.',
     steps: ['Escolha a sua profissão', 'Riscos psicossociais: questionário e testemunho áudio', 'LMERT: filme uma situação de trabalho'],
+    valeur: 'O que um questionário não diz: a voz do colaborador (riscos psicossociais) e o seu gesto real (LMERT).',
     prenom: 'Nome', nom: 'Apelido', entreprise: 'Empresa', fonction: 'Função', email: 'E-mail profissional', telephone: 'Telefone',
     optional: 'facultativo',
     accord: 'Aceito que a 360SkillVue me contacte sobre a ScanUp. Os meus dados de teste são apagados ao fim de 30 dias.',
@@ -161,7 +168,7 @@ const champ = 'w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-
 export function EssaiScanupSection({ page = false }: { page?: boolean }) {
   const t = useTexts();
   const [etat, setEtat] = useState<'saisie' | 'envoi' | 'ok' | 'erreur'>('saisie');
-  const icones = [Briefcase, ClipboardList, Smartphone];
+  const icones = [Briefcase, Mic, Video];
 
   async function envoyer(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -206,6 +213,9 @@ export function EssaiScanupSection({ page = false }: { page?: boolean }) {
                 );
               })}
             </ol>
+            <p className="mt-8 rounded-2xl border border-scanup-turquoise/30 bg-scanup-turquoise/10 px-5 py-4 text-[15px] leading-relaxed text-white">
+              {t.valeur}
+            </p>
           </div>
         </div>
 

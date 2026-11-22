@@ -418,7 +418,7 @@ export const de = {
     heroTitle: 'Erkennen Sie Ihre',
     heroTitleHighlight: 'MSE- & PSR-Risiken',
     heroTitleEnd: 'ohne Audit in 48 Stunden.',
-    heroSubtitle: 'Jede Person wird einzeln von einem Arbeitspsychologen oder einer zertifizierten Ergonomin ausgewertet. Bei Bedarf: vollständige Analyse der Arbeitssituation aus der Ferne, muskuloskelettal oder psychosozial, mit individuellem Bericht. Ab 20 € pro Mitarbeitendem.',
+    heroSubtitle: 'Jede Person wird einzeln von einem Arbeitspsychologen oder einer zertifizierten Ergonomin ausgewertet, anhand ihres Audio-Statements und eines Videos ihres Arbeitsplatzes. Bei Bedarf: vollständige Analyse der Arbeitssituation aus der Ferne, muskuloskelettal oder psychosozial, mit individuellem Bericht. Ab 20 € pro Mitarbeitendem.',
     heroCtaPrimary: 'Kosten kostenlos simulieren (auf Französisch)',
     heroCtaSecondary: 'Demo ansehen',
     stats: [

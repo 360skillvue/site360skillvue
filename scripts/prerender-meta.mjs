@@ -64,7 +64,7 @@ const ROUTES = [
   { path: '/politique-confidentialite',      pick: t => t.meta.confidentialite, noindexTranslations: true },
   { path: '/a-propos',                       pick: t => t.meta.apropos },
   { path: '/revue-de-presse',                pick: t => ({ title: t.revueDePresse.metaTitle, description: t.revueDePresse.metaDescription }) },
-  { path: '/essai-gratuit',                  pick: (t, lang) => ESSAI_META[lang], ogImage: '/og-essai-gratuit.png' },
+  { path: '/essai-gratuit',                  pick: (t, lang) => ESSAI_META[lang], ogImage: '/og-essai-audio-video.png' },
 ];
 
 function localizePath(path, lang) {

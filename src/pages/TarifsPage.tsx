@@ -97,6 +97,7 @@ export default function TarifsPage() {
         title={t.meta.tarifs.title}
         description={t.meta.tarifs.description}
         path="/tarifs"
+        ogImage="https://360skillvue.com/og-tarifs.png"
       />
       <Navbar />
 

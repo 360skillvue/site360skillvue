@@ -47,7 +47,7 @@ const ROUTES = [
   { path: '/cabinets-sante-travail',         pick: (t, lang) => CABINETS_META[lang] },
   { path: '/partenaires',                    pick: t => t.meta.partenaires },
   { path: '/aide-support',                   pick: t => t.meta.aide },
-  { path: '/tarifs',                         pick: t => t.meta.tarifs },
+  { path: '/tarifs',                         pick: t => t.meta.tarifs, ogImage: '/og-tarifs.png' },
   { path: '/mentions-legales',               pick: t => t.meta.mentions, noindexTranslations: true },
   { path: '/cgu',                            pick: t => t.meta.cgu, noindexTranslations: true },
   { path: '/cgv',                            pick: t => t.meta.cgv, noindexTranslations: true },
@@ -148,6 +148,10 @@ function renderPage(route, lang, t) {
     /<meta name="twitter:description" content="[^"]*"\s*\/>/,
     `<meta name="twitter:description" content="${esc(description)}" />`
   );
+  // Image d'aperçu propre à la page (même valeur que la prop ogImage de PageMeta).
+  if (route.ogImage) {
+    html = html.replace(/(<meta (?:property="og:image"|name="twitter:image") content=")[^"]*("\s*\/>)/g, `$1${BASE}${route.ogImage}$2`);
+  }
   html = html.replace('</head>', `${alternates}\n  </head>`);
   return html;
 }

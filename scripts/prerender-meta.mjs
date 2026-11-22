@@ -40,12 +40,12 @@ const CABINETS_META = {
 
 /** Titre et description de la page « essai gratuit », par langue (mêmes valeurs que ESSAI_META dans src/components/EssaiScanup.tsx). */
 const ESSAI_META = {
-  fr: { title: 'Tester ScanUp gratuitement', description: "Testez ScanUp gratuitement en 10 minutes, comme un de vos salariés : questionnaire RPS et vidéo TMS depuis votre téléphone. Sans engagement, données supprimées au bout de 30 jours." },
-  en: { title: 'Try ScanUp for free', description: 'Try ScanUp for free in 10 minutes, as one of your employees would: psychosocial risk questionnaire and MSD video from your phone. No commitment, data deleted after 30 days.' },
-  de: { title: 'ScanUp kostenlos testen', description: 'Testen Sie ScanUp kostenlos in 10 Minuten, wie Ihre Mitarbeitenden: Fragebogen zu psychosozialen Risiken und MSE-Video mit dem Smartphone. Unverbindlich, Daten nach 30 Tagen gelöscht.' },
-  it: { title: 'Prova ScanUp gratis', description: 'Prova ScanUp gratis in 10 minuti, come uno dei tuoi collaboratori: questionario sui rischi psicosociali e video DMS dal telefono. Senza impegno, dati cancellati dopo 30 giorni.' },
-  es: { title: 'Probar ScanUp gratis', description: 'Pruebe ScanUp gratis en 10 minutos, como uno de sus empleados: cuestionario de riesgos psicosociales y vídeo TME desde su teléfono. Sin compromiso, datos eliminados a los 30 días.' },
-  pt: { title: 'Testar a ScanUp grátis', description: 'Teste a ScanUp grátis em 10 minutos, como um dos seus colaboradores: questionário de riscos psicossociais e vídeo LMERT no telemóvel. Sem compromisso, dados apagados ao fim de 30 dias.' },
+  fr: { title: 'Tester ScanUp gratuitement', description: "Testez ScanUp gratuitement en 10 minutes, comme un de vos salariés : questionnaire et témoignage audio RPS, vidéo TMS depuis votre téléphone. Sans engagement, données supprimées au bout de 30 jours." },
+  en: { title: 'Try ScanUp for free', description: 'Try ScanUp for free in 10 minutes, as one of your employees would: psychosocial risk questionnaire and audio testimony, MSD video from your phone. No commitment, data deleted after 30 days.' },
+  de: { title: 'ScanUp kostenlos testen', description: 'Testen Sie ScanUp kostenlos in 10 Minuten, wie Ihre Mitarbeitenden: Fragebogen und Audio-Statement zu psychosozialen Risiken, MSE-Video mit dem Smartphone. Unverbindlich, Daten nach 30 Tagen gelöscht.' },
+  it: { title: 'Prova ScanUp gratis', description: 'Prova ScanUp gratis in 10 minuti, come uno dei tuoi collaboratori: questionario e testimonianza audio sui rischi psicosociali, video DMS dal telefono. Senza impegno, dati cancellati dopo 30 giorni.' },
+  es: { title: 'Probar ScanUp gratis', description: 'Pruebe ScanUp gratis en 10 minutos, como uno de sus empleados: cuestionario y testimonio de audio sobre riesgos psicosociales, vídeo TME desde su teléfono. Sin compromiso, datos eliminados a los 30 días.' },
+  pt: { title: 'Testar a ScanUp grátis', description: 'Teste a ScanUp grátis em 10 minutos, como um dos seus colaboradores: questionário e testemunho áudio sobre riscos psicossociais, vídeo LMERT no telemóvel. Sem compromisso, dados apagados ao fim de 30 dias.' },
 };
 
 const ROUTES = [
@@ -64,7 +64,7 @@ const ROUTES = [
   { path: '/politique-confidentialite',      pick: t => t.meta.confidentialite, noindexTranslations: true },
   { path: '/a-propos',                       pick: t => t.meta.apropos },
   { path: '/revue-de-presse',                pick: t => ({ title: t.revueDePresse.metaTitle, description: t.revueDePresse.metaDescription }) },
-  { path: '/essai-gratuit',                  pick: (t, lang) => ESSAI_META[lang], ogImage: '/og-essai.png' },
+  { path: '/essai-gratuit',                  pick: (t, lang) => ESSAI_META[lang], ogImage: '/og-essai-gratuit.png' },
 ];
 
 function localizePath(path, lang) {

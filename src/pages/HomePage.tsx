@@ -13,6 +13,7 @@ import PageMeta from '../components/PageMeta';
 import VideoEmbed from '../components/VideoEmbed';
 import AvantagesPresentiel from '../components/AvantagesPresentiel';
 import { WebinaireEncadre } from '../components/WebinaireDecembre';
+import { EssaiScanupSection } from '../components/EssaiScanup';
 
 const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: string }> = ({
   children, delay = 0, className = ""
@@ -136,6 +137,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ─── ESSAI GRATUIT EN LIBRE ACCÈS ─────────────────────── */}
+      <EssaiScanupSection />
 
       {/* ─── COMMENT ÇA MARCHE ──────────────────────────── */}
       <section className="py-24 px-6">

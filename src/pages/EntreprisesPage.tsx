@@ -12,6 +12,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useLanguage } from '../i18n';
 import PageMeta from '../components/PageMeta';
+import { EssaiScanupBouton, EssaiScanupSection } from '../components/EssaiScanup';
 
 /* ── Helpers ─────────────────────────────────────────────── */
 
@@ -116,10 +117,11 @@ export default function EntreprisesPage() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.15} className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Reveal delay={0.15} className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
+            <EssaiScanupBouton />
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               onClick={() => { window.location.href = '/simulateur-cout-tms-rps'; }}
-              className="bg-scanup-blue text-white px-8 py-3.5 rounded-full font-semibold text-[15px] hover:bg-blue-700 transition-colors shadow-lg shadow-scanup-blue/25 flex items-center gap-2 group"
+              className="text-scanup-navy px-8 py-3.5 rounded-full font-semibold text-[15px] border border-scanup-blue/30 hover:border-scanup-blue hover:text-scanup-blue transition-all flex items-center gap-2 group"
             >
               {t.entreprises.heroCtaPrimary}
               <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
@@ -393,6 +395,9 @@ export default function EntreprisesPage() {
           </div>
         </div>
       </section>
+
+      {/* ── Essai gratuit en libre accès ─────────────────────── */}
+      <EssaiScanupSection />
 
       {/* ── CTA ──────────────────────────────────────────────── */}
       <section className="py-32 px-6 relative overflow-hidden">

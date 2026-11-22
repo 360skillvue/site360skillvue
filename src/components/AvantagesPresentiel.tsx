@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from '../i18n/Link';
 import { useLanguage, type Lang } from '../i18n';
+import { EssaiScanupBouton } from './EssaiScanup';
 
 /**
  * Section « ScanUp face aux méthodes en présentiel » de la page d'accueil.
@@ -185,6 +186,7 @@ export default function AvantagesPresentiel({ hero = false }: { hero?: boolean }
           <p className="text-[16px] text-scanup-graytext max-w-2xl mx-auto leading-relaxed">
             {t.subtitle}
           </p>
+          {hero && <EssaiScanupBouton className="mt-8" />}
         </FadeIn>
 
         <div className="grid sm:grid-cols-2 gap-5 md:gap-6">
@@ -229,10 +231,12 @@ export default function AvantagesPresentiel({ hero = false }: { hero?: boolean }
           </FadeIn>
         </div>
 
-        <FadeIn delay={0.2} className="text-center mt-12">
+        <FadeIn delay={0.2} className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             to="/aide-support?sujet=test#contact"
-            className="inline-flex items-center gap-2 bg-scanup-blue text-white px-7 py-3.5 rounded-[10px] font-semibold text-[15px] hover:brightness-110 transition-all"
+            className={hero
+              ? 'inline-flex items-center gap-2 text-scanup-navy px-7 py-3.5 rounded-full font-semibold text-[15px] border border-black/10 hover:border-scanup-blue hover:text-scanup-blue transition-all'
+              : 'inline-flex items-center gap-2 bg-scanup-blue text-white px-7 py-3.5 rounded-[10px] font-semibold text-[15px] hover:brightness-110 transition-all'}
           >
             {t.cta}
             <ArrowRight size={18} />

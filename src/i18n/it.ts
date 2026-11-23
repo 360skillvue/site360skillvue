@@ -30,7 +30,7 @@ export const it = {
     apropos: { title: 'Chi siamo, 360SkillVue e ScanUp', description: 'Da oltre dieci anni 360SkillVue accompagna i professionisti sanitari. L\'origine di ScanUp, la nostra piattaforma di screening dei rischi professionali.' },
     mentions: { title: 'Note legali', description: 'Note legali di 360SkillVue Sàrl, editore di ScanUp, piattaforma di screening dei rischi professionali.' },
     cgu: { title: 'Condizioni generali di utilizzo', description: 'Condizioni generali di utilizzo di ScanUp, edito da 360SkillVue Sàrl.' },
-    cgv: { title: 'Condizioni generali di vendita', description: 'Condizioni generali di vendita di ScanUp e delle prestazioni di certificazione periodica, edite da 360SkillVue Sàrl.' },
+    cgv: { title: 'Condizioni generali di vendita', description: 'Condizioni generali di vendita di ScanUp: moduli di screening dei rischi psicosociali e dei DMS e moduli di formazione, edite da 360SkillVue.' },
     confidentialite: { title: 'Informativa sulla privacy', description: 'Protezione dei dati personali presso 360SkillVue Sàrl, editore di ScanUp. Hosting certificato per i dati sanitari.' },
     introuvable: { title: 'Pagina non trovata', description: 'La pagina che cercate non esiste o è stata spostata.' },
   },
@@ -947,7 +947,7 @@ export const it = {
     frenchOnly: 'Le informazioni legali di questa pagina sono disponibili solo in francese; fa fede esclusivamente la versione francese.',
     lastUpdated: 'Ultimo aggiornamento:',
     updatedOn: '20 ottobre 2026',
-    cgvUpdatedOn: '20 novembre 2026', // date propre aux CGV
+    cgvUpdatedOn: '23 novembre 2026', // date propre aux CGV
     backHome: '← Torna alla home page',
   },
   footer: {

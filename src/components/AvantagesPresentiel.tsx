@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Mic, Video, Layers, User, BarChart3, Stethoscope } from 'lucide-react';
+import { ArrowRight, Video, Layers, Users } from 'lucide-react';
 import { Link } from '../i18n/Link';
 import { useLanguage, type Lang } from '../i18n';
 import { EssaiScanupBouton } from './EssaiScanup';
@@ -171,12 +171,12 @@ const Card: React.FC<CardProps> = ({ tone, tag, children }) => {
   const isBlue = tone === 'blue';
   return (
     <div
-      className={`h-full flex flex-col gap-4 rounded-[20px] p-7 md:p-9 text-white ${
+      className={`h-full flex flex-col gap-2.5 md:gap-3 rounded-2xl p-4 md:p-6 text-white ${
         isBlue ? 'bg-scanup-blue' : 'bg-scanup-navy'
       }`}
     >
       <span
-        className={`self-start rounded-full px-4 py-1.5 text-[13px] font-semibold ${
+        className={`self-start rounded-full px-3 py-1 text-[11px] md:text-[12px] font-semibold ${
           isBlue ? 'bg-white text-scanup-blue' : 'bg-scanup-turquoise text-scanup-navy'
         }`}
       >
@@ -215,71 +215,56 @@ export default function AvantagesPresentiel({ hero = false }: { hero?: boolean }
           {hero && <EssaiScanupBouton className="mt-8" />}
         </FadeIn>
 
-        <div className="grid sm:grid-cols-2 gap-5 md:gap-6">
-          <FadeIn delay={0} className="sm:col-span-2">
-            <div className="relative overflow-hidden rounded-[20px] p-7 md:p-9 text-white bg-gradient-to-br from-scanup-blue to-scanup-navy">
-              <div aria-hidden="true" className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-scanup-turquoise/25 blur-3xl" />
-              <div className="relative">
-                <span className="inline-block rounded-full px-4 py-1.5 text-[13px] font-semibold bg-scanup-turquoise text-scanup-navy">{t.valueTag}</span>
-                <p className="mt-4 text-[28px] md:text-[36px] font-bold leading-[1.15] tracking-tight text-balance">{t.valueTitle}</p>
-                <div className="mt-7 grid md:grid-cols-3 gap-4">
-                  {[
-                    { Icon: Layers, title: t.value1Title, text: t.value1Text },
-                    { Icon: Mic, Icon2: Video, title: t.value2Title, text: t.value2Text },
-                    { Icon: User, Icon2: BarChart3, Icon3: Stethoscope, title: t.value3Title, text: t.value3Text },
-                  ].map(({ Icon, Icon2, Icon3, title, text }: { Icon: typeof Mic; Icon2?: typeof Mic; Icon3?: typeof Mic; title: string; text: string }) => (
-                    <div key={title} className="flex flex-col gap-3 rounded-2xl bg-white/10 p-5">
-                      <span className="flex gap-2">
-                        <span className="w-11 h-11 rounded-xl bg-scanup-turquoise/15 text-scanup-turquoise flex items-center justify-center"><Icon size={20} strokeWidth={1.8} /></span>
-                        {Icon2 && <span className="w-11 h-11 rounded-xl bg-scanup-turquoise/15 text-scanup-turquoise flex items-center justify-center"><Icon2 size={20} strokeWidth={1.8} /></span>}
-                        {Icon3 && <span className="w-11 h-11 rounded-xl bg-scanup-turquoise/15 text-scanup-turquoise flex items-center justify-center"><Icon3 size={20} strokeWidth={1.8} /></span>}
-                      </span>
-                      <p className="text-[18px] font-semibold leading-snug text-white">{title}</p>
-                      <p className="text-[15px] leading-relaxed text-white/85">{text}</p>
+        {/* Valeur ajoutée : trois piliers compacts */}
+        <FadeIn delay={0}>
+          <div className="relative overflow-hidden rounded-2xl p-5 md:p-8 text-white bg-gradient-to-br from-scanup-blue to-scanup-navy">
+            <div aria-hidden="true" className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-scanup-turquoise/25 blur-3xl" />
+            <div className="relative">
+              <span className="inline-block rounded-full px-3 py-1 text-[12px] font-semibold bg-scanup-turquoise text-scanup-navy">{t.valueTag}</span>
+              <p className="mt-3 text-[22px] md:text-[32px] font-bold leading-[1.2] tracking-tight text-balance">{t.valueTitle}</p>
+              <div className="mt-5 grid md:grid-cols-3 gap-3 md:gap-4">
+                {[
+                  { Icon: Layers, title: t.value1Title, text: t.value1Text },
+                  { Icon: Video, title: t.value2Title, text: t.value2Text },
+                  { Icon: Users, title: t.value3Title, text: t.value3Text },
+                ].map(({ Icon, title, text }) => (
+                  <div key={title} className="flex md:flex-col items-start gap-3 rounded-xl bg-white/10 p-3.5 md:p-5">
+                    <span className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-scanup-turquoise/15 text-scanup-turquoise flex items-center justify-center flex-shrink-0"><Icon size={18} strokeWidth={1.8} /></span>
+                    <div>
+                      <p className="text-[15px] md:text-[17px] font-semibold leading-snug text-white">{title}</p>
+                      <p className="mt-1 text-[13px] md:text-[14px] leading-snug text-white/80">{text}</p>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </FadeIn>
+          </div>
+        </FadeIn>
 
-          <FadeIn delay={0}>
+        {/* Quatre avantages face au présentiel, en tuiles */}
+        <div className="mt-3 md:mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <FadeIn delay={0.05}>
             <Card tone="blue" tag={t.simpleTag}>
-              <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight">{t.simpleFigure}</p>
-              <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">{t.simpleText}</p>
+              <p className="text-[20px] md:text-[26px] font-bold leading-[1.15] tracking-tight">{t.simpleFigure}</p>
+              <p className="text-[13px] md:text-[14px] leading-snug text-white/85">{t.simpleText}</p>
             </Card>
           </FadeIn>
-
-          <FadeIn delay={0.08}>
+          <FadeIn delay={0.1}>
             <Card tone="navy" tag={t.cheapTag}>
-              <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight text-scanup-turquoise">{t.cheapFigure}</p>
-              <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">{t.cheapText}</p>
+              <p className="text-[20px] md:text-[26px] font-bold leading-[1.15] tracking-tight text-scanup-turquoise">{t.cheapFigure}</p>
+              <p className="text-[13px] md:text-[14px] leading-snug text-white/85">{t.cheapText}</p>
             </Card>
           </FadeIn>
-
-          <FadeIn delay={0.16}>
+          <FadeIn delay={0.15}>
             <Card tone="navy" tag={t.qualityTag}>
-              <div className="grid grid-cols-2 gap-5">
-                <div className="flex flex-col gap-2">
-                  <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight text-scanup-turquoise">100 %</p>
-                  <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">
-                    <span className="font-semibold text-white">{t.tmsLabel}</span> {t.tmsText}
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight text-scanup-turquoise">≈ 20 %</p>
-                  <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">
-                    <span className="font-semibold text-white">{t.rpsLabel}</span> {t.rpsText}
-                  </p>
-                </div>
-              </div>
+              <p className="text-[13px] md:text-[14px] leading-snug text-white/85"><span className="text-[20px] md:text-[26px] font-bold leading-[1.15] tracking-tight text-scanup-turquoise block">100 %</span><span className="font-semibold text-white">{t.tmsLabel}</span> {t.tmsText}</p>
+              <p className="text-[13px] md:text-[14px] leading-snug text-white/85"><span className="text-[20px] md:text-[26px] font-bold leading-[1.15] tracking-tight text-scanup-turquoise block">≈ 20 %</span><span className="font-semibold text-white">{t.rpsLabel}</span> {t.rpsText}</p>
             </Card>
           </FadeIn>
-
-          <FadeIn delay={0.24}>
+          <FadeIn delay={0.2}>
             <Card tone="blue" tag={t.inclusiveTag}>
-              <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight">{t.inclusiveFigure}</p>
-              <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">{t.inclusiveText}</p>
+              <p className="text-[20px] md:text-[26px] font-bold leading-[1.15] tracking-tight">{t.inclusiveFigure}</p>
+              <p className="text-[13px] md:text-[14px] leading-snug text-white/85">{t.inclusiveText}</p>
             </Card>
           </FadeIn>
         </div>

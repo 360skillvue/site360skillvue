@@ -29,6 +29,8 @@ const SECTIONS = [
     title: '3. Offres et tarification',
     paragraphs: [
       "Les offres commerciales (dépistages, livrables, formations et prestations associées) sont présentées sur le site 360skillvue.com ou dans les devis transmis par voie électronique.",
+      "La plateforme ScanUp permet de créer trois types de modules : des modules de dépistage des risques psychosociaux (RPS), des modules de dépistage des troubles musculosquelettiques (TMS) et des modules de formation.",
+      "La certification périodique des professionnels de santé est un cas particulier : elle est portée par un organisme de formation, qui peut utiliser ScanUp comme plateforme de formation en ligne (LMS).",
       "Les prix sont indiqués en euros (EUR) pour les clients en France et en francs suisses (CHF) ou en euros pour les autres clients, hors taxes, sauf mention contraire. Les tarifs applicables sont ceux en vigueur à la date de confirmation de la commande.",
       "Le Vendeur se réserve le droit de modifier ses tarifs à tout moment, sans que cela affecte les commandes déjà confirmées.",
     ],

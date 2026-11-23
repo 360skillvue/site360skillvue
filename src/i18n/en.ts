@@ -30,7 +30,7 @@ export const en = {
     apropos: { title: 'About 360SkillVue and ScanUp', description: 'For more than ten years, 360SkillVue has supported healthcare professionals. The origin of ScanUp, our occupational risk screening platform.' },
     mentions: { title: 'Legal notice', description: 'Legal notice of 360SkillVue Sàrl, publisher of ScanUp, an occupational risk screening platform.' },
     cgu: { title: 'Terms of use', description: 'Terms of use of ScanUp, published by 360SkillVue Sàrl.' },
-    cgv: { title: 'Terms of sale', description: 'Terms of sale for ScanUp and for periodic certification services, published by 360SkillVue Sàrl.' },
+    cgv: { title: 'Terms of sale', description: 'Terms of sale for ScanUp: psychosocial risk and MSD screening modules and training modules, published by 360SkillVue.' },
     confidentialite: { title: 'Privacy policy', description: 'Personal data protection at 360SkillVue Sàrl, publisher of ScanUp. Certified hosting for health data.' },
     introuvable: { title: 'Page not found', description: 'The page you are looking for does not exist or has been moved.' },
   },
@@ -947,7 +947,7 @@ export const en = {
     frenchOnly: 'The legal information on this page is available in French only; only the French version is legally binding.',
     lastUpdated: 'Last updated:',
     updatedOn: '20 October 2026',
-    cgvUpdatedOn: '20 November 2026', // date propre aux CGV
+    cgvUpdatedOn: '23 November 2026', // date propre aux CGV
     backHome: '← Back to home',
   },
   footer: {

@@ -511,7 +511,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="step">
           <div class="step-head"><span class="step-n">03</span><h2>Agir, et à quel prix</h2></div>
-          <p class="callout ch-only">Tarifs ScanUp identiques en euros et en francs. Le présentiel est majoré de moitié en Suisse, où la main d'œuvre coûte environ une fois et demie plus cher.</p>
+          <p class="callout ch-only">Tarifs ScanUp en Suisse : dépistage au même montant en francs qu'en euros ; plan d'action, cartographie et rapports individuels au double. Le présentiel est majoré de moitié, la main d'œuvre coûtant environ une fois et demie plus cher.</p>
           <p class="step-note">Ce que coûte le fait d'agir : en présentiel, ou à distance avec ScanUp.</p>
 
           <div class="field">
@@ -805,8 +805,8 @@ var tous = DATA.naf1.filter(function(s){return s.code==="TOUS";})[0];
 function $(id){return document.getElementById(id);}
 var fEur = new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0});
 var fChf = new Intl.NumberFormat("fr-CH",{maximumFractionDigits:0});
-// La grille ScanUp est identique en euros et en francs : la prestation est
-// realisee a distance, son prix ne change pas d'un pays a l'autre.
+// Le depistage ScanUp a le meme montant en euros et en francs ; plan d'action,
+// cartographie et rapports individuels sont au double en Suisse (voir fLiv).
 var SV_PAYS = "fr";
 function eur(n){
   if(SV_PAYS==="ch"){ return fChf.format(Math.round(n))+" CHF"; }
@@ -1107,8 +1107,11 @@ function calcule(){
   var nbTr=tranches50(eff);
   var planRps=(document.querySelector('input[name="svprps"]:checked').value==="oui");
   var planTms=(document.querySelector('input[name="svptms"]:checked').value==="oui");
-  var nbRap=nbRTms+nbRRps, puRap=nbRap?prixEtude(nbRap):0;
-  var prixPrps=planScanUp(1,eff,1)/(pu<40?4:1), prixPtms=planScanUp(nbMTms,eff,4);
+  // Suisse : depistage au meme montant en francs ; plan d'action, cartographie
+  // et rapports individuels au double (decision du 23/11/2026).
+  var fLiv = (SV_PAYS==="ch") ? 2 : 1;
+  var nbRap=nbRTms+nbRRps, puRap=nbRap?prixEtude(nbRap)*fLiv:0;
+  var prixPrps=planScanUp(1,eff,1)/(pu<40?4:1)*fLiv, prixPtms=planScanUp(nbMTms,eff,4)*fLiv;
   var c2prps=planRps?prixPrps:0, c2ptms=planTms?prixPtms:0;
   var c2rrps=nbRRps*puRap;
   var pctEtude=parseFloat($("sv-part-etude").value);
@@ -1142,7 +1145,7 @@ function calcule(){
   $("sv-roi-sur").textContent=libPer;
   $("sv-lab-prps").textContent=(pu<40?"cartographie des risques, ":"")+eur(prixPrps)+" HT";
   $("sv-lab-ptms").textContent=eur(prixPtms)+" HT pour "+num(nbMTms,0)+(nbMTms>1?" métiers":" métier");
-  $("sv-hint-rrps").textContent=(pu<40)?"Possible avec la téléconsultation uniquement.":(nbRRps>0?eur(puRap)+" HT par rapport.":"Avec téléconsultation, "+eur(400)+" HT par rapport, dégressif selon le volume.");
+  $("sv-hint-rrps").textContent=(pu<40)?"Possible avec la téléconsultation uniquement.":(nbRRps>0?eur(puRap)+" HT par rapport.":"Avec téléconsultation, "+eur(400*fLiv)+" HT par rapport, dégressif selon le volume.");
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-ent").textContent=eur(c1ent);
   $("sv-c1-l-ent").textContent="RPS · salariés : entretiens individuels, "+num(eff,0)+" × "+eur(pEnt*fPres);
@@ -1237,7 +1240,7 @@ function calcule(){
   var psyCh=$("sv-psy-ch-cout");
   if(psyCh){ psyCh.textContent=mon(cu); }
 
-  // La grille est identique en euros et en francs : seuls la monnaie et le
+  // Le depistage a le meme montant en euros et en francs : seuls la monnaie et le
   // format d'affichage changent d'un pays a l'autre.
   [["sv-lab-rps-s",20,"par salarié"],["sv-lab-tms-s",20,"par salarié"],["sv-lab-rps-e",27,"par salarié"],["sv-lab-rps-p",40,"par salarié"],
    ["sv-lab-tms-e",27,"par salarié"],["sv-lab-tms-p",40,"par salarié"]].forEach(function(t){

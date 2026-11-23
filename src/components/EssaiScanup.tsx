@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ArrowRight, CheckCircle2, Video, Mic, Briefcase } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, CheckCircle2, X, Mail, Video, Mic, Briefcase } from 'lucide-react';
 import { useLanguage, type Lang } from '../i18n';
 
 /**
@@ -34,6 +34,7 @@ type Texts = {
   submit: string;
   sending: string;
   success: string;
+  ok: string;
   error: string;
 };
 
@@ -51,6 +52,7 @@ const TEXTS: Record<Lang, Texts> = {
     submit: "Recevoir mon lien d'essai",
     sending: 'Envoi en cours…',
     success: "Merci ! Vérifiez votre boîte mail : nous venons de vous envoyer votre lien pour créer votre compte d'essai. Pensez à regarder dans les indésirables.",
+    ok: "J'ai compris",
     error: "L'envoi n'a pas abouti, réessayez dans un instant ou écrivez-nous à hello@360skillvue.com.",
   },
   en: {
@@ -66,6 +68,7 @@ const TEXTS: Record<Lang, Texts> = {
     submit: 'Get my trial link',
     sending: 'Sending…',
     success: 'Thank you! Check your inbox: we have just sent you the link to create your trial account. Remember to check your spam folder.',
+    ok: 'Got it',
     error: 'Sending failed. Please try again in a moment or write to hello@360skillvue.com.',
   },
   de: {
@@ -81,6 +84,7 @@ const TEXTS: Record<Lang, Texts> = {
     submit: 'Testlink erhalten',
     sending: 'Wird gesendet…',
     success: 'Danke! Prüfen Sie Ihr Postfach: Wir haben Ihnen soeben den Link zum Erstellen Ihres Testkontos geschickt. Sehen Sie auch im Spam-Ordner nach.',
+    ok: 'Verstanden',
     error: 'Das Senden ist fehlgeschlagen. Versuchen Sie es gleich noch einmal oder schreiben Sie an hello@360skillvue.com.',
   },
   it: {
@@ -96,6 +100,7 @@ const TEXTS: Record<Lang, Texts> = {
     submit: 'Ricevi il link di prova',
     sending: 'Invio in corso…',
     success: "Grazie! Controlla la tua casella: ti abbiamo appena inviato il link per creare l'account di prova. Guarda anche nella posta indesiderata.",
+    ok: 'Ho capito',
     error: "L'invio non è riuscito, riprova tra un momento o scrivici a hello@360skillvue.com.",
   },
   es: {
@@ -111,6 +116,7 @@ const TEXTS: Record<Lang, Texts> = {
     submit: 'Recibir mi enlace de prueba',
     sending: 'Enviando…',
     success: '¡Gracias! Revise su correo: le acabamos de enviar el enlace para crear su cuenta de prueba. Mire también en la carpeta de spam.',
+    ok: 'Entendido',
     error: 'El envío no se ha realizado. Inténtelo de nuevo en un momento o escríbanos a hello@360skillvue.com.',
   },
   pt: {
@@ -126,6 +132,7 @@ const TEXTS: Record<Lang, Texts> = {
     submit: 'Receber o meu link de teste',
     sending: 'A enviar…',
     success: 'Obrigado! Verifique a sua caixa de correio: acabámos de lhe enviar o link para criar a sua conta de teste. Veja também na pasta de spam.',
+    ok: 'Entendi',
     error: 'O envio falhou. Tente novamente dentro de momentos ou escreva-nos para hello@360skillvue.com.',
   },
 };
@@ -168,6 +175,16 @@ const champ = 'w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-
 export function EssaiScanupSection({ page = false }: { page?: boolean }) {
   const t = useTexts();
   const [etat, setEtat] = useState<'saisie' | 'envoi' | 'ok' | 'erreur'>('saisie');
+  const [popup, setPopup] = useState(false);
+  useEffect(() => {
+    if (!popup) return;
+    const fermer = (e: KeyboardEvent) => { if (e.key === 'Escape') setPopup(false); };
+    window.addEventListener('keydown', fermer);
+    return () => window.removeEventListener('keydown', fermer);
+  }, [popup]);
+  // « Merci ! » en titre, le reste du message en dessous.
+  const titreOk = t.success.match(/^[^!]*!/)?.[0] ?? '';
+  const texteOk = t.success.slice(titreOk.length).trim();
   const icones = [Briefcase, Mic, Video];
 
   async function envoyer(e: React.FormEvent<HTMLFormElement>) {
@@ -183,6 +200,7 @@ export function EssaiScanupSection({ page = false }: { page?: boolean }) {
       const r = await fetch(WEBHOOK, { method: 'POST', body: donnees });
       if (!r.ok) throw new Error(String(r.status));
       setEtat('ok');
+      setPopup(true);
     } catch {
       setEtat('erreur');
     }
@@ -274,6 +292,28 @@ export function EssaiScanupSection({ page = false }: { page?: boolean }) {
           )}
         </div>
       </div>
+      {popup && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-5 bg-scanup-navy/60 backdrop-blur-sm"
+          onClick={() => setPopup(false)}>
+          <div role="dialog" aria-modal="true" aria-labelledby="essai-ok-titre"
+            className="relative w-full max-w-md rounded-3xl bg-white p-8 text-center shadow-2xl"
+            onClick={(e) => e.stopPropagation()}>
+            <button type="button" aria-label={t.ok} onClick={() => setPopup(false)}
+              className="absolute right-4 top-4 w-9 h-9 rounded-full flex items-center justify-center text-scanup-graytext hover:bg-scanup-graylight">
+              <X size={18} />
+            </button>
+            <span className="mx-auto mb-5 w-16 h-16 rounded-full bg-scanup-success/10 text-scanup-success flex items-center justify-center">
+              <Mail size={30} strokeWidth={1.8} />
+            </span>
+            <p id="essai-ok-titre" className="text-[24px] font-bold text-scanup-navy mb-3">{titreOk}</p>
+            <p className="text-[16px] leading-relaxed text-scanup-navy/80 mb-7">{texteOk}</p>
+            <button type="button" autoFocus onClick={() => setPopup(false)}
+              className="w-full bg-scanup-blue text-white px-7 py-3.5 rounded-full font-semibold text-[15px] hover:bg-blue-700 transition-colors">
+              {t.ok}
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

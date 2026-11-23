@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Mic, Video } from 'lucide-react';
+import { ArrowRight, Mic, Video, Layers, Users, BarChart3 } from 'lucide-react';
 import { Link } from '../i18n/Link';
 import { useLanguage, type Lang } from '../i18n';
 import { EssaiScanupBouton } from './EssaiScanup';
@@ -19,7 +19,8 @@ type Texts = {
   cheapTag: string; cheapFigure: string; cheapText: string;
   qualityTag: string; tmsLabel: string; tmsText: string; rpsLabel: string; rpsText: string;
   inclusiveTag: string; inclusiveFigure: string; inclusiveText: string;
-  justeTag: string; justeFigure: string; justeText: string; audioLabel: string; audioText: string; videoLabel: string; videoText: string;
+  valueTag: string; valueTitle: string;
+  value1Title: string; value1Text: string; value2Title: string; value2Text: string; value3Title: string; value3Text: string;
   cta: string;
 };
 
@@ -38,10 +39,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'RPS :', rpsText: 'les personnes à risque repérées, seules reçues en entretien individuel.',
     inclusiveTag: 'Plus inclusif', inclusiveFigure: 'Chacun participe',
     inclusiveText: "y compris les collaborateurs isolés, en horaires décalés ou sur des sites éloignés, où qu'ils soient.",
-    justeTag: 'Plus juste', justeFigure: 'Audio et vidéo',
-    justeText: "L'expert entend le salarié et voit son poste réel, là où un questionnaire seul s'arrête aux cases cochées.",
-    audioLabel: 'RPS :', audioText: 'la voix du salarié, son ressenti dans ses propres mots.',
-    videoLabel: 'TMS :', videoText: 'le geste réel, filmé à son poste de travail.',
+    valueTag: 'La valeur ajoutée de ScanUp', valueTitle: 'Une seule plateforme, des données qui servent deux fois',
+    value1Title: 'RPS et TMS au même endroit', value1Text: "Un seul parcours pour le salarié, un seul outil pour l'expert et pour l'entreprise.",
+    value2Title: 'Audio et vidéo', value2Text: "L'expert entend le salarié et voit son poste réel, là où un questionnaire seul s'arrête aux cases cochées.",
+    value3Title: 'Individuel et collectif', value3Text: "Les mêmes données servent à l'analyse de chaque salarié et à la cartographie collective des risques.",
     cta: 'Demander à tester',
   },
   en: {
@@ -58,10 +59,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Psychosocial risks:', rpsText: 'people at risk are identified, and only they are seen in individual interviews.',
     inclusiveTag: 'More inclusive', inclusiveFigure: 'Everyone takes part',
     inclusiveText: 'including isolated employees, shift workers and remote sites, wherever they are.',
-    justeTag: 'More accurate', justeFigure: 'Audio and video',
-    justeText: 'The expert hears the employee and sees their real workstation, where a questionnaire alone stops at ticked boxes.',
-    audioLabel: 'Psychosocial risks:', audioText: "the employee's own voice, describing how they feel in their own words.",
-    videoLabel: 'MSDs:', videoText: 'the real movement, filmed at their workstation.',
+    valueTag: "ScanUp's added value", valueTitle: 'One platform, data that serves twice',
+    value1Title: 'Psychosocial risks and MSDs in one place', value1Text: 'One journey for the employee, one tool for the expert and the company.',
+    value2Title: 'Audio and video', value2Text: 'The expert hears the employee and sees their real workstation, where a questionnaire alone stops at ticked boxes.',
+    value3Title: 'Individual and collective', value3Text: "The same data feeds each employee's individual analysis and the collective risk map.",
     cta: 'Request a trial',
   },
   de: {
@@ -78,10 +79,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Psychosoziale Risiken:', rpsText: 'gefährdete Personen werden erkannt und nur sie zum Einzelgespräch eingeladen.',
     inclusiveTag: 'Inklusiver', inclusiveFigure: 'Alle machen mit',
     inclusiveText: 'auch Mitarbeitende an abgelegenen Standorten, im Schichtbetrieb oder allein arbeitend.',
-    justeTag: 'Treffender', justeFigure: 'Audio und Video',
-    justeText: 'Die Fachperson hört die Mitarbeitenden und sieht ihren echten Arbeitsplatz, wo ein Fragebogen allein bei angekreuzten Kästchen stehen bleibt.',
-    audioLabel: 'Psychosoziale Risiken:', audioText: 'die Stimme der Mitarbeitenden, ihr Befinden in eigenen Worten.',
-    videoLabel: 'MSE:', videoText: 'die echte Bewegung, am Arbeitsplatz gefilmt.',
+    valueTag: 'Der Mehrwert von ScanUp', valueTitle: 'Eine Plattform, Daten mit doppeltem Nutzen',
+    value1Title: 'Psychosoziale Risiken und MSE an einem Ort', value1Text: 'Ein Ablauf für die Mitarbeitenden, ein Werkzeug für Fachperson und Unternehmen.',
+    value2Title: 'Audio und Video', value2Text: 'Die Fachperson hört die Mitarbeitenden und sieht ihren echten Arbeitsplatz, wo ein Fragebogen allein bei angekreuzten Kästchen stehen bleibt.',
+    value3Title: 'Individuell und kollektiv', value3Text: 'Dieselben Daten dienen der Analyse jeder einzelnen Person und der kollektiven Risikokartierung.',
     cta: 'Test anfragen',
   },
   it: {
@@ -98,10 +99,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Rischi psicosociali:', rpsText: 'le persone a rischio vengono individuate e solo loro ricevute in colloquio individuale.',
     inclusiveTag: 'Più inclusivo', inclusiveFigure: 'Tutti partecipano',
     inclusiveText: 'anche i collaboratori isolati, a turni o in sedi lontane, ovunque si trovino.',
-    justeTag: 'Più giusto', justeFigure: 'Audio e video',
-    justeText: "L'esperto ascolta il collaboratore e vede la sua postazione reale, dove un questionario da solo si ferma alle caselle spuntate.",
-    audioLabel: 'Rischi psicosociali:', audioText: 'la voce del collaboratore, come si sente con parole sue.',
-    videoLabel: 'DMS:', videoText: 'il gesto reale, filmato sulla sua postazione di lavoro.',
+    valueTag: 'Il valore aggiunto di ScanUp', valueTitle: "Un'unica piattaforma, dati che servono due volte",
+    value1Title: 'Rischi psicosociali e DMS in un solo posto', value1Text: "Un solo percorso per il collaboratore, un solo strumento per l'esperto e per l'azienda.",
+    value2Title: 'Audio e video', value2Text: "L'esperto ascolta il collaboratore e vede la sua postazione reale, dove un questionario da solo si ferma alle caselle spuntate.",
+    value3Title: 'Individuale e collettivo', value3Text: "Gli stessi dati servono all'analisi di ogni collaboratore e alla mappatura collettiva dei rischi.",
     cta: 'Richiedi una prova',
   },
   es: {
@@ -118,10 +119,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Riesgos psicosociales:', rpsText: 'se detecta a las personas en riesgo y solo ellas pasan a entrevista individual.',
     inclusiveTag: 'Más inclusivo', inclusiveFigure: 'Todos participan',
     inclusiveText: 'incluidos los empleados aislados, a turnos o en centros alejados, estén donde estén.',
-    justeTag: 'Más justo', justeFigure: 'Audio y vídeo',
-    justeText: 'El experto escucha al empleado y ve su puesto real, donde un cuestionario por sí solo se queda en las casillas marcadas.',
-    audioLabel: 'Riesgos psicosociales:', audioText: 'la voz del empleado, cómo se siente con sus propias palabras.',
-    videoLabel: 'TME:', videoText: 'el gesto real, grabado en su puesto de trabajo.',
+    valueTag: 'El valor añadido de ScanUp', valueTitle: 'Una sola plataforma, datos que sirven dos veces',
+    value1Title: 'Riesgos psicosociales y TME en un mismo lugar', value1Text: 'Un solo recorrido para el empleado, una sola herramienta para el experto y la empresa.',
+    value2Title: 'Audio y vídeo', value2Text: 'El experto escucha al empleado y ve su puesto real, donde un cuestionario por sí solo se queda en las casillas marcadas.',
+    value3Title: 'Individual y colectivo', value3Text: 'Los mismos datos sirven para el análisis de cada empleado y para el mapa colectivo de riesgos.',
     cta: 'Solicitar una prueba',
   },
   pt: {
@@ -138,10 +139,10 @@ const TEXTS: Record<Lang, Texts> = {
     rpsLabel: 'Riscos psicossociais:', rpsText: 'as pessoas em risco são identificadas e só elas passam a entrevista individual.',
     inclusiveTag: 'Mais inclusivo', inclusiveFigure: 'Todos participam',
     inclusiveText: 'incluindo colaboradores isolados, por turnos ou em locais afastados, onde quer que estejam.',
-    justeTag: 'Mais justo', justeFigure: 'Áudio e vídeo',
-    justeText: 'O especialista ouve o colaborador e vê o seu posto real, onde um questionário sozinho fica pelas caixas assinaladas.',
-    audioLabel: 'Riscos psicossociais:', audioText: 'a voz do colaborador, como se sente nas suas próprias palavras.',
-    videoLabel: 'LMERT:', videoText: 'o gesto real, filmado no seu posto de trabalho.',
+    valueTag: 'O valor acrescentado da ScanUp', valueTitle: 'Uma só plataforma, dados que servem duas vezes',
+    value1Title: 'Riscos psicossociais e LMERT no mesmo sítio', value1Text: 'Um só percurso para o colaborador, uma só ferramenta para o especialista e para a empresa.',
+    value2Title: 'Áudio e vídeo', value2Text: 'O especialista ouve o colaborador e vê o seu posto real, onde um questionário sozinho fica pelas caixas assinaladas.',
+    value3Title: 'Individual e coletivo', value3Text: 'Os mesmos dados servem a análise de cada colaborador e o mapa coletivo de riscos.',
     cta: 'Pedir um teste',
   },
 };
@@ -218,21 +219,22 @@ export default function AvantagesPresentiel({ hero = false }: { hero?: boolean }
           <FadeIn delay={0} className="sm:col-span-2">
             <div className="relative overflow-hidden rounded-[20px] p-7 md:p-9 text-white bg-gradient-to-br from-scanup-blue to-scanup-navy">
               <div aria-hidden="true" className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-scanup-turquoise/25 blur-3xl" />
-              <div className="relative grid md:grid-cols-[1.1fr_1fr] gap-6 md:gap-10 items-center">
-                <div className="flex flex-col gap-4">
-                  <span className="self-start rounded-full px-4 py-1.5 text-[13px] font-semibold bg-scanup-turquoise text-scanup-navy">{t.justeTag}</span>
-                  <p className="text-[34px] md:text-[42px] font-bold leading-[1.1] tracking-tight">{t.justeFigure}</p>
-                  <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">{t.justeText}</p>
-                </div>
-                <div className="grid gap-3">
-                  {[{ Icon: Mic, label: t.audioLabel, text: t.audioText }, { Icon: Video, label: t.videoLabel, text: t.videoText }].map(({ Icon, label, text }) => (
-                    <div key={label} className="flex items-start gap-4 rounded-2xl bg-white/10 p-4 md:p-5">
-                      <span className="w-11 h-11 rounded-xl bg-scanup-turquoise/15 text-scanup-turquoise flex items-center justify-center flex-shrink-0">
-                        <Icon size={20} strokeWidth={1.8} />
+              <div className="relative">
+                <span className="inline-block rounded-full px-4 py-1.5 text-[13px] font-semibold bg-scanup-turquoise text-scanup-navy">{t.valueTag}</span>
+                <p className="mt-4 text-[28px] md:text-[36px] font-bold leading-[1.15] tracking-tight text-balance">{t.valueTitle}</p>
+                <div className="mt-7 grid md:grid-cols-3 gap-4">
+                  {[
+                    { Icon: Layers, title: t.value1Title, text: t.value1Text },
+                    { Icon: Mic, Icon2: Video, title: t.value2Title, text: t.value2Text },
+                    { Icon: Users, Icon2: BarChart3, title: t.value3Title, text: t.value3Text },
+                  ].map(({ Icon, Icon2, title, text }) => (
+                    <div key={title} className="flex flex-col gap-3 rounded-2xl bg-white/10 p-5">
+                      <span className="flex gap-2">
+                        <span className="w-11 h-11 rounded-xl bg-scanup-turquoise/15 text-scanup-turquoise flex items-center justify-center"><Icon size={20} strokeWidth={1.8} /></span>
+                        {Icon2 && <span className="w-11 h-11 rounded-xl bg-scanup-turquoise/15 text-scanup-turquoise flex items-center justify-center"><Icon2 size={20} strokeWidth={1.8} /></span>}
                       </span>
-                      <p className="text-[15px] md:text-[16px] leading-relaxed text-white/90">
-                        <span className="font-semibold text-white">{label}</span> {text}
-                      </p>
+                      <p className="text-[18px] font-semibold leading-snug text-white">{title}</p>
+                      <p className="text-[15px] leading-relaxed text-white/85">{text}</p>
                     </div>
                   ))}
                 </div>

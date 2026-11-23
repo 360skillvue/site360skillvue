@@ -418,7 +418,7 @@ export const it = {
     heroTitle: 'Screening dei rischi',
     heroTitleHighlight: 'DMS & RPS',
     heroTitleEnd: 'senza audit in 48 ore.',
-    heroSubtitle: 'Ogni collaboratore è analizzato individualmente da uno psicologo del lavoro o da un ergonomo certificato, a partire dalla sua testimonianza audio e dal video della sua postazione. Se necessario, studio completo della situazione di lavoro a distanza, muscoloscheletrico o psicosociale, con relazione individuale. A partire da 20 € per collaboratore.',
+    heroSubtitle: 'Ogni collaboratore è analizzato individualmente da uno psicologo del lavoro o da un ergonomo certificato, a partire dalla sua testimonianza audio e dal video della sua postazione, e gli stessi dati alimentano la mappatura collettiva. Se necessario, studio completo della situazione di lavoro a distanza, muscoloscheletrico o psicosociale, con relazione individuale. A partire da 20 € per collaboratore.',
     heroCtaPrimary: 'Simula il mio costo gratis (in francese)',
     heroCtaSecondary: 'Vedi una demo',
     stats: [

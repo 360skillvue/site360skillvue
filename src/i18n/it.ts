@@ -89,7 +89,7 @@ export const it = {
     pillar3Title: 'Agire',
     pillar3Desc: 'Piani di prevenzione personalizzati, solleciti automatici e tracciabilità completa per ogni collaboratore.',
     productsLabel: 'Le nostre soluzioni',
-    productsTitle: 'Tre prodotti, una visione.',
+    productsTitle: "Un'unica piattaforma, tre utilizzi.",
     productTagPrevention: 'Prevenzione',
     productTagReglementation: 'Normativa',
     product1Name: 'ScanUp DMS',

@@ -89,7 +89,7 @@ export const fr = {
     pillar3Title: 'Agir',
     pillar3Desc: 'Plans de prévention personnalisés, relances automatiques et traçabilité complète pour chaque collaborateur.',
     productsLabel: 'Nos solutions',
-    productsTitle: 'Trois produits, une vision.',
+    productsTitle: 'Une seule plateforme, trois usages.',
     productTagPrevention: 'Prévention',
     productTagReglementation: 'Réglementation',
     product1Name: 'ScanUp TMS',

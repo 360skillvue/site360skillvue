@@ -89,7 +89,7 @@ export const de = {
     pillar3Title: 'Handeln',
     pillar3Desc: 'Individuelle Präventionspläne, automatische Erinnerungen und vollständige Rückverfolgbarkeit für jeden Mitarbeitenden.',
     productsLabel: 'Unsere Lösungen',
-    productsTitle: 'Drei Produkte, eine Vision.',
+    productsTitle: 'Eine Plattform, drei Einsatzbereiche.',
     productTagPrevention: 'Prävention',
     productTagReglementation: 'Regulierung',
     product1Name: 'ScanUp MSE',

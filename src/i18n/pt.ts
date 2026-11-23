@@ -89,7 +89,7 @@ export const pt = {
     pillar3Title: 'Agir',
     pillar3Desc: 'Planos de prevenção personalizados, lembretes automáticos e rastreabilidade completa para cada colaborador.',
     productsLabel: 'As nossas soluções',
-    productsTitle: 'Três produtos, uma visão.',
+    productsTitle: 'Uma só plataforma, três utilizações.',
     productTagPrevention: 'Prevenção',
     productTagReglementation: 'Regulamentação',
     product1Name: 'ScanUp LME',

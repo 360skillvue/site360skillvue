@@ -89,7 +89,7 @@ export const en = {
     pillar3Title: 'Act',
     pillar3Desc: 'Personalized prevention plans, automatic reminders and full traceability for every employee.',
     productsLabel: 'Our solutions',
-    productsTitle: 'Three products, one vision.',
+    productsTitle: 'One platform, three uses.',
     productTagPrevention: 'Prevention',
     productTagReglementation: 'Regulation',
     product1Name: 'ScanUp MSD',

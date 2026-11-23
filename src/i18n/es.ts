@@ -89,7 +89,7 @@ export const es = {
     pillar3Title: 'Actuar',
     pillar3Desc: 'Planes de prevención personalizados, recordatorios automáticos y trazabilidad completa para cada empleado.',
     productsLabel: 'Nuestras soluciones',
-    productsTitle: 'Tres productos, una visión.',
+    productsTitle: 'Una sola plataforma, tres usos.',
     productTagPrevention: 'Prevención',
     productTagReglementation: 'Normativa',
     product1Name: 'ScanUp TME',

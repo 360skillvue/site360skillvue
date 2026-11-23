@@ -418,7 +418,7 @@ export const es = {
     heroTitle: 'Detecte sus riesgos',
     heroTitleHighlight: 'de TME y RPS',
     heroTitleEnd: 'sin auditoría, en 48 h.',
-    heroSubtitle: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo acreditado, a partir de su testimonio de audio y del vídeo de su puesto, y los mismos datos alimentan el mapa colectivo de riesgos. Si es necesario, un estudio completo de la situación de trabajo a distancia, musculoesquelético o psicosocial, con informe individual. Desde 20 € por empleado.',
+    heroSubtitle: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo acreditado, a partir de su testimonio de audio y del vídeo de su puesto, y los mismos datos sirven también para la visión colectiva de la dirección y el informe nominativo de la medicina del trabajo. Si es necesario, un estudio completo de la situación de trabajo a distancia, musculoesquelético o psicosocial, con informe individual. Desde 20 € por empleado.',
     heroCtaPrimary: 'Calcular mi coste gratis (en francés)',
     heroCtaSecondary: 'Ver una demo',
     stats: [

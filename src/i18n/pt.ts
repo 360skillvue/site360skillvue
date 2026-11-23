@@ -418,7 +418,7 @@ export const pt = {
     heroTitle: 'Rastreie os seus riscos',
     heroTitleHighlight: 'LME & RPS',
     heroTitleEnd: 'sem auditoria, em 48 h.',
-    heroSubtitle: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista certificado, a partir do seu testemunho áudio e do vídeo do seu posto, e os mesmos dados alimentam o mapa coletivo de riscos. Se necessário, um estudo completo da situação de trabalho à distância, musculoesquelético ou psicossocial, com relatório individual. A partir de 20 € por colaborador.',
+    heroSubtitle: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista certificado, a partir do seu testemunho áudio e do vídeo do seu posto, e os mesmos dados servem também a visão coletiva da direção e o relatório nominativo da medicina do trabalho. Se necessário, um estudo completo da situação de trabalho à distância, musculoesquelético ou psicossocial, com relatório individual. A partir de 20 € por colaborador.',
     heroCtaPrimary: 'Simular o meu custo gratuitamente (em francês)',
     heroCtaSecondary: 'Ver uma demonstração',
     stats: [

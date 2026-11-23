@@ -17,7 +17,7 @@ interface Props {
 }
 
 const BASE = 'https://360skillvue.com';
-const DEFAULT_OG_IMAGE = `${BASE}/og-scanup.png`;
+const DEFAULT_OG_IMAGE = `${BASE}/og-scanup-valeur.png`;
 
 export default function PageMeta({ title, description, path, ogImage, schema, noindexTranslations = false }: Props) {
   const { lang } = useLanguage();

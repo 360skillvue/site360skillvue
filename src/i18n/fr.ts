@@ -424,7 +424,7 @@ export const fr = {
     heroTitle: 'Dépistez vos risques',
     heroTitleHighlight: 'TMS & RPS',
     heroTitleEnd: 'sans audit en 48h.',
-    heroSubtitle: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome, à partir de son témoignage audio et de la vidéo de son poste, et les mêmes données alimentent la cartographie collective. Si besoin, étude de situation de travail complète à distance, TMS ou RPS, avec rapport individuel. Dès 20 € par collaborateur.',
+    heroSubtitle: 'Chaque salarié est analysé individuellement par un psychologue du travail ou un ergonome, à partir de son témoignage audio et de la vidéo de son poste, et les mêmes données servent aussi à la vue collective de la direction et au rapport nominatif de la médecine du travail. Si besoin, étude de situation de travail complète à distance, TMS ou RPS, avec rapport individuel. Dès 20 € par collaborateur.',
     heroCtaPrimary: 'Simuler mon coût gratuitement',
     heroCtaSecondary: 'Voir une démo',
     stats: [

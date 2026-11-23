@@ -418,7 +418,7 @@ export const en = {
     heroTitle: 'Screen your',
     heroTitleHighlight: 'MSD & PSR',
     heroTitleEnd: 'risks without an audit in 48h.',
-    heroSubtitle: 'Every employee is reviewed individually by an occupational psychologist or a certified ergonomist, based on their audio testimony and a video of their workstation, and the same data feeds the collective risk map. Where needed, a full remote work situation assessment, musculoskeletal or psychosocial, with an individual report. From €20 per employee.',
+    heroSubtitle: 'Every employee is reviewed individually by an occupational psychologist or a certified ergonomist, based on their audio testimony and a video of their workstation, and the same data also feeds the collective view for management and the named report for occupational health. Where needed, a full remote work situation assessment, musculoskeletal or psychosocial, with an individual report. From €20 per employee.',
     heroCtaPrimary: 'Simulate my cost for free (in French)',
     heroCtaSecondary: 'See a demo',
     stats: [

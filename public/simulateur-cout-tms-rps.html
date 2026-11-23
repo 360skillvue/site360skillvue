@@ -643,7 +643,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <span class="sl-val" id="sv-part-etude-val"></span>
                 </div>
                 <input type="range" id="sv-part-etude" min="0" max="100" step="5" value="40">
-                <p class="hint">C'est vous qui décidez des études à commander. Chaque étude donne lieu à un rapport, sur devis ; le calcul retient le tarif indicatif dégressif : 400 € HT par rapport de 1 à 20 études commandées dans le mois, 360 € de 21 à 50, 320 € de 51 à 100, 280 € de 101 à 200, 240 € au delà. La simulation suppose que les études sont commandées sur un même mois.</p>
+                <p class="hint">C'est vous qui décidez des études à commander. Chaque étude donne lieu à un rapport, sur devis.</p>
               </div>
             </div>
           </details>
@@ -759,7 +759,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li>Assurance Maladie, <a href="https://data.ameli.fr/pages/data-risques-professionnels/" target="_blank" rel="noopener nofollow">Data risques professionnels</a> : jeux de données sinistralité par secteur, troubles musculosquelettiques par tableau et secteur, maladies professionnelles psychiques par secteur, et arrêts de travail par secteur.</li>
         <li>Assurance Maladie, <a href="https://www.assurance-maladie.ameli.fr/etudes-et-donnees/2024-rapport-annuel-assurance-maladie-risques-professionnels" target="_blank" rel="noopener nofollow">Rapport annuel 2024, Risques professionnels</a>, novembre 2025.</li>
         <li>Caisse nationale de l'Assurance Maladie, barème des coûts moyens 2026 par comité technique national.</li>
-        <li>Projet de décret abaissant à 1,8 Smic le plafond des indemnités journalières d'accident du travail et de maladie professionnelle, transmis aux partenaires sociaux en août 2026, entrée en vigueur annoncée au 1<sup>er</sup> novembre 2026. Non publié à ce jour : le montant affiché est une projection, non une règle en vigueur.</li>
+        <li>Décret n° 2026-909 du 30 septembre 2026, publié au Journal officiel du 1<sup>er</sup> octobre 2026 : le plafond du salaire journalier servant au calcul des indemnités journalières d'accident du travail et de maladie professionnelle passe de 0,834 % à 0,226 % du plafond annuel de la Sécurité sociale, l'équivalent de 1,8 Smic, pour les accidents et maladies survenus à partir du 1<sup>er</sup> novembre 2026. Le simulateur applique ce plafond.</li>
         <li>INRS et Arts et Métiers ParisTech, estimation du coût social du stress professionnel en France, 2007.</li>
         <li>Insee, coût horaire du travail selon l'activité, millésime 2025 ; Office fédéral de la statistique, coûts de la main d'œuvre, millésime 2020.</li>
         <li>Confédération suisse, articles 324a du Code des obligations et 9 de la LAA ; article 11b de l'OPAS pour la psychothérapie déléguée à un psychologue.</li>
@@ -854,15 +854,15 @@ function plafondSecteur(p){
 // cas ; seule la regle de prise en charge change.
 // France : indemnites journalieres AT/MP, 60 % puis 80 % du salaire journalier
 // de base, plafonnees ; l'employeur complete jusqu'a 90 % puis 66,66 % pendant
-// la duree legale de maintien. Le plafond actuel du salaire journalier de base
-// AT/MP vaut 0,834 % du plafond annuel de la securite sociale, soit 400,82 EUR
-// en 2026 : 240,49 EUR d'indemnite les 28 premiers jours, 320,66 EUR ensuite.
-// Un projet de decret transmis aux partenaires sociaux en aout 2026, annonce
-// pour le 1er novembre 2026, abaisserait ce plafond a 1,8 Smic, ce qui deplace
-// la charge vers l'employeur et vers le salarie. A distinguer du decret
-// 2025-160, deja en vigueur, qui plafonne a 1,4 Smic les seules IJ maladie.
-var SMIC_M = 1867.02, MULT_D = 1.8;
-var PLAF_AV = 400.82, PLAF_AP = (SMIC_M*MULT_D)/30.42;
+// la duree legale de maintien. Le decret n° 2026-909 du 30 septembre 2026
+// (JO du 1er octobre 2026) ramene le plafond du salaire journalier de base
+// AT/MP de 0,834 % a 0,226 % du plafond annuel de la securite sociale, soit
+// l'equivalent de 1,8 Smic, pour les accidents et maladies survenus a partir
+// du 1er novembre 2026 : 400,82 EUR avant, 108,62 EUR apres (PASS 2026,
+// 48 060 EUR). La charge se deplace vers l'employeur et vers le salarie.
+// A distinguer du decret 2025-160, qui plafonne a 1,4 Smic les IJ maladie.
+var PASS_2026 = 48060;
+var PLAF_AV = PASS_2026*0.00834, PLAF_AP = PASS_2026*0.00226;
 var MAINTIEN_J = 60;
 function ijFR(sj, j, plaf){
   var b = sj; if(b>plaf){ b=plaf; }
@@ -959,7 +959,9 @@ function calcule(){
   var rpsDirect = nbPsy*cu,  rpsDes = nbPsy*joursOuv*coutJour*pctDes;
   var rpsNr = eff*joursRps*coutJour;
 
-  var totTms = tmsDirect+tmsDes, totRps = rpsDirect+rpsDes+rpsNr, total = totTms+totRps;
+  // Maintien de salaire supplementaire du au decret n° 2026-909, en vigueur.
+  var suppTms = surcoutDecret*nbTms, suppPsy = surcoutDecret*nbPsy;
+  var totTms = tmsDirect+tmsDes+suppTms, totRps = rpsDirect+rpsDes+rpsNr+suppPsy, total = totTms+totRps;
   var max = Math.max(tmsDirect,tmsDes,rpsDirect,rpsDes,rpsNr,1);
 
   $("sv-total").textContent = mon(total);
@@ -967,9 +969,11 @@ function calcule(){
   if(SV_PAYS==="ch"){
     $("sv-decret").textContent = "";
   } else {
-    var supp = surcoutDecret*(nbTms+nbPsy);
-    $("sv-decret").textContent = "Si le décret annoncé pour le 1er novembre 2026 plafonne les indemnités "+
-      "AT/MP à 1,8 Smic : "+mon(total+supp)+", soit "+mon(supp)+" de maintien de salaire en plus à votre charge.";
+    var supp = suppTms+suppPsy;
+    $("sv-decret").textContent = (supp>0)
+      ? "Dont "+mon(supp)+" de maintien de salaire en plus à votre charge depuis le décret du 30 septembre 2026, "+
+        "qui plafonne les indemnités journalières AT/MP à l'équivalent de 1,8 Smic pour les arrêts survenus depuis le 1er novembre 2026."
+      : "Avec ce salaire, le plafond des indemnités journalières AT/MP en vigueur depuis le 1er novembre 2026 ne change rien à votre charge.";
   }
   $("sv-tot-tms").textContent = mon(totTms);
   $("sv-tot-rps").textContent = mon(totRps);
@@ -988,7 +992,7 @@ function calcule(){
       leg = ["Assurance perte de gain","Employeur, maintien de salaire","Non couvert, perte du collaborateur"];
       note = "Maintien du salaire à 100 % pendant le délai d'attente de "+DELAI_APG+" jours, hypothèse courante du marché, dans la limite de l'échelle bernoise, puis relais de l'assurance perte de gain à 80 %.";
     } else {
-      part = partFR(salBrut/12/30.42, duree, PLAF_AV);
+      part = partFR(salBrut/12/30.42, duree, PLAF_AP);
       leg = ["Assurance Maladie","Employeur, maintien de salaire","Non couvert, perte du salarié"];
       note = "Indemnités journalières AT/MP, 60 % puis 80 % du salaire journalier de base, complétées par l'employeur pendant "+MAINTIEN_J+" jours, durée légale pour une ancienneté de 1 à 5 ans ; au-delà, le maintien s'allonge jusqu'à 180 jours et la part employeur augmente.";
     }

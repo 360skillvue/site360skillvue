@@ -405,7 +405,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="intro fr-only">
     <div>
       <p class="kicker">Données Assurance Maladie · 2005 &ndash; 2024 · régime général</p>
-      <p class="intro-lead">La fréquence des accidents du travail recule de 31 % en vingt ans, de 38,3 à 26,4 accidents pour 1 000 salariés ; les maladies professionnelles, elles, repartent à la hausse, et les affections psychiques y sont le poste qui progresse le plus vite : multipliées par 5,6 depuis 2015 dans les données de l'Assurance Maladie. Ce simulateur distingue les deux familles, risques psychosociaux et troubles musculo-squelettiques, en appliquant à votre effectif les taux réellement observés dans votre secteur et le barème officiel des coûts moyens AT/MP.</p>
+      <p class="intro-lead">Combien les troubles musculo-squelettiques et les risques psychosociaux coûtent à votre entreprise, et combien coûte d'agir, avec ou sans ScanUp. Calcul fondé sur les données de l'Assurance Maladie pour votre secteur.</p>
     </div>
     <div class="keyfigs">
       <div class="kf accent"><b>44 723</b><span>troubles musculo-squelettiques reconnus comme maladies professionnelles en France en 2024</span></div>
@@ -417,7 +417,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="intro ch-only">
     <div>
       <p class="kicker">Santé au travail en Suisse · Données 2022</p>
-      <p class="intro-lead">En Suisse, les troubles musculo-squelettiques diffus et l'épuisement professionnel ne sont pratiquement jamais reconnus comme maladies professionnelles : hors de la liste de l'annexe 1 de l'OLAA, la LAA exige une causalité professionnelle nettement prépondérante, au-delà de 75 %, hors d'atteinte pour des troubles à causes multiples. Seules quelques atteintes de l'appareil locomoteur y figurent, canal carpien ou tendinites par exemple. Ces arrêts relèvent donc très majoritairement du régime maladie, et la charge reste chez l'employeur au titre du maintien de salaire. Il n'existe pas d'équivalent suisse aux séries d'incidence françaises, précisément parce que le régime de reconnaissance exclut ces pathologies du décompte : ce simulateur applique donc les taux observés en France et calcule le coût selon les règles suisses.</p>
+      <p class="intro-lead">Combien les troubles musculo-squelettiques et l'épuisement professionnel coûtent à votre entreprise, et combien coûte d'agir, avec ou sans ScanUp. En Suisse, ces arrêts relèvent du régime maladie : la charge reste chez l'employeur.</p>
     </div>
     <div class="keyfigs">
       <div class="kf accent"><b>30,3 %</b><span>des personnes actives se sentent émotionnellement épuisées, un niveau jamais atteint depuis 2014</span></div>
@@ -436,8 +436,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="grid">
         <div class="step">
           <div class="step-head"><span class="step-n">01</span><h2>Votre entreprise</h2></div>
-          <p class="step-note">Votre secteur détermine les taux de sinistralité appliqués, votre effectif le volume d'arrêts attendu, et le salaire moyen ce que chaque arrêt coûte.</p>
-          <div class="field">
+                    <div class="field">
             <label for="sv-secteur">Grand secteur d'activité</label>
             <select id="sv-secteur"></select>
           </div>
@@ -454,7 +453,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <input type="number" id="sv-sal-brut" min="20000" max="500000" step="1000" value="50000">
             <p class="hint" id="sv-hint-sal"></p>
           </div>
-          <p class="callout" id="sv-tendance"></p>
+          <p class="callout" id="sv-tendance" hidden></p>
         </div>
 
         <div class="step">
@@ -468,7 +467,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <p class="qui-t" id="sv-qui-t">Sur un arrêt type, qui paie quoi</p>
             <div class="qui-bar" id="sv-qui-bar"></div>
             <div class="qui-leg" id="sv-qui-leg"></div>
-            <p class="qui-n" id="sv-qui-n"></p>
+            <p class="qui-n" id="sv-qui-n" hidden></p>
           </div>
           <div class="split" id="sv-split">
             <div class="split-c">
@@ -512,8 +511,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="step">
           <div class="step-head"><span class="step-n">03</span><h2>Agir, et à quel prix</h2></div>
-          <p class="callout ch-only">Les tarifs ScanUp sont identiques en euros et en francs : la prestation est réalisée à distance, son prix ne change pas d'un pays à l'autre. Les méthodes traditionnelles, elles, consomment du travail sur place ; leur coût est majoré de moitié, l'écart de coût horaire de la main d'œuvre entre les deux pays étant de cet ordre, 63,62 CHF de l'heure en Suisse selon l'Office fédéral de la statistique, millésime 2020, contre 44,70 € en France selon l'Insee, millésime 2025. Ordres de grandeur, non des devis.</p>
-          <p class="step-note">Le montant ci-dessus dit ce que le risque coûte. Il ne dit pas où agir. Pour le savoir il faut regarder les situations de travail, et cela a un prix : voici les deux façons de le payer.</p>
+          <p class="callout ch-only">Tarifs ScanUp identiques en euros et en francs. Le présentiel est majoré de moitié en Suisse, où la main d'œuvre coûte environ une fois et demie plus cher.</p>
+          <p class="step-note">Ce que coûte le fait d'agir : en présentiel, ou à distance avec ScanUp.</p>
 
           <div class="field">
             <label>Ce que vous voulez chiffrer</label>
@@ -522,16 +521,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <label class="scn"><input type="radio" name="svperim" value="rps"><span>RPS seuls<small>risques psychosociaux</small></span></label>
               <label class="scn"><input type="radio" name="svperim" value="tms"><span>TMS seuls<small>gestes et postures</small></span></label>
             </div>
-            <p class="hint">Les deux dispositifs sont indépendants et se vendent séparément. Choisissez celui qui vous intéresse, ou les deux : les montants ne s'additionnent que si vous prenez les deux.</p>
-          </div>
+                      </div>
 
-          <div class="field">
+          <div class="field" hidden>
             <div class="sl-head">
               <label for="sv-part">Part de l'effectif identifiée à risque</label>
               <span class="sl-val" id="sv-part-val"></span>
             </div>
             <input type="range" id="sv-part" min="1" max="40" step="1" value="20">
-            <p class="hint">Le recueil porte sur tout le monde ; l'analyse approfondie ne concerne ensuite que les salariés repérés, de l'ordre de 20 % de l'effectif.</p>
+            <p class="hint">De l'ordre de 20 % en moyenne.</p>
           </div>
 
           <div class="field" id="sv-f-rps">
@@ -544,9 +542,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
               <label class="scn"><input type="radio" name="svprps" value="non"><span>Sans plan d'action<small>rien pour la direction</small></span></label>
-              <label class="scn"><input type="radio" name="svprps" value="oui" checked><span>Plan d'action RPS<small id="sv-lab-prps">sur devis, selon le volume</small></span></label>
+              <label class="scn"><input type="radio" name="svprps" value="oui" checked><span>Plan d'action RPS<small id="sv-lab-prps"></small></span></label>
             </div>
-            <p class="hint">Pour vous, RH et direction : le plan d'action collectif. Pour votre médecin du travail : le rapport individuel RPS, sur devis, comparé à des entretiens approfondis en présentiel.</p>
+            <div class="field" style="margin:12px 0 0">
+              <label for="sv-nb-rrps">Rapports individuels pour le médecin du travail</label>
+              <input type="number" id="sv-nb-rrps" min="0" max="5000" step="1" value="0">
+              <p class="hint" id="sv-hint-rrps">Avec téléconsultation uniquement.</p>
+            </div>
           </div>
 
           <div class="field" id="sv-f-tms">
@@ -559,9 +561,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="scn-set scn-2" style="margin-top:8px">
               <label class="scn"><input type="radio" name="svptms" value="non" checked><span>Sans plan d'action<small>rien pour la direction</small></span></label>
-              <label class="scn"><input type="radio" name="svptms" value="oui"><span>Plan d'action TMS<small id="sv-lab-ptms">sur devis, selon le volume</small></span></label>
+              <label class="scn"><input type="radio" name="svptms" value="oui"><span>Plan d'action TMS<small id="sv-lab-ptms"></small></span></label>
             </div>
-            <p class="hint" id="sv-hint-tms"></p>
+            <div class="scn-2" style="display:grid;gap:12px;margin-top:12px">
+              <div><label for="sv-nb-mtms">Métiers ou postes à étudier</label>
+              <input type="number" id="sv-nb-mtms" min="1" max="500" step="1" value="3"></div>
+              <div><label for="sv-nb-rtms">Rapports individuels pour le médecin du travail</label>
+              <input type="number" id="sv-nb-rtms" min="0" max="5000" step="1" value="5"></div>
+            </div>
+            <p class="hint" id="sv-hint-tms" hidden></p>
           </div>
 
           <details class="avance">
@@ -626,13 +634,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p class="hint">Comparée au retour TMS avec coaching vidéo. Les organismes affichent de 550 € HT la demi-journée à 1 290 € HT la journée, en intra, par groupe de 10 à 12 personnes.</p>
               </div>
 
-              <div class="field" hidden> <label for="sv-p-planergo">Coût d'un plan d'action TMS rédigé par un ergonome sur site, par tranche de 50 salariés</label>
+              <div class="field"> <label for="sv-p-planergo">Coût d'un plan d'action TMS rédigé par un ergonome sur site, par tranche de 50 salariés</label>
                 <input type="number" id="sv-p-planergo" min="0" max="20000" step="50" value="1000">
                 <p class="hint">Comparé au plan d'action TMS ScanUp. Ordre de grandeur : une journée d'ergonome en entreprise pour 50 salariés, déplacement et rédaction compris.</p>
               </div>
 
-              <div class="field" hidden>
-                <label for="sv-p-poste">Coût d'une étude de situation de travail en présentiel</label>
+              <div class="field">
+                <label for="sv-p-poste">Coût d'une étude de poste ou d'un entretien approfondi en présentiel</label>
                 <input type="number" id="sv-p-poste" min="0" max="10000" step="50" value="1200">
                 <p class="hint">Par étude, déplacement et rédaction compris. Le FIPHFP finance une étude ergonomique externe jusqu'à 3 000 €, et la journée d'ergonome se facture 685 € dans la grille publique 2026 d'un centre de gestion.</p>
               </div>
@@ -643,7 +651,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <span class="sl-val" id="sv-part-etude-val"></span>
                 </div>
                 <input type="range" id="sv-part-etude" min="0" max="100" step="5" value="40">
-                <p class="hint">C'est vous qui décidez des études à commander. Chaque étude donne lieu à un rapport, sur devis.</p>
+                <p class="hint">C'est vous qui décidez des études à commander. Chaque étude donne lieu à un rapport.</p>
               </div>
             </div>
           </details>
@@ -670,37 +678,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="roi-fam-head fam-classique"><span>En présentiel</span><b id="sv-cmp-b1"></b></div>
               <div class="roi-row" id="sv-r1-ent"><span id="sv-c1-l-ent">Entretiens de 30 minutes, tout l'effectif</span><b id="sv-c1-ent"></b></div>
               <div class="roi-row" id="sv-r1-rps"><span id="sv-c1-l-rps">Audit RPS collectif</span><b id="sv-c1-rps"></b></div>
-              <div class="roi-row" id="sv-r1-rrps"><span>RPS, pour la santé au travail : entretiens approfondis par un psychologue, en présentiel</span><b>sur devis</b></div>
+              <div class="roi-row" id="sv-r1-rrps"><span id="sv-c1-l-rrps">RPS, pour le médecin du travail : entretiens approfondis par un psychologue, en présentiel</span><b id="sv-c1-rrps"></b></div>
               <div class="roi-row" id="sv-r1-form"><span id="sv-c1-l-form">Formation gestes et postures</span><b id="sv-c1-form"></b></div>
               <div class="roi-row" id="sv-r1-ptms"><span id="sv-c1-l-ptms">Plan d'action TMS par un ergonome sur site</span><b id="sv-c1-ptms"></b></div>
               <div class="roi-row" id="sv-r1-tms"><span id="sv-c1-l-tms">Études de poste par un ergonome</span><b id="sv-c1-tms"></b></div>
-              <p class="bd-desc" id="sv-c1-desc"></p>
+              <p class="bd-desc" id="sv-c1-desc" hidden></p>
             </div>
 
             <div class="roi-fam">
               <div class="roi-fam-head fam-scanup"><span>En digital, avec ScanUp</span><b id="sv-cmp-b2"></b></div>
               <div class="roi-row" id="sv-r2-rps"><span id="sv-c2-l-rps">Retour RPS au salarié</span><b id="sv-c2-rps"></b></div>
               <div class="roi-row" id="sv-r2-prps"><span id="sv-c2-l-prps">Plan d'action RPS</span><b id="sv-c2-prps"></b></div>
-              <div class="roi-row" id="sv-r2-rrps"><span>RPS, pour la santé au travail : rapport individuel à distance, pour les salariés que vous choisissez</span><b>sur devis</b></div>
+              <div class="roi-row" id="sv-r2-rrps"><span id="sv-c2-l-rrps">RPS, pour le médecin du travail : rapports individuels</span><b id="sv-c2-rrps"></b></div>
               <div class="roi-row" id="sv-r2-dep"><span id="sv-c2-l-dep">Retour TMS au salarié</span><b id="sv-c2-dep"></b></div>
               <div class="roi-row" id="sv-r2-ptms"><span id="sv-c2-l-ptms">Plan d'action TMS</span><b id="sv-c2-ptms"></b></div>
               <div class="roi-row" id="sv-r2-tms"><span id="sv-c2-l-tms">Rapport individuel TMS</span><b id="sv-c2-tms"></b></div>
-              <p class="bd-desc" id="sv-c2-desc"></p> </div> <p class="bd-desc" id="sv-ex-plan"></p>
+              <p class="bd-desc" id="sv-c2-desc" hidden></p> </div> <p class="bd-desc" id="sv-ex-plan" hidden></p>
 
             <div class="roi-rows">
               <div class="roi-row roi-net"><span id="sv-cmp-l-ecart">Économie sur le budget prévention</span><b id="sv-cmp-ecart"></b></div>
             </div>
 
-            <div class="psy fr-only">
-              <p class="psy-t">Et le suivi psychologique, après l'orientation ?</p>
-              <p class="psy-b">Il ne pèse pas sur votre budget. Le dispositif <strong>Mon soutien psy</strong> couvre douze séances par an à 50 €, remboursées à 60 % par l'Assurance Maladie et à 40 % par la complémentaire, sans prescription médicale préalable ; le salarié avance les frais, sauf cas de dispense. Votre part s'arrête au retour au salarié et à la téléconsultation d'orientation : le suivi qui s'ensuit est remboursé.</p>
-            </div>
+            <details class="psy fr-only"><summary>Et le suivi psychologique, après l'orientation ?</summary><p class="psy-b">Il ne pèse pas sur votre budget. Le dispositif <strong>Mon soutien psy</strong> couvre douze séances par an à 50 €, remboursées à 60 % par l'Assurance Maladie et à 40 % par la complémentaire, sans prescription médicale préalable ; le salarié avance les frais, sauf cas de dispense. Votre part s'arrête au retour au salarié et à la téléconsultation d'orientation : le suivi qui s'ensuit est remboursé.</p></details>
 
-            <div class="psy ch-only">
-              <p class="psy-t">Et le suivi psychologique, après l'orientation ?</p>
-              <p class="psy-b">Repérée tôt, une personne évite l'arrêt en <strong>six séances</strong> le plus souvent. Nos séances sont assurées en Suisse par le cabinet Equilibrium, Alessandra Rosciano. Le coût est porté par l'employeur, par le collaborateur ou par son assurance ; pour ouvrir le remboursement de l'assurance de base, il faut une <strong>prescription médicale</strong>, que le médecin de famille peut établir, y compris à distance, s'il détient l'un des titres requis, médecine interne générale, psychiatrie ou pédiatrie. Six séances représentent de l'ordre de 930 francs, à comparer aux <strong id="sv-psy-ch-cout">8 219 CHF</strong> de maintien de salaire que coûte un seul arrêt.</p>
-            </div>
-            <p class="roi-note" id="sv-cmp-note"></p>
+            <details class="psy ch-only"><summary>Et le suivi psychologique, après l'orientation ?</summary><p class="psy-b">Repérée tôt, une personne évite l'arrêt en <strong>six séances</strong> le plus souvent. Nos séances sont assurées en Suisse par le cabinet Equilibrium, Alessandra Rosciano. Le coût est porté par l'employeur, par le collaborateur ou par son assurance ; pour ouvrir le remboursement de l'assurance de base, il faut une <strong>prescription médicale</strong>, que le médecin de famille peut établir, y compris à distance, s'il détient l'un des titres requis, médecine interne générale, psychiatrie ou pédiatrie. Six séances représentent de l'ordre de 930 francs, à comparer aux <strong id="sv-psy-ch-cout">8 219 CHF</strong> de maintien de salaire que coûte un seul arrêt.</p></details>
+            <p class="roi-note" id="sv-cmp-note" hidden></p>
             <a class="btn btn-1 btn-full" href="https://360skillvue.com/aide-support/">Parler de votre situation à ScanUp</a>
           </div>
         </div>
@@ -709,8 +711,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       
     </div>
-    <p class="note ch-only">Le nombre d'arrêts et leur cause viennent des données françaises de l'Assurance Maladie, faute d'équivalent suisse : en Suisse, les troubles musculo-squelettiques diffus et l'épuisement professionnel ne sont pratiquement jamais reconnus comme maladies professionnelles, ils ne sont donc pas comptés. Le coût, lui, suit les règles suisses : maintien de salaire à 100 % au titre de l'article 324a du Code des obligations, échelle bernoise, puis relais de l'assurance perte de gain. Cette charge reste chez l'employeur, elle n'est pas mutualisée par l'assurance accidents.</p>
-    <p class="note">Estimation statistique appliquée à un effectif, et non un diagnostic de votre entreprise. Ce montant ne couvre que les troubles musculo-squelettiques et les risques psychosociaux, à l'exclusion des autres causes d'arrêt : il ne se compare pas à un chiffre d'absentéisme global. Champ, sources et limites détaillés dans l'onglet « Méthode et limites ».</p>
+    <p class="note ch-only">Fréquence des arrêts : données françaises de l'Assurance Maladie, faute d'équivalent suisse. Coût : règles suisses de maintien de salaire.</p>
+    <p class="note">Estimation statistique, pas un diagnostic. Tarifs ScanUp hors taxes, grille en vigueur. Sources et limites : onglet « Méthode et limites ».</p>
   </section>
 
   <section id="svp-data" role="tabpanel" aria-labelledby="svt-data" hidden>
@@ -771,7 +773,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="cta">
     <div>
       <h2>Un accident se voit. Une usure se dépiste.</h2>
-      <p>ScanUp repère des indicateurs de risque au niveau du collaborateur, avant qu'ils ne deviennent un arrêt long ou une maladie reconnue ; le diagnostic, lui, reste l'affaire du médecin du travail. Deux logiques distinctes : un dépistage des risques psychosociaux, là où les données publiques ne voient que la pointe reconnue de la difficulté ; une étude de situation de travail à distance pour les troubles musculo-squelettiques, qui abaisse le coût de l'analyse ergonomique et atteint les salariés invisibles en présentiel, du secteur protégé aux postes itinérants. Analyse exclusivement humaine, par un ergonome ou un psychologue.</p>
+      <p>ScanUp repère les salariés à risque avant l'arrêt long : questionnaire, témoignage audio et vidéo du poste, analysés un par un par un ergonome ou un psychologue du travail.</p>
     </div>
     <div class="cta-btns">
       <a class="btn btn-1" href="https://360skillvue.com/aide-support/">Nous contacter</a>
@@ -971,9 +973,8 @@ function calcule(){
   } else {
     var supp = suppTms+suppPsy;
     $("sv-decret").textContent = (supp>0)
-      ? "Dont "+mon(supp)+" de maintien de salaire en plus à votre charge depuis le décret du 30 septembre 2026, "+
-        "qui plafonne les indemnités journalières AT/MP à l'équivalent de 1,8 Smic pour les arrêts survenus depuis le 1er novembre 2026."
-      : "Avec ce salaire, le plafond des indemnités journalières AT/MP en vigueur depuis le 1er novembre 2026 ne change rien à votre charge.";
+      ? "Dont "+mon(supp)+" de maintien de salaire dû au décret du 30 septembre 2026 sur les indemnités AT/MP."
+      : "";
   }
   $("sv-tot-tms").textContent = mon(totTms);
   $("sv-tot-rps").textContent = mon(totRps);
@@ -1045,6 +1046,17 @@ function calcule(){
     return v;
   }
   var pAudit=lire("sv-p-audit",auditRef(eff)), pPoste=lire("sv-p-poste",1200), pEnt=lire("sv-p-entretien",90);
+  // Tarifs ScanUp, grille du 06/11/2026 : plan d'action = socle 450 + 150 par
+  // module (100 au dela du dixieme) + 4 par salarie en TMS, 1 en RPS ; en RPS
+  // sans teleconsultation, cartographie des risques = plan divise par 4.
+  // Rapports individuels : 400, 360, 320, 280 ou 240 par rapport selon le
+  // volume, le palier s'appliquant a tous les rapports.
+  function planScanUp(mods, n, parSal){ var m=Math.max(1,mods); return 450+150*Math.min(m,10)+100*Math.max(0,m-10)+parSal*n; }
+  var nbMTms=Math.max(1,Math.round(lire("sv-nb-mtms",3)));
+  var nbRTms=Math.round(lire("sv-nb-rtms",0)), nbRRps=Math.round(lire("sv-nb-rrps",0));
+  var planRps0=(document.querySelector('input[name="svprps"]:checked').value==="oui");
+  var puRps0=parseFloat(document.querySelector('input[name="svrps"]:checked').value);
+  if(puRps0<40){ nbRRps=0; }
   $("sv-hint-audit").textContent="Le prix dépend de l'effectif et du nombre d'entretiens. Les grilles publiques "+
     "vont de "+eur(1500)+" à "+eur(3500)+" HT pour un diagnostic standard et de "+eur(2300)+" à "+eur(7000)+
     " HT pour un diagnostic approfondi, entretiens et plan d'action compris ; les interventions lourdes "+
@@ -1062,7 +1074,8 @@ function calcule(){
   // Comparer ce qui est comparable : l'audit collectif ne repere personne, il faut
   // donc lui ajouter un entretien individuel par salarie pour atteindre le meme
   // resultat qu'un depistage.
-  var c1rps=vRps?pAudit*fPres:0, c1ent=vRps?eff*pEnt*fPres:0,
+  if(!vTms){ nbRTms=0; } if(!vRps){ nbRRps=0; }
+  var c1rps=(vRps&&planRps0)?pAudit*fPres:0, c1ent=vRps?eff*pEnt*fPres:0,
       c1tms=0;
   // TMS : le depistage ScanUp se compare a une formation gestes et postures ;
   // resultat et conduite a tenir contre e-learning, coaching video contre presentiel.
@@ -1072,85 +1085,90 @@ function calcule(){
   var c1form=0, lib1form="";
   if(packTms0==="essential"||packTms0==="sansretour"){
     c1form=eff*pElearn;
-    lib1form="Formation e-learning gestes et postures, "+num(eff,0)+" × "+eur(pElearn);
+    lib1form="formation e-learning, "+num(eff,0)+" × "+eur(pElearn);
   } else {
     c1form=nbGroupes*pPresForm*fPres;
-    lib1form="Formation gestes et postures en présentiel, "+num(nbGroupes,0)+(nbGroupes>1?" journées":" journée")+" de 10 salariés × "+eur(pPresForm*fPres);
+    lib1form="formation gestes et postures, "+num(nbGroupes,0)+(nbGroupes>1?" journées":" journée")+" × "+eur(pPresForm*fPres);
   }
   // Plan d'action TMS : en presentiel, un ergonome se deplace et le redige,
   // de l'ordre d'une journee par tranche de 50 salaries.
   var planTms0=(document.querySelector('input[name="svptms"]:checked').value==="oui");
   var pPlanErgo=lire("sv-p-planergo",1000);
   var nbTr0=Math.ceil(eff/50);
-  var c1ptms=0;
+  var c1ptms=(vTms&&planTms0)?pPlanErgo*nbTr0*fPres:0;
+  var c1tms=nbRTms*pPoste*fPres, c1rrps=nbRRps*pPoste*fPres;
   if(!vTms){ c1form=0; c1ptms=0; }
-  var c1=c1rps+c1ent+c1form+c1ptms;
+  var c1=c1rps+c1ent+c1form+c1ptms+c1tms+c1rrps;
 
   // scénario 2 : en digital, avec ScanUp
   var packRps=document.querySelector('input[name="svrps"]:checked').value;
   var pu=parseFloat(packRps);
-  var c2rps=eff*pu, lib2rps="RPS, pour le salarié : "+(pu>30?"retour avec téléconsultation":(pu<25?"sans retour":"résultat et conduite à tenir"))+", "+num(eff,0)+" × "+eur(pu);
+  var c2rps=eff*pu, lib2rps="RPS · salariés : "+(pu>30?"téléconsultation":(pu<25?"sans retour":"résultat et conduite à tenir"))+", "+num(eff,0)+" × "+eur(pu);
   var nbTr=tranches50(eff);
   var planRps=(document.querySelector('input[name="svprps"]:checked').value==="oui");
   var planTms=(document.querySelector('input[name="svptms"]:checked').value==="oui");
-  var c2prps=0, c2ptms=0;
-  var libTr="sur devis, selon le volume";
+  var nbRap=nbRTms+nbRRps, puRap=nbRap?prixEtude(nbRap):0;
+  var prixPrps=planScanUp(1,eff,1)/(pu<40?4:1), prixPtms=planScanUp(nbMTms,eff,4);
+  var c2prps=planRps?prixPrps:0, c2ptms=planTms?prixPtms:0;
+  var c2rrps=nbRRps*puRap;
   var pctEtude=parseFloat($("sv-part-etude").value);
   if(isNaN(pctEtude)){ pctEtude=0; }
   var packTms=document.querySelector('input[name="svtms"]:checked').value;
   var nbEtudes=0;
   var puTms=(packTms==="sansretour")?20:((packTms==="essential")?27:40);
-  var c2dep=eff*puTms, c2tms=0;
-  var lib2dep="TMS, pour le salarié : "+(packTms==="sansretour"?"sans retour":(packTms==="essential"?"résultat et conduite à tenir":"retour avec coaching vidéo"))+", "+num(eff,0)+" × "+eur(puTms);
-  var lib2tms="TMS, pour la santé au travail : rapport individuel, étude de situation de travail à distance, pour les salariés que vous choisissez";
+  var c2dep=eff*puTms, c2tms=nbRTms*puRap;
+  var lib2dep="TMS · salariés : "+(packTms==="sansretour"?"sans retour":(packTms==="essential"?"résultat et conduite à tenir":"coaching vidéo"))+", "+num(eff,0)+" × "+eur(puTms);
+  var lib2tms="TMS · médecin du travail : rapports individuels, "+num(nbRTms,0)+" × "+eur(puRap);
   if(!vRps){ c2rps=0; }
   if(!vRps){ c2prps=0; }
   if(!vTms){ c2dep=0; c2tms=0; c2ptms=0; }
-  var c2=c2rps+c2dep+c2tms+c2prps+c2ptms;
+  var c2=c2rps+c2dep+c2tms+c2prps+c2ptms+c2rrps;
   var totAff=total;
   if(perim==="rps"){ totAff=totRps; }
   if(perim==="tms"){ totAff=totTms; }
   function aff(id,v){ var e=$(id); if(e){ e.hidden=!v; } }
   aff("sv-f-rps",vRps); aff("sv-f-tms",vTms);
-  aff("sv-r1-rps",vRps); aff("sv-r1-ent",vRps); aff("sv-r1-tms",vTms); aff("sv-r1-form",vTms); aff("sv-r1-ptms",vTms&&planTms0);
-  aff("sv-r2-rps",vRps); aff("sv-r2-dep",vTms); aff("sv-r2-tms",vTms); aff("sv-r1-rrps",vRps); aff("sv-r2-rrps",vRps);
+  aff("sv-r1-rps",vRps&&planRps); aff("sv-r1-ent",vRps); aff("sv-r1-tms",vTms&&nbRTms>0); aff("sv-r1-form",vTms); aff("sv-r1-ptms",vTms&&planTms0);
+  aff("sv-r2-rps",vRps); aff("sv-r2-dep",vTms); aff("sv-r2-tms",vTms&&nbRTms>0); aff("sv-r1-rrps",vRps&&nbRRps>0); aff("sv-r2-rrps",vRps&&nbRRps>0);
   aff("sv-r2-prps",vRps&&planRps); aff("sv-r2-ptms",vTms&&planTms);
   aff("sv-split",perim==="deux");
   $("sv-total").textContent=eur(totAff);
-  $("sv-total-sub").textContent="soit "+eur(totAff/eff)+" par salarié et par an, pour "+num(eff,0)+" salariés."+(((vRps&&planRps)||(vTms&&planTms))?" Plans d'action sur devis, non inclus.":"");
+  $("sv-total-sub").textContent="soit "+eur(totAff/eff)+" par salarié et par an, pour "+num(eff,0)+" salariés.";
   var libPer="Agir sur les RPS et les TMS";
   if(perim==="rps"){ libPer="Agir sur les risques psychosociaux"; }
   if(perim==="tms"){ libPer="Agir sur les troubles musculo-squelettiques"; }
   $("sv-roi-l").textContent="Ce qu'il faut investir pour agir";
   $("sv-p-label").textContent=(perim==="deux"?"Ce que le risque vous coûte":(perim==="rps"?"Ce que les RPS vous coûtent":"Ce que les TMS vous coûtent"));
   $("sv-roi-sur").textContent=libPer;
-  $("sv-ex-plan").textContent="Plan d'action de prévention ScanUp : sur devis, selon le nombre de postes de travail et de salariés. À titre de comparaison, un plan d'action réalisé en présentiel coûte de l'ordre de "+eur(5000*fPres)+" HT pour un site de 50 collaborateurs."; $("sv-hint-tms").textContent="Chaque choix se compare à son équivalent en présentiel. Pour vos salariés, le niveau Résultat et conduite à tenir "+
-    "se compare à un module e-learning gestes et postures, le coaching vidéo à une formation en présentiel. Pour vous, RH et direction, "+
-    "le plan d'action se compare à celui d'un ergonome qui se déplace ; sur devis selon le volume, il reste hors du calcul. "+
-    "Pour votre médecin du travail, le rapport individuel à distance se compare à une étude de situation de travail en présentiel ; "+
-    "sur devis des deux côtés, il reste hors du calcul.";
+  $("sv-lab-prps").textContent=(pu<40?"cartographie des risques, ":"")+eur(prixPrps)+" HT";
+  $("sv-lab-ptms").textContent=eur(prixPtms)+" HT pour "+num(nbMTms,0)+(nbMTms>1?" métiers":" métier");
+  $("sv-hint-rrps").textContent=(pu<40)?"Possible avec la téléconsultation uniquement.":(nbRRps>0?eur(puRap)+" HT par rapport.":"Avec téléconsultation, "+eur(400)+" HT par rapport, dégressif selon le volume.");
   $("sv-c1-rps").textContent=eur(c1rps);
   $("sv-c1-ent").textContent=eur(c1ent);
-  $("sv-c1-l-ent").textContent="RPS, pour le salarié : entretiens de 30 minutes en présentiel, tout l'effectif, "+num(eff,0)+" × "+eur(pEnt*fPres);
-  $("sv-c1-l-rps").textContent="RPS, pour la direction : audit collectif en présentiel";
-  $("sv-c1-tms").textContent="sur devis";
+  $("sv-c1-l-ent").textContent="RPS · salariés : entretiens individuels, "+num(eff,0)+" × "+eur(pEnt*fPres);
+  $("sv-c1-l-rps").textContent="RPS · direction : audit collectif";
+  $("sv-c1-tms").textContent=eur(c1tms);
+  $("sv-c1-rrps").textContent=eur(c1rrps);
+  $("sv-c1-l-rrps").textContent="RPS · médecin du travail : entretiens approfondis, "+num(nbRRps,0)+" × "+eur(pPoste*fPres);
   $("sv-c1-form").textContent=eur(c1form);
-  $("sv-c1-ptms").textContent="Sur devis";
-  $("sv-c1-l-ptms").textContent="TMS, pour la direction : plan d'action par un ergonome sur site, sur devis";
-  $("sv-c1-l-form").textContent="TMS, pour le salarié : "+lib1form.charAt(0).toLowerCase()+lib1form.slice(1);
-  $("sv-c1-l-tms").textContent="TMS, pour votre médecin du travail : études de situation de travail par un ergonome, en présentiel";
+  $("sv-c1-ptms").textContent=eur(c1ptms);
+  $("sv-c1-l-ptms").textContent="TMS · direction : plan d'action par un ergonome, "+num(nbTr0,0)+(nbTr0>1?" journées":" journée");
+  $("sv-c1-l-form").textContent="TMS · salariés : "+lib1form;
+  $("sv-c1-l-tms").textContent="TMS · médecin du travail : études de poste, "+num(nbRTms,0)+" × "+eur(pPoste*fPres);
   $("sv-cmp-t1").textContent=eur(c1);
   $("sv-cmp-b1").textContent=eur(c1);
   $("sv-c2-rps").textContent=eur(c2rps);
-  $("sv-c2-tms").textContent="sur devis";
+  $("sv-c2-tms").textContent=eur(c2tms);
+  $("sv-c2-rrps").textContent=eur(c2rrps);
+  $("sv-c2-l-rrps").textContent="RPS · médecin du travail : rapports individuels, "+num(nbRRps,0)+" × "+eur(puRap);
   $("sv-c2-dep").textContent=eur(c2dep);
   $("sv-c2-l-rps").textContent=lib2rps;
   $("sv-c2-l-dep").textContent=lib2dep;
   $("sv-c2-l-tms").textContent=lib2tms;
-  $("sv-c2-prps").textContent="Sur devis";
-  $("sv-c2-ptms").textContent="Sur devis";
-  $("sv-c2-l-prps").textContent="RPS, pour la direction : plan d'action, "+libTr;
-  $("sv-c2-l-ptms").textContent="TMS, pour la direction : plan d'action, "+libTr;
+  $("sv-c2-prps").textContent=eur(c2prps);
+  $("sv-c2-ptms").textContent=eur(c2ptms);
+  $("sv-c2-l-prps").textContent="RPS · direction : "+(pu<40?"cartographie des risques":"plan d'action");
+  $("sv-c2-l-ptms").textContent="TMS · direction : plan d'action, "+num(nbMTms,0)+(nbMTms>1?" métiers":" métier");
   var d1,d2;
   if(perim==="rps"){
     d1="L'audit est collectif : il repose sur un échantillon d'entretiens et rend des indicateurs par "+
@@ -1163,7 +1181,7 @@ function calcule(){
       "Vous, vous recevez des indicateurs agrégés, jamais des noms.";
   } else if(perim==="tms"){
     d1="La formation gestes et postures transmet des règles générales, en groupe ou en ligne : elle ne "+
-      "regarde pas comment chacun travaille. Les études ergonomiques en présentiel, sur devis, raisonnent par poste et non par personne.";
+      "regarde pas comment chacun travaille. Les études ergonomiques en présentiel raisonnent par poste et non par personne.";
     d2="On part de la personne et non du poste. Le travail est capté en situation réelle, et l'étude "+
       "approfondie, elle, reste à votre main : vous commandez les rapports individuels qui vous semblent justifiés, pour votre médecin du travail.";
   } else {
@@ -1193,9 +1211,9 @@ function calcule(){
   var ecart=c1-c2;
   $("sv-cmp-ecart").textContent=(ecart>=0?"− ":"+ ")+eur(Math.abs(ecart));
   $("sv-cmp-l-ecart").textContent=(ecart>=0?"Économie sur le budget prévention":"Surcoût par rapport au présentiel");
-  var sub="Le même travail d'analyse, dans deux dispositifs différents. Ce sont des devis, pas des promesses.";
+  var sub="Tarifs ScanUp en vigueur, hors taxes. Présentiel : prix moyens du marché.";
   if(ecart>0){
-    sub=sub+" L'écart, "+eur(ecart)+" par an, est à rapprocher des "+eur(totAff)+" que le risque coûte déjà.";
+    sub=sub;
   }
   $("sv-cmp-sub").textContent=sub;
 
@@ -1324,7 +1342,7 @@ function majSalaire(){
 }
 selS.addEventListener("change",function(){fillAct();majSalaire();calcule();});
 ["sv-activite","sv-effectif","sv-sal-brut","sv-salaire","sv-desorg","sv-rps",
- "sv-part","sv-part-etude","sv-p-audit","sv-p-entretien","sv-p-poste","sv-p-elearn","sv-p-presform","sv-p-planergo"].forEach(function(id){
+ "sv-part","sv-part-etude","sv-nb-mtms","sv-nb-rtms","sv-nb-rrps","sv-p-audit","sv-p-entretien","sv-p-poste","sv-p-elearn","sv-p-presform","sv-p-planergo"].forEach(function(id){
   function relance(){ if(id==="sv-activite"){ majSalaire(); } calcule(); }
   $(id).addEventListener("input",relance);
   $(id).addEventListener("change",relance);
@@ -1397,9 +1415,9 @@ body:not([data-pays="fr"]):not([data-pays="ch"]) .svue-sim [role="tabpanel"]{dis
   // les libelles. Le moteur principal fait le calcul, ce bloc ajuste l'ecran.
   function R(id){ return document.getElementById(id); }
   var DEF = { fr:{ sal:50000, lab:"Salaire brut annuel moyen",
-                   hint:"Sert au calcul du maintien de salaire et de l'effet du décret plafonnant les indemnités journalières." },
+                   hint:"" },
               ch:{ sal:100000, lab:"Salaire brut annuel moyen, en francs",
-                   hint:"Sert au calcul du maintien de salaire selon l'échelle bernoise, puis du relais de l'assurance perte de gain." } };
+                   hint:"" } };
   var dernier = null;
 
   function sync(){

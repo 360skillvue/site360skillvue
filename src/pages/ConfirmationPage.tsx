@@ -104,7 +104,6 @@ export default function ConfirmationPage({ forcedLang, path }: Props) {
 
             <div className="grid sm:grid-cols-3 gap-3">
               {[
-                { to: '/certification-periodique-sante', label: c.linkCertification },
                 { to: '/entreprises-drh',                label: c.linkEntreprises },
                 { to: '/spsti',                          label: c.linkSpsti },
               ].map((l) => (

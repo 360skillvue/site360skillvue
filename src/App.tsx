@@ -4,7 +4,6 @@ import { LanguageProvider, PREFIXED_LANGS } from './i18n';
 import CookieConsent from './components/CookieConsent';
 
 const HomePage          = lazy(() => import('./pages/HomePage'));
-const CertificationPage = lazy(() => import('./pages/CertificationPage'));
 const EntreprisesPage   = lazy(() => import('./pages/EntreprisesPage'));
 const AssureursPage     = lazy(() => import('./pages/AssureursPage'));
 const SPSTIPage         = lazy(() => import('./pages/SPSTIPage'));
@@ -29,7 +28,6 @@ const EssaiGratuitPage             = lazy(() => import('./pages/EssaiGratuitPage
  */
 const PAGES: { path: string; element: React.ReactNode }[] = [
   { path: '/',                              element: <HomePage /> },
-  { path: '/certification-periodique-sante', element: <CertificationPage /> },
   { path: '/entreprises-drh',               element: <EntreprisesPage /> },
   { path: '/assureurs-mutuelles',           element: <AssureursPage /> },
   { path: '/spsti',                         element: <SPSTIPage /> },

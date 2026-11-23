@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import {
   ArrowRight,
   ScanLine, Brain, ShieldCheck,
-  BarChart3, Users, FileCheck
+  BarChart3, Users
 } from 'lucide-react';
 import { Link, useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
@@ -49,10 +49,9 @@ export default function HomePage() {
     { icon: ShieldCheck,color: "text-scanup-success",   bg: "bg-scanup-success/8",   title: t.home.pillar3Title, desc: t.home.pillar3Desc },
   ];
 
-  const products = [
+  const products: { tag: string; name: string; desc: string; icon: typeof Users; link: string; accent: string; accentLight: string; highlight?: boolean }[] = [
     { tag: t.home.productTagPrevention,     name: t.home.product1Name, desc: t.home.product1Desc, icon: Users,     link: "/entreprises-drh",               accent: "#0068FF", accentLight: "rgba(0,104,255,0.07)" },
     { tag: t.home.productTagPrevention,     name: t.home.product2Name, desc: t.home.product2Desc, icon: Brain,     link: "/entreprises-drh",                accent: "#33FFCC", accentLight: "rgba(51,255,204,0.08)" },
-    { tag: t.home.productTagReglementation, name: t.home.product3Name, desc: t.home.product3Desc, icon: FileCheck, link: "/certification-periodique-sante", accent: "#16A34A", accentLight: "rgba(22,163,74,0.07)", highlight: true },
   ];
 
   const navigate = useNavigate();
@@ -330,7 +329,7 @@ export default function HomePage() {
             </h2>
           </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {products.map((prod, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <Link to={prod.link} className="block h-full group">

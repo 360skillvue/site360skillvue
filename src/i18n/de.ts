@@ -20,7 +20,7 @@ export const de = {
     },
   },
   meta: {
-    home: { title: 'Prävention von MSE und psychosozialen Risiken', description: 'ScanUp screent Ihre Teams auf Muskel-Skelett-Erkrankungen und psychosoziale Risiken und steuert die periodische Zertifizierung Ihrer Gesundheitsfachkräfte. Ab 20 €.' },
+    home: { title: 'Prävention von MSE und psychosozialen Risiken', description: 'ScanUp screent Ihre Teams auf Muskel-Skelett-Erkrankungen und psychosoziale Risiken auf einer einzigen Plattform: Fragebogen, Audio-Statement und Arbeitsplatzvideo, ausgewertet von Ergonomen oder Arbeitspsychologen. Ab 20 €.' },
     entreprises: { title: 'Unternehmen und HR, Screening aus der Ferne', description: 'Jede Person wird einzeln von einem Arbeitspsychologen oder einer zertifizierten Ergonomin ausgewertet. Analyse der Arbeitssituation aus der Ferne, muskuloskelettal oder psychosozial. Ab 20 €.' },
     assureurs: { title: 'Versicherer und Kassen, Steuerung des Gesundheitsrisikos', description: 'Verwandeln Sie die Screening-Daten Ihrer Versicherten in eine handlungsfähige Risikokarte, um Absenzen zu senken und Ihre Tarife zu schärfen.' },
     certification: { title: 'Periodische Zertifizierung von Gesundheitsfachkräften', description: 'Module ausrollen, Fortschritt verfolgen und die periodische Zertifizierung Ihrer Fachkräfte über den gesamten Zertifizierungszyklus absichern. Zertifiziertes Hosting.' },
@@ -89,7 +89,7 @@ export const de = {
     pillar3Title: 'Handeln',
     pillar3Desc: 'Individuelle Präventionspläne, automatische Erinnerungen und vollständige Rückverfolgbarkeit für jeden Mitarbeitenden.',
     productsLabel: 'Unsere Lösungen',
-    productsTitle: 'Eine Plattform, drei Einsatzbereiche.',
+    productsTitle: 'Eine Plattform für MSE und psychosoziale Risiken.',
     productTagPrevention: 'Prävention',
     productTagReglementation: 'Regulierung',
     product1Name: 'ScanUp MSE',

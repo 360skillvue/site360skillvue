@@ -20,7 +20,7 @@ export const fr = {
     },
   },
   meta: {
-    home: { title: 'Prévention TMS et RPS, certification santé', description: 'ScanUp dépiste les risques TMS et RPS de vos équipes et pilote la certification périodique de vos professionnels de santé. Dès 20 € par collaborateur.' },
+    home: { title: 'Prévention TMS et RPS', description: 'ScanUp dépiste les risques TMS et RPS de chaque salarié, sur une seule plateforme : questionnaire, témoignage audio et vidéo du poste, analysés par un ergonome ou un psychologue du travail. Dès 20 € par collaborateur.' },
     entreprises: { title: 'Entreprises et DRH, dépistage TMS et RPS', description: 'Chaque salarié analysé individuellement par un psychologue du travail ou un ergonome IPRP. Étude de situation de travail à distance, TMS ou RPS. Dès 20 €.' },
     assureurs: { title: 'Assureurs et mutuelles, pilotage du risque santé', description: 'Transformez les données de dépistage TMS et RPS de vos assurés en cartographie du risque actionnable, pour réduire l\'absentéisme et affiner votre tarification.' },
     certification: { title: 'Certification périodique des professionnels de santé', description: 'Déployez les modules, suivez l\'avancement et sécurisez la certification périodique de vos professionnels de santé sur tout le cycle de certification. Hébergement HDS.' },
@@ -89,7 +89,7 @@ export const fr = {
     pillar3Title: 'Agir',
     pillar3Desc: 'Plans de prévention personnalisés, relances automatiques et traçabilité complète pour chaque collaborateur.',
     productsLabel: 'Nos solutions',
-    productsTitle: 'Une seule plateforme, trois usages.',
+    productsTitle: 'Une seule plateforme pour les TMS et les RPS.',
     productTagPrevention: 'Prévention',
     productTagReglementation: 'Réglementation',
     product1Name: 'ScanUp TMS',

@@ -20,7 +20,7 @@ export const it = {
     },
   },
   meta: {
-    home: { title: 'Prevenzione dei DMS e dei rischi psicosociali', description: 'ScanUp effettua lo screening dei disturbi muscoloscheletrici e dei rischi psicosociali dei vostri team e gestisce la certificazione periodica dei professionisti sanitari. Da 20 € per collaboratore.' },
+    home: { title: 'Prevenzione dei DMS e dei rischi psicosociali', description: 'ScanUp effettua lo screening dei disturbi muscoloscheletrici e dei rischi psicosociali dei vostri team su un\'unica piattaforma: questionario, testimonianza audio e video della postazione, analizzati da un ergonomo o da uno psicologo del lavoro. Da 20 € per collaboratore.' },
     entreprises: { title: 'Aziende e HR, screening a distanza', description: 'Ogni collaboratore è analizzato individualmente da uno psicologo del lavoro o da un ergonomo certificato. Studio della situazione di lavoro a distanza, muscoloscheletrico o psicosociale. Da 20 €.' },
     assureurs: { title: 'Assicuratori e mutue, governo del rischio salute', description: 'Trasformate i dati di screening dei vostri assicurati in una mappa del rischio utilizzabile, per ridurre l\'assenteismo e affinare la vostra tariffazione.' },
     certification: { title: 'Certificazione periodica dei professionisti sanitari', description: 'Distribuite i moduli, monitorate l\'avanzamento e mettete in sicurezza la certificazione periodica dei vostri professionisti lungo tutto il ciclo di certificazione. Hosting certificato HDS.' },
@@ -89,7 +89,7 @@ export const it = {
     pillar3Title: 'Agire',
     pillar3Desc: 'Piani di prevenzione personalizzati, solleciti automatici e tracciabilità completa per ogni collaboratore.',
     productsLabel: 'Le nostre soluzioni',
-    productsTitle: "Un'unica piattaforma, tre utilizzi.",
+    productsTitle: "Un'unica piattaforma per i DMS e i rischi psicosociali.",
     productTagPrevention: 'Prevenzione',
     productTagReglementation: 'Normativa',
     product1Name: 'ScanUp DMS',

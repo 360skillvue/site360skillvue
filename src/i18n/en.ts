@@ -20,7 +20,7 @@ export const en = {
     },
   },
   meta: {
-    home: { title: 'Musculoskeletal and psychosocial risk prevention', description: 'ScanUp screens your teams for musculoskeletal and psychosocial risks and manages the periodic certification of your healthcare professionals. From €20 per employee.' },
+    home: { title: 'Musculoskeletal and psychosocial risk prevention', description: 'ScanUp screens your teams for musculoskeletal and psychosocial risks on a single platform: questionnaire, audio testimony and workstation video, reviewed by an ergonomist or an occupational psychologist. From €20 per employee.' },
     entreprises: { title: 'Companies and HR, remote risk screening', description: 'Every employee reviewed individually by an occupational psychologist or a certified ergonomist. Remote work situation assessment, musculoskeletal or psychosocial. From €20.' },
     assureurs: { title: 'Insurers and mutuals, health risk steering', description: 'Turn your members\' screening data into an actionable risk map, to reduce absenteeism and refine your pricing.' },
     certification: { title: 'Periodic certification for healthcare professionals', description: 'Deploy the modules, track progress and secure the periodic certification of your healthcare professionals throughout the certification cycle. Certified health-data hosting.' },
@@ -89,7 +89,7 @@ export const en = {
     pillar3Title: 'Act',
     pillar3Desc: 'Personalized prevention plans, automatic reminders and full traceability for every employee.',
     productsLabel: 'Our solutions',
-    productsTitle: 'One platform, three uses.',
+    productsTitle: 'One platform for MSDs and psychosocial risks.',
     productTagPrevention: 'Prevention',
     productTagReglementation: 'Regulation',
     product1Name: 'ScanUp MSD',

@@ -1,6 +1,6 @@
 # ScanUp par 360SkillVue
 
-> ScanUp est une plateforme de dépistage à distance des troubles musculosquelettiques (TMS) et des risques psychosociaux (RPS) au travail. Chaque salarié répond depuis son téléphone (questionnaire et vidéos de ses situations de travail pour les TMS, questionnaire et message audio pour les RPS) ; ses réponses sont analysées individuellement par un ergonome ou un psychologue du travail. ScanUp réalise aussi des études de situation de travail à distance et permet de piloter la certification périodique des professionnels de santé. Éditeur : 360SkillVue (France et Suisse). Hébergement certifié HDS.
+> ScanUp est une plateforme de dépistage à distance des troubles musculosquelettiques (TMS) et des risques psychosociaux (RPS) au travail. Chaque salarié répond depuis son téléphone (questionnaire et vidéos de ses situations de travail pour les TMS, questionnaire et message audio pour les RPS) ; ses réponses sont analysées individuellement par un ergonome ou un psychologue du travail. ScanUp réalise aussi des études de situation de travail à distance. Éditeur : 360SkillVue (France et Suisse). Hébergement certifié HDS.
 
 Points clés :
 
@@ -16,7 +16,6 @@ Points clés :
 - [Assureurs et mutuelles](https://360skillvue.com/assureurs-mutuelles): cartographie du risque TMS et RPS des assurés pour cibler la prévention et réduire l'absentéisme.
 - [Services de prévention et de santé au travail (SPST)](https://360skillvue.com/spsti): dépistage avec orientation et études de situation de travail à distance pour les équipes pluridisciplinaires.
 - [Cabinets d'ergonomie et de RPS](https://360skillvue.com/cabinets-sante-travail): outil métier pour créer ses modules, évaluer à distance et recueillir les données terrain.
-- [Établissements de santé, certification périodique](https://360skillvue.com/certification-periodique-sante): déploiement des modules et suivi de la certification périodique des professionnels de santé.
 
 ## Pages utiles
 

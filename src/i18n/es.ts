@@ -20,7 +20,7 @@ export const es = {
     },
   },
   meta: {
-    home: { title: 'Prevención de TME y riesgos psicosociales', description: 'ScanUp criba los trastornos musculoesqueléticos y los riesgos psicosociales de sus equipos y gestiona la certificación periódica de sus profesionales sanitarios. Desde 20 € por empleado.' },
+    home: { title: 'Prevención de TME y riesgos psicosociales', description: 'ScanUp criba los trastornos musculoesqueléticos y los riesgos psicosociales de sus equipos en una sola plataforma: cuestionario, testimonio de audio y vídeo del puesto, analizados por un ergónomo o un psicólogo del trabajo. Desde 20 € por empleado.' },
     entreprises: { title: 'Empresas y RR. HH., cribado a distancia', description: 'Cada empleado es analizado individualmente por un psicólogo del trabajo o un ergónomo acreditado. Estudio de la situación de trabajo a distancia, musculoesquelético o psicosocial. Desde 20 €.' },
     assureurs: { title: 'Aseguradoras y mutuas, gestión del riesgo de salud', description: 'Convierta los datos de cribado de sus asegurados en un mapa de riesgo accionable, para reducir el absentismo y afinar su tarificación.' },
     certification: { title: 'Certificación periódica de profesionales sanitarios', description: 'Despliegue los módulos, siga el avance y asegure la certificación periódica de sus profesionales sanitarios durante todo el ciclo de certificación. Alojamiento certificado HDS.' },
@@ -89,7 +89,7 @@ export const es = {
     pillar3Title: 'Actuar',
     pillar3Desc: 'Planes de prevención personalizados, recordatorios automáticos y trazabilidad completa para cada empleado.',
     productsLabel: 'Nuestras soluciones',
-    productsTitle: 'Una sola plataforma, tres usos.',
+    productsTitle: 'Una sola plataforma para los TME y los riesgos psicosociales.',
     productTagPrevention: 'Prevención',
     productTagReglementation: 'Normativa',
     product1Name: 'ScanUp TME',

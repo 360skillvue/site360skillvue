@@ -20,7 +20,7 @@ export const pt = {
     },
   },
   meta: {
-    home: { title: 'Prevenção de LME e riscos psicossociais', description: 'A ScanUp faz o rastreio das lesões musculoesqueléticas e dos riscos psicossociais das suas equipas e gere a certificação periódica dos seus profissionais de saúde. A partir de 20 € por colaborador.' },
+    home: { title: 'Prevenção de LME e riscos psicossociais', description: 'A ScanUp faz o rastreio das lesões musculoesqueléticas e dos riscos psicossociais das suas equipas numa só plataforma: questionário, testemunho áudio e vídeo do posto, analisados por um ergonomista ou um psicólogo do trabalho. A partir de 20 € por colaborador.' },
     entreprises: { title: 'Empresas e RH, rastreio à distância', description: 'Cada colaborador é analisado individualmente por um psicólogo do trabalho ou por um ergonomista certificado. Estudo da situação de trabalho à distância, musculoesquelético ou psicossocial. A partir de 20 €.' },
     assureurs: { title: 'Seguradoras e mútuas, gestão do risco de saúde', description: 'Transforme os dados de rastreio dos seus segurados num mapa de risco acionável, para reduzir o absentismo e afinar a sua tarifação.' },
     certification: { title: 'Certificação periódica dos profissionais de saúde', description: 'Implemente os módulos, acompanhe o progresso e assegure a certificação periódica dos seus profissionais de saúde ao longo de todo o ciclo de certificação. Alojamento certificado HDS.' },
@@ -89,7 +89,7 @@ export const pt = {
     pillar3Title: 'Agir',
     pillar3Desc: 'Planos de prevenção personalizados, lembretes automáticos e rastreabilidade completa para cada colaborador.',
     productsLabel: 'As nossas soluções',
-    productsTitle: 'Uma só plataforma, três utilizações.',
+    productsTitle: 'Uma só plataforma para as LME e os riscos psicossociais.',
     productTagPrevention: 'Prevenção',
     productTagReglementation: 'Regulamentação',
     product1Name: 'ScanUp LME',

@@ -50,7 +50,6 @@ const ESSAI_META = {
 
 const ROUTES = [
   { path: '/',                               pick: t => t.meta.home },
-  { path: '/certification-periodique-sante', pick: t => t.meta.certification },
   { path: '/entreprises-drh',                pick: t => t.meta.entreprises },
   { path: '/assureurs-mutuelles',            pick: t => t.meta.assureurs },
   { path: '/spsti',                          pick: t => ({ title: t.spsti.metaTitle, description: t.spsti.metaDescription }) },
@@ -257,6 +256,9 @@ const LEGACY_REDIRECTS = [
   ['/de/preise', '/de/tarifs'],
   ['/de/kontakt', '/de/aide-support'],
   ['/:lang(en|de|it|es|pt)/simulateur-cout-tms-rps', '/simulateur-cout-tms-rps'],
+  // La certification périodique est présentée sur le site de Biologie e-learning.
+  ['/certification-periodique-sante', 'https://www.biologie-elearning.fr/'],
+  ['/:lang(en|de|it|es|pt)/certification-periodique-sante', 'https://www.biologie-elearning.fr/'],
   ['/blog', '/'],
   ['/blog/:path*', '/'],
 ];

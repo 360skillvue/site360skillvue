@@ -10,10 +10,6 @@
       "destination": "/formation-risques-psychosociaux.html"
     },
     {
-      "source": "/certification-periodique-sante",
-      "destination": "/certification-periodique-sante/index.html"
-    },
-    {
       "source": "/entreprises-drh",
       "destination": "/entreprises-drh/index.html"
     },
@@ -72,10 +68,6 @@
     {
       "source": "/en",
       "destination": "/en/index.html"
-    },
-    {
-      "source": "/en/certification-periodique-sante",
-      "destination": "/en/certification-periodique-sante/index.html"
     },
     {
       "source": "/en/entreprises-drh",
@@ -138,10 +130,6 @@
       "destination": "/de/index.html"
     },
     {
-      "source": "/de/certification-periodique-sante",
-      "destination": "/de/certification-periodique-sante/index.html"
-    },
-    {
       "source": "/de/entreprises-drh",
       "destination": "/de/entreprises-drh/index.html"
     },
@@ -200,10 +188,6 @@
     {
       "source": "/it",
       "destination": "/it/index.html"
-    },
-    {
-      "source": "/it/certification-periodique-sante",
-      "destination": "/it/certification-periodique-sante/index.html"
     },
     {
       "source": "/it/entreprises-drh",
@@ -266,10 +250,6 @@
       "destination": "/es/index.html"
     },
     {
-      "source": "/es/certification-periodique-sante",
-      "destination": "/es/certification-periodique-sante/index.html"
-    },
-    {
       "source": "/es/entreprises-drh",
       "destination": "/es/entreprises-drh/index.html"
     },
@@ -328,10 +308,6 @@
     {
       "source": "/pt",
       "destination": "/pt/index.html"
-    },
-    {
-      "source": "/pt/certification-periodique-sante",
-      "destination": "/pt/certification-periodique-sante/index.html"
     },
     {
       "source": "/pt/entreprises-drh",
@@ -537,6 +513,16 @@
     {
       "source": "/:lang(en|de|it|es|pt)/simulateur-cout-tms-rps",
       "destination": "/simulateur-cout-tms-rps",
+      "permanent": true
+    },
+    {
+      "source": "/certification-periodique-sante",
+      "destination": "https://www.biologie-elearning.fr/",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|de|it|es|pt)/certification-periodique-sante",
+      "destination": "https://www.biologie-elearning.fr/",
       "permanent": true
     },
     {

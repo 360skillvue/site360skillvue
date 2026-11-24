@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, ArrowRight, UserCog, Sparkles, User, Building2, Stethoscope } from 'lucide-react';
+import { Check, ArrowRight, UserCog, Sparkles, User, Building2, Stethoscope, Smartphone, Video } from 'lucide-react';
 import { useLocalizedNavigate as useNavigate } from '../i18n/Link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageMeta from '../components/PageMeta';
-import { useLanguage } from '../i18n';
+import { useLanguage, type Lang } from '../i18n';
 
 const Reveal: React.FC<{ children: React.ReactNode; delay?: number; className?: string }> = ({
   children, delay = 0, className = '',
@@ -65,29 +65,99 @@ const PlanCard: React.FC<{ plan: Plan; featured?: boolean }> = ({ plan, featured
   </motion.div>
 );
 
+
+/** Les deux façons d'essayer ScanUp, présentées côte à côte. */
+type EssaiTexts = {
+  head: string; sub: string;
+  t1: string; h1: string; d1: string; c1: string;
+  t2: string; h2: string; d2: string; c2: string;
+};
+const ESSAIS: Record<Lang, EssaiTexts> = {
+  fr: { head: "Deux façons d'essayer, gratuitement", sub: 'Sans carte bancaire, sans engagement.',
+    t1: 'Immédiat · 10 minutes', h1: 'Essayer comme un salarié',
+    d1: 'Vivez le parcours d\'un salarié : choisissez votre métier, répondez au questionnaire, enregistrez un témoignage audio et filmez une situation de travail. Vous recevez votre lien par e-mail.',
+    c1: 'Tester ScanUp gratuitement',
+    t2: '15 jours · accompagné', h2: 'Un espace d\'essai à votre nom',
+    d2: 'Une visio pour cerner vos besoins, puis nous vous ouvrons un espace personnalisé, avec des modules adaptés à vos métiers. Vous y invitez quelques salariés et suivez les résultats en tant que responsable de projet.',
+    c2: 'Réserver une visio' },
+  en: { head: 'Two ways to try ScanUp, for free', sub: 'No credit card, no commitment.',
+    t1: 'Instant · 10 minutes', h1: 'Try it as an employee',
+    d1: 'Go through the employee journey: choose your job, answer the questionnaire, record an audio testimony and film a work situation. You receive your link by email.',
+    c1: 'Try ScanUp for free',
+    t2: '15 days · with our support', h2: 'A trial space in your name',
+    d2: 'A video call to understand your needs, then we open a personalised space with modules suited to your jobs. You invite a few employees and follow the results as project lead.',
+    c2: 'Book a video call' },
+  de: { head: 'Zwei Wege, ScanUp kostenlos zu testen', sub: 'Ohne Kreditkarte, ohne Verpflichtung.',
+    t1: 'Sofort · 10 Minuten', h1: 'Als Mitarbeitende testen',
+    d1: 'Durchlaufen Sie den Ablauf der Mitarbeitenden: Beruf wählen, Fragebogen ausfüllen, Audio-Statement aufnehmen und eine Arbeitssituation filmen. Den Link erhalten Sie per E-Mail.',
+    c1: 'ScanUp kostenlos testen',
+    t2: '15 Tage · begleitet', h2: 'Ein Testbereich auf Ihren Namen',
+    d2: 'Ein Videogespräch zu Ihrem Bedarf, dann richten wir Ihnen einen persönlichen Bereich mit passenden Modulen ein. Sie laden einige Mitarbeitende ein und verfolgen die Ergebnisse als Projektverantwortliche.',
+    c2: 'Videogespräch buchen' },
+  it: { head: 'Due modi per provare ScanUp, gratis', sub: 'Senza carta di credito, senza impegno.',
+    t1: 'Subito · 10 minuti', h1: 'Provare come un collaboratore',
+    d1: 'Vivete il percorso di un collaboratore: scegliete il mestiere, rispondete al questionario, registrate una testimonianza audio e filmate una situazione di lavoro. Ricevete il link per e-mail.',
+    c1: 'Prova ScanUp gratis',
+    t2: '15 giorni · accompagnati', h2: 'Uno spazio di prova a vostro nome',
+    d2: 'Una videochiamata per capire le vostre esigenze, poi vi apriamo uno spazio personalizzato con moduli adatti ai vostri mestieri. Invitate alcuni collaboratori e seguite i risultati come responsabili di progetto.',
+    c2: 'Prenota una videochiamata' },
+  es: { head: 'Dos formas de probar ScanUp, gratis', sub: 'Sin tarjeta bancaria, sin compromiso.',
+    t1: 'Inmediato · 10 minutos', h1: 'Probar como un empleado',
+    d1: 'Viva el recorrido de un empleado: elija su oficio, responda al cuestionario, grabe un testimonio de audio y grabe una situación de trabajo. Recibe su enlace por correo.',
+    c1: 'Probar ScanUp gratis',
+    t2: '15 días · acompañado', h2: 'Un espacio de prueba a su nombre',
+    d2: 'Una videollamada para entender sus necesidades y, después, le abrimos un espacio personalizado con módulos adaptados a sus oficios. Invita a algunos empleados y sigue los resultados como responsable de proyecto.',
+    c2: 'Reservar una videollamada' },
+  pt: { head: 'Duas formas de experimentar a ScanUp, grátis', sub: 'Sem cartão bancário, sem compromisso.',
+    t1: 'Imediato · 10 minutos', h1: 'Experimentar como um colaborador',
+    d1: 'Viva o percurso de um colaborador: escolha a profissão, responda ao questionário, grave um testemunho áudio e filme uma situação de trabalho. Recebe o link por e-mail.',
+    c1: 'Testar a ScanUp grátis',
+    t2: '15 dias · acompanhado', h2: 'Um espaço de teste em seu nome',
+    d2: 'Uma videochamada para perceber as suas necessidades e, depois, abrimos um espaço personalizado com módulos adaptados às suas profissões. Convida alguns colaboradores e acompanha os resultados como responsável de projeto.',
+    c2: 'Marcar uma videochamada' },
+};
+
 export default function TarifsPage() {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const tr = t.tarifs;
+  const es = ESSAIS[lang] ?? ESSAIS.fr;
+  const goEssai = () => navigate('/essai-gratuit');
+  const goVisio = () => navigate('/aide-support?sujet=test#contact');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const goContact = () => navigate('/aide-support');
 
   const TrialBanner = (
-    <div className="rounded-2xl bg-gradient-to-br from-scanup-blue/[0.06] to-scanup-turquoise/[0.12] border-2 border-dashed border-scanup-blue/30 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-      <div className="w-10 h-10 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center flex-shrink-0">
-        <Sparkles size={18} />
+    <div className="rounded-2xl bg-gradient-to-br from-scanup-blue/[0.06] to-scanup-turquoise/[0.12] border border-scanup-blue/15 p-5 md:p-7">
+      <div className="flex items-center gap-3 mb-5">
+        <span className="w-10 h-10 rounded-full bg-scanup-blue/10 text-scanup-blue flex items-center justify-center flex-shrink-0"><Sparkles size={18} /></span>
+        <div>
+          <div className="text-[17px] font-bold text-scanup-navy">{es.head}</div>
+          <p className="text-[13px] text-scanup-graytext">{es.sub}</p>
+        </div>
       </div>
-      <div className="flex-grow">
-        <div className="text-[16px] font-bold text-scanup-navy">{tr.trial.title}</div>
-        <p className="text-[13px] text-scanup-graytext leading-relaxed">{tr.trial.desc}</p>
+      <div className="grid md:grid-cols-2 gap-4">
+        {[
+          { Icon: Smartphone, tag: es.t1, title: es.h1, desc: es.d1, cta: es.c1, go: goEssai, primary: true },
+          { Icon: Video, tag: es.t2, title: es.h2, desc: es.d2, cta: es.c2, go: goVisio, primary: false },
+        ].map(({ Icon, tag, title, desc, cta, go, primary }) => (
+          <div key={title} className="flex flex-col rounded-xl bg-white border border-black/[0.06] p-5">
+            <div className="flex items-center gap-2.5 mb-3">
+              <span className="w-9 h-9 rounded-lg bg-scanup-blue/10 text-scanup-blue flex items-center justify-center flex-shrink-0"><Icon size={17} /></span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-scanup-blue">{tag}</span>
+            </div>
+            <div className="text-[16px] font-bold text-scanup-navy mb-1.5">{title}</div>
+            <p className="text-[13px] text-scanup-graytext leading-relaxed flex-grow">{desc}</p>
+            <motion.button
+              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+              onClick={go}
+              className={`mt-4 self-start py-2.5 px-5 rounded-xl font-bold text-[13px] inline-flex items-center gap-2 transition-all ${primary ? 'bg-scanup-blue text-white hover:brightness-110' : 'border border-scanup-blue/30 text-scanup-blue hover:bg-scanup-blue/5'}`}
+            >
+              {cta} <ArrowRight size={13} />
+            </motion.button>
+          </div>
+        ))}
       </div>
-      <motion.button
-        whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-        onClick={() => navigate('/aide-support?sujet=test#contact')}
-        className="py-3 px-6 rounded-xl font-bold text-[13px] bg-scanup-blue text-white hover:brightness-110 transition-all inline-flex items-center gap-2 flex-shrink-0"
-      >
-        {tr.trial.cta} <ArrowRight size={13} />
-      </motion.button>
     </div>
   );
 
@@ -126,13 +196,20 @@ export default function TarifsPage() {
               <p className="text-[17px] text-scanup-graytext leading-relaxed max-w-xl mx-auto mb-8">{tr.subtitle}</p>
             </Reveal>
           )}
-          <Reveal delay={0.15}>
+          <Reveal delay={0.15} className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <motion.button
               whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-              onClick={goContact}
+              onClick={goEssai}
               className="bg-scanup-blue text-white px-8 py-3.5 rounded-full font-bold text-[15px] hover:brightness-110 transition-all shadow-lg shadow-scanup-blue/25 inline-flex items-center gap-2"
             >
-              {tr.trial.cta} <ArrowRight size={15} />
+              {es.c1} <ArrowRight size={15} />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
+              onClick={goVisio}
+              className="text-scanup-navy px-8 py-3.5 rounded-full font-bold text-[15px] border border-black/10 hover:border-scanup-blue hover:text-scanup-blue transition-all inline-flex items-center gap-2"
+            >
+              {es.c2} <ArrowRight size={15} />
             </motion.button>
           </Reveal>
         </div>

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, X, Mail, Video, Mic, Briefcase } from 'lucide-react';
 import { useLanguage, type Lang } from '../i18n';
 
@@ -142,18 +143,26 @@ function useTexts(): Texts {
   return TEXTS[lang] ?? TEXTS.fr;
 }
 
-function allerAuFormulaire(e: React.MouseEvent) {
-  const cible = document.getElementById(ESSAI_ANCRE);
-  if (!cible) return;
-  e.preventDefault();
-  cible.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  history.replaceState(null, '', `#${ESSAI_ANCRE}`);
-  window.setTimeout(() => (cible.querySelector('input[name="prenom"]') as HTMLInputElement | null)?.focus({ preventScroll: true }), 600);
-}
-
 /** Bouton qui fait défiler jusqu'au formulaire d'essai de la page. */
 export function EssaiScanupBouton({ variant = 'primary', className = '' }: { variant?: 'primary' | 'light'; className?: string }) {
   const t = useTexts();
+  const navigate = useNavigate();
+  const location = useLocation();
+  // Le clic ajoute une étape à l'historique : « Retour » remonte en haut de la
+  // page au lieu de quitter le site (ou de revenir à la page vue avant).
+  const avant = useRef(location.hash);
+  useEffect(() => {
+    if (avant.current === `#${ESSAI_ANCRE}` && location.hash === '') window.scrollTo({ top: 0, behavior: 'smooth' });
+    avant.current = location.hash;
+  }, [location.hash]);
+  function allerAuFormulaire(e: React.MouseEvent) {
+    const cible = document.getElementById(ESSAI_ANCRE);
+    if (!cible) return;
+    e.preventDefault();
+    if (location.hash !== `#${ESSAI_ANCRE}`) navigate({ hash: ESSAI_ANCRE }, { preventScrollReset: true });
+    cible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => (cible.querySelector('input[name="prenom"]') as HTMLInputElement | null)?.focus({ preventScroll: true }), 600);
+  }
   const styles = variant === 'light'
     ? 'bg-scanup-turquoise text-scanup-navy hover:bg-white'
     : 'bg-scanup-blue text-white hover:bg-blue-700 shadow-lg shadow-scanup-blue/25';

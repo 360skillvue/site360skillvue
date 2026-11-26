@@ -6,7 +6,7 @@ export const pt = {
     about: 'Sobre nós',
     help: 'Contacte-nos',
     login: 'Iniciar sessão',
-    trial: 'Teste gratuito',
+    trial: 'Testar grátis',
     call: 'Ligue-nos',
     phone: '+33 4 50 27 91 02',
     phoneLabel: 'Telefone',

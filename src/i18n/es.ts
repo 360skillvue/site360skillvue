@@ -6,7 +6,7 @@ export const es = {
     about: 'Quiénes somos',
     help: 'Contacto',
     login: 'Iniciar sesión',
-    trial: 'Prueba gratuita',
+    trial: 'Probar gratis',
     call: 'Llámenos',
     phone: '+33 4 50 27 91 02',
     phoneLabel: 'Teléfono',

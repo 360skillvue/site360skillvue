@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Link } from '../i18n/Link';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, Building2, Shield, Stethoscope, Briefcase, Menu, X, Globe, Wrench } from 'lucide-react';
-import { useLanguage, LANGUAGES } from '../i18n';
+import { useLanguage, LANGUAGES, localizePath } from '../i18n';
 import { WebinaireBandeau } from './WebinaireDecembre';
 
 /** Libelles du public « cabinets de sante au travail », par langue. */
@@ -227,7 +227,7 @@ export default function Navbar() {
 
             {/* CTA — desktop */}
             <motion.a
-              href="/aide-support?sujet=test#contact"
+              href={localizePath('/essai-gratuit', lang)}
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="hidden sm:flex bg-scanup-blue text-white px-4 py-2 rounded-full text-[13px] font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-scanup-blue/20 whitespace-nowrap"
             >
@@ -376,7 +376,7 @@ export default function Navbar() {
                   {t.nav.login}
                 </a>
                 <a
-                  href="/aide-support?sujet=test#contact"
+                  href={localizePath('/essai-gratuit', lang)}
                   className="block w-full bg-scanup-blue text-white py-3 rounded-full text-[14px] font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-scanup-blue/20 text-center"
                 >
                   {t.nav.trial}
